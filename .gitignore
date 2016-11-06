@@ -1,0 +1,8 @@
+# Dependency directory
+node_modules
+dist
+babel_cache
+
+# Other
+.DS_Store
+npm-debug*

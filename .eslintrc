@@ -1,0 +1,6 @@
+{
+  'extends': 'airbnb',
+  'rules': {
+    'id-length': [2, {'min': 2, 'properties': 'never', 'exceptions': ['_']}],
+  }
+}
