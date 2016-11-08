@@ -16,7 +16,9 @@ export default class Footer extends React.Component {
           <Row>
             <Col md={12} sm={12} xs={12} className="text-center" >
               <div className="footer_content">
-                <div className="col-sm-2 center-block"><Link to="/"><img src="assets/img/logo.png" alt="" /></Link></div>
+                  <Col md={12} sm={2} xs={12} className="text-center">
+                    <Link to="/"><img src="/img/logo.png" alt="" /></Link>
+                  </Col>
                 <div className="footer_social">
                   <ul>
                     <li><a className="f_facebook  wow bounceInDown" href="#"><i className="fa fa-facebook"></i></a></li>

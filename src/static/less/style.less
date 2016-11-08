@@ -5,12 +5,27 @@
 @greenColor: #8BC34A;
 @blackColor: #333;
 @headerBlackColor: #222222;
+@headerGreyColor: #f7f7f7;
+
+body {
+    background-color: #fff;
+    color: #777;
+    font-family: 'Hind', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 26px;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: @blackColor;
     font-family: "Montserrat",sans-serif;
     font-weight: 700;
 }
-
+.form-control:focus {
+    border-color: @greenColor !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(139,195,74,1.6) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(139,195,74,1.6) !important;
+}
 .layout-content {
     padding-top: 40px;
 }
@@ -292,6 +307,73 @@ Slider navigation
 
 /*
 * ----------------------------------------------------------------------------------------
+* .START NEWSLETTER DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+.center-block{
+	float: inherit;
+}
+.newsletter {
+    position: relative;
+    background-image: url(http://placehold.it/1920x1280);
+     background-size:cover;
+     background-position: center center;
+     background-attachment:fixed;
+}
+.newsletter::before{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  content: "";
+  left: 0;
+  top: 0;
+}
+.signup_form h3{
+	color: #fff;
+	font-size: 18px;
+	line-height: 34px;
+	margin-bottom: 30px;
+	margin-top: 0;
+	text-transform: capitalize;
+	font-weight: 300;
+}
+.signup_form input{
+	background: transparent none repeat scroll 0 0;
+	border: 1px solid #fff;
+	border-radius: 0;
+	color: #fff;
+	margin-bottom: 30px;
+	transition: all 0.2s ease 0s;
+	height: 45px;
+	line-height: 45px;
+}
+
+.signup_form input:focus {
+    border-color:@greenColor;
+    box-shadow: none;
+    outline: 0 none;
+}
+.signup_form button {
+	font-family: montserrat,sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 1px;
+	padding: 10px 30px;
+}
+.signup_form button:hover{
+	background: #fff none repeat scroll 0 0!important;
+	color: #333;
+	border:2px solid #fff;
+}
+/*
+* ----------------------------------------------------------------------------------------
+* .END NEWSLETTER DESIGN
+* ----------------------------------------------------------------------------------------
+*/
+
+/*
+* ----------------------------------------------------------------------------------------
 * 18.START FOOTER DESIGN
 * ----------------------------------------------------------------------------------------
 */
@@ -299,7 +381,7 @@ Slider navigation
     padding: 60px 0;
 }
 .footer {
-    background-color: @headerBlackColor;
+    background-color: #333333;
 }
 
 .footer img { padding-bottom: 30px }

@@ -10,7 +10,6 @@ import Faq from './components/Faq';
 
 import Toastr from 'toastr';
 
-
 const routes = (
         <Route path='/' component={Layout}>
           <IndexRoute component={IndexPage}/>

@@ -11,10 +11,18 @@ module.exports = {
   	emprunteur: 'src/components/Emprunteur',
     //FAQ
 	faq: 'src/components/Faq',
+	aboutUs: 'src/components/AboutUs',
+	aboutEmprunteur: 'src/components/AboutEmprunteur',
+	aboutPreteur: 'src/components/AboutPreteur',
+	ourService: 'src/components/OurService',
+	newsletter: 'src/components/Newsletter',
+	contact: 'src/components/Contact',
+	fieldGroup: 'src/components/FieldGroup',
 	noMatch: 'src/components/NoMatch',
 	layout: 'src/components/Layout',
 	homePage: 'src/components/HomePage',
 	footer: 'src/components/Footer',
+	slider: 'src/components/Slider',
 
 	// Constants
 	actionTypes: 'src/constants/ActionTypes',
