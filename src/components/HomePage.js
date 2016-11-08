@@ -1,7 +1,9 @@
 var React = require('react');
-import { Grid, Row, Col , Button} from 'react-bootstrap';
+import { Grid, Row, Col , ButtonToolbar, Button, Carousel, Media} from 'react-bootstrap';
 import { Link } from 'react-router';
 import Scrollchor from 'react-scrollchor';
+import _ from 'lodash';
+import Footer from 'footer';
 
 export default class HomePage extends React.Component {
   constructor (){
@@ -17,120 +19,123 @@ export default class HomePage extends React.Component {
      });
    };
 
-/*
-<Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={handleCarouselSelect.bind(this)}>
-   <Carousel.Item>
-     <img width={900} height={500} alt="900x500" src="http://placehold.it/900x500"/>
-     <Carousel.Caption>
-       <h3>First slide label</h3>
-       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-     </Carousel.Caption>
-   </Carousel.Item>
-   <Carousel.Item>
-     <img width={900} height={500} alt="900x500" src="http://placehold.it/900x500"/>
-     <Carousel.Caption>
-       <h3>Second slide label</h3>
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-     </Carousel.Caption>
-   </Carousel.Item>
-   <Carousel.Item>
-     <img width={900} height={500} alt="900x500" src="http://placehold.it/900x500"/>
-     <Carousel.Caption>
-       <h3>Third slide label</h3>
-       <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-     </Carousel.Caption>
-   </Carousel.Item>
- </Carousel>
- */
+
     return (
-      <div className="cd-hero" id="home">
-<ul className="cd-hero-slider autoplay">
-  <li className="selected">
-    <div className="slider-image">
-      <img src="http://placehold.it/900x500"/>
-    </div>
+      <Grid fluid>
+        <Carousel slide={true} indicators={true} activeIndex={this.state.index} direction={this.state.direction} onSelect={handleCarouselSelect.bind(this)}>
+         <Carousel.Item animateIn={true}>
+           <img className="imgCarousel" height={500} alt="900x500" src="/img/fotolia.jpg"/>
+           <Carousel.Caption>
+              <Media>
+                <Media.Left align="top">
+                  <img src="http://placehold.it/400x320" alt="Image"/>
+                </Media.Left>
+                <Media.Body>
+                  <Media.Heading>Vous désirez prêter votre argent</Media.Heading>
+                  <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
 
+                  <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </Media.Body>
+              </Media>
+              <ButtonToolbar>
+                <Link to="/register" className="cd-btn btn-home-bg">S'enregistrer</Link>
+                <Link to="/preteur" className="cd-btn btn-home-border">Détails</Link>
+              </ButtonToolbar>
+           </Carousel.Caption>
+         </Carousel.Item>
+         <Carousel.Item>
+           <img className="imgCarousel" height={500} alt="900x500" src="/img/fotolia.jpg"/>
+           <Carousel.Caption>
+             <Media>
+              <Media.Left align="top">
+                <img src="http://placehold.it/400x320" alt="Image"/>
+              </Media.Left>
+              <Media.Body>
+                <Media.Heading>Vous avez besoin d'un prêt</Media.Heading>
+                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
 
-    <div className="cd-full-width">
-      <h2>Creative - Clean - Responsive</h2>
-      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</p>
-      <Link to="/register" className="cd-btn btn-home-bg">S'enregistrer</Link>
+                <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+              </Media.Body>
+            </Media>
+            <ButtonToolbar>
+              <Link to="/register" className="cd-btn btn-home-bg">S'enregistrer</Link>
+              <Link to="/emprunteur" className="cd-btn btn-home-border">Détails</Link>
+           </ButtonToolbar>
+           </Carousel.Caption>
+         </Carousel.Item>
+        </Carousel>
+        <div id='about'></div>
+        <Grid fluid>
+          <Row className='section'>
+        		<div className="section-title text-center">
+        			<h2>À propos de <span>nous</span></h2>
+        			<div></div>
+        		</div>
+        		<Col md={6} sm={6} xs={6} mdOffset={3} xsOffset={3} >
+        			<div className="single_about_content">
+        				<iframe src="https://player.vimeo.com/video/183058098" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        			</div>
+        		</Col>
+          </Row>
+        </Grid>
+        <Grid fluid>
+          <Row className='section our_service'>
+            <div className="section-title text-center">
+        			<h2 id='whyus'>Notre <span>service</span></h2>
+        			<div></div>
+        		</div>
+        		  <div id="why_choose">
+        				<Row>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+        							<i className="fa fa-circle-o-notch"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+                      <i className="fa fa-keyboard-o"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+                      <i className="fa fa-bullhorn"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+                      <i className="fa fa-life-bouy"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+                      <i className="fa fa-briefcase"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
+        					<Col  md={4} sm={4} xs={12}>
+                    <div className="single_service">
+                      <i className="fa fa-camera-retro"></i>
+        							<h4>Consultancy</h4>
+        							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
+        						</div>
+        					</Col>
 
-      <a href="" className="cd-btn btn-home-bg">Start With US</a>
-    </div>
+        			  </Row>
+        		  </div>
+          </Row>
+        </Grid>
 
-  </li>
-
-  <li>
-    <div className="slider-image">
-      <img src="http://placehold.it/900x500"/>
-    </div>
-
-    <div className="cd-half-width text-left">
-      <h2>Start Your Business </h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In consequatur cumque natus!</p>
-
-      <a href="#0" className="cd-btn btn-home-border">Purchase Now</a>
-    </div>
-
-
-    <div className="cd-half-width cd-img-container">
-      <img src="http://placehold.it/900x500" alt="tech 1"/>
-    </div>
-
-
-  </li>
-
-  <li>
-    <div className="slider-image">
-      <img src="http://placehold.it/600x500"/>
-    </div>
-
-
-    <div className="cd-half-width cd-img-container">
-      <img src="http://placehold.it/700x500" alt="tech 2"/>
-    </div>
-
-    <div className="cd-half-width text-left">
-      <h2>Join With US</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In consequatur cumque natus!</p>
-      <a href="#0" className="cd-btn btn-home-bg">Start With US</a>
-      <a href="#0" className="cd-btn btn-home-border">Purchase Now</a>
-    </div>
-
-  </li>
-
-  <li className="cd-bg-video">
-
-    <div className="cd-full-width">
-      <h2>Video Background</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, explicabo.</p>
-      <a href="#0" className="cd-btn btn-home-bg">Start With US</a>
-    </div>
-
-    <div className="slider-image"></div>
-      <div className="cd-bg-video-wrapper" data-video="assets/img/slider/video/video">
-      </div>
-
-
-  </li>
-
-</ul>
-
-<div className="cd-slider-nav">
-  <nav>
-    <span className="cd-marker item-1"></span>
-
-    <ul>
-      <li className="selected"><a href="#0"><i className="fa fa-home"></i>Intro</a></li>
-      <li><a href="#0"><i className="fa fa-briefcase"></i>Business</a></li>
-      <li><a href="#0"><i className="fa fa-globe"></i>Connect</a></li>
-      <li><a href="#0"><i className="fa fa-video-camera"></i>Video</a></li>
-    </ul>
-  </nav>
-</div>
-</div>
-
+        <Footer />
+      </Grid>
     );
   }
 }

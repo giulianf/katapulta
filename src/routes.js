@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import IndexPage from './components/HomePage';
 import Preteur from './components/Preteur';
 import Emprunteur from './components/Emprunteur';
+import Faq from './components/Faq';
 
 import Toastr from 'toastr';
 
@@ -15,6 +16,7 @@ const routes = (
           <IndexRoute component={IndexPage}/>
           <Route path='/preteur' component={Preteur} />
           <Route path='/emprunteur' component={Emprunteur} />
+          <Route path='/faq' component={Faq} />
           <Route path="*" component={NoMatch} />
         </Route>
 );

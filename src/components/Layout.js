@@ -38,9 +38,10 @@ export default class Layout extends Component {
                 <Navbar.Collapse>
                  <Nav pullRight>
                     <li><Link to="/">Accueil</Link></li>
-                    <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>A propos de nous</Scrollchor></li>
+                    <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>À propos de nous</Scrollchor></li>
                     <li><Link to="/preteur">Preteur</Link></li>
                     <li><Link to="/emprunteur">Emprunteur</Link></li>
+                    <li><Link to="/faq">Questions</Link></li>
                  </Nav>
                </Navbar.Collapse>
              </Grid>

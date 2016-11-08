@@ -9,10 +9,12 @@ module.exports = {
   	preteur: 'src/components/Preteur',
     // emprunteur
   	emprunteur: 'src/components/Emprunteur',
+    //FAQ
+	faq: 'src/components/Faq',
 	noMatch: 'src/components/NoMatch',
 	layout: 'src/components/Layout',
 	homePage: 'src/components/HomePage',
-	root: 'src/components/Root',
+	footer: 'src/components/Footer',
 
 	// Constants
 	actionTypes: 'src/constants/ActionTypes',
