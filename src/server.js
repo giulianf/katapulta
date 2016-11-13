@@ -1,5 +1,3 @@
-'use strict';
-
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
@@ -7,16 +5,45 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './routes';
-import NoMatch from './components/NoMatch';
+import NoMatch from './client/components/NoMatch';
+import cors from 'cors';
+let bodyParser = require('body-parser');
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
 const server = new Server(app);
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json())
+.use(function(req, res, next){
+    if (req.url === '/favicon.ico') {
+        res.writeHead(200, {'Content-Type': 'image/x-icon'} );
+        res.end(/* icon content here */);
+     } else {
+         next();
+     }
+});
+app.use(cors({
+    //  origin: 'http://localhost:3333',
+    credentials: true
+}) );
+
+
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, 'static')));
+app.use(Express.static(path.join(__dirname, 'webapp', 'resources')));
+
+app.get('/api/simulate', function(req, res) {
+  const data = {pret: 10000};
+  console.log('TEST DATA: '+data);
+  res.status(401).send("merci");
+});
 
 // universal routing and rendering
 app.get('*', (req, res) => {
@@ -34,6 +61,7 @@ app.get('*', (req, res) => {
       if (redirectLocation) {
         return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       }
+      console.log('location: ' + req.url);
 
       // generate the React markup for the current route
       let markup;
