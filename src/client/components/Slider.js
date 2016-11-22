@@ -32,7 +32,7 @@ export default class Slider extends React.Component {
               </Media.Body>
               </Media>
               <ButtonToolbar>
-                <Link to="/register" className="cd-btn btn-home-bg">S'enregistrer</Link>
+                <Link to="/register" className="cd-btn btn-home-bg home-bg">Connexion</Link>
                 <Link to="/preteur" className="cd-btn btn-home-border">Détails</Link>
               </ButtonToolbar>
            </Carousel.Caption>
@@ -50,7 +50,7 @@ export default class Slider extends React.Component {
               </Media.Body>
             </Media>
             <ButtonToolbar>
-              <Link to="/register" className="cd-btn btn-home-bg">S'enregistrer</Link>
+              <Link to="/register" className="cd-btn btn-home-bg home-bg">Connexion</Link>
               <Link to="/emprunteur" className="cd-btn btn-home-border">Détails</Link>
            </ButtonToolbar>
            </Carousel.Caption>

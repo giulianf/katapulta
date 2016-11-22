@@ -15,8 +15,8 @@ module.exports = {
           if (item === 'font-awesome' || item === 'express' || item === 'ejs') {
               return false;
           }
-        //   return item.indexOf('babel') === -1
-          return true
+          return item.indexOf('babel') === -1
+        //   return true
       })
   },
 

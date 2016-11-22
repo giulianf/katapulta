@@ -8,6 +8,7 @@ import routes from './routes';
 import NoMatch from './client/components/NoMatch';
 import cors from 'cors';
 let bodyParser = require('body-parser');
+import _ from 'lodash';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -45,40 +46,60 @@ app.get('/api/simulate', function(req, res) {
   res.status(401).send("merci");
 });
 
+app.get('/profile', function(req, res) {
+  const data = {pret: 10000};
+  console.log('TEST DATA: '+data);
+  getMatch('/', res);
+
+});
+
 // universal routing and rendering
 app.get('*', (req, res) => {
+    if (_.isEqual(req.url, '/profile')) {
+        // check token
 
-  match(
-    { routes, location: req.url },
-    (err, redirectLocation, renderProps) => {
-
-      // in case of error display the error message
-      if (err) {
-        return res.status(500).send(err.message);
-      }
-
-      // in case of redirect propagate the redirect to the browser
-      if (redirectLocation) {
-        return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-      }
-      console.log('location: ' + req.url);
-
-      // generate the React markup for the current route
-      let markup;
-      if (renderProps) {
-        // if the current route matched we have renderProps
-        markup = renderToString(<RouterContext {...renderProps}/>);
-      } else {
-        // otherwise we can render a 404 page
-        markup = renderToString(<NoMatch/>);
-        res.status(404);
-      }
-
-      // render the index template with the embedded React markup
-      return res.render('index', { markup });
+        // forward if the token is ok  otherwise push to login page
+        getMatch('/', res);
+    } else {
+        getMatch(req.url, res);
     }
-  );
 });
+
+function getMatch (url, res) {
+    match(
+      { routes, location: url },
+      (err, redirectLocation, renderProps) => {
+
+        // in case of error display the error message
+        if (err) {
+          return res.status(500).send(err.message);
+        }
+
+        // in case of redirect propagate the redirect to the browser
+        if (redirectLocation) {
+          return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+        }
+        console.log('location: ' + url);
+
+
+        // generate the React markup for the current route
+        let markup;
+        if (renderProps) {
+          // if the current route matched we have renderProps
+          markup = renderToString(<RouterContext {...renderProps}/>);
+        } else {
+          // otherwise we can render a 404 page
+          markup = renderToString(<NoMatch/>);
+          res.status(404);
+        }
+
+        // render the index template with the embedded React markup
+        return res.render('index', { markup });
+      }
+    );
+}
+
+
 
 // start the server
 const port = process.env.PORT || 3001;

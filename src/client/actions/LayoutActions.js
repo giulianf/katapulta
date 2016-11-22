@@ -4,14 +4,24 @@ import SimulateurService from '../services/SimulateurService';
 
 
 export default {
-  simulate: (simulateData) => {
-    let promise = SimulateurService.simulate(simulateData);
+    login: (userInfo) => {
+        let promise = SimulateurService.simulate(simulateData);
 
-    dispatchAsync(promise, {
-      request: SimulateurConstants.SIMULATEUR_DATA,
-      success: SimulateurConstants.SIMULATEUR_DATA_SUCCESS,
-      failure: SimulateurConstants.DATA_ERROR
-    }, { });
+        dispatchAsync(promise, {
+        request: SimulateurConstants.SIMULATEUR_DATA,
+        success: SimulateurConstants.SIMULATEUR_DATA_SUCCESS,
+        failure: SimulateurConstants.DATA_ERROR
+        }, { });
 
-  }
+    },
+    signUp: (userInfo) => {
+        let promise = SimulateurService.simulate(simulateData);
+
+        dispatchAsync(promise, {
+        request: SimulateurConstants.SIMULATEUR_DATA,
+        success: SimulateurConstants.SIMULATEUR_DATA_SUCCESS,
+        failure: SimulateurConstants.DATA_ERROR
+        }, { });
+
+    }
 }

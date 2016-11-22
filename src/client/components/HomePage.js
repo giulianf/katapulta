@@ -33,8 +33,6 @@ export default class HomePage extends Component {
           <OurService />
           {/* Newsletter ection */}
           <Newsletter />
-          {/* Contact ection */}
-          <Contact />
 
       </div>
     );

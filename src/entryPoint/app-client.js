@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppRoutes from '../client/components/AppRoutes';
-import 'babel-polyfill';
 import 'jquery';
 import 'bootstrap';
 import './js/scrolltopcontrol.js';

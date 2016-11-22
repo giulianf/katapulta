@@ -10,7 +10,6 @@ export default class Contact extends Component {
   render () {
 
     return (
-      <div id='contact'>
         <Grid fluid>
           <Row className='section  section-padding'>
             <div className="section-title text-center">
@@ -36,7 +35,6 @@ export default class Contact extends Component {
               </Col>
           </Row>
         </Grid>
-      </div>
     );
   }
 }

@@ -7,11 +7,12 @@ const path = require('path');
 const aliases = require('./aliases');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer');
+require("babel-polyfill");
 
 module.exports = {
   devtool: debug ? 'source-map' : null,
 
-  entry: path.join(__dirname, 'src', 'entryPoint', 'app-client.js'),
+  entry: ['babel-polyfill',path.join(__dirname, 'src', 'entryPoint', 'app-client.js')],
 
   output: {
     path: path.join(__dirname, 'src', 'static'),
