@@ -22,7 +22,6 @@ export default class HomePage extends Component {
       <div>
         {/* Carousel  */}
         <Slider/>
-
           {/* about us section */}
           <AboutUs/>
           {/* about preteur section */}

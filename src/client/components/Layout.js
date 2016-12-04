@@ -5,29 +5,52 @@ import Scrollchor from 'react-scrollchor';
 import Footer from './Footer';
 import Login from './Login';
 import LayoutStore from '../stores/LayoutStore';
+import LayoutActions from '../actions/LayoutActions';
 
 import _ from 'lodash';
 
 
 function getLayoutState() {
-  return {
-    layout: LayoutStore.state
-  };
+  return LayoutStore.state;
 }
 
 export default class Layout extends Component {
     constructor(props) {
         super(props);
         this.state = getLayoutState();
-
         this._onChange = this._onChange.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+
       }
+
+    login() {
+        // We can call the show method from Auth0Lock,
+        // which is passed down as a prop, to allow
+        // the user to log in
+        this.state.lock.show((err, profile, token) => {
+         if (err) {
+           alert(err);
+           return;
+         }
+         LayoutActions.logUserIn(profile, token);
+
+         this.setState({authenticated: true});
+        });
+    }
+
+    logout() {
+       LayoutActions.logUserOut();
+       this.setState({authenticated: false});
+     }
 
     _onChange() {
         this.setState(getLayoutState());
     }
 
     componentDidMount() {
+        let jwt = localStorage.getItem('jwt');
+
         LayoutStore.addChangeListener(this._onChange);
     }
 
@@ -43,12 +66,12 @@ export default class Layout extends Component {
         about =  ( <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>À propos de nous</Scrollchor></li>) ;
       };
 
-      if ( !_.isNil(this.state.layout) && !this.state.layout.loggedIn ) {
-        connexion =  (<li className='leftConnectButton'><Link to="/login" className="btn-home-bg header">Connexion</Link></li>) ;
+      if ( !this.state.authenticated ) {
+        connexion =  (<li className='leftConnectButton'><Button onClick={this.login} className="btn-home-bg header">Connexion</Button></li>) ;
     } else {
         connexion =  ( <li className="leftConnectLogged  dropdown">
                         <a href="javascript:void(0);" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <Glyphicon glyph="user" >{this.state.layout.user}</Glyphicon>
+                            <Glyphicon glyph="user" >{this.state.user}</Glyphicon>
                             <span className=" fa fa-angle-down"></span>
                         </a>
                         <ul className="dropdown-menu dropdown-usermenu animated fadeInUp pull-right">
@@ -64,7 +87,7 @@ export default class Layout extends Component {
                             <li>
                                 <a href="javascript:void(0);" >Help</a>
                             </li>
-                            <li><a href="../app-pages/page-login-2.html" ><i className=" icon-login pull-right"></i> Log Out</a>
+                            <li><Button onClick={this.logout} ><i className=" icon-login pull-right"></i> Log Out</Button>
                             </li>
                         </ul>
                     </li>) ;

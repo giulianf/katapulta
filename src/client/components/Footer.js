@@ -1,7 +1,7 @@
 var React = require('react');
-import { Grid, Row, Col, Glyphicon} from 'react-bootstrap';
+import { Grid, Row, Col} from 'react-bootstrap';
 import { Link } from 'react-router';
-import _ from 'lodash';
+import moment from 'moment';
 
 export default class Footer extends React.Component {
   constructor (){
@@ -9,6 +9,7 @@ export default class Footer extends React.Component {
   }
 
   render () {
+      const year = moment().year();
 
     return (
       <footer className="footer section-padding">
@@ -29,7 +30,7 @@ export default class Footer extends React.Component {
                     <li><a className="f_skype wow bounceInDown" data-wow-delay=".5s" href="#"><i className="fa fa-skype"></i></a></li>
                   </ul>
                 </div>
-                <p>Ratio &copy; 2016 All Rights Reserved.</p>
+                <p>Katapulta &copy; {year} All Rights Reserved.</p>
               </div>
 
             </Col>

@@ -8,94 +8,96 @@ import _ from 'lodash';
 
 class LayoutStore extends BaseStore {
 
-   constructor() {
-      super();
-      this.subscribe(() => this._registerToActions.bind(this))
-      this._user = null;
-      this._error = null;
-      this._isLoggin = false;
+    constructor() {
+        super();
+        this.subscribe(() => this._registerToActions.bind(this))
+        this._user = null;
+        this._error = null;
+        this._isLoggin = false;
 
-      this._autoLogin();
+        // Configure Auth0
+        // this.lock = new Auth0Lock('IdQLehW9Ui8hxtVDwSDLbiiXtjSgMiNA', 'fumanju.eu.auth0.com');
+        // Add callback for lock `authenticated` event
+        // this.lock.on('authenticated', this._doAuthentication.bind(this));
+
+        // this._autoLogin();
     }
+
+    // _doAuthentication(authResult) {
+    //    // Saves the user token
+    //    this.setToken(authResult.idToken)
+    //    // navigate to the home route
+    // //    browserHistory.replace('/home')
+    //  }
 
   _registerToActions(action) {
       this._error = null;
 
-    switch(action.type){
-        // Respond to RECEIVE_DATA action
-        case ActionTypes.DATA_ERROR:
-            // If action was responded to, emit change event
-            this._error = action.error.data;
-            Toastr.error(this.state.error);
+        switch(action.type){
+            // Respond to RECEIVE_DATA action
+            case ActionTypes.DATA_ERROR:
+                // If action was responded to, emit change event
+                this._error = action.error.data;
+                Toastr.error(this.state.error);
 
-            this.emitChange();
-            break;
-        default:
-            break;
+                this.emitChange();
+                break;
+            case ActionTypes.LOGIN_USER:
+                this.setUser(action.profile, action.token);
+
+                this.emitChange();
+                break;
+
+            case ActionTypes.LOGOUT_USER:
+                this.removeUser();
+
+                this.emitChange();
+                break;
+
+            default:
+                break;
+        }
+
+  }
+
+    get state() {
+        return {
+            authenticated: this.isAuthenticated(),
+            lock: this.getLock
+        };
     }
 
-  }
+    isAuthenticated() {
+        // if (localStorage.getItem('id_token')) {
+        //     return true;
+        // }
 
-  _autoLogin () {
-    try {
-        // let jwt = localStorage.getItem("jv_jwt");
-        let jwt = {};
+        return false;
+    }
 
-       this.populateLogin(jwt);
-   } catch (e) {
-    //    localStorage.removeItem("jv_jwt");
+    getUser() {
+        return localStorage.getItem('profile');
+    }
 
-       this._jwt = null;
-       this._isLoggedIn = false;
+    getJwt() {
+        return localStorage.getItem('id_token');
+    }
 
-    //    console.debug("autologin failed user session expired ");
-   }
- }
+    setUser(profile, token) {
+        if (!localStorage.getItem('id_token')) {
+            localStorage.setItem('profile', JSON.stringify(profile));
+            localStorage.setItem('id_token', token);
+        }
+    }
 
- populateLogin(jwt) {
-    //  let decodeJwt = jwt_decode(jwt);
+    get getLock() {
+        return this.lock;
+    }
 
-    //  let now = moment().unix();
-
-     // jwt has expired
-   //   if (now > decodeJwt.exp) {
-   //       localStorage.removeItem("jv_jwt");
-     //
-   //       this._jwt = null;
-   //       this._cashRegisterId = 0;
-   //       this._isLoggedIn = false;
-   //       this._isLoggedAdminIn = false;
-   //   } else {
-         this._jwt = jwt;
-
-        //  this._user = decodeJwt.username;
-        this._user='Julien Fumanti';
-           //this._cashRegisterId = jwt_decode(this._cr);
-
-         this._isLoggedIn = true;
-        //  this._isLoggedAdminIn = decodeJwt.isAdmin;
-   //   }
- }
-
-  get state() {
-    return {
-        error : this.getError,
-        user: this.getUser,
-        loggedIn: this.isLoggedIn
-    };
-   }
-
-  get getUser() {
-      return this._user;
-  }
-
-  get getError() {
-      return this._error;
-  }
-
-  get isLoggedIn() {
-      return true;
-  }
+    removeUser() {
+        localStorage.removeItem('profile');
+        localStorage.removeItem('id_token');
+    }
 
 }
 export default new LayoutStore();

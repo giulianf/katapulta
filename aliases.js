@@ -2,7 +2,7 @@ module.exports = {
 	appDispatcher: 'src/clientdispatcher/AppDispatcher',
 
 	// Actions
-	simulateurActions: 'src/clientactions/SimulateurActions',
+	promrovideActions: 'src/clientactions/ProvideActions',
 
 	// Components
     // explorer
@@ -26,14 +26,14 @@ module.exports = {
 
 	// Constants
 	actionTypes: 'src/clientconstants/ActionTypes',
-	simulateurConstants: 'src/clientconstants/SimulateurConstants',
+	simulateurConstants: 'src/clientconstants/ProvideConstants',
 	webServiceConstants: 'src/clientconstants/WebServiceConstants',
 
 	// Services
 	authService: 'src/clientservices/AuthService',
-	simulateurService: 'src/clientservices/SimulateurService',
+	simulateurService: 'src/clientservices/ProvideService',
 
 	// Stores
 	baseStore: 'src/clientstores/BaseStore',
-	simulateurStore: 'src/clientstores/SimulateurStore'
+	simulateurStore: 'src/clientstores/ProvideStore'
 };

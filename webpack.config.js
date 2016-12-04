@@ -74,7 +74,14 @@ module.exports = {
       new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
       new ExtractTextPlugin('style.css'),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
+      new webpack.NoErrorsPlugin(),
+      new webpack.DefinePlugin({
+            process: {
+                env: {
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                }
+            }
+        })
   ] : [
       new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
       new ExtractTextPlugin('style.css'),

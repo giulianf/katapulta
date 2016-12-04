@@ -1,27 +1,39 @@
 import { dispatch, dispatchAsync } from '../dispatcher/AppDispatcher';
-import SimulateurConstants from '../constants/SimulateurConstants';
-import SimulateurService from '../services/SimulateurService';
-
+import ActionTypes from '../constants/ActionTypes';
 
 export default {
-    login: (userInfo) => {
-        let promise = SimulateurService.simulate(simulateData);
-
-        dispatchAsync(promise, {
-        request: SimulateurConstants.SIMULATEUR_DATA,
-        success: SimulateurConstants.SIMULATEUR_DATA_SUCCESS,
-        failure: SimulateurConstants.DATA_ERROR
-        }, { });
-
+    logUserIn: (profile, token) => {
+        dispatch({
+          actionType: ActionTypes.LOGIN_USER,
+          profile: profile,
+          token: token
+        });
     },
-    signUp: (userInfo) => {
-        let promise = SimulateurService.simulate(simulateData);
 
-        dispatchAsync(promise, {
-        request: SimulateurConstants.SIMULATEUR_DATA,
-        success: SimulateurConstants.SIMULATEUR_DATA_SUCCESS,
-        failure: SimulateurConstants.DATA_ERROR
-        }, { });
-
+    logUserOut: () => {
+        dispatch({
+          actionType: ActionTypes.LOGOUT_USER
+        });
     }
+
+    // login: (userInfo) => {
+    //     let promise = ProvideService.simulate(simulateData);
+    //
+    //     dispatchAsync(promise, {
+    //     request: ProvideConstants.SIMULATEUR_DATA,
+    //     success: ProvideConstants.SIMULATEUR_DATA_SUCCESS,
+    //     failure: ProvideConstants.DATA_ERROR
+    //     }, { });
+    //
+    // },
+    // signUp: (userInfo) => {
+    //     let promise = ProvideService.simulate(simulateData);
+    //
+    //     dispatchAsync(promise, {
+    //     request: ProvideConstants.SIMULATEUR_DATA,
+    //     success: ProvideConstants.SIMULATEUR_DATA_SUCCESS,
+    //     failure: ProvideConstants.DATA_ERROR
+    //     }, { });
+    //
+    // }
 }

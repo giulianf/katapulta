@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Grid,  Row, Col, Tabs, Tab, Button} from 'react-bootstrap';
-import Auth0Lock from 'auth0-lock'
 import { browserHistory } from 'react-router'
 
 import _ from 'lodash';

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, PageHeader, FormControl, FormGroup, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
-import SimulateurStore from '../stores/SimulateurStore';
-import SimulateurActions from '../actions/SimulateurActions';
+import ProvideStore from '../stores/ProvideStore';
+import ProvideActions from '../actions/ProvideActions';
 
 export default class Simulateur extends Component {
   constructor (props){
     super(props);
-    this.state = SimulateurStore.state;
+    this.state = ProvideStore.state;
 
     this._onChange = this._onChange.bind(this);
     this._handleSimulateClick = this._handleSimulateClick.bind(this);
@@ -19,14 +19,14 @@ export default class Simulateur extends Component {
   }
 
   _onChange() {
-      this.setState(SimulateurStore.state);
+      this.setState(ProvideStore.state);
   }
   _handleSimulateClick() {
     // Call action and set the isLoading in store to false
     // this.state.simulateur.isLoading = true;
     // this.setState(this.state.simulateur);
 
-    SimulateurActions.simulate(this.state);
+    ProvideActions.simulate(this.state);
     // This probably where you would have an `ajax` call
     // setTimeout(() => {
     //   // Completed of async action, set loading state back
@@ -36,14 +36,14 @@ export default class Simulateur extends Component {
 
 
   componentDidMount() {
-    SimulateurStore.addChangeListener(this._onChange);
+    ProvideStore.addChangeListener(this._onChange);
 
     //  this.timer = setTimeout(() => this.progress(5), 10);
    }
 
    componentWillUnmount() {
     //  clearTimeout(this.timer);
-     SimulateurStore.removeChangeListener(this._onChange);
+     ProvideStore.removeChangeListener(this._onChange);
 
    }
    //

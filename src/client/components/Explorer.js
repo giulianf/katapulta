@@ -1,5 +1,6 @@
 var React = require('react');
 import { Grid, Row, Col, Thumbnail } from 'react-bootstrap';
+import Emprunteur from './profile/Emprunteur';
 
 export default class Explorer extends React.Component {
   constructor (){
@@ -9,73 +10,163 @@ export default class Explorer extends React.Component {
   render () {
     return (
         <Grid fluid className='marginLeftContainer our_service'>
-          <Row className='section section-padding'>
-          	<Col md={2}>
-          		<div className="widget user-view-style-1">
-          		<div className="thumbnail">
-                <img  src="http://placehold.it/4133x2745" alt="242x200"/>
-          			<div className="user-info">
-          				<p className="user-name">John Doe</p>
-          				<p className="user-type administrator"><span className="badge">Administrator</span></p>
-          			</div>
+            <Row className='section section-padding'>
+                <div className="c_panel">
 
-  			 <div className="caption">
+                            <div className="c_title">
+                                <h2>Search Results Page</h2>
+                                <div className="clearfix"></div>
+                            </div>
 
-  					<div className="user-task-info">
-  						<i className="fa fa-th-large"></i><span className="user-number-tickets">28</span><span className="lbl-user-number-tickets">Assigned Tickets</span>
-  					</div>
+                            <div className="c_content page-search-results">
 
-  					<div className="user-other-info">
-  						<ul>
-  							<li>
-  								<i className="fa fa-circle-o"></i>
-  								<span>
-  									<a href="#">Web Developer</a>
-  								</span>
-  							</li>
-  							<li>
-  								@ <span><a href="#">jdoe@gmail.com</a></span>
-  							</li>
-  							<li>
-  								<i className="icon-earphones"></i> <span>236-3626-312</span>
-  							</li>
-  						</ul>
-  					</div>
+                                <div className="search-box">
+                                   <form>
+                                        <div className="input-group margin-bottom-15">
+                                            <input type="text" className="form-control"/>
+                                            <span className="input-group-btn">
+                                                <button className="btn btn-success" type="button">Search</button>
+                                            </span>
+                                        </div>
 
-  					<div className="user-action">
-  						<button type="button" className="btn btn-green btn-flat btn-sm" data-toggle="modal" data-target="#modal-pull-right-view">View <i className="fa fa-eye"></i></button>
-  					</div>
+                                   </form>
+                                </div>
 
-  				</div>
-  		  </div>
+                                <div className="search-results">
 
-  		</div>
+                                    <div className="line-tabs bottom">
+                                        <ul className="nav" role="tablist">
+                                            <li className="active">
+                                                <a href="#all-results" role="tab" data-toggle="tab">Tous <span className="badge badge-success">217</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="#php-results" role="tab" data-toggle="tab">Notre sélection <span className="badge badge-primary">85</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="#css-html-results" role="tab" data-toggle="tab">Les derniers inscrits<span className="badge badge-info">32</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="#javascript-results" role="tab" data-toggle="tab">Javascript <span className="badge badge-warning">76</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="tab-content">
+                                        <div className="tab-pane fade in active" id="all-results">
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Sed cursus ante dapibus diam</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p> Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
+                                            </div>
+                                        </div>
+                                        <div className="tab-pane fade" id="php-results">
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Sed cursus ante dapibus diam</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                        </div>
+                                        <div className="tab-pane fade" id="css-html-results">
+                                             <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
+                                            </div>
+                                        </div>
+                                        <div className="tab-pane fade" id="javascript-results">
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p> Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                            <div className="search-item">
+                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
+                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
+                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-  	</Col>
-  </Row>
+                                    <div>
+                                        <ul className="pagination">
+                                            <li className="disabled"><a href="#">«</a></li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
 
-    <li class="dropdown">
-  	<a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-  		<img src="../../../assets/images/profile.jpg" alt="image"/>John Doe
-  		<span class=" fa fa-angle-down"></span>
-  	</a>
-  	<ul class="dropdown-menu dropdown-usermenu animated fadeInUp pull-right">
-  		<li>
-  			<a href="../app-pages/page-profile-dashboard.html" class="hvr-bounce-to-right">  Profile</a>
-  		</li>
-  		<li>
-  			<a href="../app-pages/page-profile-settings.html" class="hvr-bounce-to-right">
-  				<span class="badge bg-red pull-right">50%</span>
-  				<span>Settings</span>
-  			</a>
-  		</li>
-  		<li>
-  			<a href="javascript:void(0);" class="hvr-bounce-to-right">Help</a>
-  		</li>
-  		<li><a href="../app-pages/page-login-2.html" class="hvr-bounce-to-right"><i class=" icon-login pull-right"></i> Log Out</a>
-  		</li>
-  	</ul>
-  </li>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+            </Row>
         </Grid>
 
     );

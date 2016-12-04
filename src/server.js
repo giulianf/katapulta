@@ -9,6 +9,12 @@ import NoMatch from './client/components/NoMatch';
 import cors from 'cors';
 let bodyParser = require('body-parser');
 import _ from 'lodash';
+const jwt = require('express-jwt');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import {green100, green500, green700} from 'material-ui/styles/colors';
+
+import {getCurrentDate, getDate, error, debug, info} from './common/UtilityLog';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -28,11 +34,17 @@ app.use(bodyParser.json())
      }
 });
 app.use(cors({
-    //  origin: 'http://localhost:3333',
+     origin: 'http://localhost:3333',
     credentials: true
 }) );
 
-
+// Authentication middleware provided by express-jwt.
+// This middleware will check incoming requests for a valid
+// JWT on any routes that it is applied to.
+const authCheck = jwt({
+  secret: new Buffer('IdQLehW9Ui8hxtVDwSDLbiiXtjSgMiNA', 'base64'),
+  audience: 'fumanju.eu.auth0.com'
+});
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -42,30 +54,33 @@ app.use(Express.static(path.join(__dirname, 'webapp', 'resources')));
 
 app.get('/api/simulate', function(req, res) {
   const data = {pret: 10000};
-  console.log('TEST DATA: '+data);
-  res.status(401).send("merci");
-});
-
-app.get('/profile', function(req, res) {
-  const data = {pret: 10000};
-  console.log('TEST DATA: '+data);
+  info('TEST DATA: '+data);
+  // res.json(data);
   getMatch('/', res);
-
+  // res.json(JSON.parse(content));
 });
 
 // universal routing and rendering
 app.get('*', (req, res) => {
-    if (_.isEqual(req.url, '/profile')) {
-        // check token
-
-        // forward if the token is ok  otherwise push to login page
-        getMatch('/', res);
-    } else {
-        getMatch(req.url, res);
-    }
+    // if (_.isEqual(req.url, '/profile')) {
+    //     // check token
+    //
+    //     // forward if the token is ok  otherwise push to login page
+    //     getMatch('/', res);
+    // } else {
+        getMatch(req.url, req, res);
+    // }
 });
 
-function getMatch (url, res) {
+function getMatch (url, req, res) {
+    info('before match location: ' + url);
+    const muiTheme = getMuiTheme(null, {
+      avatar: {
+        borderColor: null,
+      },
+      userAgent: req.headers['user-agent'],
+    });
+
     match(
       { routes, location: url },
       (err, redirectLocation, renderProps) => {
@@ -79,17 +94,17 @@ function getMatch (url, res) {
         if (redirectLocation) {
           return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         }
-        console.log('location: ' + url);
 
+        info('location: ' + url);
 
         // generate the React markup for the current route
         let markup;
         if (renderProps) {
           // if the current route matched we have renderProps
-          markup = renderToString(<RouterContext {...renderProps}/>);
+          markup = renderToString( <MuiThemeProvider muiTheme={muiTheme}><RouterContext {...renderProps}/></MuiThemeProvider>);
         } else {
           // otherwise we can render a 404 page
-          markup = renderToString(<NoMatch/>);
+          markup = renderToString(<MuiThemeProvider><NoMatch/></MuiThemeProvider>);
           res.status(404);
         }
 
@@ -99,14 +114,12 @@ function getMatch (url, res) {
     );
 }
 
-
-
 // start the server
 const port = process.env.PORT || 3001;
 const env = process.env.NODE_ENV || 'production';
 server.listen(port, err => {
   if (err) {
-    return console.error(err);
+    return error(err);
   }
-  console.info(`Server running on http://localhost:${port} [${env}]`);
+   info(`Server running on http://localhost:${port} [${env}]`);
 });
