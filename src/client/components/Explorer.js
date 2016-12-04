@@ -14,7 +14,7 @@ export default class Explorer extends React.Component {
                 <div className="c_panel">
 
                             <div className="c_title">
-                                <h2>Search Results Page</h2>
+                                <h2>Recherche de société</h2>
                                 <div className="clearfix"></div>
                             </div>
 
@@ -25,7 +25,7 @@ export default class Explorer extends React.Component {
                                         <div className="input-group margin-bottom-15">
                                             <input type="text" className="form-control"/>
                                             <span className="input-group-btn">
-                                                <button className="btn btn-success" type="button">Search</button>
+                                                <button className="btn btn-success" type="button">Recherche</button>
                                             </span>
                                         </div>
 
