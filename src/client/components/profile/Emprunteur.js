@@ -20,7 +20,7 @@ class Emprunteur extends Component {
         const creationDate = getDateDetails(dataSociete.creationDate);
 
         return (
-            <Col key={dataSociete.emprunteurId} md={4}>
+            <Col key={dataSociete.emprunteurId} md={this.props.col}>
                 <div className="widget user-view-style-1">
                     <div className="thumbnail">
                         <img  src="http://placehold.it/4133x2745" alt="242x200"/>
@@ -42,6 +42,12 @@ class Emprunteur extends Component {
                                 <ul>
                                     <li>
                                         <Glyphicon glyph='globe'/>
+                                        <span>
+                                            <a href="#">{dataSociete.location}</a>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span className="fa fa-cubes"></span>
                                         <span>
                                             <a href="#">{dataSociete.activite}</a>
                                         </span>

@@ -1,39 +1,119 @@
 var React = require('react');
-import { Grid, Row, Col, Thumbnail } from 'react-bootstrap';
+import { Grid, Row, Col, Pagination, Panel, Form, FormGroup, FormControl ,HelpBlock , InputGroup, Button} from 'react-bootstrap';
 import Emprunteur from './profile/Emprunteur';
+import ProvideStore from '../stores/ProvideStore';
+import _ from 'lodash';
+import AutoComplete from 'material-ui/AutoComplete';
+import MenuItem from 'material-ui/MenuItem';
+import zip from '../../data/zipcode-belgium.json';
 
 export default class Explorer extends React.Component {
   constructor (){
     super();
+
+    this.handleSelect = this.handleSelect.bind(this);
+    this._handleCode = this._handleCode.bind(this);
+    this.state = ProvideStore.getExplorer;
   }
 
-  render () {
-    return (
-        <Grid fluid className='marginLeftContainer our_service'>
-            <Row className='section section-padding'>
-                <div className="c_panel">
+  handleSelect(eventKey) {
+     this.setState({
+       activePage: eventKey
+     });
+   }
 
-                            <div className="c_title">
-                                <h2>Recherche de société</h2>
-                                <div className="clearfix"></div>
-                            </div>
+    _handleCode(chosenRequest, index) {
+        alert(chosenRequest.value.props.secondaryText);
+    }
+  render () {
+      const explorer = _.map(this.state.explorer , expl => {
+          return (
+                  <Emprunteur key={expl.emprunteurId} dataSociete={expl} col={3} />
+          )
+      });
+      const dataSource1 = _.map(zip , code => {
+          return (
+              {
+                text: code.zip + ' ' + code.city,
+                value: (
+                  <MenuItem
+                    primaryText={code.city}
+                    secondaryText={code.zip}
+                  />
+                ),
+              }
+          )
+      });
+
+      const dataSource3 = _.sortBy(['Horeca', 'Services' , 'Construction', 'Technologies']);
+    const dataSourceConfig = {
+      text: 'zip',
+      value: 'city',
+    };
+
+
+    return (
+        <Grid fluid className='marginLeftContainer our_service c_panel'>
+            <Row className='section section-padding'>
+                <div className="">
+                    <div className="section-title text-center">
+            			<h2>Recherche de <span>sociétés</span></h2>
+                    <div></div>
+            		</div>
 
                             <div className="c_content page-search-results">
 
                                 <div className="search-box">
-                                   <form>
-                                        <div className="input-group margin-bottom-15">
-                                            <input type="text" className="form-control"/>
-                                            <span className="input-group-btn">
-                                                <button className="btn btn-success" type="button">Recherche</button>
-                                            </span>
-                                        </div>
+                                   <Form horizontal>
+                                         <Col sm={12} md={12}>
+                                               <InputGroup>
+                                                   <FormControl type="text" placeholder="Faites une recherche de la société, d'un lieu ou d'une catégorie" />
+                                                       <InputGroup.Button>
+                                                         <Button bsStyle="success">Recherche</Button>
+                                                       </InputGroup.Button>
+                                               </InputGroup>
+                                         </Col>
+                                        <a href="#" onClick={ ()=> this.setState({ open: !this.state.open })}>
+                                          Recherche avancée
+                                      </a>
 
-                                   </form>
+                                        <Panel collapsible expanded={this.state.open}>
+                                            <FormGroup controlId="formHorizontalLieu">
+                                              <Col sm={12} md={4}>
+                                                  <AutoComplete
+                                                      floatingLabelText="Code postale, commune"
+                                                      filter={AutoComplete.fuzzyFilter}
+                                                      maxSearchResults={10}
+                                                      dataSource={dataSource1}
+                                                      onNewRequest={this._handleCode}
+                                                      fullWidth={true}
+                                                    />
+                                              </Col>
+                                            </FormGroup>
+                                            <FormGroup controlId="formHorizontalCategory">
+                                              <Col sm={12} md={4}>
+                                                  <AutoComplete
+                                                      floatingLabelText="Catégories"
+                                                      filter={AutoComplete.fuzzyFilter}
+                                                      maxSearchResults={10}
+                                                      openOnFocus={true}
+                                                      dataSource={dataSource3}
+                                                      onNewRequest={this._handleCode}
+                                                      fullWidth={true}
+                                                    />
+                                              </Col>
+                                            </FormGroup>
+                                            <FormGroup controlId="formHorizontalRecherche">
+                                              <Col sm={12} md={4}>
+                                                 <Button bsStyle="success">Recherche</Button>
+                                              </Col>
+                                            </FormGroup>
+                                       </Panel>
+
+                                   </Form>
                                 </div>
 
                                 <div className="search-results">
-
                                     <div className="line-tabs bottom">
                                         <ul className="nav" role="tablist">
                                             <li className="active">
@@ -50,113 +130,30 @@ export default class Explorer extends React.Component {
                                             </li>
                                         </ul>
                                     </div>
+                                    <Row>
                                     <div className="tab-content">
                                         <div className="tab-pane fade in active" id="all-results">
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Sed cursus ante dapibus diam</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p> Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
-                                            </div>
-                                        </div>
-                                        <div className="tab-pane fade" id="php-results">
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Sed cursus ante dapibus diam</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                        </div>
-                                        <div className="tab-pane fade" id="css-html-results">
-                                             <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales.</p>
-                                            </div>
-                                        </div>
-                                        <div className="tab-pane fade" id="javascript-results">
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p> Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                            <div className="search-item">
-                                                <h3><a href="javascript:void(0);">Curabitur tortor</a></h3>
-                                                <a href="javascript:void(0);" className="search-link">www.google.com</a>
-                                                <p>Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div>
-                                        <ul className="pagination">
-                                            <li className="disabled"><a href="#">«</a></li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">»</a></li>
-                                        </ul>
+                                            { explorer }
+                                        </div>
+
                                     </div>
+                                </Row>
+
+                                                                            <Row>
+                                                                                <Pagination
+                                                                                  prev
+                                                                                  next
+                                                                                  first
+                                                                                  last
+                                                                                  ellipsis
+                                                                                  boundaryLinks
+                                                                                  items={20}
+                                                                                  maxButtons={5}
+                                                                                  activePage={this.state.activePage}
+                                                                                  onSelect={this.handleSelect} />
+                                                                            </Row>
+
 
 
 

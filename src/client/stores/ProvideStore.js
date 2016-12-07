@@ -21,8 +21,8 @@ const basicProfil = new BasicInfo('butacni', 'Nicolas', 'Butacide', '24/03/1985'
  85032414555, 'nicolas.butacide@katapulta.be', 'BE0837.444.333' ,'Rue de Tamine 2', '5060', 'Tamines');
 
 const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 1600000, 'BE0837.444.333');
-const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true),
-new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true)];
+const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
+new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
 
 class ProvideStore extends BaseStore {
 
@@ -49,6 +49,10 @@ class ProvideStore extends BaseStore {
       // profile favoris
       this._favorisEmprunteur = [];
       this._favorisEmprunteur = favorisEmprunteur;
+
+      // explorer
+      this._explorer = [];
+      this._explorer = {explorer : favorisEmprunteur, activePage: 1};
     }
 
     openStepperDetail(contractId) {
@@ -159,6 +163,16 @@ class ProvideStore extends BaseStore {
    */
   get getTabContract() {
       return this._tabContracts;
+  }
+
+
+  /**
+   * get - explorer page
+   *
+   * @return {type}  description
+   */
+  get getExplorer() {
+      return this._explorer;
   }
 
   get getStepWorkflow() {

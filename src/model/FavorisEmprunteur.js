@@ -17,7 +17,7 @@ export class FavorisEmprunteur {
      * @param  {boolean} isFavoris   to know if it's favoris
      * @return {type}                description
      */
-    constructor(emprunteurId, nomSociete, chiffreAffaire, activite, description, imageHeader, creationDate, niveau, isFavoris) {
+    constructor(emprunteurId, nomSociete, chiffreAffaire, activite, description, imageHeader, creationDate, niveau, isFavoris, location) {
         this.emprunteurId= emprunteurId;
         this.nomSociete= nomSociete;
         this.chiffreAffaire= chiffreAffaire;
@@ -27,5 +27,6 @@ export class FavorisEmprunteur {
         this.imageHeader= imageHeader;
         this.niveau= niveau;
         this.isFavoris= isFavoris;
+        this.location= location;
     }
 }
