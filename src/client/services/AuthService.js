@@ -1,47 +1,53 @@
-import { LOGIN_API } from '../constants/WebServiceConstants';
-import bluebird from 'bluebird';
-import axios from 'axios';
+import Auth0 from 'auth0-js';
 
-class AuthService {
-    logout() {
-        // LoginActions.logoutUser();
+export default class AuthService {
+  constructor(clientId, domain) {
+    // Configure Auth0
+    this.auth0 = new Auth0({
+      clientID: clientId,
+      domain: domain,
+      responseType: 'token'
+    });
+
+    this.login = this.login.bind(this)
+    this.signup = this.signup.bind(this)
+  }
+
+  login(params, onError) {
+    //redirects the call to auth0 instance
+    this.auth0.login(params, onError)
+  }
+
+  signup(params, onError) {
+    //redirects the call to auth0 instance
+    this.auth0.signup(params, onError)
+  }
+
+  parseHash(hash) {
+    // uses auth0 parseHash method to extract data from url hash
+    const authResult = this.auth0.parseHash(hash)
+    if (authResult && authResult.idToken) {
+      this.setToken(authResult.idToken)
     }
+  }
 
-    login(username, password) {
-        return new bluebird( (resolve, reject) => {
-            ApiService.get(
-               LOGIN_API,
-            ).then(response => {
-              if (!_.isNil(response)) {
-                  return resolve(response.data);
-              }
-            }).catch( err => {
-              return reject(err);
-            });
-        });
-    }
+  loggedIn() {
+    // Checks if there is a saved token and it's still valid
+    return !!this.getToken()
+  }
 
-    signup(username, password, extra) {
-        // return new bluebird( (resolve, reject) => {
-        //     request.post(
-        //         {
-        //             url: SIGNUP_URL,
-        //             body: {username, password, extra},
-        //             json: true
-        //         },
-        //         (err, response, body) => {
-        //             if(err){
-        //                 return reject(err);
-        //             }
-        //             if(response.statusCode >= 400){
-        //                 return reject(body);
-        //             }
-        //             return resolve(body);
-        //         }
-        //     );
-        // });
-    }
+  setToken(idToken) {
+    // Saves user token to local storage
+    localStorage.setItem('id_token', idToken)
+  }
 
+  getToken() {
+    // Retrieves the user token from local storage
+    return localStorage.getItem('id_token')
+  }
+
+  logout() {
+    // Clear user token and profile data from local storage
+    localStorage.removeItem('id_token');
+  }
 }
-
-export default new AuthService()

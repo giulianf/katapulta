@@ -123,6 +123,15 @@ export default class ProfileTabBasicEmprunteur extends Component {
                               onChange={e => ProvideActions.updateBasicInfoEmprunteur({societe: e.target.value})}  value={this.props.basicInfoEmprunteur.societe}/>
                         </Col>
                       </FormGroup>
+                      <FormGroup controlId="formHorizontaldesc" validationState={validateTva}>
+                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                          Description
+                        </Col>
+                        <Col sm={12} md={8}>
+                          <FormControl type="text" placeholder="Descriptition de la société"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({description: e.target.value})}  value={this.props.basicInfoEmprunteur.description}/>
+                        </Col>
+                      </FormGroup>
                       <FormGroup controlId="formHorizontaltva" validationState={validateTva}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           TVA

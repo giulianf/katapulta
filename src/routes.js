@@ -10,41 +10,44 @@ import Faq from './client/components/Faq';
 import Contact from './client/components/Contact';
 import Profile from './client/components/Profile';
 import Login from './client/components/Login';
+import Emprunteur from './client/components/Emprunteur';
 import LayoutStore from './client/stores/LayoutStore';
+import AuthService from './client/services/AuthService'
 
 import Toastr from 'toastr';
 
-// const auth = new AuthService(__AUTH0_CLIENT_ID__, __AUTH0_DOMAIN__);
+const auth = new AuthService('uwy5HE63Wy6vezc1Kzq1W0ls64LYX2oi', 'fumanju.eu.auth0.com');
 
 // onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
+    if (!auth.loggedIn()) {
+        replace({ pathname: '/login' })
+      }
   if (!LayoutStore.loggedIn) {
     //   Toastr.error("Connectez-vous avant l'accès à votre compte.")
     // replace({ pathname: '/' })
   }
   callback();
 }
-//authenticated component hook
-// const requireAuth =  (nextState, replace, callback) => {
-//  // nextPathStore = nextState.location.pathname
-//
-//     LayoutStore._autoLogin();
-//     if (!LayoutStore.isLoggedIn) {
-//         replace( '/login');
-//     }
-//     callback();
-// }
-//
+
+// OnEnter for callback url to parse access_token
+const parseAuthHash = (nextState, replace) => {
+  if (nextState.location.hash) {
+    auth.parseHash(nextState.location.hash)
+    replace({ pathname: '/profile' })
+  }
+}
 
 const routes = (
-        <Route path='/' component={Layout}>
+        <Route path='/' component={Layout} auth={auth}>
             <IndexRoute component={IndexPage} />
-            <Route path='/Explorer' component={Explorer} />
-            <Route path='/simulateur' component={Simulateur} />
+            <Route path="explorer" component={Explorer} />
+            <Route path="/emprunteur/:emprunteurId" component={ Emprunteur }/>
+            <Route path='simulateur' component={Simulateur} />
             <Route path='/faq' component={Faq} />
             <Route path='/contact' component={Contact} />
             <Route path='/profile' component={Profile} onEnter={requireAuth}/>
-            <Route path='/login' component={Login} />
+            <Route path='login' component={Login} onEnter={parseAuthHash}/>
             <Route path="*" component={NoMatch} />
         </Route>
 );

@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Form, Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import { Link } from 'react-router';
 import _ from 'lodash';
 import { getDateDetails } from '../../../common/Utility';
 import ProvideActions from '../../actions/ProvideActions';
 
-class Emprunteur extends Component {
+class EmprunteurComponent extends Component {
     constructor (props){
         super(props);
     }
@@ -20,10 +21,10 @@ class Emprunteur extends Component {
         const creationDate = getDateDetails(dataSociete.creationDate);
 
         return (
-            <Col key={dataSociete.emprunteurId} md={this.props.col}>
+            <Col key={dataSociete.emprunteurId} xs={12} sm={6} md={this.props.col} lg={this.props.col}>
                 <div className="widget user-view-style-1">
                     <div className="thumbnail">
-                        <img  src="http://placehold.it/4133x2745" alt="242x200"/>
+                        <img  src="/img/profile.jpg" alt="242x200"/>
                         <Button className="favoris-info" >
                             <Glyphicon glyph='star' className={startColor}  onClick={e => ProvideActions.favorisEmprunteur({dataSociete})} />
                         </Button>
@@ -65,7 +66,7 @@ class Emprunteur extends Component {
                             </div>
 
                             <div className="user-action">
-                                <Button bsStyle="success" className="btn-sm" data-toggle="modal">Voir <i className="fa fa-eye"></i></Button>
+                                <Link className="btn btn-sm btn-success" to='/emprunteur/77'>Voir <i className="fa fa-eye"></i></Link>
                             </div>
                         </div>
                     </div>
@@ -75,8 +76,8 @@ class Emprunteur extends Component {
     }
 }
 
-Emprunteur.propTypes = {
+EmprunteurComponent.propTypes = {
   dataSociete: PropTypes.object.isRequired,
 };
 
-export default Emprunteur;
+export default EmprunteurComponent;

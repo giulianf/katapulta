@@ -1,6 +1,6 @@
 var React = require('react');
 import { Grid, Row, Col, Pagination, Panel, Form, FormGroup, FormControl ,HelpBlock , InputGroup, Button} from 'react-bootstrap';
-import Emprunteur from './profile/Emprunteur';
+import EmprunteurComponent from './profile/EmprunteurComponent';
 import ProvideStore from '../stores/ProvideStore';
 import _ from 'lodash';
 import AutoComplete from 'material-ui/AutoComplete';
@@ -28,7 +28,7 @@ export default class Explorer extends React.Component {
   render () {
       const explorer = _.map(this.state.explorer , expl => {
           return (
-                  <Emprunteur key={expl.emprunteurId} dataSociete={expl} col={3} />
+                  <EmprunteurComponent key={expl.emprunteurId} dataSociete={expl} col={3} />
           )
       });
       const dataSource1 = _.map(zip , code => {
@@ -113,7 +113,7 @@ export default class Explorer extends React.Component {
                                    </Form>
                                 </div>
 
-                                <div className="search-results">
+                                <div className="search-results back-gallery">
                                     <div className="line-tabs bottom">
                                         <ul className="nav" role="tablist">
                                             <li className="active">
@@ -140,24 +140,19 @@ export default class Explorer extends React.Component {
                                     </div>
                                 </Row>
 
-                                                                            <Row>
-                                                                                <Pagination
-                                                                                  prev
-                                                                                  next
-                                                                                  first
-                                                                                  last
-                                                                                  ellipsis
-                                                                                  boundaryLinks
-                                                                                  items={20}
-                                                                                  maxButtons={5}
-                                                                                  activePage={this.state.activePage}
-                                                                                  onSelect={this.handleSelect} />
-                                                                            </Row>
-
-
-
-
-
+                                <Row>
+                                    <Pagination
+                                      prev
+                                      next
+                                      first
+                                      last
+                                      ellipsis
+                                      boundaryLinks
+                                      items={20}
+                                      maxButtons={5}
+                                      activePage={this.state.activePage}
+                                      onSelect={this.handleSelect} />
+                                </Row>
                                 </div>
 
                             </div>

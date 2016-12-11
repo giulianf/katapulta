@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
+
 import {Grid,  Row, Col, Navbar, Nav, NavItem, Button, Glyphicon } from 'react-bootstrap';
 import Scrollchor from 'react-scrollchor';
 import Footer from './Footer';
 import Login from './Login';
 import LayoutStore from '../stores/LayoutStore';
 import LayoutActions from '../actions/LayoutActions';
+import AuthService from '../services/AuthService'
 
 import _ from 'lodash';
 
@@ -14,7 +16,7 @@ function getLayoutState() {
   return LayoutStore.state;
 }
 
-export default class Layout extends Component {
+class Layout extends Component {
     constructor(props) {
         super(props);
         this.state = getLayoutState();
@@ -28,15 +30,21 @@ export default class Layout extends Component {
         // We can call the show method from Auth0Lock,
         // which is passed down as a prop, to allow
         // the user to log in
-        this.state.lock.show((err, profile, token) => {
-         if (err) {
-           alert(err);
-           return;
-         }
-         LayoutActions.logUserIn(profile, token);
-
-         this.setState({authenticated: true});
-        });
+        // this.state.lock.show((err, profile, token) => {
+        //  if (err) {
+        //    alert(err);
+        //    return;
+        //  }
+        if (AuthService.loggedIn()) {
+            // authenticated
+            this.props.history.push('/profile');
+        } else {
+            // not authenticated
+            this.props.history.push('/login');
+        }
+        //  LayoutActions.logUserIn(profile, token);
+         //
+        //  this.setState({authenticated: true});
     }
 
     logout() {
@@ -49,8 +57,6 @@ export default class Layout extends Component {
     }
 
     componentDidMount() {
-        let jwt = localStorage.getItem('jwt');
-
         LayoutStore.addChangeListener(this._onChange);
     }
 
@@ -62,11 +68,18 @@ export default class Layout extends Component {
       let about;
       let connexion;
 
+      let children = null;
+        if (this.props.children) {
+        children = React.cloneElement(this.props.children, {
+            auth: this.props.route.auth //sends auth instance from route to children
+        })
+        }
+
       if (_.isEqual(this.props.location.pathname, '/')) {
         about =  ( <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>À propos de nous</Scrollchor></li>) ;
       };
 
-      if ( !this.state.authenticated ) {
+      if ( !AuthService.loggedIn() ) {
         connexion =  (<li className='leftConnectButton'><Button onClick={this.login} className="btn-home-bg header">Connexion</Button></li>) ;
     } else {
         connexion =  ( <li className="leftConnectLogged  dropdown">
@@ -123,7 +136,7 @@ export default class Layout extends Component {
           </Row>
           <Row className="layout-content">
                     {/* this is the important part */}
-                    {this.props.children}
+                    {children}
               </Row>
               <Row>
               <Footer />
@@ -132,3 +145,5 @@ export default class Layout extends Component {
         );
     }
 }
+
+export default withRouter(Layout);

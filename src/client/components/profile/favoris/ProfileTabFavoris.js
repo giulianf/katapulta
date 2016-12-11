@@ -4,7 +4,7 @@ import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Gly
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
 import ProvideStore from '../../../stores/ProvideStore';
-import Emprunteur from '../Emprunteur';
+import EmprunteurComponent from '../EmprunteurComponent';
 
 export default class ProfileTabFavoris extends Component {
   constructor (props){
@@ -26,7 +26,7 @@ export default class ProfileTabFavoris extends Component {
     render () {
         const favoris = _.map(this.props.favoris , favori => {
             return (
-                <Emprunteur key={favori.emprunteurId} dataSociete={favori} col={4} />
+                <EmprunteurComponent key={favori.emprunteurId} dataSociete={favori} col={4} />
             )
         })
 
