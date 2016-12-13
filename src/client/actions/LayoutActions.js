@@ -11,9 +11,7 @@ export default {
     },
 
     logUserOut: () => {
-        dispatch({
-          actionType: ActionTypes.LOGOUT_USER
-        });
+        dispatch(ActionTypes.LOGOUT_USER, {});
     }
 
     // login: (userInfo) => {

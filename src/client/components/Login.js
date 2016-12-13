@@ -1,27 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import {Grid,  Row, Col, Tabs, Tab, Button, Form, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 import { browserHistory } from 'react-router'
-import AuthService from '../services/AuthService'
+import LayoutStore from '../stores/LayoutStore';
 
 import _ from 'lodash';
 
 
+function getLayoutState() {
+  return LayoutStore.state;
+}
+
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {username: '', pass:''};
+        this.state = getLayoutState();
 
         this._login = this._login.bind(this);
-        this._register = this._register.bind(this);
     }
 
     _login() {
         // on form submit, sends the credentials to auth0 api
-        this.props.auth.login({
+        this.state.auth.login({
           connection: 'Username-Password-Authentication',
           responseType: 'token',
-          email: this.state.username,
-          password: this.state.pass
+          email: this.state.user.username,
+          password: this.state.user.pass
         }, function(err) {
           if (err) alert("something went wrong: " + err.message);
         });
@@ -35,7 +38,13 @@ class Login extends Component {
         // this.props.history.push('/profile');
     }
 
-    _register() {
+    _handleProfile(key, e) {
+        let userUpdated = this.state.user;
+        userUpdated[key]= e.target.value;
+
+        this.setState({user : userUpdated });
+
+        // this.setState({user { username: e.target.value } });
         // this.state.openLoginPopup = false;
     }
 
@@ -51,14 +60,15 @@ class Login extends Component {
                                        <FormGroup controlId="formHorizontalEmail">
                                           <ControlLabel >Adresse Email</ControlLabel>
                                           <FormControl type="text" placeholder="Entrez votre adresse email"
-                                              onChange={e => {this.setState({username: e.target.value})}}
-                                              value={this.state.username}/>
+                                             onChange={this._handleProfile.bind(this, 'username')}
+                                              value={this.state.user.username}/>
                                         </FormGroup>
                                        <FormGroup controlId="formHorizontalPass">
                                           <ControlLabel >Mot de passe</ControlLabel>
                                           <FormControl type="password" placeholder="Mot de passe"
-                                              onChange={e => {this.setState({pass: e.target.value})}}
-                                              value={this.state.pass}/>
+                                              onChange={this._handleProfile.bind(this, 'pass')}
+
+                                              value={this.state.user.pass}/>
                                         </FormGroup>
                                      <FormGroup>
                                        <Col smOffset={8} sm={2}>
@@ -85,9 +95,5 @@ class Login extends Component {
     }
 }
 
-
-Login.propTypes = {
-  auth: PropTypes.instanceOf(AuthService)
-};
 
 export default Login;

@@ -14,8 +14,9 @@ export class BasicInfo {
      * @param  {string} address       description
      * @param  {string} codePostal    description
      * @param  {string} ville         description
+     * @param  {Boolean} isEmprunteur         description
      */
-    constructor(username, prenom, nom, dateNaissance, numNational, email, tva, address, codePostal, ville) {
+    constructor(username, prenom, nom, dateNaissance, numNational, email, tva, address, codePostal, ville, isEmprunteur) {
         this.username= username;
         this.prenom=prenom;
         this.nom= nom;
@@ -28,5 +29,6 @@ export class BasicInfo {
         this.address= address;
         this.codePostal= codePostal;
         this.ville= ville;
+        this.isEmprunteur= isEmprunteur;
     }
 }

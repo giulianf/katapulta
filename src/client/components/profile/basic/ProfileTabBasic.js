@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock, Checkbox } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -121,6 +121,13 @@ export default class ProfileTabBasic extends Component {
                         <Col sm={12} md={8}>
                           <FormControl type="text" placeholder="Ville"
                               onChange={e => ProvideActions.updateBasicInfo({ville: e.target.value})}  value={this.props.basicInfo.ville}/>
+                        </Col>
+                      </FormGroup>
+                      <FormGroup controlId="formHorizontalville" validationState={validateNom}>
+                        <Col sm={12} md={8}>
+                            <Checkbox checked={ this.props.basicInfo.isEmprunteur } onChange={e => ProvideActions.updateBasicInfo({isEmprunteur: !this.props.basicInfo.isEmprunteur})} >
+                            Souhaitez-vous emprunter
+                          </Checkbox>
                         </Col>
                       </FormGroup>
                       <FormGroup>

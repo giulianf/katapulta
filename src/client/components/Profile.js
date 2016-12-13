@@ -52,15 +52,19 @@ export default class Profile extends Component {
   //  }
 
   render () {
+      let disableTab =true;
+      if (!_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur) {
+          disableTab = false;
+      }
 
     const largeTabVisible = (
-        <Tabs className="tabs-left" defaultActiveKey={5} id="uncontrolled-tab-lg-example">
+        <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example">
             <Tab eventKey={1} title="Basic"><ProfileTabBasic basicInfo={this.state.basicInfo} /></Tab>
-            <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
+            <Tab eventKey={2} disabled={disableTab} title="Basic Emprunteur"><ProfileTabBasicEmprunteur basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
             <Tab eventKey={3} title="Contrats Preteur"><ProfileTabContracts tabContracts={this.state.tabContracts} /></Tab>
-            <Tab eventKey={4} title="Contrats Emprunteur"></Tab>
+            <Tab eventKey={4} disabled={disableTab} title="Contrats Emprunteur"></Tab>
             <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
-            <Tab eventKey={6} title="Paiements">Tab 4 content</Tab>
+            <Tab eventKey={6} title="Admin">Tab 4 content</Tab>
         </Tabs>
     );
 

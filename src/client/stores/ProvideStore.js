@@ -18,7 +18,7 @@ new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20,
 const stepIndex = 1;
 
 const basicProfil = new BasicInfo('butacni', 'Nicolas', 'Butacide', '24/03/1985',
- 85032414555, 'nicolas.butacide@katapulta.be', 'BE0837.444.333' ,'Rue de Tamine 2', '5060', 'Tamines');
+ 85032414555, 'nicolas.butacide@katapulta.be', 'BE0837.444.333' ,'Rue de Tamine 2', '5060', 'Tamines', true);
 
 const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 'blablablablablablablablablablablablablablablablablablablablablabla', 1600000, 'BE0837.444.333');
 const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),

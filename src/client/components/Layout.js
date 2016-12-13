@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 
-import {Grid,  Row, Col, Navbar, Nav, NavItem, Button, Glyphicon } from 'react-bootstrap';
+import {Grid,  Row, Col, Navbar, Nav,NavDropdown, NavItem,MenuItem, Button, Glyphicon } from 'react-bootstrap';
 import Scrollchor from 'react-scrollchor';
 import Footer from './Footer';
 import Login from './Login';
 import LayoutStore from '../stores/LayoutStore';
 import LayoutActions from '../actions/LayoutActions';
-import AuthService from '../services/AuthService'
 
 import _ from 'lodash';
 
@@ -35,7 +34,7 @@ class Layout extends Component {
         //    alert(err);
         //    return;
         //  }
-        if (AuthService.loggedIn()) {
+        if ( this.state.loggedIn ) {
             // authenticated
             this.props.history.push('/profile');
         } else {
@@ -49,7 +48,8 @@ class Layout extends Component {
 
     logout() {
        LayoutActions.logUserOut();
-       this.setState({authenticated: false});
+
+       this.props.history.push('/');
      }
 
     _onChange() {
@@ -68,42 +68,43 @@ class Layout extends Component {
       let about;
       let connexion;
 
-      let children = null;
-        if (this.props.children) {
-        children = React.cloneElement(this.props.children, {
-            auth: this.props.route.auth //sends auth instance from route to children
-        })
-        }
-
       if (_.isEqual(this.props.location.pathname, '/')) {
         about =  ( <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>À propos de nous</Scrollchor></li>) ;
       };
 
-      if ( !AuthService.loggedIn() ) {
+      if ( !this.state.loggedIn ) {
         connexion =  (<li className='leftConnectButton'><Button onClick={this.login} className="btn-home-bg header">Connexion</Button></li>) ;
     } else {
-        connexion =  ( <li className="leftConnectLogged  dropdown">
-                        <a href="javascript:void(0);" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <Glyphicon glyph="user" >{this.state.user}</Glyphicon>
-                            <span className=" fa fa-angle-down"></span>
-                        </a>
-                        <ul className="dropdown-menu dropdown-usermenu animated fadeInUp pull-right">
-                            <li>
-                                <Link to="/profile" >Profile</Link>
-                            </li>
-                            <li>
-                                <a href="../app-pages/page-profile-settings.html" >
-                                    <span className="badge bg-red pull-right">50%</span>
-                                    <span>Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);" >Help</a>
-                            </li>
-                            <li><Button onClick={this.logout} ><i className=" icon-login pull-right"></i> Log Out</Button>
-                            </li>
-                        </ul>
-                    </li>) ;
+        connexion =  ( <NavDropdown eventKey={3} title={<Glyphicon glyph="user" >{this.state.user ? this.state.user.username : null}</Glyphicon>}
+                        id="basic-nav-dropdown">
+                        <li>
+                           <Link to="/profile" >Profile</Link>
+                       </li>
+                          <MenuItem divider />
+                          <MenuItem eventKey={3.3} onClick={this.logout} >Log Out <Glyphicon glyph="log-out" className="pull-right"></Glyphicon></MenuItem>
+                        </NavDropdown>) ;
+        // connexion =  ( <li className="leftConnectLogged  dropdown">
+        //                 <a href="javascript:void(0);" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        //                     <Glyphicon glyph="user" >{this.state.user ? this.state.user.username : null}</Glyphicon>
+        //                     <span className=" fa fa-angle-down"></span>
+        //                 </a>
+        //                 <ul className="dropdown-menu dropdown-usermenu animated fadeInUp pull-right">
+        //                     <li>
+        //                         <Link to="/profile" >Profile</Link>
+        //                     </li>
+        //                     <li>
+        //                         <a href="../app-pages/page-profile-settings.html" >
+        //                             <span className="badge bg-red pull-right">50%</span>
+        //                             <span>Settings</span>
+        //                         </a>
+        //                     </li>
+        //                     <li>
+        //                         <a href="javascript:void(0);" >Help</a>
+        //                     </li>
+        //                     <li><Button onClick={this.logout} ><i className=" icon-login pull-right"></i> Log Out</Button>
+        //                     </li>
+        //                 </ul>
+        //             </li>) ;
     }
 
 
@@ -136,7 +137,7 @@ class Layout extends Component {
           </Row>
           <Row className="layout-content">
                     {/* this is the important part */}
-                    {children}
+                    {this.props.children}
               </Row>
               <Row>
               <Footer />
