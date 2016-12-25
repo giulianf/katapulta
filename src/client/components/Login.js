@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import {Grid,  Row, Col, Tabs, Tab, Button, Form, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import {Grid,  Row, Col, Tabs, Tab, Button, Form, FormGroup, FormControl, ControlLabel, HelpBlock} from 'react-bootstrap';
 import { browserHistory } from 'react-router'
 import LayoutStore from '../stores/LayoutStore';
+import { validateEmail } from '../../common/Utility';
+import Toastr from 'toastr';
 
 import _ from 'lodash';
 
@@ -15,7 +17,22 @@ class Login extends Component {
         super(props);
         this.state = getLayoutState();
 
+        this._findUsername = this._findUsername.bind(this);
         this._login = this._login.bind(this);
+        this._signUp = this._signUp.bind(this);
+    }
+
+    _findUsername() {
+        if ( this.state.signUser.username ) {
+            // Async loads the user profile data
+            this.state.auth.getProfile(this.state.token, (error, profile) => {
+              if (error) {
+                  Toastr.error('Error loading the Profile', error);
+              } else {
+                  Toastr.info('Error loading the Profile', profile);
+              }
+          });
+        }
     }
 
     _login() {
@@ -24,19 +41,32 @@ class Login extends Component {
           connection: 'Username-Password-Authentication',
           responseType: 'token',
           email: this.state.user.username,
-          password: this.state.user.pass
+          password: this.state.user.pass,
+          params: {
+              state: '/'
+            }
         }, function(err) {
           if (err) alert("something went wrong: " + err.message);
         });
-        // close the popup
-        // this.setState({openLoginPopup: false});
-
-        // action to login
-        // this.state.openLoginPopup = false;
-
-        // forward to account
-        // this.props.history.push('/profile');
     }
+
+    _signUp() {
+        if (!_.isEqual(this.state.signUser.pass, this.state.signUser.confirmPass)) {
+            Toastr.error('Les mots de passes doivent être les mêmes!');
+        }
+        // calls auth0 signup api, sending new account data
+        this.state.auth.signup({
+            connection: 'Username-Password-Authentication',
+            responseType: 'token',
+            // username: this.state.signUser.username,
+            email: this.state.signUser.email,
+            password: this.state.signUser.pass,
+        }, function(err) {
+        if (err) alert("something went wrong: " + err.message);
+        });
+    }
+
+
 
     _handleProfile(key, e) {
         let userUpdated = this.state.user;
@@ -48,8 +78,27 @@ class Login extends Component {
         // this.state.openLoginPopup = false;
     }
 
+    _handleProfileSign(key, e) {
+        let userUpdated = this.state.signUser;
+        userUpdated[key]= e.target.value;
+
+        this.setState({signUser : userUpdated });
+
+        // this.setState({user { username: e.target.value } });
+        // this.state.openLoginPopup = false;
+    }
+
 
     render() {
+        const validateEmailSign = !_.isNil(this.state.signUser.email) && validateEmail(this.state.signUser.email) ? "success" : "error";
+        const validatePass = !_.isNil(this.state.signUser.pass) && _.size(this.state.signUser.pass) > 6 ? "success" : "error";
+        const validateConfirmPass = !_.isEmpty(this.state.signUser.confirmPass) && _.isEqual(this.state.signUser.pass, this.state.signUser.confirmPass) ? "success" : "error";
+
+        const enableConfirmPass = !_.isEmpty(this.state.signUser.pass) && _.size(this.state.signUser.pass) > 6 ? true : false;
+        const enableButton =  !_.isEmpty(this.state.signUser.email) && validateEmail(this.state.signUser.email)
+        && !_.isNil(this.state.signUser.pass) && _.size(this.state.signUser.pass) > 6
+        && _.isEqual(this.state.signUser.pass, this.state.signUser.confirmPass) ? true : false;
+
         return (
             <Grid >
                 <Row className='section section-padding'>
@@ -78,14 +127,34 @@ class Login extends Component {
                                  </Form>
                             </Tab.Pane>
                             <Tab.Pane eventKey={2} title="S'inscrire">
-                               <Grid>
-                                   <Row>
-                                       Register
-                                   </Row>
-                                   <Row>
-                                       <Button type="submit" onClick={this._register}>s'inscrire</Button>
-                                   </Row>
-                               </Grid>
+                                <Form horizontal>
+                                    <FormGroup controlId="formHorizontalsignEmail" validationState={validateEmailSign}>
+                                       <ControlLabel >Adresse Email</ControlLabel>
+                                       <FormControl type="text" placeholder="Entrez votre adresse email"
+                                          onChange={this._handleProfileSign.bind(this, 'email')}
+                                           value={this.state.signUser.email}/>
+                                     </FormGroup>
+                                    <FormGroup controlId="formHorizontalsignPass" validationState={ validatePass }>
+                                       <ControlLabel>Mot de passe</ControlLabel>
+                                       <FormControl type="password" placeholder="Mot de passe"
+                                           onChange={this._handleProfileSign.bind(this, 'pass')}
+
+                                           value={this.state.signUser.pass}/>
+                                     </FormGroup>
+                                    <FormGroup controlId="formHorizontalsignconfPass" validationState={validateConfirmPass}>
+                                       <ControlLabel>Confirmer votre mot de passe</ControlLabel>
+                                       <FormControl type="password" placeholder="Mot de passe"
+                                           disabled={!enableConfirmPass}
+                                           onChange={this._handleProfileSign.bind(this, 'confirmPass')}
+                                           value={this.state.signUser.confirmPass}/>
+                                       <HelpBlock>Insérez le même mot de passe.</HelpBlock>
+                                     </FormGroup>
+                                  <FormGroup>
+                                    <Col smOffset={8} sm={2}>
+                                        <Button bsStyle='primary' onClick={this._signUp} disabled={!enableButton}>s'enregistrer</Button>
+                                    </Col>
+                                  </FormGroup>
+                              </Form>
                             </Tab.Pane>
                         </Tabs>
                     </Col>
@@ -95,5 +164,8 @@ class Login extends Component {
     }
 }
 
+Login.contextTypes = {
+    router: React.PropTypes.func.isRequired
+};
 
 export default Login;

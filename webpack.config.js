@@ -28,7 +28,7 @@ module.exports = {
       colors: true,
       contentBase: "src/",
       historyApiFallback: {
-        index: '/static/index-static.html'
+        index: '/static/index.html'
       }
     },
     node: {

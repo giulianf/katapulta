@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock, Checkbox } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
@@ -7,23 +7,21 @@ var DatePicker = require("react-bootstrap-date-picker");
 import { validateEmail } from '../../../../common/Utility';
 import belgium from '../../../../data/zipcode-belgium.json';
 
-export default class ProfileTabBasic extends Component {
-  constructor (props){
-    super(props);
+class ProfileTabBasic extends Component {
+    constructor (props){
+        super(props);
+        this._handleSaveBasicInfo = this._handleSaveBasicInfo.bind(this);
+    }
 
-    this._handleSaveBasicInfo = this._handleSaveBasicInfo.bind(this);
+    componentDidMount() {
+    }
 
-  }
+    componentWillUnmount() {
+    }
 
-  componentDidMount() {
-   }
-
-   componentWillUnmount() {
-   }
-
-   _handleSaveBasicInfo() {
+    _handleSaveBasicInfo() {
        // Save action for Server
-   }
+    }
     render () {
         const listZip = _.sortedUniq(_.map(belgium, (city) => {
             return city.zip;
@@ -32,15 +30,16 @@ export default class ProfileTabBasic extends Component {
             return (<option key={city} value={city}></option>);
         });
 
-        const validatePrenom = !_.isNil(this.props.basicInfo.prenom) && !_.isEmpty(this.props.basicInfo.prenom) ? "success" : "";
-        const validateNom = !_.isNil(this.props.basicInfo.nom) && !_.isEmpty(this.props.basicInfo.nom) ? "success" : "";
-        const validateNaissance = !_.isNil(this.props.basicInfo.dateNaissance) && !_.isEmpty(this.props.basicInfo.dateNaissance) ? "success" : "";
+        const validatePrenom = !_.isNil(this.props.basicInfo.prenom) && !_.isEmpty(this.props.basicInfo.prenom) ? "success" : "error";
+        const validateNom = !_.isNil(this.props.basicInfo.nom) && !_.isEmpty(this.props.basicInfo.nom) ? "success" : "error";
+        const validateNaissance = !_.isNil(this.props.basicInfo.dateNaissance) && !_.isEmpty(this.props.basicInfo.dateNaissance) ? "success" : "error";
+        const validateNational = !_.isNil(this.props.basicInfo.numNational) && !_.isEmpty(this.props.basicInfo.numNational) && !_.size(this.props.basicInfo.numNational) > 8 ? "success" : "error";
         const validateEmailAddress = !_.isNil(this.props.basicInfo.email) && validateEmail(this.props.basicInfo.email) ? "success" : "error";
-        const validateAddress = !_.isNil(this.props.basicInfo.address) && !_.isEmpty(this.props.basicInfo.address) ? "success" : "";
+        const validateAddress = !_.isNil(this.props.basicInfo.address) && !_.isEmpty(this.props.basicInfo.address) ? "success" : "error";
 
         const zipObject = _.find(belgium, {'zip': this.props.basicInfo.codePostal});
         const validateCodePostal = !_.isNil(this.props.basicInfo.codePostal) && !_.isNil(zipObject) ? "success" : "error";
-        const validateVille = !_.isNil(this.props.basicInfo.ville) && !_.isEmpty(this.props.basicInfo.ville) ? "success" : "";
+        const validateVille = !_.isNil(this.props.basicInfo.ville) && !_.isEmpty(this.props.basicInfo.ville) ? "success" : "error";
 
         return (
             <div key='profileTabBasic'>
@@ -75,7 +74,7 @@ export default class ProfileTabBasic extends Component {
                                 onChange={ (value, formattedValue) => ProvideActions.updateBasicInfo({dateNaissance: value}) } />
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalnumNational" validationState={validateNaissance}>
+                      <FormGroup controlId="formHorizontalnumNational" validationState={validateNational}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Numéro National
                         </Col>
@@ -144,3 +143,10 @@ export default class ProfileTabBasic extends Component {
         );
     }
 }
+
+ProfileTabBasic.contextTypes = {
+    basicInfo: React.PropTypes.object.isRequired
+};
+
+
+export default ProfileTabBasic;

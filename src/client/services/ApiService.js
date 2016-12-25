@@ -1,12 +1,9 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-// axios.defaults.baseURL = 'http://127.0.0.1:3000/';
+axios.defaults.baseURL = 'http://127.0.0.1:3001/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-// The custom header is required by the server in order to identify the request
-// as AJAX and return the appropriate response when the auth cookie is not present
-// or the session is expired (See ECAS documentation)
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
    Add an interceptor for error response to just transform it and return a unified object from all requests

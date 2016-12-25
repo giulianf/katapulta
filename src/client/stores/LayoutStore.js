@@ -3,7 +3,7 @@ import ActionTypes from '../constants/ActionTypes';
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
 import Auth0 from 'auth0-js';
-
+import { isTokenExpired } from './jwtHelper'
 import _ from 'lodash';
 
 
@@ -13,8 +13,12 @@ class LayoutStore extends BaseStore {
         super();
         this.subscribe(() => this._registerToActions.bind(this))
         this._user = {username: '', pass:''};
+        this._signUser = {username: '', email:'', pass:'', confirmPass: ''};
+
         this._error = null;
         this._isLoggin = false;
+        this._isAdmin = false;
+        this._profile = {};
 
         // Configure Auth0
         this.auth0 = new Auth0({
@@ -23,6 +27,22 @@ class LayoutStore extends BaseStore {
           responseType: 'token'
         });
 
+        if (this.loggedIn) {
+            this.auth0.getProfile(this.getToken(), (error, profile) => {
+                if (error) {
+                    console.log('Error loading the Profile', error)
+                } else {
+                    this._profile = profile;
+
+                    _.map(profile.app_metadata.roles, role => {
+                            if (_.isEqual(role, 'admin')) {
+                                this._isAdmin = true;
+                            }
+                    });
+                // this.setProfile(profile)
+                }
+            });
+        }
     }
 
   _registerToActions(action) {
@@ -32,8 +52,13 @@ class LayoutStore extends BaseStore {
             // Respond to RECEIVE_DATA action
             case ActionTypes.DATA_ERROR:
                 // If action was responded to, emit change event
-                this._error = action.error.data;
-                Toastr.error(this.state.error);
+                if ( !_.isNil(action.error.response) ) {
+                    this._error = action.error.data;
+                } else if ( !_.isNil(action.error.data) ) {
+                    this._error = action.error.data;
+                }
+
+                Toastr.error(this._error);
 
                 this.emitChange();
                 break;
@@ -58,13 +83,31 @@ class LayoutStore extends BaseStore {
     get state() {
         return {
             user: this.getUser,
+            token: this.getToken,
+            signUser: this.getSignUser,
             loggedIn: this.loggedIn,
             auth: this.getAuth
         };
     }
 
+    get stateLayout() {
+        return {
+            profile: this.getProfile,
+            token: this.getToken,
+            loggedIn: this.loggedIn
+        };
+    }
+
     get getUser() {
         return this._user;
+    }
+
+    get getSignUser() {
+        return this._signUser;
+    }
+
+    get getProfile() {
+        return this._profile;
     }
 
     isAuthenticated() {
@@ -76,8 +119,9 @@ class LayoutStore extends BaseStore {
     }
 
     get loggedIn() {
-      // Checks if there is a saved token and it's still valid
-      return !!this.getToken();
+        // Checks if there is a saved token and it's still valid
+      const token = this.getToken();
+      return !!token && !isTokenExpired(token);
     }
 
     setToken(idToken) {
@@ -104,6 +148,10 @@ class LayoutStore extends BaseStore {
 
     get getAuth() {
         return this.auth0;
+    }
+
+    get isAdmin() {
+        return this._isAdmin;
     }
 
 }

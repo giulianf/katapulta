@@ -15,6 +15,9 @@ export default {
         }, { });
 
     },
+    updateSimulateur: (newValue) => {
+        dispatch(ProvideConstants.UPDATE_SIMULATEUR, {newValue});
+    },
     stepperDetail: (contractId) => {
         dispatch(ProvideConstants.OPEN_STEPPER_DETAIL, {contractId});
     },
@@ -31,4 +34,14 @@ export default {
     favorisEmprunteur: dataSociete => {
         dispatch(ProvideConstants.FAVORIS_EMPRUNTEUR, { dataSociete });
     },
+
+    getBasicInfo: (profile) => {
+        let promise = ProvideService.getBasicInfo(profile);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GET_BASIC_INFO,
+          success: ProvideConstants.GET_BASIC_INFO_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    }
 }

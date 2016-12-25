@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Grid, Form, Row, Col, Button, Glyphicon , Image, Table, Tabs, Tab} from 'react-bootstrap';
+import { Grid, Form, Row, Col, Button, Glyphicon , Image, Table, Tabs, Tab, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import _ from 'lodash';
 import { getDateDetails } from '../../common/Utility';
 import ProvideActions from '../actions/ProvideActions';
@@ -30,6 +30,9 @@ class Emprunteur extends Component {
             }
         })
 
+        const tooltip = (
+          <Tooltip id="tooltip"><strong>Prêter</strong> de l'argent à Katapulta</Tooltip>
+        );
         // const startColor = dataSociete.isFavoris ? 'fa-2x startGold' : 'fa-2x';
 
 
@@ -47,30 +50,33 @@ class Emprunteur extends Component {
                                 </Col>
                                 <Col xs={11} md={7} lg={7}>
                                     <h4 className='alignEmprunteur'>Emprunteur</h4>
-                                        <Table>
-                                            <tbody>
-                                              <tr>
-                                                <th>Nom de société</th>
-                                                <td>Katapulta</td>
-                                              </tr>
-                                              <tr>
-                                                  <th>Adresse</th>
-                                                  <td>234 Avenue des best of the best 6000 Charleroi</td>
-                                              </tr>
-                                              <tr>
-                                                  <th>Chiffre d'affaire</th>
-                                                  <td><CountUp start={1000000} end={12000000} useGrouping={true} separator="." duration={1.5} suffix=" EUR" /></td>
-                                              </tr>
-                                              <tr>
-                                                  <th>Emprunt souhaité</th>
-                                                  <td><CountUp start={100} end={10000} useGrouping={true} separator="."  duration={1.5} suffix=" EUR" /></td>
-                                              </tr>
-                                              <tr>
-                                                  <th>Date de création de </th>
-                                                  <td>24 décembre 2015</td>
-                                              </tr>
-                                            </tbody>
-                                          </Table>
+                                    <Table>
+                                        <tbody>
+                                          <tr>
+                                            <th>Nom de société</th>
+                                            <td>Katapulta</td>
+                                          </tr>
+                                          <tr>
+                                              <th>Adresse</th>
+                                              <td>234 Avenue des best of the best 6000 Charleroi</td>
+                                          </tr>
+                                          <tr>
+                                              <th>Chiffre d'affaire</th>
+                                              <td><CountUp start={1000000} end={12000000} useGrouping={true} separator="." duration={1.5} suffix=" EUR" /></td>
+                                          </tr>
+                                          <tr>
+                                              <th>Emprunt souhaité</th>
+                                              <td><CountUp start={100} end={10000} useGrouping={true} separator="."  duration={1.5} suffix=" EUR" /></td>
+                                          </tr>
+                                          <tr>
+                                              <th>Date de création de </th>
+                                              <td>24 décembre 2015</td>
+                                          </tr>
+                                        </tbody>
+                                      </Table>
+                                      <OverlayTrigger placement="right" overlay={tooltip}>
+                                          <Button bsStyle='success' className='btn-flat'>Prêter de l'argent</Button>
+                                        </OverlayTrigger>
                                 </Col>
                                 <Col xs={1} md={1} lg={1}>
                                     <a href="#" className="favoris-info" >

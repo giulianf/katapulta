@@ -26,7 +26,7 @@ export default class ProfileTabContracts extends Component {
 
     return (
         <div key='profileTabContract'>
-            <Col md={8} sm={10} className='space-top-bottom'>
+            <Col className='space-top-bottom'>
                 <Griddle results={ contracts } showFilter={true} showSettings={true} useGriddleStyles={true}
                    noDataMessage="Il n'y a pas de contrats prêteur"
                     columnMetadata={this.customPreteurColumnMetadata} columns={["contractId", "nomEmprunteur", "creationDate", "progress"]}/>
@@ -85,7 +85,7 @@ export default class ProfileTabContracts extends Component {
             "cssClassName": "progressClass"
         },
         {
-            "columnName": "usernamePreteur",
+            "columnName": "user_idPreteur",
             "order": 6,
             "locked": true,
             "visible": false,

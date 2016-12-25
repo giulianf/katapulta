@@ -14,7 +14,10 @@ const jwt = require('express-jwt');
 // import getMuiTheme from 'material-ui/styles/getMuiTheme'
 // import {green100, green500, green700} from 'material-ui/styles/colors';
 
-import {getCurrentDate, getDate, error, debug, info} from './common/UtilityLog';
+import {getCurrentDate, getDate, error, debug, info, getYear, addYear, getBelgiumDate} from './common/UtilityLog';
+
+import { SimulatorDao } from './dao/SimulatorDao';
+import { ProfileDao } from './dao/ProfileDao';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -52,21 +55,63 @@ const authCheck = jwt({
 // define the folder that will be used for static assets
 app.use(Express.static(path.join(__dirname, 'webapp', 'resources')));
 
-app.get('/log/callback', function(req, res) {
-  const data = {pret: 10000};
-  info('TEST DATA: '+data);
-  // res.json(data);
-  // getMatch('/', req, res);
-  // res.json(JSON.parse(content));
+/******************************************/
+/********** START SIMULATOR API ***********/
+/******************************************/
+
+/**
+ * Calculate Simulator
+ */
+app.get('/api/simulate/:simulateData', (req, res) => {
+    debug("Entering /api/simulate ");
+    debug("Receive data simulateData: " + req.params.simulateData);
+
+    const simulateData = JSON.parse(req.params.simulateData);
+
+    const simulatorDao = new SimulatorDao();
+
+    simulatorDao.getSimulatorResult(res, simulateData);
 });
 
-app.get('/api/simulate', function(req, res) {
-  const data = {pret: 10000};
-  info('TEST DATA: '+data);
-  // res.json(data);
-  // getMatch('/', req, res);
-  // res.json(JSON.parse(content));
+
+/******************************************/
+/*********** END SIMULATOR API ************/
+/******************************************/
+
+
+/******************************************/
+/********** START PROFILE API ***********/
+/******************************************/
+
+/**
+ * Update Basic info
+ */
+app.get('/api/getBasicInfo/:user', (req, res) => {
+    debug("Entering /api/getBasicInfo ");
+
+    const user = req.params.user;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.getBasicInfo(res, user);
 });
+
+/**
+ * Update Basic info
+ */
+app.post('/api/updateBasicInfo', (req, res) => {
+    debug("Entering /api/updateBasicInfo ");
+
+    const basicInfo = req.body.basicInfo;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.updateBasicInfo(res, basicInfo);
+});
+
+/******************************************/
+/************ END PROFILE API *************/
+/******************************************/
 
 // universal routing and rendering
 // app.get('*', (req, res) => {

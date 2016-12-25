@@ -31,8 +31,20 @@ export function getCurrentDate() {
     return moment(moment()).format('YYYY-MM-DD');
 }
 
+export function getYear(date) {
+    return moment(date).year();
+}
+
+export function addYear(date, nb) {
+    return moment(date).add(nb, 'y');
+}
+
 export function getDate(date) {
     return moment(date).format('YYYY-MM-DD');
+}
+
+export function getBelgiumDate(date) {
+    return moment(date).format('DD/MM/YYYY');
 }
 
 export function getHour(hourMilli) {

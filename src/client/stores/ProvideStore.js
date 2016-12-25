@@ -1,7 +1,9 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProvideConstants from '../constants/ProvideConstants';
 import BaseStore from './BaseStore';
+import LayoutStore from './LayoutStore';
 import { ContractsPreteur } from '../../model/ContractsPreteur';
+import { SimulateurInfo } from '../../model/SimulateurInfo';
 import { BasicInfo } from '../../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../../model/BasicInfoEmprunteur';
 import { FavorisEmprunteur } from '../../model/FavorisEmprunteur';
@@ -10,15 +12,14 @@ import { getDateISO, getDateDetails } from '../../common/Utility';
 var _ = require('lodash');
 import moment from 'moment';
 
+const simulator = new SimulateurInfo( moment(), 5000, 3, 2.25);
+
 const contracts = [
 new ContractsPreteur(1,  'fumanju', 'Coca Cola', '01/10/2016 22h30', 'PAIEMENT RECU', 55, 2),
 new ContractsPreteur(3,  'fumanju', 'United-IT', '01/10/2016 22h30', 'CONTRAT ENVOYE', 100, 3),
 new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20, 1)];
 
 const stepIndex = 1;
-
-const basicProfil = new BasicInfo('butacni', 'Nicolas', 'Butacide', '24/03/1985',
- 85032414555, 'nicolas.butacide@katapulta.be', 'BE0837.444.333' ,'Rue de Tamine 2', '5060', 'Tamines', true);
 
 const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 'blablablablablablablablablablablablablablablablablablablablablabla', 1600000, 'BE0837.444.333');
 const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
@@ -29,7 +30,8 @@ class ProvideStore extends BaseStore {
    constructor() {
       super();
       this.subscribe(() => this._registerToActions.bind(this))
-      this._simulateur = {pret: null, year: 3, isLoading:false };
+      this._simulateur = simulator;
+      this._simulateurResult = null;
 
       // contracts list, stepIndex
        this._tabContracts = {};
@@ -40,7 +42,6 @@ class ProvideStore extends BaseStore {
 
       // profile
       this._tabBasic = {};
-      this._tabBasic = basicProfil;
 
       // profile emprunteur
       this._tabBasicEmprunteur = {};
@@ -68,6 +69,15 @@ class ProvideStore extends BaseStore {
 
 
     /**
+     * populateBasicInfo - Populate Basic Info tab within Profile
+     *
+     * @param  {type} basicProfil description
+     * @return {type}             description
+     */
+    populateBasicInfo(basicProfil) {
+        this._tabBasic = basicProfil;
+    }
+    /**
      * updateBasicInfo - To update Profile tab Basic info
      *
      * @param  {type} newValue Key/value in the Object tabBasic
@@ -85,11 +95,61 @@ class ProvideStore extends BaseStore {
         favoris.isFavoris = !favoris.isFavoris;
     }
 
+    /**************************/
+    /***** START SIMULATOR ****/
+    /*************************/
+
+
+    /**
+     * updateSimulateur - Change the simulator form
+     *
+     * @param  {type} newValue description
+     * @return {type}          description
+     */
+    updateSimulateur(newValue) {
+        if (!_.isNil(newValue.taux)) {
+            if (newValue.taux > 2.25) {
+                newValue.taux = 2.25;
+            } else if (newValue.taux < 0) {
+                newValue.taux = 0;
+            }
+
+        }
+        _.assign(this._simulateur, newValue);
+        this._simulateurResult = null;
+    }
+
+
+    /**
+     * calculateSimulator - To get Result from Server
+     *
+     * @param  {simulateurResultInfo} simulatorResult description
+     * @return {type}             description
+     */
+    calculateSimulator(simulatorResult) {
+        this._simulateurResult = simulatorResult;
+    }
+
+    /**************************/
+    /***** END SIMULATOR ****/
+    /*************************/
+
     _registerToActions(action) {
     switch(action.type){
        // Respond to RECEIVE_DATA action
       case ProvideConstants.SIMULATEUR_DATA_SUCCESS:
-        // this.loadLayoutUI(action.body);
+        this.calculateSimulator(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+       // Respond to RECEIVE_DATA action
+      case ProvideConstants.GET_BASIC_INFO_SUCCCESS:
+        this.populateBasicInfo(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.UPDATE_SIMULATEUR:
+        this.updateSimulateur(action.newValue);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -124,14 +184,31 @@ class ProvideStore extends BaseStore {
 
   }
 
-  get state() {
+  get stateSimulateur() {
     return {
-        simulateur : this.getSimulateur
+        simulateur : this.getSimulateur,
+        simulateurResult : this.getSimulateurResult
     };
    }
 
+
+  /**
+   * get - Object to display simulateur information
+   *
+   * @return {type}  description
+   */
   get getSimulateur() {
       return this._simulateur;
+  }
+
+
+  /**
+   * get - Resultat de la simulation
+   *
+   * @return {type}  description
+   */
+  get getSimulateurResult() {
+      return this._simulateurResult;
   }
 
   /**
@@ -177,6 +254,14 @@ class ProvideStore extends BaseStore {
 
   get getStepWorkflow() {
       return this._tabContracts.stepWorkflow;
+  }
+
+  get isAdmin() {
+      return LayoutStore.isAdmin;
+  }
+
+  get getProfile() {
+      return LayoutStore.getProfile;
   }
 
 }

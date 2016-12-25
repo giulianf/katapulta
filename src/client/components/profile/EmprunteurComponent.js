@@ -36,7 +36,7 @@ class EmprunteurComponent extends Component {
                         <div className="caption">
                             <div className="user-task-info">
                                 <Glyphicon glyph='equalizer' className='fa-2x' />
-                                <span className="lbl-user-number-tickets">{dataSociete.chiffreAffaire}</span>
+                                <span className="lbl-user-number-tickets">{dataSociete.chiffreAffaire} / 5000</span>
                             </div>
 
                             <div className="user-other-info">

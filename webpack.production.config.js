@@ -12,7 +12,9 @@ module.exports = {
   entry: {
       app: path.join(__dirname, 'src', 'entryPoint', 'app-client.js'),
       vendor: Object.keys(pkg.dependencies).filter(function(item) {
-          if (item === 'font-awesome' || item === 'express' || item === 'ejs') {
+          if (item === 'font-awesome' || item === 'express' || item === 'ejs'
+          || item === 'winston' || item === 'net' || item === 'express-jwt'
+          || item === 'cors' || item === 'mongodb' || item === 'async') {
               return false;
           }
           return item.indexOf('babel') === -1
@@ -21,9 +23,9 @@ module.exports = {
   },
 
   output: {
-      path: path.resolve(ROOT_PATH, 'src', 'webapp', 'resources'),
+      path: path.resolve(ROOT_PATH, 'dist-client', 'webapp', 'resources'),
       filename: '[name].min.js',
-      publicPath: '/'
+      publicPath: '/resources/'
   },
   module: {
    preLoaders: [

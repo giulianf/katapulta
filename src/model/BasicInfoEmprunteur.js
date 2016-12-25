@@ -3,8 +3,8 @@ import moment from 'moment';
 
 export class BasicInfoEmprunteur {
 
-    constructor(username, societe, description, chiffreAffaire, tva, image) {
-        this.username= username;
+    constructor(user_id, societe, description, chiffreAffaire, tva, image) {
+        this.user_id= user_id;
         this.societe=societe;
         this.description=description;
         this.chiffreAffaire= chiffreAffaire;

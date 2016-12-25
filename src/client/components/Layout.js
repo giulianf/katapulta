@@ -12,11 +12,11 @@ import _ from 'lodash';
 
 
 function getLayoutState() {
-  return LayoutStore.state;
+  return LayoutStore.stateLayout;
 }
 
 class Layout extends Component {
-    constructor(props) {
+    constructor(props, context) {
         super(props);
         this.state = getLayoutState();
         this._onChange = this._onChange.bind(this);
@@ -26,14 +26,6 @@ class Layout extends Component {
       }
 
     login() {
-        // We can call the show method from Auth0Lock,
-        // which is passed down as a prop, to allow
-        // the user to log in
-        // this.state.lock.show((err, profile, token) => {
-        //  if (err) {
-        //    alert(err);
-        //    return;
-        //  }
         if ( this.state.loggedIn ) {
             // authenticated
             this.props.history.push('/profile');
@@ -49,7 +41,8 @@ class Layout extends Component {
     logout() {
        LayoutActions.logUserOut();
 
-       this.props.history.push('/');
+       // redirects to login page
+       this.context.router.push('/');
      }
 
     _onChange() {
@@ -73,38 +66,23 @@ class Layout extends Component {
       };
 
       if ( !this.state.loggedIn ) {
-        connexion =  (<li className='leftConnectButton'><Button onClick={this.login} className="btn-home-bg header">Connexion</Button></li>) ;
+        connexion =  (
+            <li><Link className="btn btn-flat btn-home-bg" to="/login">Connexion</Link></li>
+        ) ;
     } else {
-        connexion =  ( <NavDropdown eventKey={3} title={<Glyphicon glyph="user" >{this.state.user ? this.state.user.username : null}</Glyphicon>}
-                        id="basic-nav-dropdown">
-                        <li>
-                           <Link to="/profile" >Profile</Link>
-                       </li>
-                          <MenuItem divider />
-                          <MenuItem eventKey={3.3} onClick={this.logout} >Log Out <Glyphicon glyph="log-out" className="pull-right"></Glyphicon></MenuItem>
-                        </NavDropdown>) ;
-        // connexion =  ( <li className="leftConnectLogged  dropdown">
-        //                 <a href="javascript:void(0);" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        //                     <Glyphicon glyph="user" >{this.state.user ? this.state.user.username : null}</Glyphicon>
-        //                     <span className=" fa fa-angle-down"></span>
-        //                 </a>
-        //                 <ul className="dropdown-menu dropdown-usermenu animated fadeInUp pull-right">
-        //                     <li>
-        //                         <Link to="/profile" >Profile</Link>
-        //                     </li>
-        //                     <li>
-        //                         <a href="../app-pages/page-profile-settings.html" >
-        //                             <span className="badge bg-red pull-right">50%</span>
-        //                             <span>Settings</span>
-        //                         </a>
-        //                     </li>
-        //                     <li>
-        //                         <a href="javascript:void(0);" >Help</a>
-        //                     </li>
-        //                     <li><Button onClick={this.logout} ><i className=" icon-login pull-right"></i> Log Out</Button>
-        //                     </li>
-        //                 </ul>
-        //             </li>) ;
+        connexion =  (
+            <NavDropdown eventKey={3} title={<Glyphicon glyph="user" ></Glyphicon>} id="basic-nav-dropdown">
+                <Navbar.Text>
+                   {this.state.profile ? this.state.profile.name : null}
+                 </Navbar.Text>
+                <MenuItem divider />
+                <li>
+                   <Link to="/profile" >Profile</Link>
+                </li>
+                  <MenuItem divider />
+                  <MenuItem eventKey={3.3} onClick={this.logout} >Log Out <Glyphicon glyph="log-out" className="pull-right"></Glyphicon></MenuItem>
+            </NavDropdown>
+        ) ;
     }
 
 
@@ -116,7 +94,7 @@ class Layout extends Component {
                   <Grid>
                     <Navbar.Header>
                       <Navbar.Brand>
-                        <Link to="/"><img width="" src="/img/logo.png"></img></Link>
+                        <Link to="/"><img width="100" src="/img/logo.png"></img></Link>
                       </Navbar.Brand>
                       <Navbar.Toggle />
                     </Navbar.Header>
@@ -146,5 +124,9 @@ class Layout extends Component {
         );
     }
 }
+
+Layout.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 export default withRouter(Layout);

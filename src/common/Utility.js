@@ -21,6 +21,10 @@ export function getHour(hourMilli) {
     return moment(parseInt(hourMilli)).format('HH:mm');
 }
 
+export function getBelgiumDate(date) {
+    return moment(date).format('DD/MM/YYYY');
+}
+
 export function validateEmail(mail) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
         return (true);
