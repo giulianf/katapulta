@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
 import { BasicInfo } from '../model/BasicInfo';
 import async from 'async';
-import Validator from '../validator/validator';
+import Validator from '../validator/validatorBasicInfo';
 
 export class ProfileDao {
     constructor() {

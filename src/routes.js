@@ -12,15 +12,24 @@ import Profile from './client/components/Profile';
 import Login from './client/components/Login';
 import Emprunteur from './client/components/Emprunteur';
 import LayoutStore from './client/stores/LayoutStore';
+import LayoutActions from './client/actions/LayoutActions';
 
 import Toastr from 'toastr';
 
 // onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
     if (!LayoutStore.loggedIn) {
-        replace({ pathname: '/login' })
-      }
-  callback();
+        replace({ pathname: '/login' });
+        callback();
+    } else {
+        LayoutActions.getProfileUser(LayoutStore.getToken, LayoutStore.getAuth, (err) => {
+            // if error during authentification
+            if (err) {
+                replace({ pathname: '/' });
+            }
+            callback();
+        });
+    }
 }
 
 // OnEnter for callback url to parse access_token

@@ -61,9 +61,9 @@ let _mongodb;
 
 const user = process.env.DB_USER;
 const password = process.env.DB_PASS;
-const authSource = process.env.DB_DB;
 const localhostDB = process.env.DB_HOST;
 const portDB = process.env.DB_PORT;
+const authSource = process.env.DB_DB;
 
 // Connection URL
 const url = f('mongodb://%s:%s@%s:%s/%s', user, password, localhostDB, portDB, authSource);

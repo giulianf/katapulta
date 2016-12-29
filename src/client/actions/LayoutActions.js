@@ -2,11 +2,29 @@ import { dispatch, dispatchAsync } from '../dispatcher/AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
 
 export default {
-    logUserIn: (profile, token) => {
-        dispatch({
-          actionType: ActionTypes.LOGIN_USER,
-          profile: profile,
-          token: token
+
+    /**
+     * get the profile from auth0
+     */
+    getProfileUser: (token, auth0, callback) => {
+        let profile;
+        let isAdmin;
+
+        auth0.getProfile(token, (error, userDetail) => {
+            if (error) {
+                callback(error);
+            } else {
+                profile = userDetail;
+
+                _.map(userDetail.app_metadata.roles, role => {
+                        if (_.isEqual(role, 'admin')) {
+                            isAdmin = true;
+                        }
+                });
+
+                dispatch(ActionTypes.LOGIN_USER, {profile , isAdmin });
+                callback();
+            }
         });
     },
 
@@ -14,24 +32,4 @@ export default {
         dispatch(ActionTypes.LOGOUT_USER, {});
     }
 
-    // login: (userInfo) => {
-    //     let promise = ProvideService.simulate(simulateData);
-    //
-    //     dispatchAsync(promise, {
-    //     request: ProvideConstants.SIMULATEUR_DATA,
-    //     success: ProvideConstants.SIMULATEUR_DATA_SUCCESS,
-    //     failure: ProvideConstants.DATA_ERROR
-    //     }, { });
-    //
-    // },
-    // signUp: (userInfo) => {
-    //     let promise = ProvideService.simulate(simulateData);
-    //
-    //     dispatchAsync(promise, {
-    //     request: ProvideConstants.SIMULATEUR_DATA,
-    //     success: ProvideConstants.SIMULATEUR_DATA_SUCCESS,
-    //     failure: ProvideConstants.DATA_ERROR
-    //     }, { });
-    //
-    // }
 }

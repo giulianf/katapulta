@@ -27,23 +27,6 @@ class LayoutStore extends BaseStore {
           responseType: 'token'
         });
 
-        if (this.loggedIn) {
-            this.auth0.getProfile(this.getToken(), (error, profile) => {
-                if (error) {
-                    console.log('Error loading the Profile', error)
-                } else {
-                    this._profile = profile;
-                    localStorage.setItem('_profile', JSON.stringify(profile));
-
-                    _.map(profile.app_metadata.roles, role => {
-                            if (_.isEqual(role, 'admin')) {
-                                this._isAdmin = true;
-                            }
-                    });
-                // this.setProfile(profile)
-                }
-            });
-        }
     }
 
   _registerToActions(action) {
@@ -66,7 +49,7 @@ class LayoutStore extends BaseStore {
                 this.emitChange();
                 break;
             case ActionTypes.LOGIN_USER:
-                this.setUser(action.profile, action.token);
+                this.setUser(action.profile, action.isAdmin);
 
                 this.emitChange();
                 break;
@@ -117,17 +100,9 @@ class LayoutStore extends BaseStore {
         }
     }
 
-    isAuthenticated() {
-        // if (localStorage.getItem('id_token')) {
-        //     return true;
-        // }
-
-        return false;
-    }
-
     get loggedIn() {
         // Checks if there is a saved token and it's still valid
-      const token = this.getToken();
+      const token = this.getToken;
       const isTokenExp= isTokenExpired(token);
 
       if (isTokenExp) {
@@ -141,9 +116,14 @@ class LayoutStore extends BaseStore {
       localStorage.setItem('id_token', idToken);
     }
 
-    getToken() {
+    get getToken() {
       // Retrieves the user token from local storage
       return localStorage.getItem('id_token');
+    }
+
+    setUser(profile, isAdmin) {
+        localStorage.setItem('_profile', JSON.stringify(profile));
+        this._isAdmin = isAdmin;
     }
 
     removeUser() {

@@ -6,7 +6,7 @@ import ProvideActions from '../../../actions/ProvideActions';
 var DatePicker = require("react-bootstrap-date-picker");
 import { validateEmail } from '../../../../common/Utility';
 import belgium from '../../../../data/zipcode-belgium.json';
-import Validator from '../../../../validator/validator';
+import Validator from '../../../../validator/validatorBasicInfo';
 
 class ProfileTabBasic extends Component {
     constructor (props){

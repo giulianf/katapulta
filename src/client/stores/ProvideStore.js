@@ -22,7 +22,7 @@ new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20,
 
 const stepIndex = 1;
 
-const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 'blablablablablablablablablablablablablablablablablablablablablabla', 1600000, 'BE0837.444.333');
+const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 'SPRL', 1600000, 'BE0837.444.333');
 const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
 new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
 
@@ -176,7 +176,7 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.UPDATE_BASIC_INFO_EMPRUNTEUR:
-         this.updateBasicInfo(action.newValue);
+         this.updateBasicInfoEmprunteur(action.newValue);
         // If action was responded to, emit change event
         this.emitChange();
         break;
