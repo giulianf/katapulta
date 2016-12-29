@@ -8,6 +8,7 @@ import { BasicInfo } from '../../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../../model/BasicInfoEmprunteur';
 import { FavorisEmprunteur } from '../../model/FavorisEmprunteur';
 import { getDateISO, getDateDetails } from '../../common/Utility';
+import Toastr from 'toastr';
 
 var _ = require('lodash');
 import moment from 'moment';
@@ -67,7 +68,6 @@ class ProvideStore extends BaseStore {
         this._tabContracts.stepWorkflow.visible = false ;
     }
 
-
     /**
      * populateBasicInfo - Populate Basic Info tab within Profile
      *
@@ -77,6 +77,7 @@ class ProvideStore extends BaseStore {
     populateBasicInfo(basicProfil) {
         this._tabBasic = basicProfil;
     }
+
     /**
      * updateBasicInfo - To update Profile tab Basic info
      *
@@ -147,6 +148,12 @@ class ProvideStore extends BaseStore {
         this.populateBasicInfo(action.body);
         // If action was responded to, emit change event
         this.emitChange();
+        break;
+      case ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS:
+        Toastr.info(action.body);
+
+        // If action was responded to, emit change event
+        // this.emitChange();
         break;
       case ProvideConstants.UPDATE_SIMULATEUR:
         this.updateSimulateur(action.newValue);

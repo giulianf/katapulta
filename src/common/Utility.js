@@ -6,15 +6,16 @@ export function getDateDetails() {
 }
 
 export function getCurrentDate() {
-    return moment(moment()).format('YYYY-MM-DD');
+    return moment.utc(moment()).format('YYYY-MM-DD');
 }
 
-export function getDateISO(date) {
-    const now = moment(date, 'DD/MM/YYYY');
-    return now.toISOString();
+export function getDateISO(dateString) {
+    const now = moment.utc(dateString, 'DD/MM/YYYY');
+    return now.local().toISOString();
 }
-export function getDate(date) {
-    return moment(date, 'DD/MM/YYYY');
+
+export function getDate(dateString) {
+    return moment.utc(dateString, 'DD/MM/YYYY');
 }
 
 export function getHour(hourMilli) {
@@ -22,7 +23,7 @@ export function getHour(hourMilli) {
 }
 
 export function getBelgiumDate(date) {
-    return moment(date).format('DD/MM/YYYY');
+    return moment.utc(date).format('DD/MM/YYYY');
 }
 
 export function validateEmail(mail) {
@@ -31,4 +32,12 @@ export function validateEmail(mail) {
     }
 
     return (false);
+}
+
+export function validateDate(date) {
+    if ( moment(date).isValid() ) {
+        return true;
+    }
+
+    return false;
 }

@@ -46,7 +46,9 @@ class Login extends Component {
               state: '/'
             }
         }, function(err) {
-          if (err) alert("something went wrong: " + err.message);
+          if (err) {
+              Toastr.error("Impossible de s'authentifier: " + err.message);
+          }
         });
     }
 

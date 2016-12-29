@@ -35,12 +35,28 @@ export default {
         dispatch(ProvideConstants.FAVORIS_EMPRUNTEUR, { dataSociete });
     },
 
+    /**
+     * get Basic profile within TAB basic
+     */
     getBasicInfo: (profile) => {
         let promise = ProvideService.getBasicInfo(profile);
 
         dispatchAsync(promise, {
           request: ProvideConstants.GET_BASIC_INFO,
           success: ProvideConstants.GET_BASIC_INFO_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+
+    /**
+     * Update profile Basic within TAB basic
+     */
+    updateSaveBasicInfo: (basicInfo) => {
+        let promise = ProvideService.updateBasicInfo(basicInfo);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.UPDATE_BASIC_INFO,
+          success: ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     }

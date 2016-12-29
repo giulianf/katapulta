@@ -1,4 +1,5 @@
 import decode from 'jwt-decode';
+import _ from 'lodash';
 
 export function getTokenExpirationDate(token) {
   const decoded = decode(token)
@@ -12,7 +13,10 @@ export function getTokenExpirationDate(token) {
 }
 
 export function isTokenExpired(token) {
-  const date = getTokenExpirationDate(token)
+    if (_.isNil(token)) {
+        return true;
+    }
+  const date = getTokenExpirationDate(token);
   const offsetSeconds = 0
   if (date === null) {
     return false;

@@ -8,9 +8,15 @@ const aliases = require('./aliases');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer');
 require("babel-polyfill");
+// const Dotenv = require('dotenv-webpack');
+require('dotenv').config({
+    path: path.join(__dirname,'config', `.env.development`),
+    // path: './config/.env.${process.env.NODE_ENV}',
+    silent: true
+});
 
 module.exports = {
-  devtool: debug ? 'source-map' : null,
+  devtool: 'source-map',
 
   entry: ['babel-polyfill',path.join(__dirname, 'src', 'entryPoint', 'app-client.js')],
 
@@ -44,7 +50,7 @@ module.exports = {
             exclude: /node_modules/,
             query: {
                 cacheDirectory: 'babel_cache',
-                presets: debug ? ['react', 'es2015', 'react-hmre', 'stage-2'] : ['react', 'es2015', 'stage-2']
+                presets: ['react', 'es2015', 'react-hmre', 'stage-2']
             }
         }, {
             test:  /\.less/,
@@ -70,7 +76,11 @@ module.exports = {
     root: path.resolve(__dirname),
     extensions: ['', '.js', '.jsx', '.json']
 	},
-  plugins: debug ? [
+  plugins: [
+    //   new Dotenv({
+    //      path:  path.join(__dirname, 'config', '.env'), // if not simply .env
+    //      safe: false // lets load the .env.example file as well
+    //  }),
       new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
       new ExtractTextPlugin('style.css'),
       new webpack.HotModuleReplacementPlugin(),
@@ -78,26 +88,15 @@ module.exports = {
       new webpack.DefinePlugin({
             process: {
                 env: {
-                    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                    AUTH_AUDIENCE: JSON.stringify(process.env.AUTH_AUDIENCE),
+                    AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID),
+                    SERVER_HOST: JSON.stringify(process.env.SERVER_HOST),
+                    SERVER_PORT: JSON.stringify(process.env.SERVER_PORT)
                 }
             }
         })
-  ] : [
-      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }),
-      new ExtractTextPlugin('style.css'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      mangle: true,
-      sourcemap: false,
-      beautify: false,
-      dead_code: true
-    })
-],
+  ],
 postcss: function () {
   return [autoprefixer];
 }

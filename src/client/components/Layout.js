@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 
 import {Grid,  Row, Col, Navbar, Nav,NavDropdown, NavItem,MenuItem, Button, Glyphicon } from 'react-bootstrap';
-import Scrollchor from 'react-scrollchor';
 import Footer from './Footer';
 import Login from './Login';
 import LayoutStore from '../stores/LayoutStore';
@@ -20,23 +19,9 @@ class Layout extends Component {
         super(props);
         this.state = getLayoutState();
         this._onChange = this._onChange.bind(this);
-        this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
 
       }
-
-    login() {
-        if ( this.state.loggedIn ) {
-            // authenticated
-            this.props.history.push('/profile');
-        } else {
-            // not authenticated
-            this.props.history.push('/login');
-        }
-        //  LayoutActions.logUserIn(profile, token);
-         //
-        //  this.setState({authenticated: true});
-    }
 
     logout() {
        LayoutActions.logUserOut();
@@ -58,16 +43,11 @@ class Layout extends Component {
     }
 
     render() {
-      let about;
       let connexion;
-
-      if (_.isEqual(this.props.location.pathname, '/')) {
-        about =  ( <li><Scrollchor to="#about" className="nav-link" animate={{offset: 20, duration: 600}}>À propos de nous</Scrollchor></li>) ;
-      };
 
       if ( !this.state.loggedIn ) {
         connexion =  (
-            <li><Link className="btn btn-flat btn-home-bg" to="/login">Connexion</Link></li>
+            <Link className="btn btn-flat btn-home-bg" to="/login">Connexion</Link>
         ) ;
     } else {
         connexion =  (
@@ -104,10 +84,14 @@ class Layout extends Component {
                         <li><Link to="/">Accueil</Link></li>
                         <li><Link to="/explorer">Explorer</Link></li>
                         <li><Link to="/simulateur">Simulateur</Link></li>
-                        {about}
                         <li><Link to="/faq">Questions</Link></li>
                         <li><Link to="/contact">Contact</Link></li>
-                        {connexion}
+                        <li>
+                            <Navbar.Form>
+                                {connexion}
+                            </Navbar.Form>
+                        </li>
+
                      </Nav>
                    </Navbar.Collapse>
                  </Grid>

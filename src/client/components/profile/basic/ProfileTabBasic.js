@@ -6,6 +6,7 @@ import ProvideActions from '../../../actions/ProvideActions';
 var DatePicker = require("react-bootstrap-date-picker");
 import { validateEmail } from '../../../../common/Utility';
 import belgium from '../../../../data/zipcode-belgium.json';
+import Validator from '../../../../validator/validator';
 
 class ProfileTabBasic extends Component {
     constructor (props){
@@ -21,6 +22,7 @@ class ProfileTabBasic extends Component {
 
     _handleSaveBasicInfo() {
        // Save action for Server
+       this.props.updateBasicInfo(this.props.basicInfo);
     }
     render () {
         const listZip = _.sortedUniq(_.map(belgium, (city) => {
@@ -30,16 +32,14 @@ class ProfileTabBasic extends Component {
             return (<option key={city} value={city}></option>);
         });
 
-        const validatePrenom = !_.isNil(this.props.basicInfo.prenom) && !_.isEmpty(this.props.basicInfo.prenom) ? "success" : "error";
-        const validateNom = !_.isNil(this.props.basicInfo.nom) && !_.isEmpty(this.props.basicInfo.nom) ? "success" : "error";
-        const validateNaissance = !_.isNil(this.props.basicInfo.dateNaissance) && !_.isEmpty(this.props.basicInfo.dateNaissance) ? "success" : "error";
-        const validateNational = !_.isNil(this.props.basicInfo.numNational) && !_.isEmpty(this.props.basicInfo.numNational) && !_.size(this.props.basicInfo.numNational) > 8 ? "success" : "error";
-        const validateEmailAddress = !_.isNil(this.props.basicInfo.email) && validateEmail(this.props.basicInfo.email) ? "success" : "error";
-        const validateAddress = !_.isNil(this.props.basicInfo.address) && !_.isEmpty(this.props.basicInfo.address) ? "success" : "error";
-
-        const zipObject = _.find(belgium, {'zip': this.props.basicInfo.codePostal});
-        const validateCodePostal = !_.isNil(this.props.basicInfo.codePostal) && !_.isNil(zipObject) ? "success" : "error";
-        const validateVille = !_.isNil(this.props.basicInfo.ville) && !_.isEmpty(this.props.basicInfo.ville) ? "success" : "error";
+        const validatePrenom = Validator.validatePrenom(this.props.basicInfo.prenom) ? "success" : "error";
+        const validateNom = Validator.validateNom(this.props.basicInfo.nom) ? "success" : "error";
+        const validateNaissance = Validator.validateNaissance(this.props.basicInfo.dateNaissance) ? "success" : "error";
+        const validateNational = Validator.validateNational(this.props.basicInfo.numNational) ? "success" : "error";
+        const validateEmailAddress = Validator.validateEmailAddress(this.props.basicInfo.email) ? "success" : "error";
+        const validateAddress = Validator.validateAddress(this.props.basicInfo.address) ? "success" : "error";
+        const validateCodePostal = Validator.validateCodePostal(this.props.basicInfo.codePostal) ? "success" : "error";
+        const validateVille = Validator.validateVille(this.props.basicInfo.ville) ? "success" : "error";
 
         return (
             <div key='profileTabBasic'>
@@ -59,7 +59,7 @@ class ProfileTabBasic extends Component {
                           Nom
                         </Col>
                         <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Prénom"
+                          <FormControl type="text" placeholder="Nom"
                               onChange={e => ProvideActions.updateBasicInfo({nom: e.target.value})}  value={this.props.basicInfo.nom}/>
                         </Col>
                       </FormGroup>

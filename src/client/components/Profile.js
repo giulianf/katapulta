@@ -26,6 +26,7 @@ export default class Profile extends Component {
     super(props);
 
     this._onChange = this._onChange.bind(this);
+    this._updateBasicInfo = this._updateBasicInfo.bind(this);
 
 
     this.state = getProfileState();
@@ -46,7 +47,10 @@ export default class Profile extends Component {
    componentWillUnmount() {
     //  clearTimeout(this.timer);
      ProvideStore.removeChangeListener(this._onChange);
+   }
 
+   _updateBasicInfo(basicInfo) {
+       ProvideActions.updateSaveBasicInfo(basicInfo);
    }
    //
   //  progress(completed) {
@@ -72,7 +76,7 @@ export default class Profile extends Component {
 
     const largeTabVisible = (
         <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example">
-            <Tab eventKey={1} title="Basic"><ProfileTabBasic basicInfo={this.state.basicInfo} /></Tab>
+            <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
             { basicEmprunteurTab }
             <Tab eventKey={3} title="Contrats Preteur"><Col md={8} sm={10}><ProfileTabContracts tabContracts={this.state.tabContracts} /></Col></Tab>
             { conractEmprunteurTab }

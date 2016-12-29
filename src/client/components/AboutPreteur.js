@@ -15,21 +15,21 @@ export default class AboutPreteur extends Component {
         <Grid>
           <Row className='section  section-padding'>
         		<div className="section-title text-center">
-        			<h2>Prêter de l'<span>argent</span></h2>
+        			<h2>Prêter de <span>l'argent</span></h2>
                 <div></div>
         		</div>
         		<Col md={6} sm={6} xs={6} >
-              <div>
-                <ResponsiveEmbed a16by9>
-                  <embed type="image/svg+xml" src="https://player.vimeo.com/video/183058098" />
-                </ResponsiveEmbed>
-              </div>
+                  <div>
+                    <ResponsiveEmbed a16by9>
+                      <embed type="image/svg+xml" src="https://player.vimeo.com/video/183058098" />
+                    </ResponsiveEmbed>
+                  </div>
         		</Col>
         		<Col md={6} sm={6} xs={6} >
         			<div className="single_about_content">
-                <p>
-                  Votre argent est en securité
-                </p>
+                        <p>
+                          Votre argent est en securité
+                        </p>
         			</div>
         		</Col>
           </Row>

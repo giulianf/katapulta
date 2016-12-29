@@ -1,8 +1,9 @@
-var React = require('react');
+import React, { Component } from 'react';
+
 import {  ButtonToolbar, Carousel, Media} from 'react-bootstrap';
 import { Link } from 'react-router';
 
-export default class Slider extends React.Component {
+export default class Slider extends Component {
   constructor (){
     super();
     this.state = {index: 0, direction: null};
@@ -20,9 +21,9 @@ export default class Slider extends React.Component {
     return (
         <Carousel slide={true} indicators={true} activeIndex={this.state.index} direction={this.state.direction} onSelect={handleCarouselSelect.bind(this)}>
          <Carousel.Item animateIn={true}>
-           <img className="imgCarousel" height={500} alt="900x500" src="/img/fotolia2.jpg"/>
+           <img className="imgCarousel"  width={900} height={500} alt="900x500" src="/img/fotolia2.jpg"/>
            <Carousel.Caption>
-              <Media>
+              <Media smHidden xsHidden>
                 <Media.Left align="top">
                   <img src="http://placehold.it/400x320" alt="Image"/>
                 </Media.Left>
@@ -32,15 +33,15 @@ export default class Slider extends React.Component {
               </Media.Body>
               </Media>
               <ButtonToolbar>
-                <Link to="/register" className="cd-btn btn-home-bg home-bg">Connexion</Link>
+                <Link to="/login" className="cd-btn btn-home-bg home-bg">Connexion</Link>
                 <Link to="/preteur" className="cd-btn btn-home-border">Détails</Link>
               </ButtonToolbar>
            </Carousel.Caption>
          </Carousel.Item>
          <Carousel.Item>
-           <img className="imgCarousel" height={500} alt="900x500" src="/img/fotolia6.jpg"/>
+           <img className="imgCarousel" width={900} height={500} alt="900x500" src="/img/fotolia6.jpg"/>
            <Carousel.Caption>
-             <Media>
+             <Media smHidden xsHidden>
               <Media.Left align="top">
                 <img src="http://placehold.it/400x320" alt="Image"/>
               </Media.Left>
@@ -50,7 +51,7 @@ export default class Slider extends React.Component {
               </Media.Body>
             </Media>
             <ButtonToolbar>
-              <Link to="/register" className="cd-btn btn-home-bg home-bg">Connexion</Link>
+              <Link to="/login" className="cd-btn btn-home-bg home-bg">Connexion</Link>
               <Link to="/emprunteur" className="cd-btn btn-home-border">Détails</Link>
            </ButtonToolbar>
            </Carousel.Caption>

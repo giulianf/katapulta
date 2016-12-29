@@ -17,7 +17,6 @@ export default class OurService extends Component {
         			<div></div>
         		</div>
         		  <div id="why_choose">
-        				<Row>
         					<Col  md={4} sm={4} xs={12}>
                     <div className="single_service">
         							<i className="fa fa-circle-o-notch"></i>
@@ -60,8 +59,6 @@ export default class OurService extends Component {
         							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum ante vel aliquet</p>
         						</div>
         					</Col>
-
-        			  </Row>
         		  </div>
           </Row>
         </Grid>

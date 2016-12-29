@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-axios.defaults.baseURL = 'http://127.0.0.1:3001/';
+axios.defaults.baseURL = `http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/`;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

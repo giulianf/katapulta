@@ -22,8 +22,8 @@ class LayoutStore extends BaseStore {
 
         // Configure Auth0
         this.auth0 = new Auth0({
-          clientID: 'uwy5HE63Wy6vezc1Kzq1W0ls64LYX2oi',
-          domain: 'fumanju.eu.auth0.com',
+          clientID: process.env.AUTH_CLIENT_ID,
+          domain: process.env.AUTH_AUDIENCE,
           responseType: 'token'
         });
 
@@ -33,6 +33,7 @@ class LayoutStore extends BaseStore {
                     console.log('Error loading the Profile', error)
                 } else {
                     this._profile = profile;
+                    localStorage.setItem('_profile', JSON.stringify(profile));
 
                     _.map(profile.app_metadata.roles, role => {
                             if (_.isEqual(role, 'admin')) {
@@ -56,6 +57,8 @@ class LayoutStore extends BaseStore {
                     this._error = action.error.data;
                 } else if ( !_.isNil(action.error.data) ) {
                     this._error = action.error.data;
+                } else {
+                    this._error = action.error.message;
                 }
 
                 Toastr.error(this._error);
@@ -107,7 +110,11 @@ class LayoutStore extends BaseStore {
     }
 
     get getProfile() {
-        return this._profile;
+        if ( localStorage.getItem('_profile') ) {
+            return JSON.parse(localStorage.getItem('_profile') );
+        } else {
+            return this._profile;
+        }
     }
 
     isAuthenticated() {
@@ -121,7 +128,12 @@ class LayoutStore extends BaseStore {
     get loggedIn() {
         // Checks if there is a saved token and it's still valid
       const token = this.getToken();
-      return !!token && !isTokenExpired(token);
+      const isTokenExp= isTokenExpired(token);
+
+      if (isTokenExp) {
+          this.removeUser();
+      }
+      return !!token && !isTokenExp;
     }
 
     setToken(idToken) {
@@ -136,6 +148,7 @@ class LayoutStore extends BaseStore {
 
     removeUser() {
         localStorage.removeItem('id_token');
+        localStorage.removeItem('_profile');
     }
 
     parseHash(hash) {

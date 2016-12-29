@@ -1,6 +1,3 @@
-import { getDateISO } from '../common/Utility';
-import moment from 'moment';
-
 export class BasicInfoEmprunteur {
 
     constructor(user_id, societe, description, chiffreAffaire, tva, image) {

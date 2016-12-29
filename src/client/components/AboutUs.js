@@ -18,12 +18,12 @@ export default class AboutUs extends Component {
         			<h2>À propos de <span>nous</span></h2>
         			<div></div>
         		</div>
-        		<Col md={6} sm={6} xs={6} mdOffset={3} xsOffset={3} >
-              <div style={{width: 660, height: 'auto'}}>
-                <ResponsiveEmbed a16by9>
-                  <embed type="image/svg+xml" src="https://player.vimeo.com/video/183058098" />
-                </ResponsiveEmbed>
-              </div>
+        		<Col md={6} sm={9} xs={9} mdOffset={3} lgOffset={3} >
+                    <div>
+                      <ResponsiveEmbed a16by9>
+                        <embed type="image/svg+xml" src="https://player.vimeo.com/video/183058098" />
+                      </ResponsiveEmbed>
+                    </div>
         		</Col>
           </Row>
         </Grid>

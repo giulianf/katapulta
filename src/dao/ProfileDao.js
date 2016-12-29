@@ -1,19 +1,12 @@
 import _ from 'lodash';
 import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
 import { BasicInfo } from '../model/BasicInfo';
-const MongoClient = require('mongodb').MongoClient;
 import async from 'async';
-
-// Connection URL
-const url = 'mongodb://localhost:27017/ktp';
+import Validator from '../validator/validator';
 
 export class ProfileDao {
     constructor() {
-        // Use connect method to connect to the server
-        MongoClient.connect(url, function(err, db) {
-          debug("Connected successfully to server");
-          this._mongodb =  db;
-        });
+
     }
 
 
@@ -24,74 +17,89 @@ export class ProfileDao {
      * @param  {type} user description
      * @return {type}      description
      */
-    getBasicInfo(res, user) {
+    getBasicInfo(res, _mongodb, user, email) {
         info('Entering getBasicInfo() data: ' + JSON.stringify( user ));
 
          try {
-             const userId = user.username;
+             const userId = user;
              let basicProfil = null;
 
-             const clients = this._mongodb.collection('client');
+             const clients = _mongodb.collection('clients');
 
-             // Find some documents
-             clients.find({'user_id': userId}).toArray(function(err, client) {
-               debug("client found: " + client);
+            async.series([
+                (callback) => {
+                    // Find some documents
+                    clients.findOne({'user_id': userId}, function(err, client) {
+                      debug("*****  Client found: " + JSON.stringify( client ));
 
-               if (!_.isNil(client)) {
-                   basicProfil = new BasicInfo(client);
-               } else {
-                   basicProfil = new BasicInfo(null, userId, , '', '',
-                     null, user.email, '' ,'', '', '', false);
-               }
+                      if (!_.isNil(client)) {
+                          basicProfil = new BasicInfo(client);
+                      } else {
+                          basicProfil = new BasicInfo(null, userId, '' , '', '01/09/1939',
+                            null, email, '' ,'', '', '', false);
+                      }
 
-               callback(client);
-             });
-             db.close();
+                      callback();
+                    });
+                },
+                (callback) => {
+                    debug("****  BasicProfil: " + JSON.stringify( basicProfil ) );
 
-            //  const basicProfil = new BasicInfo(userId, , 'Butacide', '24/03/1985',
-            //   85032414555, 'nicolas.butacide@katapulta.be', 'BE0837.444.333' ,'Rue de Tamine 2', '5060', 'Tamines', true);
-
-            res.end( JSON.stringify( basicProfil ) );
+                    res.end( JSON.stringify( basicProfil ) );
+                }
+            ], (err) => {
+                error("Unable to updateBasicInfo " , err);
+                //   When it's done
+                if (err) {
+                    res.status(500).json(err);
+                    return;
+                }
+            });
         } catch( e ) {
             error('error: ' + e);
-            res.status(500).send('Problème pendant la simulation.');
+            res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
         }
     }
 
-    updateBasicInfo(res, basicInfo) {
-        info('Entering updateBasicInfo() data: ' + JSON.stringify( basicInfo ));
+
+    /**
+     * updateBasicInfo - Update basic info
+     *
+     * @param  {type} res       description
+     * @param  {type} _mongodb  description
+     * @param  {type} basicInfo description
+     * @return {type}           description
+     */
+    updateBasicInfo(res, _mongodb, basicInfo) {
+        info('Entering updateBasicInfo() basic info: ' + basicInfo.user_id);
         let clients;
          try {
              async.series([
                 (callback) => {
+                    // Validate basic Info
+                    Validator.validateProfileTabBasic(basicInfo);
+
                     // Find some documents
-                    clients.find({'user_id': basicInfo.user_id}).toArray(function(err, client) {
-                      debug("client found: " + client);
+                    clients = _mongodb.collection('clients');
 
-                      clients = client;
-
-                      callback();
+                    // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
+                    clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
+                        returnOriginal: false
+                      , upsert: true
+                  }, (err, r) => {
+                        if(err) {
+                            callback(err);
+                        }
+                        debug('Result findOneAndUpdate: ' + JSON.stringify(r.value));
+                        res.end( "Les informations utilisateur ont été enregistrées" );
                     });
-                }, (callback) => {
-                    // insert new one
-                    if (_.isNil(clients)) {
-                        // Insert a single document
-                         this._mongodb.collection('inserts').insertOne({a:1}, function(err, r) {
-                           assert.equal(null, err);
-                           assert.equal(1, r.insertedCount);
-
-                           // Insert multiple documents
-                           db.collection('inserts').insertMany([{a:2}, {a:3}], function(err, r) {
-                             assert.equal(null, err);
-                             assert.equal(2, r.insertedCount);
-
-                             db.close();
-                           });
-                         });
-                        // basicProfil = new BasicInfo(client);
-                    } else {
-
-                    }
+                    // clients.find({'user_id': basicInfo.user_id}).toArray(function(err, client) {
+                    //   debug("client found: " + client);
+                    //
+                    //   clients = client;
+                    //
+                    //   callback();
+                    // });
                 }
             ], (err) => {
                 error("Unable to updateBasicInfo " , err);
@@ -103,12 +111,11 @@ export class ProfileDao {
             });
 
 
-             db.close();
+            //  db.close();
 
-            res.end( JSON.stringify( this.getSimulatorResultInfo(simulateData) ) );
         } catch( e ) {
             error('error: ' + e);
-            res.status(500).send('Problème pendant la simulation.');
+            res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
         }
     }
 }

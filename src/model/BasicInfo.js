@@ -1,5 +1,5 @@
 import { getDateISO } from '../common/Utility';
-import moment from 'moment';
+import _ from 'lodash';
 
 export class BasicInfo {
     /**
@@ -18,12 +18,12 @@ export class BasicInfo {
      * @param  {Boolean} isEmprunteur         description
      */
     constructor(client, user_id, prenom, nom, dateNaissance, numNational, email, tva, address, codePostal, ville, isEmprunteur) {
-        if (client) {
+        if (!_.isNil(client)) {
             this.user_id = client.user_id;
             this.prenom = client.prenom;
             this.nom = client. nom;
             // this.dateNaissance= client.new Date(2011, 2, 12, 5, 0, 0).toISOString();
-            this.dateNaissance = getDateISO(client.dateNaissance);
+            this.dateNaissance = client.dateNaissance;
             // this.dateNaissance= client.dateNaissance;
             this.numNational = client.numNational;
             this.email = client.email;

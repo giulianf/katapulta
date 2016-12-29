@@ -7,6 +7,10 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer');
 var pkg = require('./package.json');
 var ROOT_PATH = path.resolve(__dirname);
+require('dotenv').config({
+    path: path.join(__dirname,'config', `.env.production`),
+    silent: true
+});
 
 module.exports = {
   entry: {
@@ -14,7 +18,7 @@ module.exports = {
       vendor: Object.keys(pkg.dependencies).filter(function(item) {
           if (item === 'font-awesome' || item === 'express' || item === 'ejs'
           || item === 'winston' || item === 'net' || item === 'express-jwt'
-          || item === 'cors' || item === 'mongodb' || item === 'async') {
+          || item === 'cors' || item === 'mongodb' || item === 'async' || item === 'util') {
               return false;
           }
           return item.indexOf('babel') === -1
@@ -93,11 +97,14 @@ module.exports = {
      }
    }),
    new webpack.DefinePlugin({
-     // This affects react lib size
-     'process.env': {
-       'NODE_ENV': JSON.stringify('production')
-     }
-   }),
+         process: {
+             env: {
+                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                 AUTH_AUDIENCE: JSON.stringify(process.env.AUTH_AUDIENCE),
+                 AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID)
+             }
+         }
+     }),
    new ExtractTextPlugin('[name].min.css'),
  ],
 
