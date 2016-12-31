@@ -116,9 +116,19 @@ class LayoutStore extends BaseStore {
       localStorage.setItem('id_token', idToken);
     }
 
+    setAccessToken(accessToken) {
+      // Saves user token to local storage
+      localStorage.setItem('accessToken', accessToken);
+    }
+
     get getToken() {
       // Retrieves the user token from local storage
       return localStorage.getItem('id_token');
+    }
+
+    get getAccessToken() {
+      // Retrieves the user token from local storage
+      return localStorage.getItem('accessToken');
     }
 
     setUser(profile, isAdmin) {
@@ -127,6 +137,7 @@ class LayoutStore extends BaseStore {
     }
 
     removeUser() {
+        localStorage.removeItem('accessToken');
         localStorage.removeItem('id_token');
         localStorage.removeItem('_profile');
     }
@@ -135,7 +146,8 @@ class LayoutStore extends BaseStore {
       // uses auth0 parseHash method to extract data from url hash
       const authResult = this.auth0.parseHash(hash);
       if (authResult && authResult.idToken) {
-        this.setToken(authResult.idToken)
+        this.setAccessToken(authResult.accessToken)
+        this.setToken(authResult.idToken );
       }
     }
 

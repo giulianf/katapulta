@@ -4,10 +4,10 @@ import BaseStore from './BaseStore';
 import LayoutStore from './LayoutStore';
 import { ContractsPreteur } from '../../model/ContractsPreteur';
 import { SimulateurInfo } from '../../model/SimulateurInfo';
-import { BasicInfo } from '../../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../../model/BasicInfoEmprunteur';
 import { FavorisEmprunteur } from '../../model/FavorisEmprunteur';
 import { getDateISO, getDateDetails } from '../../common/Utility';
+import Validator from '../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
 
 var _ = require('lodash');
@@ -22,9 +22,12 @@ new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20,
 
 const stepIndex = 1;
 
-const basicEmprunteurProfil = new BasicInfoEmprunteur('butacni', 'KATAPULTA', 'SPRL', 1600000, 'BE0837.444.333');
+const basicEmprunteurProfil = new BasicInfoEmprunteur(null,'butacni', 'KATAPULTA', 'SPRL', '', '', '', '', '', '','', '', 'julien.fumanti@g.vom', '0456/55.66.33',
+    '01/09/1989', 100000, '', 1234567, 3, 12600, [], '', 2.25,
+    'siteWeb', null);
 const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
 new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
+
 
 class ProvideStore extends BaseStore {
 
@@ -88,6 +91,30 @@ class ProvideStore extends BaseStore {
     }
 
     updateBasicInfoEmprunteur(newValue) {
+        if (!_.isNil(newValue.tauxInteretOffert)) {
+            if (newValue.tauxInteretOffert > Validator.TAUX_MAXIMUM) {
+                newValue.tauxInteretOffert = Validator.TAUX_MAXIMUM;
+            } else if (newValue.tauxInteretOffert < 0) {
+                newValue.tauxInteretOffert = 0;
+            }
+        } else if (!_.isNil(newValue.numEntreprise) ) {
+            // last entered digit is a number
+            const lastDigit = newValue.numEntreprise.substr(newValue.numEntreprise.length - 1, newValue.numEntreprise.length );
+            if ( Number( lastDigit ) ) {
+                // tva : 0833.444.333
+                if (_.size(newValue.numEntreprise) == 4) {
+                    newValue.numEntreprise = _.padEnd(newValue.numEntreprise, 5, '.');
+                } else if (_.size(newValue.numEntreprise) == 8) {
+                    newValue.numEntreprise = _.padEnd(newValue.numEntreprise, 9, '.');
+                } else if (_.size(newValue.numEntreprise) > 12 ) {
+                    newValue.numEntreprise = newValue.numEntreprise.substr(0, 12);
+                }
+            } else if (!_.isEqual(lastDigit, '.') ) {
+                newValue.numEntreprise = newValue.numEntreprise.substr(0, newValue.numEntreprise.length - 1);
+            } else if ( _.isEqual(lastDigit, '.') &&  (_.size(newValue.numEntreprise) == 5 || _.size(newValue.numEntreprise) == 9) )  {
+                newValue.numEntreprise = newValue.numEntreprise.substr(0, (newValue.numEntreprise.length >= 2 ? newValue.numEntreprise.length: 2)  - 2);
+            }
+        }
         _.assign(this._tabBasicEmprunteur, newValue);
     }
 
@@ -109,8 +136,8 @@ class ProvideStore extends BaseStore {
      */
     updateSimulateur(newValue) {
         if (!_.isNil(newValue.taux)) {
-            if (newValue.taux > 2.25) {
-                newValue.taux = 2.25;
+            if (newValue.taux > Validator.TAUX_MAXIMUM) {
+                newValue.taux = Validator.TAUX_MAXIMUM;
             } else if (newValue.taux < 0) {
                 newValue.taux = 0;
             }

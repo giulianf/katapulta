@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+import belgium from '../data/zipcode-belgium.json';
 
 export function getDateDetails() {
     return moment().format('DD/MM/YYYY HH:mm:ss');
@@ -40,4 +41,9 @@ export function validateDate(date) {
     }
 
     return false;
+}
+
+export function validateCodePostal(codePostal) {
+    const zipObject = _.find(belgium, {'zip': codePostal});
+    return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;
 }

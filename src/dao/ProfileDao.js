@@ -18,7 +18,7 @@ export class ProfileDao {
      * @return {type}      description
      */
     getBasicInfo(res, _mongodb, user, email) {
-        info('Entering getBasicInfo() data: ' + JSON.stringify( user ));
+        info('Entering getBasicInfo() data: ' + JSON.stringify( user ) + ' email: ' + email);
 
          try {
              const userId = user;
@@ -36,7 +36,7 @@ export class ProfileDao {
                           basicProfil = new BasicInfo(client);
                       } else {
                           basicProfil = new BasicInfo(null, userId, '' , '', '01/09/1939',
-                            null, email, '' ,'', '', '', false);
+                            null, email, '', '', '', false);
                       }
 
                       callback();
@@ -86,20 +86,13 @@ export class ProfileDao {
                     clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
                         returnOriginal: false
                       , upsert: true
-                  }, (err, r) => {
+                    }, (err, r) => {
                         if(err) {
                             callback(err);
                         }
                         debug('Result findOneAndUpdate: ' + JSON.stringify(r.value));
                         res.end( "Les informations utilisateur ont été enregistrées" );
                     });
-                    // clients.find({'user_id': basicInfo.user_id}).toArray(function(err, client) {
-                    //   debug("client found: " + client);
-                    //
-                    //   clients = client;
-                    //
-                    //   callback();
-                    // });
                 }
             ], (err) => {
                 error("Unable to updateBasicInfo " , err);
@@ -109,13 +102,36 @@ export class ProfileDao {
                     return;
                 }
             });
-
-
-            //  db.close();
-
         } catch( e ) {
             error('error: ' + e);
             res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
         }
+    }
+
+    updateEmprunteurInfo (res, _mongodb, soapClient, basicEmprunteurProfil) {
+        const args = {countryCode: 'BE', vatNumber: _.replace(basicEmprunteurProfil.numEntreprise, '.', '')};
+        async.series([
+            (callback) => {
+                soapClient.checkVat(args, function(err, result) {
+                     if (err) {
+                         error("Error during VAT. " , err);
+                         callback("Le numéro de TVA n'est pas valid.");
+                     }
+                     debug("Result of VAT: " + JSON.stringify(result));
+                     // VAT is valid
+                     if (result.valid == true) {
+                         callback();
+                     }
+                });
+            }
+        ], (err) => {
+            error("Unable to updateEmprunteurInfo " , err);
+            //   When it's done
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+        });
+
     }
 }

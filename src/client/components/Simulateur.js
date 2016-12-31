@@ -6,6 +6,7 @@ import ProvideStore from '../stores/ProvideStore';
 import ProvideActions from '../actions/ProvideActions';
 var DatePicker = require("react-bootstrap-date-picker");
 import { getBelgiumDate } from '../../common/Utility';
+import Validator from '../../validator/validatorEmprunteurBasic';
 
 export default class Simulateur extends Component {
   constructor (props){
@@ -71,13 +72,13 @@ export default class Simulateur extends Component {
     // }
     const validateDate = !_.isNil(this.state.simulateur.datePret) && !_.isEmpty(this.state.simulateur.datePret) ? "success" : "error";
 
-    const validatePret = !_.isNil(this.state.simulateur.pret) && this.state.simulateur.pret > 1000   && this.state.simulateur.pret < 100000 ? "success" : "error";
-    const validateYear = this.state.simulateur.year == 4 || this.state.simulateur.year == 6  || this.state.simulateur.year == 8 ? "success" : "error";
-    const validatetaux = this.state.simulateur.taux >= 1.125 && this.state.simulateur.taux <= 2.25 ? "success" : "error";
+    const validatePret = Validator.validatePretSouhaite(this.state.simulateur.pret) ? "success" : "error";
+    const validateYear = Validator.validateYearSouhaite(this.state.simulateur.year) ? "success" : "error";
+    const validatetaux = Validator.validateTauxInteret(this.state.simulateur.taux) ? "success" : "error";
     const isLoading = this.state.simulateur.isLoading;
 
-    const minTaux = 1.125;
-    const maxTaux = 2.25;
+    const minTaux = Validator.TAUX_MINIMUM;
+    const maxTaux = Validator.TAUX_MAXIMUM;
 
     let disableCalculate = true;
 

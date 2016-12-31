@@ -22,7 +22,7 @@ const requireAuth = (nextState, replace, callback) => {
         replace({ pathname: '/login' });
         callback();
     } else {
-        LayoutActions.getProfileUser(LayoutStore.getToken, LayoutStore.getAuth, (err) => {
+        LayoutActions.getProfileUser(LayoutStore.getAccessToken, LayoutStore.getAuth, (err) => {
             // if error during authentification
             if (err) {
                 replace({ pathname: '/' });

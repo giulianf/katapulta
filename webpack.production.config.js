@@ -19,6 +19,7 @@ module.exports = {
           if (item === 'font-awesome' || item === 'express' || item === 'ejs'
           || item === 'winston' || item === 'net' || item === 'express-jwt'
           || item === 'cors' || item === 'mongodb' || item === 'async' || item === 'util') {
+          || item === 'soap' || item === 'xml2js') {
               return false;
           }
           return item.indexOf('babel') === -1

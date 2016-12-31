@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { validateEmail , validateDate } from '../common/Utility';
+import { validateEmail , validateDate, validateCodePostal } from '../common/Utility';
 import belgium from '../data/zipcode-belgium.json';
 
 export default {
@@ -51,8 +51,7 @@ export default {
       return !_.isNil(address) && !_.isEmpty(address) ? true : false;
   },
   validateCodePostal(codePostal) {
-      const zipObject = _.find(belgium, {'zip': codePostal});
-      return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;
+      return validateCodePostal(codePostal) ? true : false;
   },
   validateVille(ville) {
       return !_.isNil(ville) && !_.isEmpty(ville) ? true : false;

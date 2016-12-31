@@ -10,7 +10,7 @@ export default {
         let profile;
         let isAdmin;
 
-        auth0.getProfile(token, (error, userDetail) => {
+        auth0.getUserInfo(token, (error, userDetail) => {
             if (error) {
                 callback(error);
             } else {

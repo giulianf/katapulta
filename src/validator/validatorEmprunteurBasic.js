@@ -1,60 +1,124 @@
 import _ from 'lodash';
-import { validateEmail , validateDate } from '../common/Utility';
-import belgium from '../data/zipcode-belgium.json';
+import { validateEmail , validateDate, validateCodePostal } from '../common/Utility';
 
 export default {
-  validateProfileTabBasic(basicInfo) {
-      if (_.isNil(basicInfo)) {
-          throw new Error("Impossible de valider le profil utilisateur.");
+    TAUX_MINIMUM : 1.125,
+    TAUX_MAXIMUM : 2.25,
+    PRET_MAX : 100000,
+  validateProfileEmprunteurTab(basicInfoEmprunteur) {
+      if (_.isNil(basicInfoEmprunteur)) {
+          throw new Error("Impossible de valider le profil de l'emprunteur.");
       }
-      if (!this.validatePrenom(basicInfo.prenom)) {
-          throw new Error("Le prénom n'est pas valid.");
-      }
-      if (!this.validateNom(basicInfo.nom)) {
-          throw new Error("Le prénom n'est pas valid.");
-      }
-      if (!this.validateNaissance(basicInfo.dateNaissance)) {
-          throw new Error("La date de naissance n'est pas valide.");
-      }
-      if (!this.validateNational(basicInfo.numNational)) {
-          throw new Error("Le numéro national n'est pas valid.");
-      }
-      if (!this.validateEmailAddress(basicInfo.email)) {
-          throw new Error("L'adresse email n'est pas valide.");
-      }
-      if (!this.validateAddress(basicInfo.address)) {
-          throw new Error("L'adresse n'est pas valide.");
-      }
-      if (!this.validateCodePostal(basicInfo.codePostal)) {
-          throw new Error("Le code postal n'est pas valid.");
-      }
-      if (!this.validateVille(basicInfo.ville)) {
-          throw new Error("La ville n'est pas valide.");
+      if (!this.validateActionnariat(basicInfoEmprunteur.actionnariatList)) {
+          throw new Error("Les actionnaires ne sont pas valids.");
       }
   },
-  validatePrenom(prenom) {
-      return !_.isNil(prenom) && !_.isEmpty(prenom) ? true : false;
+
+  validateUniqActionnariat(actionnariatList, newNameActionnaire) {
+      if ( !_.isEmpty(actionnariatList) ) {
+          for(let i = 0; i < actionnariatList.length; i++) {
+              const actionnaire = actionnariatList[i];
+              if (_.isEqual(actionnaire.nomComplet, _.trimStart(newNameActionnaire))) {
+                  return false;
+              }
+          }
+      }
+
+      return true;
   },
-  validateNom(nom) {
-      return !_.isNil(nom) && !_.isEmpty(nom) ? true : false;
+  validateNewActionnariat(actionnariatList, newPartActionnaire) {
+      if (newPartActionnaire.nbPart <= 0) {
+          return false;
+      }
+
+      if (this.validateUniqActionnariat(actionnariatList, newPartActionnaire.nomComplet)) {
+          return true;
+      } else {
+          return false;
+      }
   },
-  validateNaissance(dateNaissance) {
-      return !_.isNil(dateNaissance) && !_.isEmpty(dateNaissance) && validateDate(dateNaissance) ? true : false;
+
+  /**
+   * validatePartActionnariat - Sum of parts must be 100
+   *
+   * @param  {type} actionnariatList description
+   * @return {type}                  description
+   */
+  validatePartActionnariat(actionnariatList) {
+      if ( !_.isEmpty(actionnariatList) ) {
+          const nbParts = _.reduce(_.map(actionnariatList, (actionnaire) => {
+             return actionnaire.nbPart;
+         }), (total , part )=> {
+             return total += part;
+         });
+
+         if (nbParts == 100) {
+             return true;
+         }
+      }
+
+      return false;
   },
-  validateNational(numNational) {
-      return !_.isNil(numNational) && !_.isEmpty(numNational) && _.size(numNational) == 11  ? true : false;
+
+  validateTva(tva) {
+      return !_.isNil(tva) && (_.size(tva) == 12) ? true : false;
   },
+
+  validatePretSouhaite(pret) {
+      return !_.isNil(pret) && pret > 1000 && pret < this.PRET_MAX ? true : false;
+  },
+
+  validateYearSouhaite(year) {
+      return year == 4 || year == 6  || year == 8 ? true : false;
+  },
+
+  validateTauxInteret(taux) {
+      if (!_.isNil(taux)) {
+          if (taux <= this.TAUX_MAXIMUM && taux >= this.TAUX_MINIMUM) {
+              return true;
+          }
+      }
+
+      return false;
+  },
+
+  validateActionnariat(actionnariat) {
+      if (!_.isNil(actionnariat) && !_.isEmpty(actionnariat) && this.validatePartActionnariat(actionnariat)) {
+          return true;
+      }
+
+      return false;
+  },
+
   validateEmailAddress(email) {
       return !_.isNil(email) && validateEmail(email) ? true : false;
   },
+
   validateAddress(address) {
       return !_.isNil(address) && !_.isEmpty(address) ? true : false;
   },
+
   validateCodePostal(codePostal) {
-      const zipObject = _.find(belgium, {'zip': codePostal});
-      return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;
+      return validateCodePostal(codePostal) ? true : false;
   },
-  validateVille(ville) {
-      return !_.isNil(ville) && !_.isEmpty(ville) ? true : false;
+
+  validateDateConstitution(date) {
+      return !_.isNil(date) && !_.isEmpty(date) && validateDate(date) ? true : false;
+  },
+
+  validateChiffreAffaire(chiffreAffaire) {
+      return !_.isNil(chiffreAffaire) && _.isNumber(chiffreAffaire) && chiffreAffaire <= 50000000 ? true : false;
+  },
+
+  validateNbEmploye(nbEmploye) {
+      return !_.isNil(nbEmploye) && _.isNumber(nbEmploye) && nbEmploye <= 250 ? true : false;
+  },
+
+  validateFormeJuridique(formeJuridique) {
+      return !_.isNil(formeJuridique) &&
+      ( _.isEqual(formeJuridique, "SPRL") || _.isEqual(formeJuridique, "SPRL-S") ||  _.isEqual(formeJuridique, "SPRL") ||
+        _.isEqual(formeJuridique, "SCRL") || _.isEqual(formeJuridique, "SCRI") || _.isEqual(formeJuridique, "SA") ||
+        _.isEqual(formeJuridique, "SNC") || _.isEqual(formeJuridique, "SCS") || _.isEqual(formeJuridique, "SCA") ||
+        _.isEqual(formeJuridique, "ASBL") || _.isEqual(formeJuridique, "FONDATION") ) ? true : false;
   },
 };

@@ -75,7 +75,7 @@ export default class Profile extends Component {
       ) : null;
 
     const largeTabVisible = (
-        <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example">
+        <Tabs className="tabs-left" defaultActiveKey={2} id="uncontrolled-tab-lg-example">
             <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
             { basicEmprunteurTab }
             <Tab eventKey={3} title="Contrats Preteur"><Col md={8} sm={10}><ProfileTabContracts tabContracts={this.state.tabContracts} /></Col></Tab>

@@ -1,22 +1,11 @@
 import path from 'path';
 import { Server } from 'http';
 import Express from 'express';
-
-// import React from 'react';
-// import { renderToString } from 'react-dom/server';
-// import { match, RouterContext } from 'react-router';
-// import routes from './routes';
-// import NoMatch from './client/components/NoMatch';
 import cors from 'cors';
 let bodyParser = require('body-parser');
 import _ from 'lodash';
 const jwt = require('express-jwt');
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme'
-// import {green100, green500, green700} from 'material-ui/styles/colors';
-
 import {getCurrentDate, getDate, error, debug, info, getYear, addYear, getBelgiumDate} from './common/UtilityLog';
-
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
 
@@ -74,11 +63,17 @@ MongoClient.connect(url, function(err, db) {
   _mongodb =  db;
 });
 
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
+let soap = require('soap');
 
-// define the folder that will be used for static assets
-app.use(Express.static(path.join(__dirname, 'webapp', 'resources')));
+ const urlSoap = process.env.SOAP_VAT_URL;
+ let clientSoap;
+
+ soap.createClient(urlSoap, function(err, client) {
+     info("info SOAP VAT connected");
+
+     clientSoap = client;
+ });
+
 
 /******************************************/
 /********** START SIMULATOR API ***********/
@@ -109,7 +104,7 @@ app.get('/api/simulate/:simulateData', (req, res) => {
 /******************************************/
 
 /**
- * Update Basic info
+ * get Basic info by user id
  */
 app.get('/api/getBasicInfo/:user/:email', (req, res) => {
     debug("Entering /api/getBasicInfo ");
@@ -138,60 +133,6 @@ app.post('/api/updateBasicInfo', (req, res) => {
 /******************************************/
 /************ END PROFILE API *************/
 /******************************************/
-
-// universal routing and rendering
-// app.get('*', (req, res) => {
-//     getMatch(req.url, req, res);
-// });
-
-// function getMatch (url, req, res) {
-//     const muiTheme = getMuiTheme(null, {
-//       avatar: {
-//         borderColor: null,
-//       },
-//       userAgent: req.headers['user-agent'],
-//     });
-//
-//     match(
-//       { routes, location: url },
-//       (err, redirectLocation, renderProps) => {
-//
-//         // in case of error display the error message
-//         if (err) {
-//           return res.status(500).send(err.message);
-//         }
-//
-//         // in case of redirect propagate the redirect to the browser
-//         if (redirectLocation) {
-//           return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-//         }
-//
-//         info('location: ' + url);
-//
-//         if (_.isEqual(url, '/profile')) {
-//              // check token
-//
-//             return res.redirect('/');
-//         }
-//
-//         // generate the React markup for the current route
-//         let markup;
-//         if (renderProps) {
-//           // if the current route matched we have renderProps
-//           markup = renderToString( <MuiThemeProvider muiTheme={muiTheme}><RouterContext {...renderProps}/></MuiThemeProvider>);
-//         } else {
-//           // otherwise we can render a 404 page
-//           markup = renderToString(<MuiThemeProvider><NoMatch/></MuiThemeProvider>);
-//           res.status(404);
-//         }
-//
-//         info('Markup ' + url);
-//
-//         // render the index template with the embedded React markup
-//         return res.render('index', { markup });
-//       }
-//     );
-// }
 
 // start the server
 const port = process.env.SERVER_PORT ;
