@@ -49,6 +49,19 @@ export default {
     },
 
     /**
+     * get Basic emprunteur profile within TAB emprunteur
+     */
+    getEmprunteurBasicInfo: (profile) => {
+        let promise = ProvideService.getEmprunteurBasicInfo(profile);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GET_BASIC_INFO_EMPRUNTEUR,
+          success: ProvideConstants.GET_BASIC_INFO_EMPRUNTEUR_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+
+    /**
      * Update profile Basic within TAB basic
      */
     updateSaveBasicInfo: (basicInfo) => {
@@ -57,6 +70,19 @@ export default {
         dispatchAsync(promise, {
           request: ProvideConstants.UPDATE_BASIC_INFO,
           success: ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+
+    /**
+     * Update profile Basic within TAB basic
+     */
+    updateSaveEmprunteurBasicInfo: (basicInfoEmprunteur) => {
+        let promise = ProvideService.updateEmprunteurBasicInfo(basicInfoEmprunteur);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR,
+          success: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     }

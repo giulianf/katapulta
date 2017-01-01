@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Clearfix } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -16,12 +16,16 @@ export default class ProfileTabBasicEmprunteur extends Component {
     super(props);
 
     this._addImage = this._addImage.bind(this);
-    this._handleSaveBasicInfo = this._handleSaveBasicInfo.bind(this);
     this._changeActionnaire = this._changeActionnaire.bind(this);
     this._addActionnaire = this._addActionnaire.bind(this);
+    this._handleSaveEmprunteurBasicInfo = this._handleSaveEmprunteurBasicInfo.bind(this);
 
-    this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[], actionnaire: {titre: "Mr", nomComplet:"", nbPart: 0} }
+    this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[], actionnaire: {titre: "Mr", nomComplet:"", nbPart: 0} };
 
+  }
+
+  _handleSaveEmprunteurBasicInfo() {
+      this.props.handleSaveEmprunteurBasicInfo(this.props.basicInfoEmprunteur);
   }
 
   _addImage(e) {
@@ -47,6 +51,7 @@ export default class ProfileTabBasicEmprunteur extends Component {
  }
 
   componentDidMount() {
+
    }
 
    componentWillUnmount() {
@@ -95,8 +100,6 @@ export default class ProfileTabBasicEmprunteur extends Component {
         const validateDestinationPret = Validator.validateAddress(this.props.basicInfoEmprunteur.destinationPret) ? "success" : "error";
         const validateNumEntreprise = Validator.validateTva(this.props.basicInfoEmprunteur.numEntreprise) ? "success" : "error";
         const validateActionnariat = Validator.validateActionnariat(this.props.basicInfoEmprunteur.actionnariat) ? "success" : "error";
-        const validateMontantSouhaite = Validator.validatePretSouhaite(this.props.basicInfoEmprunteur.montantSouhaite) ? "success" : "error";
-        const validateDureeSouhaite = Validator.validateYearSouhaite(this.props.basicInfoEmprunteur.dureeSouhaite) ? "success" : "error"
         const validatetaux = Validator.validateTauxInteret(this.props.basicInfoEmprunteur.tauxInteretOffert) ? "success" : "error";
         const validateCodePostalSC = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeSocial) ? "success" : "error";
         const validateVilleSS = Validator.validateAddress(this.props.basicInfoEmprunteur.villeSiegeSocial) ? "success" : "error";
@@ -110,6 +113,8 @@ export default class ProfileTabBasicEmprunteur extends Component {
         const validateDateConstitution = Validator.validateDateConstitution(this.props.basicInfoEmprunteur.dateConstitution ) ? "success" : "error";
         const validateNbEmploye = Validator.validateNbEmploye(this.props.basicInfoEmprunteur.nbEmploye ) ? "success" : "error";
         const validateCapital = Validator.validateAddress(this.props.basicInfoEmprunteur.capital ) ? "success" : "error";
+        const validateMontantSouhaite = Validator.validatePretSouhaite(this.props.basicInfoEmprunteur.montantSouhaite) ? "success" : "error";
+        const validateDureeSouhaite = Validator.validateYearSouhaite(this.props.basicInfoEmprunteur.dureeSouhaite) ? "success" : "error";
         const validateSiteWeb = Validator.validateAddress(this.props.basicInfoEmprunteur.siteWeb ) ? "success" : "error";
 
         const colImage = !_.isNil(this.state) && !_.isNil(this.state.imagePreviewUrl) ? (
@@ -245,6 +250,7 @@ export default class ProfileTabBasicEmprunteur extends Component {
                               }  value={this.props.basicInfoEmprunteur.numEntreprise}/>
                         </Col>
                       </FormGroup>
+                       <Clearfix visibleSmBlock visibleLgBlock visibleMdBlock></Clearfix>
                       <FormGroup controlId="formHorizontalASS" validationState={validateAddressSS}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Adresse Siège social
@@ -504,7 +510,7 @@ export default class ProfileTabBasicEmprunteur extends Component {
                       <FormGroup>
                         <Col smOffset={10} sm={2} mdOffset={8} md={2}>
                           <Button bsStyle="primary"
-                            onClick={ this._handleSaveBasicInfo }>
+                            onClick={ this._handleSaveEmprunteurBasicInfo }>
                             Enregistrer
                           </Button>
                         </Col>

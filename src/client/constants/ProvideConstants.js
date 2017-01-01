@@ -12,15 +12,18 @@ export default keyMirror({
         GET_BASIC_INFO_SUCCCESS: null,
         UPDATE_BASIC_INFO: null,
         UPDATE_BASIC_INFO_SUCCCESS: null,
+        // BASIC emprunteur
+        GET_BASIC_INFO_EMPRUNTEUR: null,
+        GET_BASIC_INFO_EMPRUNTEUR_SUCCCESS: null,
+        UPDATE_BASIC_INFO_EMPRUNTEUR: null,
+        SAVE_BASIC_INFO_EMPRUNTEUR: null,
+        SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS: null,
+
+
 
     // Pop up Workflow Stepper
     OPEN_STEPPER_DETAIL : null,
     CLOSE_STEPPER_DETAIL : null,
-
-    // Update Basic info , Profile Tab
-    UPDATE_BASIC_INFO : null,
-    // Update Basic info Emprunteur, Profile Tab
-    UPDATE_BASIC_INFO_EMPRUNTEUR : null,
 
     FAVORIS_EMPRUNTEUR : null,
 

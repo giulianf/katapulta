@@ -9,6 +9,7 @@ import ProfileTabBasic from './profile/basic/ProfileTabBasic';
 import ProfileTabBasicEmprunteur from './profile/emprunteur/ProfileTabBasicEmprunteur';
 import ProfileTabFavoris from './profile/favoris/ProfileTabFavoris';
 import ProfileTabContractEmprunteur from './profile/emprunteur/ProfileTabContractEmprunteur';
+import async from 'async';
 
 function getProfileState() {
   return {
@@ -24,14 +25,15 @@ function getProfileState() {
 export default class Profile extends Component {
   constructor (props){
     super(props);
+    ProvideActions.getBasicInfo(ProvideStore.getProfile);
+    ProvideActions.getEmprunteurBasicInfo(ProvideStore.getProfile);
 
     this._onChange = this._onChange.bind(this);
     this._updateBasicInfo = this._updateBasicInfo.bind(this);
-
+    this._updateEmprunteurBasicInfo = this._updateEmprunteurBasicInfo.bind(this);
 
     this.state = getProfileState();
 
-     ProvideActions.getBasicInfo(ProvideStore.getProfile);
   }
 
   _onChange() {
@@ -52,6 +54,11 @@ export default class Profile extends Component {
    _updateBasicInfo(basicInfo) {
        ProvideActions.updateSaveBasicInfo(basicInfo);
    }
+
+   _updateEmprunteurBasicInfo(basicInfoEmprunteur) {
+       ProvideActions.updateSaveEmprunteurBasicInfo(basicInfoEmprunteur);
+   }
+
    //
   //  progress(completed) {
   //    if (completed > 100) {
@@ -65,7 +72,7 @@ export default class Profile extends Component {
 
   render () {
       const basicEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
+          <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo} clientId={this.state.basicInfo.clientId} basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
       ) : null;
       const conractEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
           <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur tabContracts={this.state.tabContracts}  /></Tab>

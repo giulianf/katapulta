@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { validateEmail , validateDate, validateCodePostal } from '../common/Utility';
+import { validateEmail , validateDate, validateCodePostal, periodDate } from '../common/Utility';
 
 export default {
     TAUX_MINIMUM : 1.125,
@@ -103,7 +103,7 @@ export default {
   },
 
   validateDateConstitution(date) {
-      return !_.isNil(date) && !_.isEmpty(date) && validateDate(date) ? true : false;
+      return !_.isNil(date) && !_.isEmpty(date) && validateDate(date) && periodDate(date, 5) ? true : false;
   },
 
   validateChiffreAffaire(chiffreAffaire) {

@@ -43,6 +43,15 @@ export function validateDate(date) {
     return false;
 }
 
+export function periodDate(date, minDate) {
+    const creationDate = moment(date).add(5, 'years');
+    if ( creationDate.isAfter(moment()) ) {
+        return true;
+    }
+
+    return false;
+}
+
 export function validateCodePostal(codePostal) {
     const zipObject = _.find(belgium, {'zip': codePostal});
     return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;

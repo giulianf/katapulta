@@ -63,17 +63,6 @@ MongoClient.connect(url, function(err, db) {
   _mongodb =  db;
 });
 
-let soap = require('soap');
-
- const urlSoap = process.env.SOAP_VAT_URL;
- let clientSoap;
-
- soap.createClient(urlSoap, function(err, client) {
-     info("info SOAP VAT connected");
-
-     clientSoap = client;
- });
-
 
 /******************************************/
 /********** START SIMULATOR API ***********/
@@ -128,6 +117,31 @@ app.post('/api/updateBasicInfo', (req, res) => {
     const profileDao = new ProfileDao();
 
     profileDao.updateBasicInfo(res, _mongodb, basicInfo);
+});
+/**
+ * get emprunteur Basic info by user id
+ */
+app.get('/api/getEmprunteurBasicInfo/:user', (req, res) => {
+    debug("Entering /api/getBasicInfo ");
+
+    const user = req.params.user;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.getEmprunteurBasicInfo(res, _mongodb, user);
+});
+
+/**
+ * Update emprunteur Basic info
+ */
+app.post('/api/updateEmprunteurBasicInfo', (req, res) => {
+    debug("Entering /api/updateEmprunteurBasicInfo ");
+
+    const basicInfoEmprunteur = req.body.basicInfoEmprunteur;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.updateEmprunteurInfo(res, _mongodb, basicInfoEmprunteur);
 });
 
 /******************************************/

@@ -6,6 +6,7 @@ export class BasicInfo {
      * constructor - description
      *
      * @param  {Object} client      description
+     * @param  {string} clientId      description
      * @param  {string} user_id      description
      * @param  {string} prenom        description
      * @param  {string} nom           description
@@ -16,8 +17,9 @@ export class BasicInfo {
      * @param  {string} ville         description
      * @param  {Boolean} isEmprunteur         description
      */
-    constructor(client, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur) {
+    constructor(client, clientId, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur) {
         if (!_.isNil(client)) {
+            this.clientId = client._id;
             this.user_id = client.user_id;
             this.prenom = client.prenom;
             this.nom = client. nom;
@@ -31,6 +33,7 @@ export class BasicInfo {
             this.ville = client.ville;
             this.isEmprunteur = client.isEmprunteur;
         } else {
+            this.clientId= clientId;
             this.user_id= user_id;
             this.prenom=prenom;
             this.nom= nom;

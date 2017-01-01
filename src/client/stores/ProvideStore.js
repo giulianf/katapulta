@@ -22,9 +22,9 @@ new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20,
 
 const stepIndex = 1;
 
-const basicEmprunteurProfil = new BasicInfoEmprunteur(null,'butacni', 'KATAPULTA', 'SPRL', '', '', '', '', '', '','', '', 'julien.fumanti@g.vom', '0456/55.66.33',
-    '01/09/1989', 100000, '', 1234567, 3, 12600, [], '', 2.25,
-    'siteWeb', null);
+// const basicEmprunteurProfil = new BasicInfoEmprunteur(null,'butacni', 'KATAPULTA', 'SPRL', '', '', '', '', '', '','', '', 'julien.fumanti@g.vom', '0456/55.66.33',
+//     '01/09/1989', 100000, '', 1234567, 3, 12600, [], '', 2.25,
+//     'siteWeb', null);
 const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
 new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
 
@@ -49,7 +49,6 @@ class ProvideStore extends BaseStore {
 
       // profile emprunteur
       this._tabBasicEmprunteur = {};
-      this._tabBasicEmprunteur = basicEmprunteurProfil;
 
       // profile favoris
       this._favorisEmprunteur = [];
@@ -82,6 +81,16 @@ class ProvideStore extends BaseStore {
     }
 
     /**
+     * populateEmprunteurBasicInfo - Populate Emprunteur Basic Info tab within Profile
+     *
+     * @param  {type} basicEmprunteurProfil description
+     * @return {type}             description
+     */
+    populateEmprunteurBasicInfo(basicEmprunteurProfil) {
+        this._tabBasicEmprunteur = basicEmprunteurProfil;
+    }
+
+    /**
      * updateBasicInfo - To update Profile tab Basic info
      *
      * @param  {type} newValue Key/value in the Object tabBasic
@@ -100,7 +109,7 @@ class ProvideStore extends BaseStore {
         } else if (!_.isNil(newValue.numEntreprise) ) {
             // last entered digit is a number
             const lastDigit = newValue.numEntreprise.substr(newValue.numEntreprise.length - 1, newValue.numEntreprise.length );
-            if ( Number( lastDigit ) ) {
+            if ( Number( lastDigit ) || parseInt(lastDigit) == 0 ) {
                 // tva : 0833.444.333
                 if (_.size(newValue.numEntreprise) == 4) {
                     newValue.numEntreprise = _.padEnd(newValue.numEntreprise, 5, '.');
@@ -176,8 +185,15 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
+      case ProvideConstants.GET_BASIC_INFO_EMPRUNTEUR_SUCCCESS:
+        this.populateEmprunteurBasicInfo(action.body);
+
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
       case ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS:
-        Toastr.info(action.body);
+        this.populateBasicInfo(action.body);
+        Toastr.info( "Les informations utilisateur ont été enregistrées.");
 
         // If action was responded to, emit change event
         // this.emitChange();
