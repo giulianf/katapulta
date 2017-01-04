@@ -11,7 +11,8 @@ export default keyMirror({
         GET_BASIC_INFO: null,
         GET_BASIC_INFO_SUCCCESS: null,
         UPDATE_BASIC_INFO: null,
-        UPDATE_BASIC_INFO_SUCCCESS: null,
+        SAVE_BASIC_INFO: null,
+        SAVE_BASIC_INFO_SUCCCESS: null,
         // BASIC emprunteur
         GET_BASIC_INFO_EMPRUNTEUR: null,
         GET_BASIC_INFO_EMPRUNTEUR_SUCCCESS: null,
@@ -28,6 +29,8 @@ export default keyMirror({
     FAVORIS_EMPRUNTEUR : null,
 
     LOGIN_DATA : null,
-    LOGIN_DATA_SUCCESS : null
+    LOGIN_DATA_SUCCESS : null,
+    FORGET_USER: null,
+    FORGET_USER_SUCCCESS: null
 
 });

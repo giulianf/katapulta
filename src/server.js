@@ -8,6 +8,7 @@ const jwt = require('express-jwt');
 import {getCurrentDate, getDate, error, debug, info, getYear, addYear, getBelgiumDate} from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
+import { LoginDao } from './dao/LoginDao';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -24,7 +25,7 @@ const MongoClient =  require('mongodb').MongoClient,
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}))
 .use(function(req, res, next){
     if (req.url === '/favicon.ico') {
         res.writeHead(200, {'Content-Type': 'image/x-icon'} );
@@ -148,6 +149,21 @@ app.post('/api/updateEmprunteurBasicInfo', (req, res) => {
 /************ END PROFILE API *************/
 /******************************************/
 
+
+/******************************************/
+/************ END LOGIN API *************/
+/******************************************/
+
+app.post('/api/forgetLogin', (req, res) => {
+    debug("Entering /api/forgetLogin ");
+
+    const newUser = req.body.newUser;
+    const token = req.body.token;
+
+    const loginDao = new LoginDao();
+
+    loginDao.forgetUser(res, _mongodb, newUser, token);
+})
 // start the server
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;

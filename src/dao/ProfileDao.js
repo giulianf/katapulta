@@ -3,7 +3,8 @@ import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/U
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import async from 'async';
-import Validator from '../validator/validatorBasicInfo';
+import ValidatorBasic from '../validator/validatorBasicInfo';
+import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 let soap = require('soap');
 
 export class ProfileDao {
@@ -79,7 +80,7 @@ export class ProfileDao {
              async.series([
                 (callback) => {
                     // Validate basic Info
-                    Validator.validateProfileTabBasic(basicInfo);
+                    ValidatorBasic.validateProfileTabBasic(basicInfo);
 
                     // Find some documents
                     clients = _mongodb.collection('clients');
@@ -88,7 +89,7 @@ export class ProfileDao {
                     clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
                         returnOriginal: false
                       , upsert: true
-                  }, (err, clientResult) => {
+                    }, (err, clientResult) => {
                         if(err) {
                             callback(err);
                         }
@@ -134,20 +135,20 @@ export class ProfileDao {
                     (callback) => {
                         // Find some documents
                         emprunteurs.findOne({'user_id': userId}, function(err, emprunteur) {
-                          debug("*****  emprunteur found: " + JSON.stringify( emprunteur ));
+                          debug("*****  emprunteur found: " + _.isEmpty( emprunteur ));
 
                           if (!_.isNil(emprunteur)) {
                               basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
                           } else {
-                              basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '',
-                              '01/09/1989', 0, '', 0, 0, 0, [], '', 2.25, 'www.', null);
+                              basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '','01/09/1989',
+                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', []);
                           }
 
                           callback();
                         });
                     },
                     (callback) => {
-                        debug("****  BasicInfoEmprunteur: " + JSON.stringify( basicInfoEmprunteur ) );
+                        debug("****  BasicInfoEmprunteur: " + JSON.stringify( basicInfoEmprunteur.toLog() ) );
 
                         res.end( JSON.stringify( basicInfoEmprunteur ) );
                     }
@@ -174,72 +175,77 @@ export class ProfileDao {
      * @param  {Object} basicEmprunteurProfil description
      */
     updateEmprunteurInfo (res, _mongodb, basicEmprunteurProfil) {
-        info('Entering updateEmprunteurInfo() emprunteur info: ' + JSON.stringify(basicEmprunteurProfil));
+        try {
+            let emprunteur = _.cloneDeep(basicEmprunteurProfil);
+            emprunteur.image = [];
+            info('Entering updateEmprunteurInfo() emprunteur info: ' + JSON.stringify(emprunteur));
 
-        const urlSoap = process.env.SOAP_VAT_URL;
-        let clientSoap;
-        debug("VAT is: " + _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '') );
-        const args = {countryCode: 'BE', vatNumber:  _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '')};
+            const urlSoap = process.env.SOAP_VAT_URL;
+            let clientSoap;
+            debug("VAT is: " + _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '') );
+            const args = {countryCode: 'BE', vatNumber:  _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '')};
 
-        async.series([
-            (callback) => {
-                soap.createClient(urlSoap, function(err, client) {
-                    if (err) {
-                        error("Error during connection of VAT SOAP. ", err);
-                        callback("Error during connection of VAT SOAP. ");
-                    }
-                    info("info SOAP VAT connected");
+            async.series([
+                (callback) => {
+                    // Validate basic Info
+                    ValidatorEmprunteur.validateProfileEmprunteurTab(basicEmprunteurProfil);
 
-                    clientSoap = client;
-                    callback();
-                });
-            },
-            (callback) => {
-                clientSoap.checkVat(args, function(err, result) {
-                     if (err) {
-                         error("Error during VAT. " , err);
-                         callback("Le numéro de TVA n'est pas valid.");
-                         return;
-                     }
-                     debug("Result of VAT: " + JSON.stringify(result));
-                     // VAT is valid
-                     if (result.valid == true) {
-                         callback();
-                     } else {
-                         debug("user " +basicEmprunteurProfil.user_id +" la tva " + basicEmprunteurProfil.numEntreprise + " n'est pas valid.");
-                         callback("Le numéro d'entreprise " + basicEmprunteurProfil.numEntreprise + " n'est pas valid.");
-                     }
-                });
-            },
-            (callback) => {
-                // Validate basic Info
-                // Validator.validateProfileTabBasic(basicInfo);
+                    soap.createClient(urlSoap, function(err, client) {
+                        if (err) {
+                            error("Error during connection of VAT SOAP. ", err);
+                            callback("Error during connection of VAT SOAP. ");
+                        }
+                        info("info SOAP VAT connected");
 
-                // Find some documents
-                let emprunteurs = _mongodb.collection('emprunteurs');
+                        clientSoap = client;
+                        callback();
+                    });
+                },
+                (callback) => {
+                    clientSoap.checkVat(args, function(err, result) {
+                         if (err) {
+                             error("Error during VAT. " , err);
+                             callback("Le numéro de TVA n'est pas valid.");
+                             return;
+                         }
+                         debug("Result of VAT: " + JSON.stringify(result));
+                         // VAT is valid
+                         if (result.valid == true) {
+                             callback();
+                         } else {
+                             debug("user " +basicEmprunteurProfil.user_id +" la tva " + basicEmprunteurProfil.numEntreprise + " n'est pas valid.");
+                             callback("Le numéro d'entreprise " + basicEmprunteurProfil.numEntreprise + " n'est pas valid.");
+                         }
+                    });
+                },
+                (callback) => {
+                    // Find some documents
+                    let emprunteurs = _mongodb.collection('emprunteurs');
 
-                // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
-                emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id}, basicEmprunteurProfil, {
-                    returnOriginal: false
-                  , upsert: true
-              }, (err, emprunteurResult) => {
-                    if(err) {
-                        callback(err);
-                    }
-                    debug('Result findOneAndUpdate: ' + JSON.stringify(emprunteurResult.value));
-                    const basicEmprunteur = new BasicInfoEmprunteur(emprunteurResult);
+                    emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id}, basicEmprunteurProfil, {
+                        returnOriginal: false
+                      , upsert: true
+                    }, (err, emprunteurResult) => {
+                        if(err) {
+                            callback(' error async ' , err);
+                        }
+                        const basicEmprunteur = new BasicInfoEmprunteur(emprunteurResult.value);
+                        debug('Result findOneAndUpdate: ' + JSON.stringify(basicEmprunteur.toLog()));
 
-                    res.end( JSON.stringify(basicEmprunteur) );
-                });
-            }
-        ], (err) => {
-            error("Unable to updateEmprunteurInfo " , err);
-            //   When it's done
-            if (err) {
-                res.status(500).send(err);
-                return;
-            }
-        });
-
+                        res.end( JSON.stringify(basicEmprunteur) );
+                    });
+                }
+            ], (err) => {
+                error("Unable to updateEmprunteurInfo " , err);
+                //   When it's done
+                if (err) {
+                    res.status(500).send(err.message);
+                    return;
+                }
+            });
+        } catch( e ) {
+            error('error: ' + e);
+            res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
+        }
     }
 }

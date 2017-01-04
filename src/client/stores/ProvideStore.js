@@ -191,9 +191,16 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
-      case ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS:
+      case ProvideConstants.SAVE_BASIC_INFO_SUCCCESS:
         this.populateBasicInfo(action.body);
         Toastr.info( "Les informations utilisateur ont été enregistrées.");
+
+        // If action was responded to, emit change event
+        // this.emitChange();
+        break;
+      case ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS:
+        this.populateEmprunteurBasicInfo(action.body);
+        Toastr.info( "Les informations emprunteur ont été enregistrées.");
 
         // If action was responded to, emit change event
         // this.emitChange();
@@ -220,6 +227,7 @@ class ProvideStore extends BaseStore {
         break;
       case ProvideConstants.UPDATE_BASIC_INFO_EMPRUNTEUR:
          this.updateBasicInfoEmprunteur(action.newValue);
+
         // If action was responded to, emit change event
         this.emitChange();
         break;

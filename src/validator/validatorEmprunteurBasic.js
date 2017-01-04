@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { validateEmail , validateDate, validateCodePostal, periodDate } from '../common/Utility';
+import { validateEmail , validateDate, validateCodePostal, periodDate, validateWeb } from '../common/Utility';
 
 export default {
     TAUX_MINIMUM : 1.125,
@@ -9,9 +9,103 @@ export default {
       if (_.isNil(basicInfoEmprunteur)) {
           throw new Error("Impossible de valider le profil de l'emprunteur.");
       }
-      if (!this.validateActionnariat(basicInfoEmprunteur.actionnariatList)) {
+
+      if (!this.validateString(basicInfoEmprunteur.denominationSocial)) {
+          throw new Error("La dénomination sociale n'est pas valide.");
+      }
+
+      if (!this.validateFormeJuridique(basicInfoEmprunteur.formeJuridique)) {
+          throw new Error("La forme juridique n'est pas valide.");
+      }
+
+      if (!this.validateTva(basicInfoEmprunteur.numEntreprise)) {
+          throw new Error("Le numéro d'entreprise n'est pas valid.");
+      }
+
+      if (!this.validateAddress(basicInfoEmprunteur.adresseSiegeSocial)) {
+          throw new Error("L'adresse du siège social n'est pas valide.");
+      }
+
+      if (!this.validateCodePostal(basicInfoEmprunteur.codePostalSiegeSocial)) {
+          throw new Error("Le code postal du siège social n'est pas valid.");
+      }
+
+      if (!this.validateString(basicInfoEmprunteur.villeSiegeSocial)) {
+          throw new Error("La ville du siège social n'est pas valide.");
+      }
+
+      if (!this.validateAddress(basicInfoEmprunteur.adresseSiegeExploitation)) {
+          throw new Error("L'adresse du siège d'exploitation n'est pas valide.");
+      }
+
+      if (!this.validateCodePostal(basicInfoEmprunteur.codePostalSiegeExploitation)) {
+          throw new Error("Le code postal du siège d'exploitation n'est pas valid.");
+      }
+
+      if (!this.validateString(basicInfoEmprunteur.villeSiegeExploitation)) {
+          throw new Error("La ville du siège d'exploitation n'est pas valid.");
+      }
+
+      if (!this.validateString(basicInfoEmprunteur.representantLegal)) {
+          throw new Error("Le représentant légal n'est pas valid.");
+      }
+
+        if (!this.validateEmailAddress(basicInfoEmprunteur.email)) {
+            throw new Error("L'email n'est pas valid.");
+        }
+
+      if (!this.validateString(basicInfoEmprunteur.numTel)) {
+          throw new Error("Le numéro de téléphone n'est pas valid.");
+      }
+
+      if (!this.validateDateConstitution(basicInfoEmprunteur.dateConstitution)) {
+          throw new Error("La date de constitution n'est pas valide.");
+      }
+
+      if (!this.validateChiffreAffaire(basicInfoEmprunteur.chiffreAffaire)) {
+          throw new Error("Le chiffre d'affaire n'est pas valid.");
+      }
+
+      if (!this.validateNbEmploye(basicInfoEmprunteur.nbEmploye)) {
+          throw new Error("Le nombre d'employé n'est pas valid.");
+      }
+
+      if (!this.validateNumber(basicInfoEmprunteur.capital)) {
+          throw new Error("Le capital n'est pas valid.");
+      }
+
+      if (!this.validateActionnariat(basicInfoEmprunteur.actionnariat)) {
           throw new Error("Les actionnaires ne sont pas valids.");
       }
+
+      if (!this.validateString(basicInfoEmprunteur.destinationPret)) {
+          throw new Error("La destination du prêt n'est pas valid.");
+      }
+
+      if (!this.validatePretSouhaite(basicInfoEmprunteur.montantSouhaite)) {
+          throw new Error("Le montant souhaité n'est pas valid.");
+      }
+
+      if (!this.validateYearSouhaite(basicInfoEmprunteur.dureeSouhaite)) {
+          throw new Error("La durée souhaitée n'est pas valid.");
+      }
+
+      if (!this.validateTauxInteret(basicInfoEmprunteur.tauxInteretOffert)) {
+          throw new Error("Le taux intérêt offert n'est pas valid.");
+      }
+
+      if (!this.validateSiteWeb(basicInfoEmprunteur.siteWeb)) {
+          throw new Error("Le site web n'est pas valid.");
+      }
+
+  },
+
+  validateFormeJuridique(formeJuridique) {
+      return !_.isNil(formeJuridique) &&
+      ( _.isEqual(formeJuridique, "SPRL") || _.isEqual(formeJuridique, "SPRL-S") ||  _.isEqual(formeJuridique, "SPRL") ||
+        _.isEqual(formeJuridique, "SCRL") || _.isEqual(formeJuridique, "SCRI") || _.isEqual(formeJuridique, "SA") ||
+        _.isEqual(formeJuridique, "SNC") || _.isEqual(formeJuridique, "SCS") || _.isEqual(formeJuridique, "SCA") ||
+        _.isEqual(formeJuridique, "ASBL") || _.isEqual(formeJuridique, "FONDATION") ) ? true : false;
   },
 
   validateUniqActionnariat(actionnariatList, newNameActionnaire) {
@@ -98,6 +192,14 @@ export default {
       return !_.isNil(address) && !_.isEmpty(address) ? true : false;
   },
 
+  validateString(text) {
+      return !_.isNil(text) && !_.isEmpty(text) ? true : false;
+  },
+
+  validateNumber(chiffre) {
+      return !_.isNil(chiffre) && _.isNumber(chiffre) ? true : false;
+  },
+
   validateCodePostal(codePostal) {
       return validateCodePostal(codePostal) ? true : false;
   },
@@ -114,11 +216,9 @@ export default {
       return !_.isNil(nbEmploye) && _.isNumber(nbEmploye) && nbEmploye <= 250 ? true : false;
   },
 
-  validateFormeJuridique(formeJuridique) {
-      return !_.isNil(formeJuridique) &&
-      ( _.isEqual(formeJuridique, "SPRL") || _.isEqual(formeJuridique, "SPRL-S") ||  _.isEqual(formeJuridique, "SPRL") ||
-        _.isEqual(formeJuridique, "SCRL") || _.isEqual(formeJuridique, "SCRI") || _.isEqual(formeJuridique, "SA") ||
-        _.isEqual(formeJuridique, "SNC") || _.isEqual(formeJuridique, "SCS") || _.isEqual(formeJuridique, "SCA") ||
-        _.isEqual(formeJuridique, "ASBL") || _.isEqual(formeJuridique, "FONDATION") ) ? true : false;
+  validateSiteWeb(siteWeb) {
+      return !_.isNil(siteWeb) && validateWeb(siteWeb) ? true : false;
   },
+
+
 };

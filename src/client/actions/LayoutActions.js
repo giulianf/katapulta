@@ -1,5 +1,7 @@
 import { dispatch, dispatchAsync } from '../dispatcher/AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
+import ProvideConstants from '../constants/ProvideConstants';
+import ProvideService from '../services/ProvideService';
 
 export default {
 
@@ -26,6 +28,16 @@ export default {
                 callback();
             }
         });
+    },
+
+    forgetUser: (newUser, token) => {
+        let promise = ProvideService.forgetUser(newUser, token);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.FORGET_USER,
+          success: ProvideConstants.FORGET_USER_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
     },
 
     logUserOut: () => {

@@ -68,8 +68,8 @@ export default {
         let promise = ProvideService.updateBasicInfo(basicInfo);
 
         dispatchAsync(promise, {
-          request: ProvideConstants.UPDATE_BASIC_INFO,
-          success: ProvideConstants.UPDATE_BASIC_INFO_SUCCCESS,
+          request: ProvideConstants.SAVE_BASIC_INFO,
+          success: ProvideConstants.SAVE_BASIC_INFO_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     },

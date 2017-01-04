@@ -1,4 +1,4 @@
-import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API, UPDATE_EMPRUNTEUR_BASIC_INFO_API} from '../constants/WebServiceConstants';
+import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API, UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER} from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -6,6 +6,29 @@ import ApiService from './ApiService';
 var _ = require('lodash');
 
 class ProvideService {
+
+    /**
+     * forgetUser - description
+     *
+     * @param  {type} email       description
+     * @param  {type} pass        description
+     * @param  {type} passConfirm description
+     * @return {type}             description
+     */
+    forgetUser(newUser, token ) {
+        return new bluebird( (resolve, reject) => {
+            ApiService.post(
+               FORGET_USER , {newUser :newUser ,
+                    token: token}
+            ).then(response => {
+              if (!_.isNil(response)) {
+                  return resolve(response.data);
+              }
+            }).catch( err => {
+              return reject(err);
+            });
+        });
+    }
 
     /**
      * simulate - CALCULATE simulator

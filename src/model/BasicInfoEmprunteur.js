@@ -6,6 +6,7 @@ export class BasicInfoEmprunteur {
     /**
      * constructor - description
      *
+     * @param  {Object} emprunteur                     description
      * @param  {type} user_id                     description
      * @param  {type} denominationSocial          description
      * @param  {type} formeJuridique              description
@@ -19,24 +20,25 @@ export class BasicInfoEmprunteur {
      * @param  {type} representantLegal           description
      * @param  {type} email                       description
      * @param  {type} numTel                      description
-     * @param  {type} dateConstitution            description
-     * @param  {type} chiffreAffaire              description
-     * @param  {type} nbEmploye                   description
-     * @param  {type} capital                     description
-     * @param  {type} actionnariat                description
+     * @param  {Date} dateConstitution            description
+     * @param  {Number} chiffreAffaire              description
+     * @param  {Number} nbEmploye                   description
+     * @param  {Number} capital                     description
+     * @param  {List} actionnariat                description
      * @param  {type} destinationPret             description
-     * @param  {type} montantSouhaite             description
+     * @param  {Number} montantSouhaite             description
      * @param  {type} dureeSouhaite               description
-     * @param  {type} tauxInteretOffert           description
+     * @param  {Number} tauxInteretOffert           description
      * @param  {type} siteWeb                     description
      * @param  {type} image                       description
+     * @param  {type} logo                       description
      * @return {type}                             description
      */
     constructor(emprunteur, user_id, denominationSocial, formeJuridique, numEntreprise,
         adresseSiegeSocial, codePostalSiegeSocial, villeSiegeSocial,
         adresseSiegeExploitation, codePostalSiegeExploitation, villeSiegeExploitation,
         representantLegal,email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
-        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb, image) {
+        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
                 this.denominationSocial= emprunteur.denominationSocial;
@@ -62,6 +64,7 @@ export class BasicInfoEmprunteur {
                 this.tauxInteretOffert= emprunteur.tauxInteretOffert;
                 this.siteWeb= emprunteur.siteWeb;
                 this.image= emprunteur.image;
+                this.logo= emprunteur.logo;
             } else {
                 this.user_id= user_id;
                 this.denominationSocial= denominationSocial;
@@ -87,6 +90,17 @@ export class BasicInfoEmprunteur {
                 this.tauxInteretOffert= tauxInteretOffert;
                 this.siteWeb= siteWeb;
                 this.image= image;
+                this.logo= logo;
             }
+    }
+
+    toLog() {
+        return 'user_id: ' + this.user_id + ' denominationSocial: ' +this.denominationSocial + ' formeJuridique: ' + this.formeJuridique +
+        ' numEntreprise: ' + this.numEntreprise + ' codePostalSiegeSocial ' + this.codePostalSiegeSocial +' adresseSiegeSocial '+this.adresseSiegeSocial+
+        ' villeSiegeSocial '+this.villeSiegeSocial +' adresseSiegeExploitation '+this.adresseSiegeExploitation +' codePostalSiegeExploitation '+ this.codePostalSiegeExploitation +
+        ' villeSiegeExploitation '+this.villeSiegeExploitation +' representantLegal '+ this.representantLegal +' email '+ this.email +
+        ' numTel '+this.numTel +' dateConstitution '+this.dateConstitution +' chiffreAffaire '+this.chiffreAffaire+' nbEmploye '+this.nbEmploye +
+        ' capital '+this.capital+' actionnariat '+this.actionnariat +' destinationPret '+this.destinationPret +' montantSouhaite '+this.montantSouhaite+
+        ' dureeSouhaite '+this.dureeSouhaite+' tauxInteretOffert '+this.tauxInteretOffert+' siteWeb '+this.siteWeb;
     }
 }

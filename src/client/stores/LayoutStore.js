@@ -14,6 +14,7 @@ class LayoutStore extends BaseStore {
         this.subscribe(() => this._registerToActions.bind(this))
         this._user = {username: '', pass:''};
         this._signUser = {username: '', email:'', pass:'', confirmPass: ''};
+        this._passForget = {user_id: null,username: '', pass: '', passConfirm:''};
 
         this._error = null;
         this._isLoggin = false;
@@ -69,10 +70,13 @@ class LayoutStore extends BaseStore {
     get state() {
         return {
             user: this.getUser,
+            userId: this.getUserId,
+            passForget: this.getPassForget,
             token: this.getToken,
             signUser: this.getSignUser,
             loggedIn: this.loggedIn,
-            auth: this.getAuth
+            auth: this.getAuth,
+            oublipwd: false,
         };
     }
 
@@ -86,6 +90,14 @@ class LayoutStore extends BaseStore {
 
     get getUser() {
         return this._user;
+    }
+
+    get getUserId() {
+        return this.getProfile.user_id;
+    }
+
+    get getPassForget() {
+        return this._passForget;
     }
 
     get getSignUser() {

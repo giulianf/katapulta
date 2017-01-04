@@ -203,7 +203,7 @@ export default class Simulateur extends Component {
                                   <h6>Rendement Annuel Moyen %</h6>
                               </Col>
                               <Col md={4} sm={3} xs={3}>
-                                  <h4 className='simulatorRendement'><Label>{ this.state.simulateurResult.rendementAnnuelMoyenPercent.toFixed(2)}€</Label></h4>
+                                  <h4 className='simulatorRendement'><Label>{ this.state.simulateurResult.rendementAnnuelMoyenPercent.toFixed(2)}%</Label></h4>
                               </Col>
                           </Row>
                       </Grid>

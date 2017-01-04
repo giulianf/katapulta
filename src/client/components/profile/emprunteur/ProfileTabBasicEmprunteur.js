@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Clearfix } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Validator from '../../../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
 import belgium from '../../../../data/zipcode-belgium.json';
-var DatePicker = require("react-bootstrap-date-picker");
+let DatePicker = require("react-bootstrap-date-picker");
 
 // import Gallery from 'react-photo-gallery';
 
@@ -16,16 +16,29 @@ export default class ProfileTabBasicEmprunteur extends Component {
     super(props);
 
     this._addImage = this._addImage.bind(this);
+    this._removeImage = this._removeImage.bind(this);
     this._changeActionnaire = this._changeActionnaire.bind(this);
     this._addActionnaire = this._addActionnaire.bind(this);
     this._handleSaveEmprunteurBasicInfo = this._handleSaveEmprunteurBasicInfo.bind(this);
 
-    this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[], actionnaire: {titre: "Mr", nomComplet:"", nbPart: 0} };
+    this.state = { removeFiles:[], actionnaire: {titre: "Mr", nomComplet:"", nbPart: 0} };
 
   }
 
   _handleSaveEmprunteurBasicInfo() {
       this.props.handleSaveEmprunteurBasicInfo(this.props.basicInfoEmprunteur);
+  }
+
+  _addRemoveFile(file, e) {
+      const checked = e.target.checked;
+
+      if ( checked ) {
+          this.state.removeFiles.push(file);
+      } else {
+          _.remove(this.state.removeFiles, (f) => {
+              return _.isEqual(f, file) ;
+          });
+      }
   }
 
   _addImage(e) {
@@ -35,19 +48,35 @@ export default class ProfileTabBasicEmprunteur extends Component {
        let reader = new FileReader();
        let file = e.target.files[0];
 
-       reader.onloadend = () => {
-           const lastImage = reader.result;
-           let imageFiles = this.state.imageFiles;
-           imageFiles.push(lastImage);
+        reader.onloadend = () => {
+            const lastImage = reader.result;
+            let img = this.props.basicInfoEmprunteur.image;
+            // lastImage.index = _.size(this.props.basicInfoEmprunteur.image) + 1;
+            img.push(lastImage);
 
-         this.setState({
-           file: file,
-           imagePreviewUrl: lastImage,
-           imageFiles: imageFiles
-         });
+            ProvideActions.updateBasicInfoEmprunteur({image: img});
         }
 
          reader.readAsDataURL(file);
+ }
+
+ _removeImage() {
+     let img = this.props.basicInfoEmprunteur.image;
+
+     _.remove(img, (file) => {
+         let fileToRemove = false;
+         _.forEach(this.state.removeFiles, rf => {
+             if( _.isEqual(rf, file)) {
+             fileToRemove= true;
+             return;
+            }
+         });
+
+         return fileToRemove;
+     });
+     this.state.removeFiles = [];
+
+     ProvideActions.updateBasicInfoEmprunteur({image: img});
  }
 
   componentDidMount() {
@@ -94,35 +123,38 @@ export default class ProfileTabBasicEmprunteur extends Component {
    }
 
     render () {
-        const validateSociete = Validator.validateAddress(this.props.basicInfoEmprunteur.denominationSocial) ? "success" : "error";
+        const validateSociete = Validator.validateString(this.props.basicInfoEmprunteur.denominationSocial) ? "success" : "error";
         const validateFJ = Validator.validateFormeJuridique(this.props.basicInfoEmprunteur.formeJuridique) ? "success" : "error";
-        const validateChiffre = Validator.validateChiffreAffaire(this.props.basicInfoEmprunteur.chiffreAffaire) ? "success" : "error";
-        const validateDestinationPret = Validator.validateAddress(this.props.basicInfoEmprunteur.destinationPret) ? "success" : "error";
         const validateNumEntreprise = Validator.validateTva(this.props.basicInfoEmprunteur.numEntreprise) ? "success" : "error";
-        const validateActionnariat = Validator.validateActionnariat(this.props.basicInfoEmprunteur.actionnariat) ? "success" : "error";
-        const validatetaux = Validator.validateTauxInteret(this.props.basicInfoEmprunteur.tauxInteretOffert) ? "success" : "error";
-        const validateCodePostalSC = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeSocial) ? "success" : "error";
-        const validateVilleSS = Validator.validateAddress(this.props.basicInfoEmprunteur.villeSiegeSocial) ? "success" : "error";
         const validateAddressSS= Validator.validateAddress(this.props.basicInfoEmprunteur.adresseSiegeSocial) ? "success" : "error";
-        const validateCodePostalSE = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeExploitation) ? "success" : "error";
+        const validateCodePostalSC = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeSocial) ? "success" : "error";
+        const validateVilleSS = Validator.validateString(this.props.basicInfoEmprunteur.villeSiegeSocial) ? "success" : "error";
         const validateAdresseSE = Validator.validateAddress(this.props.basicInfoEmprunteur.adresseSiegeExploitation) ? "success" : "error";
-        const validateVilleSE = Validator.validateAddress(this.props.basicInfoEmprunteur.villeSiegeExploitation ) ? "success" : "error";
-        const validateReprensentantL = Validator.validateAddress(this.props.basicInfoEmprunteur.representantLegal ) ? "success" : "error";
+        const validateCodePostalSE = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeExploitation) ? "success" : "error";
+        const validateVilleSE = Validator.validateString(this.props.basicInfoEmprunteur.villeSiegeExploitation ) ? "success" : "error";
+        const validateReprensentantL = Validator.validateString(this.props.basicInfoEmprunteur.representantLegal ) ? "success" : "error";
         const validateEmail = Validator.validateEmailAddress(this.props.basicInfoEmprunteur.email ) ? "success" : "error";
-        const validateNumTel = Validator.validateAddress(this.props.basicInfoEmprunteur.numTel ) ? "success" : "error";
+        const validateNumTel = Validator.validateString(this.props.basicInfoEmprunteur.numTel ) ? "success" : "error";
         const validateDateConstitution = Validator.validateDateConstitution(this.props.basicInfoEmprunteur.dateConstitution ) ? "success" : "error";
+        const validateChiffre = Validator.validateChiffreAffaire(this.props.basicInfoEmprunteur.chiffreAffaire) ? "success" : "error";
         const validateNbEmploye = Validator.validateNbEmploye(this.props.basicInfoEmprunteur.nbEmploye ) ? "success" : "error";
-        const validateCapital = Validator.validateAddress(this.props.basicInfoEmprunteur.capital ) ? "success" : "error";
+        const validateCapital = Validator.validateNumber(this.props.basicInfoEmprunteur.capital ) ? "success" : "error";
+        const validateActionnariat = Validator.validateActionnariat(this.props.basicInfoEmprunteur.actionnariat) ? "success" : "error";
+        const validateDestinationPret = Validator.validateString(this.props.basicInfoEmprunteur.destinationPret) ? "success" : "error";
         const validateMontantSouhaite = Validator.validatePretSouhaite(this.props.basicInfoEmprunteur.montantSouhaite) ? "success" : "error";
         const validateDureeSouhaite = Validator.validateYearSouhaite(this.props.basicInfoEmprunteur.dureeSouhaite) ? "success" : "error";
-        const validateSiteWeb = Validator.validateAddress(this.props.basicInfoEmprunteur.siteWeb ) ? "success" : "error";
+        const validatetaux = Validator.validateTauxInteret(this.props.basicInfoEmprunteur.tauxInteretOffert) ? "success" : "error";
+        const validateSiteWeb = Validator.validateString(this.props.basicInfoEmprunteur.siteWeb ) ? "success" : "error";
 
-        const colImage = !_.isNil(this.state) && !_.isNil(this.state.imagePreviewUrl) ? (
-            _.map(this.state.imageFiles , file => {
+        const colImage = !_.isNil(this.state) && !_.isNil(this.props.basicInfoEmprunteur.image) ? (
+            _.map(this.props.basicInfoEmprunteur.image , file => {
                 return (
                     <Col key={file} md={4} lg={4}>
                         <a href="#" title="Image 1">
                             <img className="img-responsive" src={file} alt="image" onClick={() => this.setState({ isOpen: true, photoIndex: 0 })}/>
+
+                            <Checkbox className="pull-right" onClick={ this._addRemoveFile.bind(this, file)}></Checkbox>
+
                         </a>
                     </Col>
                 )
@@ -131,8 +163,8 @@ export default class ProfileTabBasicEmprunteur extends Component {
 
         let indexImage = 0;
         let restImage = 0;
-        const newImage = !_.isNil(this.state) && !_.isNil(this.state.imagePreviewUrl) ? (
-            _.map(this.state.imageFiles , file => {
+        const newImage = !_.isNil(this.state) && !_.isNil(this.props.basicInfoEmprunteur.image) ? (
+            _.map(this.props.basicInfoEmprunteur.image , file => {
                 indexImage ++;
 
                 // 3 because only 3 image per row
@@ -250,7 +282,6 @@ export default class ProfileTabBasicEmprunteur extends Component {
                               }  value={this.props.basicInfoEmprunteur.numEntreprise}/>
                         </Col>
                       </FormGroup>
-                       <Clearfix visibleSmBlock visibleLgBlock visibleMdBlock></Clearfix>
                       <FormGroup controlId="formHorizontalASS" validationState={validateAddressSS}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Adresse Siège social
@@ -351,8 +382,8 @@ export default class ProfileTabBasicEmprunteur extends Component {
                           Chiffre d'affaire
                         </Col>
                         <Col sm={12} md={8}>
-                          <FormControl type="number" placeholder="chiffreAffaire"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({chiffreAffaire: e.target.value})}  value={this.props.basicInfoEmprunteur.chiffreAffaire}/>
+                          <FormControl type="number" placeholder="chiffreAffaire" step="0.01"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({chiffreAffaire: parseFloat(e.target.value)})}  value={this.props.basicInfoEmprunteur.chiffreAffaire}/>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalnbEmpl" validationState={validateNbEmploye}>
@@ -369,8 +400,8 @@ export default class ProfileTabBasicEmprunteur extends Component {
                           Capital
                         </Col>
                         <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Capital"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({capital: e.target.value})}  value={this.props.basicInfoEmprunteur.capital}/>
+                          <FormControl type="number" placeholder="Capital"  step="0.01"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({capital: parseFloat(e.target.value) })}  value={this.props.basicInfoEmprunteur.capital}/>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalActionnariat" validationState={ validateActionnariat }>
@@ -479,18 +510,39 @@ export default class ProfileTabBasicEmprunteur extends Component {
                                         </div>
                                         <div className="panel-body">
                                             <Row>
-                                                <Col md={3} mdOffset={9} >
-                                                    <RaisedButton
-                                                        className='pull-right'
-                                                      containerElement='label'
-                                                      label='Ajouter'
-                                                      style={styles.button}
-                                                      icon={<Glyphicon glyph="upload" className='glyphUpload'/>}>
-                                                        <input type="file" style={styles.exampleImageInput} accept='.jpg,.png' onChange={this._addImage}/>
-                                                    </RaisedButton>
-                                                </Col>
+                                                {_.size(this.props.basicInfoEmprunteur.image) == 0 ? (
+                                                    <Col md={3} mdOffset={9} >
+                                                        <RaisedButton
+                                                            className='pull-right'
+                                                          containerElement='label'
+                                                          label='Ajouter'
+                                                          style={styles.button}
+                                                          icon={<Glyphicon glyph="upload" className='glyphUpload'/>}>
+                                                            <input type="file" style={styles.exampleImageInput} accept='.jpg,.png' onChange={this._addImage}/>
+                                                        </RaisedButton>
+                                                    </Col>) : null}
+                                                {_.size(this.props.basicInfoEmprunteur.image) > 0 ? (
+                                                    <Col md={6} mdOffset={6} >
+                                                        <RaisedButton
+                                                            className='pull-right'
+                                                          containerElement='label'
+                                                          label='Supprimer'
+                                                          style={styles.button}
+                                                          onTouchTap={this._removeImage}
+                                                          icon={<Glyphicon glyph="trash" className='glyphUpload'/>}>
+                                                        </RaisedButton>
+                                                        <RaisedButton
+                                                            className='pull-right'
+                                                          containerElement='label'
+                                                          label='Ajouter'
+                                                          style={styles.button}
+                                                          icon={<Glyphicon glyph="upload" className='glyphUpload'/>}>
+                                                            <input type="file" style={styles.exampleImageInput} accept='.jpg,.png' onChange={this._addImage}/>
+                                                        </RaisedButton>
+                                                    </Col>) : null}
+
                                             </Row>
-                                            <Row className="gallery">
+                                            <Row className="gallery show-grid">
                                                 <Col md={12}>
                                                     <div className="profile-gallery">
                                                         { newImage }
