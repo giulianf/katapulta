@@ -15,7 +15,7 @@ export class ContractsPreteur {
      * @param  {decimal} progress        l'avancement du contrat
      * @param  {number} stepWorkflow    step du workflow pour le Stepper
      */
-    constructor(contractsPreteur, contractId, basicInfo, basicInfoEmprunteur, creationDate, status, progress, stepWorkflow) {
+    constructor(contractsPreteur, contractId, basicInfo, basicInfoEmprunteurId, creationDate, status, progress, stepWorkflow) {
 		if (!_.isNil(contractsPreteur)) {
 			this.contractId= contractsPreteur.contractId;
 			this.basicInfo= contractsPreteur.basicInfo;
