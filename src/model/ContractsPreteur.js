@@ -1,26 +1,37 @@
-import moment from 'moment';
-
+import _ from 'lodash';
+import { getDateISO } from '../common/Utility';
 
 export class ContractsPreteur {
 
     /**
      * constructor - Dans le profil afficher le(s) contrat(s) preteur(s)
      *
+     * @param  {Object} contractsPreteur      existing object 
      * @param  {number} contractId      le contrat id
-     * @param  {string} user_idPreteur user_id du preteur afin de l'identifier
-     * @param  {string} nomEmprunteur   nom de la societe pour l'emprunt
+     * @param  {string} basicInfo  basicInfo du preteur afin de l'identifier
+     * @param  {string} basicInfoEmprunteurId   id de l'emprunteur pour l'emprunt
      * @param  {Date} creationDate    date de creation ou date de validite du contrat
      * @param  {number} status        status du contrat
      * @param  {decimal} progress        l'avancement du contrat
      * @param  {number} stepWorkflow    step du workflow pour le Stepper
      */
-    constructor(contractId, user_idPreteur, nomEmprunteur, creationDate, status, progress, stepWorkflow) {
-        this.contractId= contractId;
-        this.user_idPreteur= user_idPreteur;
-        this.nomEmprunteur= nomEmprunteur;
-        this.creationDate= this.creationDate;
-        this.status= status;
-        this.progress= progress;
-        this.stepWorkflow= stepWorkflow;
+    constructor(contractsPreteur, contractId, basicInfo, basicInfoEmprunteur, creationDate, status, progress, stepWorkflow) {
+		if (!_.isNil(contractsPreteur)) {
+			this.contractId= contractsPreteur.contractId;
+			this.basicInfo= contractsPreteur.basicInfo;
+			this.basicInfoEmprunteurId= contractsPreteur.basicInfoEmprunteurId;
+			this.creationDate= contractsPreteur.creationDate;
+			this.status= contractsPreteur.status;
+			this.progress= contractsPreteur.progress;
+			this.stepWorkflow= contractsPreteur.stepWorkflow;
+		} else {
+			this.contractId= contractId;
+			this.basicInfo= basicInfo;
+			this.basicInfoEmprunteurId= basicInfoEmprunteurId;
+			this.creationDate= getDateISO(creationDate);
+			this.status= status;
+			this.progress= progress;
+			this.stepWorkflow= stepWorkflow;	
+		}
     }
 }
