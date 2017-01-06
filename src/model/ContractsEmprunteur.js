@@ -1,4 +1,3 @@
-
 import _ from 'lodash';
 import { getDateISO } from '../common/Utility';
 
@@ -18,6 +17,7 @@ export class ContractsEmprunteur {
      */
     constructor(contractsEmprunteur, contractId, basicInfo, basicInfoEmprunteur, creationDate, status, progress, stepWorkflow) {
 		if (!_.isNil(contractsEmprunteur)) {
+			this.id= contractsEmprunteur._id;
 			this.contractId= contractsEmprunteur.contractId;
 			this.basicInfo= contractsEmprunteur.basicInfo;
 			this.basicInfoEmprunteur= contractsEmprunteur.basicInfoEmprunteur;
