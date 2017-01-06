@@ -17,6 +17,7 @@ export class ContractsPreteur {
      */
     constructor(contractsPreteur, contractId, basicInfo, basicInfoEmprunteurId, creationDate, status, progress, stepWorkflow) {
 		if (!_.isNil(contractsPreteur)) {
+			this.id= contractsPreteur._id;
 			this.contractId= contractsPreteur.contractId;
 			this.basicInfo= contractsPreteur.basicInfo;
 			this.basicInfoEmprunteurId= contractsPreteur.basicInfoEmprunteurId;
