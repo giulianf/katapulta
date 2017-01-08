@@ -145,13 +145,24 @@ app.post('/api/updateEmprunteurBasicInfo', (req, res) => {
     profileDao.updateEmprunteurInfo(res, _mongodb, basicInfoEmprunteur);
 });
 
+
+app.get('/api/getContractPreteur/:user', (req, res) => {
+    debug("Entering /api/updateEmprunteurBasicInfo ");
+
+    const user = req.params.user;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.getContractPreteur(res, _mongodb, user);
+});
+
 /******************************************/
 /************ END PROFILE API *************/
 /******************************************/
 
 
 /******************************************/
-/************ END LOGIN API *************/
+/************ START LOGIN API *************/
 /******************************************/
 
 app.post('/api/forgetLogin', (req, res) => {
@@ -163,7 +174,31 @@ app.post('/api/forgetLogin', (req, res) => {
     const loginDao = new LoginDao();
 
     loginDao.forgetUser(res, _mongodb, newUser, token);
-})
+});
+
+/******************************************/
+/************ END LOGIN API *************/
+/******************************************/
+
+
+/******************************************/
+/************ START EXPLORER API *************/
+/******************************************/
+
+app.get('/api/getExplorer', (req, res) => {
+    debug("Entering /api/updateEmprunteurBasicInfo ");
+
+    const user = req.params.user;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.getContractPreteur(res, _mongodb, user);
+});
+
+/******************************************/
+/************ END EXPLORER API *************/
+/******************************************/
+
 // start the server
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;

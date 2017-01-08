@@ -25,12 +25,23 @@ class Login extends Component {
         this._signUp = this._signUp.bind(this);
     }
 
+    componentDidMount() {
+        this.state.lock.show();
+    }
+
     _showForgetPwd() {
-        if (this.state.oublipwd) {
-            this.setState({oublipwd: false});
-        } else {
-            this.setState({oublipwd: true});
-        }
+        this.state.lock.show((err, profile, token) => {
+          if (err) {
+            alert(err);
+            return;
+          }
+          LayoutActions.logUserIn(profile, token);
+    });
+        // if (this.state.oublipwd) {
+        //     this.setState({oublipwd: false});
+        // } else {
+        //     this.setState({oublipwd: true});
+        // }
     }
 
     _findUsername() {
@@ -140,97 +151,7 @@ class Login extends Component {
             <Grid >
                 <Row className='section section-padding'>
                     <Col md={4} sm={8} xs={12} mdOffset={4} smOffset={4} >
-                        <Tabs className="login" defaultActiveKey={1} id="uncontrolled-tab-example">
-                            <Tab.Pane className='test' eventKey={1} title="Connexion">
-
-                                { !this.state.oublipwd ? (
-                                    <Form horizontal>
-                                        <FormGroup controlId="formHorizontalEmail">
-                                            <ControlLabel >Adresse Email</ControlLabel>
-                                            <FormControl type="text" placeholder="Entrez votre adresse email"
-                                            onChange={this._handleProfile.bind(this, 'username')}
-                                            value={this.state.user.username}/>
-                                        </FormGroup>
-                                        <FormGroup controlId="formHorizontalPass">
-                                            <ControlLabel >Mot de passe</ControlLabel>
-                                            <FormControl type="password" placeholder="Mot de passe"
-                                            onChange={this._handleProfile.bind(this, 'pass')}
-                                            value={this.state.user.pass}/>
-                                        </FormGroup>
-                                        <FormGroup controlId="formHorizontalPassoubli">
-                                            <a href="#" onClick={this._showForgetPwd}>Mot de passe oublié?</a>
-                                        </FormGroup>
-                                        <FormGroup>
-                                          <Col smOffset={8} sm={2}>
-                                              <Button bsStyle='primary' onClick={this._login}>se connecter</Button>
-                                          </Col>
-                                        </FormGroup>
-                                    </Form>
-                                ) : (
-                                    <Form horizontal>
-                                        <FormGroup controlId="formHorizontalEmail">
-                                            <ControlLabel >Adresse Email</ControlLabel>
-                                            <FormControl type="text" placeholder="Entrez votre adresse email"
-                                            onChange={this._handleForgotPass.bind(this, 'username')}
-                                            value={this.state.passForget.username}/>
-                                        </FormGroup>
-                                        <FormGroup controlId="formHorizontalNewPass">
-                                            <ControlLabel >Nouveau Mot de passe</ControlLabel>
-                                            <FormControl type="password" placeholder="Nouveau Mot de passe"
-                                            onChange={this._handleForgotPass.bind(this, 'pass')}
-                                            value={this.state.passForget.pass}/>
-                                        <HelpBlock>Le mot de passe doit contenir au moins 7 caractères, incluant majuscule, minuscule et nombre</HelpBlock>
-                                        </FormGroup>
-                                        <FormGroup controlId="formHorizontalNewPassConfirm">
-                                            <ControlLabel >Confirmer nouveau Mot de passe</ControlLabel>
-                                            <FormControl type="password" placeholder="Confirmer Mot de passe"
-                                            onChange={this._handleForgotPass.bind(this, 'passConfirm')}
-                                            value={this.state.passForget.passConfirm}/>
-                                        <HelpBlock>Insérez le même mot de passe.</HelpBlock>
-                                        </FormGroup>
-                                        <FormGroup controlId="formHorizontalBack" >
-                                            <a href="#" className="pull-right" onClick={this._showForgetPwd}>Retour</a>
-                                        </FormGroup>
-                                        <FormGroup>
-                                          <Col smOffset={8} sm={2}>
-                                              <Button bsStyle='primary' disabled={!enableSoumettre} onClick={this._forgetPass}>Soumettre</Button>
-                                          </Col>
-                                        </FormGroup>
-                                    </Form>
-                                )}
-
-                            </Tab.Pane>
-                            <Tab.Pane eventKey={2} title="S'inscrire">
-                                <Form horizontal>
-                                    <FormGroup controlId="formHorizontalsignEmail" validationState={validateEmailForget}>
-                                       <ControlLabel >Adresse Email</ControlLabel>
-                                       <FormControl type="text" placeholder="Entrez votre adresse email"
-                                          onChange={this._handleProfileSign.bind(this, 'email')}
-                                           value={this.state.signUser.email}/>
-                                     </FormGroup>
-                                    <FormGroup controlId="formHorizontalsignPass" validationState={ validatePass }>
-                                       <ControlLabel>Mot de passe</ControlLabel>
-                                       <FormControl type="password" placeholder="Mot de passe"
-                                           onChange={this._handleProfileSign.bind(this, 'pass')}
-
-                                           value={this.state.signUser.pass}/>
-                                     </FormGroup>
-                                    <FormGroup controlId="formHorizontalsignconfPass" validationState={validateConfirmPass}>
-                                       <ControlLabel>Confirmer votre mot de passe</ControlLabel>
-                                       <FormControl type="password" placeholder="Mot de passe"
-                                           disabled={!enableConfirmPass}
-                                           onChange={this._handleProfileSign.bind(this, 'confirmPass')}
-                                           value={this.state.signUser.confirmPass}/>
-                                       <HelpBlock>Insérez le même mot de passe.</HelpBlock>
-                                     </FormGroup>
-                                  <FormGroup>
-                                    <Col smOffset={8} sm={2}>
-                                        <Button bsStyle='primary' onClick={this._signUp} disabled={!enableButton}>s'enregistrer</Button>
-                                    </Col>
-                                  </FormGroup>
-                              </Form>
-                            </Tab.Pane>
-                        </Tabs>
+                    
                     </Col>
                 </Row>
             </Grid>

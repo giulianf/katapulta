@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
@@ -11,7 +11,7 @@ let DatePicker = require("react-bootstrap-date-picker");
 
 // import Gallery from 'react-photo-gallery';
 
-export default class ProfileTabBasicEmprunteur extends Component {
+class ProfileTabBasicEmprunteur extends Component {
   constructor (props){
     super(props);
 
@@ -573,3 +573,11 @@ export default class ProfileTabBasicEmprunteur extends Component {
         );
     }
 }
+
+ProfileTabBasicEmprunteur.contextTypes = {
+    client: React.PropTypes.object.isRequired,
+    basicInfoEmprunteur: React.PropTypes.object.isRequired,
+    handleSaveEmprunteurBasicInfo: React.PropTypes.func.isRequired
+};
+
+export default ProfileTabBasicEmprunteur ;

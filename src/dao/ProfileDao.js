@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
+import { ContractsPreteur } from '../model/ContractsPreteur';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
@@ -248,4 +249,58 @@ export class ProfileDao {
             res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
         }
     }
+
+
+    /**
+     * getBasicInfo - Get Basic Info by User id
+     *
+     * @param  {type} res      response
+     * @param  {type} _mongodb db connection
+     * @param  {type} user     user id from auth0
+     * @param  {type} email    email from auth profile
+     */
+    getContractPreteur(res, _mongodb, user) {
+        info('Entering getContractPreteur() data: ' + user  );
+
+         try {
+             const userId = user;
+             let contractsPreteur = [];
+
+             const emprunteurs = _mongodb.collection('emprunteurs');
+
+            async.series([
+                (callback) => {
+                    // Find some documents
+                    emprunteurs.find({'user_id': userId}, function(err, contracts) {
+                        const contractSize = _.size( contracts );
+                        debug("*****  contract found: " + contractSize);
+
+                        for(let i = 0 ; i < contractSize ; i++) {
+                            const contract = contracts[i];
+
+                            contractsPreteur.push( new ContractsPreteur(contract) );
+                        }
+
+                        callback();
+                    });
+                },
+                (callback) => {
+                    debug("****  contractsPreteur: " + JSON.stringify( contractsPreteur ) );
+
+                    res.end( JSON.stringify( contractsPreteur ) );
+                }
+            ], (err) => {
+                error("Unable to getEmprunteurBasicInfo " , err);
+                //   When it's done
+                if (err) {
+                    res.status(500).json(err);
+                    return;
+                }
+            });
+        } catch( e ) {
+            error('error: ' + e);
+            res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
+        }
+    }
+
 }

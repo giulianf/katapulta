@@ -19,6 +19,7 @@ function getProfileState() {
       basicInfoEmprunteur: ProvideStore.getBasicInfoEmprunteur,
       favoris: ProvideStore.getFavorisEmprunteur,
       isAdmin: ProvideStore.isAdmin,
+      profile: ProvideStore.getProfile
   };
 }
 
@@ -72,20 +73,21 @@ export default class Profile extends Component {
 
   render () {
       const basicEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo} clientId={this.state.basicInfo.clientId} basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
+          <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo}
+              {...this.state} /></Tab>
       ) : null;
       const conractEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur tabContracts={this.state.tabContracts}  /></Tab>
+          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur  tabContracts={this.state.tabContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin ? (
               <Tab eventKey={6} title="Admin">Tab 4 content</Tab>
       ) : null;
 
     const largeTabVisible = (
-        <Tabs className="tabs-left" defaultActiveKey={2} id="uncontrolled-tab-lg-example">
+        <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example">
             <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
             { basicEmprunteurTab }
-            <Tab eventKey={3} title="Contrats Preteur"><Col md={8} sm={10}><ProfileTabContracts tabContracts={this.state.tabContracts} /></Col></Tab>
+            <Tab eventKey={3} title="Contrats Preteur"><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
             { conractEmprunteurTab }
             <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
             { isAdminTab }

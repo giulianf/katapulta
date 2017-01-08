@@ -1,4 +1,5 @@
-import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API, UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER} from '../constants/WebServiceConstants';
+import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API,
+     UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API} from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -111,6 +112,34 @@ class ProvideService {
           ApiService.post(
              UPDATE_EMPRUNTEUR_BASIC_INFO_API ,
              {basicInfoEmprunteur: basicInfoEmprunteur}
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    getContractPreteur(profile) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+              `${GET_CONTRACTS_PRETEUR_API}${ profile.user_id }`
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    getExplorer() {
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+              `${GET_EXPLORERS_API}`
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

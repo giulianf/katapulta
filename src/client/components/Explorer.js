@@ -6,26 +6,40 @@ import _ from 'lodash';
 import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 import zip from '../../data/zipcode-belgium.json';
+import ProvideActions from '../actions/ProvideActions';
 
 export default class Explorer extends React.Component {
-  constructor (){
-    super();
+    constructor (){
+        super();
+        ProvideActions.getExplorer();
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this._handleCode = this._handleCode.bind(this);
-    this.state = ProvideStore.getExplorer;
-  }
+        this.handleSelect = this.handleSelect.bind(this);
+        this._handleCode = this._handleCode.bind(this);
+        this.state = ProvideStore.getExplorer;
+    }
 
-  handleSelect(eventKey) {
+    _onChange() {
+        this.setState(getProfileState());
+    }
+
+    componentDidMount() {
+        ProvideStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        ProvideStore.removeChangeListener(this._onChange);
+    }
+
+    handleSelect(eventKey) {
      this.setState({
        activePage: eventKey
      });
-   }
+    }
 
     _handleCode(chosenRequest, index) {
         alert(chosenRequest.value.props.secondaryText);
     }
-  render () {
+    render () {
       const explorer = _.map(this.state.explorer , expl => {
           return (
                   <EmprunteurComponent key={expl.emprunteurId} dataSociete={expl} col={3} />
@@ -34,10 +48,10 @@ export default class Explorer extends React.Component {
       const dataSource1 = _.map(zip , code => {
           return (
               {
-                text: code.zip + ' ' + code.city,
+                text: code.zip + ' ' + code.commune,
                 value: (
                   <MenuItem
-                    primaryText={code.city}
+                    primaryText={code.commune}
                     secondaryText={code.zip}
                   />
                 ),
@@ -45,10 +59,10 @@ export default class Explorer extends React.Component {
           )
       });
 
-      const dataSource3 = _.sortBy(['Horeca', 'Services' , 'Construction', 'Technologies']);
+    const dataSource3 = _.sortBy(['Horeca', 'Services' , 'Construction', 'Technologies']);
     const dataSourceConfig = {
-      text: 'zip',
-      value: 'city',
+        text: 'zip',
+        value: 'commune',
     };
 
 
@@ -125,9 +139,6 @@ export default class Explorer extends React.Component {
                                             <li>
                                                 <a href="#css-html-results" role="tab" data-toggle="tab">Les derniers inscrits<span className="badge badge-info">32</span></a>
                                             </li>
-                                            <li>
-                                                <a href="#javascript-results" role="tab" data-toggle="tab">Javascript <span className="badge badge-warning">76</span></a>
-                                            </li>
                                         </ul>
                                     </div>
                                     <Row>
@@ -162,5 +173,5 @@ export default class Explorer extends React.Component {
         </Grid>
 
     );
-  }
+    }
 }

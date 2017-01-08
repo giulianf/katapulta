@@ -38,8 +38,7 @@ class ProvideStore extends BaseStore {
       this._simulateurResult = null;
 
       // contracts list, stepIndex
-       this._tabContracts = {};
-      this._tabContracts.contracts = contracts ;
+      this._tabContracts = {};
       this._tabContracts.stepWorkflow = {} ;
       this._tabContracts.stepWorkflow.visible = false ;
       this._tabContracts.stepWorkflow.stepIndex = stepIndex ;
@@ -55,8 +54,7 @@ class ProvideStore extends BaseStore {
       this._favorisEmprunteur = favorisEmprunteur;
 
       // explorer
-      this._explorer = [];
-      this._explorer = {explorer : favorisEmprunteur, activePage: 1};
+      this._explorer = {};
     }
 
     openStepperDetail(contractId) {
@@ -127,15 +125,39 @@ class ProvideStore extends BaseStore {
         _.assign(this._tabBasicEmprunteur, newValue);
     }
 
+
+    /**
+     * getContractPreteur - to show contracts preteur tab within profile
+     *
+     * @param  {type} contractsPreteur description
+     * @return {type}                  description
+     */
+    populateContractsPreteur(contractsPreteur) {
+        this._tabContracts.contracts = contractsPreteur ;
+
+    }
+
     favorisEmprunteur(dataSociete) {
         const favoris = _.find(this._favorisEmprunteur, dataSociete.emprunteurId);
         favoris.isFavoris = !favoris.isFavoris;
     }
 
     /**************************/
-    /***** START SIMULATOR ****/
+    /***** START EXPLORER ****/
     /*************************/
 
+    populateExplorer(explorers) {
+        this._explorer = {explorer : explorers, activePage: 1};
+    }
+
+    /**************************/
+    /***** END EXPLORER ****/
+    /*************************/
+
+
+    /**************************/
+    /***** START SIMULATOR ****/
+    /*************************/
 
     /**
      * updateSimulateur - Change the simulator form
@@ -231,8 +253,19 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
+      case ProvideConstants.CONTRACTS_PRETEUR_SUCCCESS:
+         this.populateContractsPreteur(action.contractsPreteur);
+
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
       case ProvideConstants.FAVORIS_EMPRUNTEUR:
          this.favorisEmprunteur(action.dataSociete);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.GET_EXPLORERS_SUCCESS:
+         this.populateExplorer(action.explorers);
         // If action was responded to, emit change event
         this.emitChange();
         break;

@@ -5,6 +5,16 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+    getExplorer: () => {
+        let promise = ProvideService.getExplorer();
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GET_EXPLORERS,
+          success: ProvideConstants.GET_EXPLORERS_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
     simulate: (simulateData) => {
         let promise = ProvideService.simulate(simulateData);
 
@@ -83,6 +93,18 @@ export default {
         dispatchAsync(promise, {
           request: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR,
           success: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+    /**
+     * get contracts preteur within TAB contract preteur
+     */
+    getContractPreteur: (profile) => {
+        let promise = ProvideService.getContractPreteur(profile);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.CONTRACTS_PRETEUR,
+          success: ProvideConstants.CONTRACTS_PRETEUR_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     }

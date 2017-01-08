@@ -4,7 +4,6 @@ import ProvideConstants from '../constants/ProvideConstants';
 import ProvideService from '../services/ProvideService';
 
 export default {
-
     /**
      * get the profile from auth0
      */

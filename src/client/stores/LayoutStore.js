@@ -3,6 +3,7 @@ import ActionTypes from '../constants/ActionTypes';
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
 import Auth0 from 'auth0-js';
+import Auth0Lock from 'auth0-lock'
 import { isTokenExpired } from './jwtHelper'
 import _ from 'lodash';
 
@@ -27,7 +28,47 @@ class LayoutStore extends BaseStore {
           domain: process.env.AUTH_AUDIENCE,
           responseType: 'token'
         });
+        const options = {
+            closable: false,
+            language: 'fr',
+            auth: {
+               responseType: "token",
+           },
+            // forgotPasswordLink: 'https://test.com',
+            allowForgotPassword: true,
+            theme: {
+               logo: '/img/logo_login.png',
+               primaryColor: '#8BC34A',
+           },
+           languageDictionary: {
+               title: "Katapulta",
+           },
+           options
+            };
+        this.lock = new Auth0Lock(process.env.AUTH_CLIENT_ID, process.env.AUTH_AUDIENCE, options);
 
+        // Add callback for lock `authenticated` event
+        this.lock.on('authenticated', this._doAuthentication.bind(this))
+    }
+
+    _doAuthentication(authResult) {
+        this.setAccessToken(authResult.accessToken)
+        this.setToken(authResult.idToken );
+        this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
+            if (error) {
+                // callback(error);
+            } else {
+                let isAdmin = false;
+                _.map(userDetail.app_metadata.roles, role => {
+                        if (_.isEqual(role, 'admin')) {
+                            isAdmin = true;
+                        }
+                });
+                this.setUser(userDetail, isAdmin);
+                // in order to emit the profile
+                this.emitChange();
+            }
+        });
     }
 
   _registerToActions(action) {
@@ -54,12 +95,12 @@ class LayoutStore extends BaseStore {
 
                 this.emitChange();
                 break;
-
             case ActionTypes.LOGOUT_USER:
                 this.removeUser();
 
                 this.emitChange();
                 break;
+
 
             default:
                 break;
@@ -77,6 +118,7 @@ class LayoutStore extends BaseStore {
             loggedIn: this.loggedIn,
             auth: this.getAuth,
             oublipwd: false,
+            lock: this.getLock,
         };
     }
 
@@ -84,7 +126,8 @@ class LayoutStore extends BaseStore {
         return {
             profile: this.getProfile,
             token: this.getToken,
-            loggedIn: this.loggedIn
+            loggedIn: this.loggedIn,
+            lock: this.getLock,
         };
     }
 
@@ -157,14 +200,15 @@ class LayoutStore extends BaseStore {
     parseHash(hash) {
       // uses auth0 parseHash method to extract data from url hash
       const authResult = this.auth0.parseHash(hash);
-      if (authResult && authResult.idToken) {
-        this.setAccessToken(authResult.accessToken)
-        this.setToken(authResult.idToken );
-      }
+      this._doAuthentication(authResult);
     }
 
     get getAuth() {
         return this.auth0;
+    }
+
+    get getLock() {
+        return this.lock ;
     }
 
     get isAdmin() {

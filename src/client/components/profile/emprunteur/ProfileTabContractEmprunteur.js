@@ -3,7 +3,7 @@ import { Grid, Form, Row, Col, Button, Panel, Tooltip, OverlayTrigger, Glyphicon
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import HorizontalLinearStepper from '../../HorizontalLinearStepper';
-import ProfileTabContracts from '../contracts/ProfileTabContracts';
+import ContractsList from '../contracts/ContractsList';
 
 export default class ProfileTabContractEmprunteur extends Component {
   constructor (props){
@@ -28,7 +28,7 @@ export default class ProfileTabContractEmprunteur extends Component {
         );
 
         return (
-            <Grid>
+            <Grid keyTab='profileTabEmprunteurContract' >
                 <Col md={10} sm={10}>
                     <OverlayTrigger placement="right" overlay={tooltip}>
                         <Button bsStyle='primary' className='btn-flat'><Glyphicon  glyph='plus' ></Glyphicon> Demande d'emprunt</Button>
@@ -51,7 +51,7 @@ export default class ProfileTabContractEmprunteur extends Component {
                  </Panel>
                 </Col>
                     <Col md={10} sm={10} className='space-top-bottom'>
-                    <ProfileTabContracts tabContracts={this.props.tabContracts} />
+                        <ContractsList  keyTab='profileTabEmpContract' {...this.props}/>
                     </Col>
             </Grid>
         )
