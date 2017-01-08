@@ -8,7 +8,7 @@ const jwt = require('express-jwt');
 import {getCurrentDate, getDate, error, debug, info, getYear, addYear, getBelgiumDate} from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
-import { LoginDao } from './dao/LoginDao';
+import { ExplorerDao } from './dao/ExplorerDao';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -18,7 +18,8 @@ require('dotenv').config({
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
-const MongoClient =  require('mongodb').MongoClient,
+const MongoDb =  require('mongodb');
+const MongoClient = MongoDb.MongoClient,
   f = require('util').format;
 
 // parse application/x-www-form-urlencoded
@@ -162,37 +163,17 @@ app.get('/api/getContractPreteur/:user', (req, res) => {
 
 
 /******************************************/
-/************ START LOGIN API *************/
-/******************************************/
-
-app.post('/api/forgetLogin', (req, res) => {
-    debug("Entering /api/forgetLogin ");
-
-    const newUser = req.body.newUser;
-    const token = req.body.token;
-
-    const loginDao = new LoginDao();
-
-    loginDao.forgetUser(res, _mongodb, newUser, token);
-});
-
-/******************************************/
-/************ END LOGIN API *************/
-/******************************************/
-
-
-/******************************************/
 /************ START EXPLORER API *************/
 /******************************************/
 
-app.get('/api/getExplorer', (req, res) => {
-    debug("Entering /api/updateEmprunteurBasicInfo ");
+app.get('/api/getExplorers/:user', (req, res) => {
+    debug("Entering /api/getExplorers ");
 
     const user = req.params.user;
 
-    const profileDao = new ProfileDao();
+    const explorerDao = new ExplorerDao();
 
-    profileDao.getContractPreteur(res, _mongodb, user);
+    explorerDao.getExplorers(res, MongoDb, _mongodb, user);
 });
 
 /******************************************/

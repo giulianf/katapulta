@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
-import Auth0 from 'auth0-js';
+// import Auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock'
 import { isTokenExpired } from './jwtHelper'
 import _ from 'lodash';
@@ -23,11 +23,11 @@ class LayoutStore extends BaseStore {
         this._profile = {};
 
         // Configure Auth0
-        this.auth0 = new Auth0({
-          clientID: process.env.AUTH_CLIENT_ID,
-          domain: process.env.AUTH_AUDIENCE,
-          responseType: 'token'
-        });
+        // this.auth0 = new Auth0({
+        //   clientID: process.env.AUTH_CLIENT_ID,
+        //   domain: process.env.AUTH_AUDIENCE,
+        //   responseType: 'token'
+        // });
         const options = {
             closable: false,
             language: 'fr',
@@ -48,7 +48,9 @@ class LayoutStore extends BaseStore {
         this.lock = new Auth0Lock(process.env.AUTH_CLIENT_ID, process.env.AUTH_AUDIENCE, options);
 
         // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this))
+        this.lock.on('authenticated', this._doAuthentication.bind(this));
+        // this.lock.on('authorization_error', this._showError.bind(this) );
+
     }
 
     _doAuthentication(authResult) {
@@ -116,7 +118,7 @@ class LayoutStore extends BaseStore {
             token: this.getToken,
             signUser: this.getSignUser,
             loggedIn: this.loggedIn,
-            auth: this.getAuth,
+            // auth: this.getAuth,
             oublipwd: false,
             lock: this.getLock,
         };
@@ -203,9 +205,9 @@ class LayoutStore extends BaseStore {
       this._doAuthentication(authResult);
     }
 
-    get getAuth() {
-        return this.auth0;
-    }
+    // get getAuth() {
+    //     return this.auth0;
+    // }
 
     get getLock() {
         return this.lock ;

@@ -29,16 +29,6 @@ export default {
         });
     },
 
-    forgetUser: (newUser, token) => {
-        let promise = ProvideService.forgetUser(newUser, token);
-
-        dispatchAsync(promise, {
-          request: ProvideConstants.FORGET_USER,
-          success: ProvideConstants.FORGET_USER_SUCCCESS,
-          failure: ActionTypes.DATA_ERROR
-        }, { });
-    },
-
     logUserOut: () => {
         dispatch(ActionTypes.LOGOUT_USER, {});
     }

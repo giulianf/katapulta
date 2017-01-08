@@ -7,30 +7,6 @@ import ApiService from './ApiService';
 var _ = require('lodash');
 
 class ProvideService {
-
-    /**
-     * forgetUser - description
-     *
-     * @param  {type} email       description
-     * @param  {type} pass        description
-     * @param  {type} passConfirm description
-     * @return {type}             description
-     */
-    forgetUser(newUser, token ) {
-        return new bluebird( (resolve, reject) => {
-            ApiService.post(
-               FORGET_USER , {newUser :newUser ,
-                    token: token}
-            ).then(response => {
-              if (!_.isNil(response)) {
-                  return resolve(response.data);
-              }
-            }).catch( err => {
-              return reject(err);
-            });
-        });
-    }
-
     /**
      * simulate - CALCULATE simulator
      *
@@ -136,10 +112,10 @@ class ProvideService {
       });
     }
 
-    getExplorer() {
+    getExplorer(profile) {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
-              `${GET_EXPLORERS_API}`
+              `${GET_EXPLORERS_API}${ profile.user_id }`
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

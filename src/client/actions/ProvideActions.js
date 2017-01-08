@@ -5,8 +5,8 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
-    getExplorer: () => {
-        let promise = ProvideService.getExplorer();
+    getExplorer: (profile) => {
+        let promise = ProvideService.getExplorer(profile);
 
         dispatchAsync(promise, {
           request: ProvideConstants.GET_EXPLORERS,

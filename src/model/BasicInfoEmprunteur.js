@@ -31,6 +31,7 @@ export class BasicInfoEmprunteur {
      * @param  {Number} tauxInteretOffert           description
      * @param  {type} siteWeb                     description
      * @param  {type} image                       description
+     * @param  {Boolean} isFavoris                       is favoris for user connected
      * @param  {type} logo                       description
      * @return {type}                             description
      */
@@ -38,9 +39,10 @@ export class BasicInfoEmprunteur {
         adresseSiegeSocial, codePostalSiegeSocial, villeSiegeSocial,
         adresseSiegeExploitation, codePostalSiegeExploitation, villeSiegeExploitation,
         representantLegal,email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
-        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb, image, logo) {
+        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb, isFavoris, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
+                this.id= emprunteur._id;
                 this.denominationSocial= emprunteur.denominationSocial;
                 this.formeJuridique= emprunteur.formeJuridique ;
                 this.numEntreprise= emprunteur.numEntreprise ;
@@ -63,6 +65,7 @@ export class BasicInfoEmprunteur {
                 this.dureeSouhaite= emprunteur.dureeSouhaite;
                 this.tauxInteretOffert= emprunteur.tauxInteretOffert;
                 this.siteWeb= emprunteur.siteWeb;
+                this.isFavoris= emprunteur.isFavoris;
                 this.image= emprunteur.image;
                 this.logo= emprunteur.logo;
             } else {
@@ -89,13 +92,14 @@ export class BasicInfoEmprunteur {
                 this.dureeSouhaite= dureeSouhaite;
                 this.tauxInteretOffert= tauxInteretOffert;
                 this.siteWeb= siteWeb;
+                this.isFavoris= isFavoris;
                 this.image= image;
                 this.logo= logo;
             }
     }
 
     toLog() {
-        return 'user_id: ' + this.user_id + ' denominationSocial: ' +this.denominationSocial + ' formeJuridique: ' + this.formeJuridique +
+        return 'id: ' + this.id + ' user_id: ' + this.user_id + ' denominationSocial: ' +this.denominationSocial + ' formeJuridique: ' + this.formeJuridique +
         ' numEntreprise: ' + this.numEntreprise + ' codePostalSiegeSocial ' + this.codePostalSiegeSocial +' adresseSiegeSocial '+this.adresseSiegeSocial+
         ' villeSiegeSocial '+this.villeSiegeSocial +' adresseSiegeExploitation '+this.adresseSiegeExploitation +' codePostalSiegeExploitation '+ this.codePostalSiegeExploitation +
         ' villeSiegeExploitation '+this.villeSiegeExploitation +' representantLegal '+ this.representantLegal +' email '+ this.email +

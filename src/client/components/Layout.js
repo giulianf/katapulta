@@ -20,7 +20,6 @@ class Layout extends Component {
         this.state = getLayoutState();
         this._onChange = this._onChange.bind(this);
         this.logout = this.logout.bind(this);
-        this.openLogin = this.openLogin.bind(this);
 
       }
 
@@ -29,10 +28,6 @@ class Layout extends Component {
 
        // redirects to login page
        this.context.router.push('/');
-     }
-
-    openLogin() {
-        this.state.lock.show();
      }
 
     _onChange() {
@@ -49,7 +44,6 @@ class Layout extends Component {
 
     render() {
       let connexion;
-    //   <Button className="btn-flat btn-home-bg" onClick={this.openLogin}>Connexion</Button>
 
       if ( !this.state.loggedIn ) {
         connexion =  (

@@ -107,7 +107,7 @@ class ProfileTabBasic extends Component {
                         </Col>
                         <Col sm={4} md={4}>
                             <FormControl type="text" placeholder="Code Postal" list="list"
-                                onChange={e => ProvideActions.updateBasicInfo({codePostal: e.target.value})}  value={this.props.basicInfo.codePostal}/>
+                                onChange={e => ProvideActions.updateBasicInfo({codePostal: parseInt(e.target.value)})}  value={this.props.basicInfo.codePostal}/>
                             <datalist id="list">
                                     {cityData}
                                 </datalist>

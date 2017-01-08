@@ -5,7 +5,6 @@ import LayoutStore from './LayoutStore';
 import { ContractsPreteur } from '../../model/ContractsPreteur';
 import { SimulateurInfo } from '../../model/SimulateurInfo';
 import { BasicInfoEmprunteur } from '../../model/BasicInfoEmprunteur';
-import { FavorisEmprunteur } from '../../model/FavorisEmprunteur';
 import { getDateISO, getDateDetails } from '../../common/Utility';
 import Validator from '../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
@@ -25,8 +24,6 @@ const stepIndex = 1;
 // const basicEmprunteurProfil = new BasicInfoEmprunteur(null,'butacni', 'KATAPULTA', 'SPRL', '', '', '', '', '', '','', '', 'julien.fumanti@g.vom', '0456/55.66.33',
 //     '01/09/1989', 100000, '', 1234567, 3, 12600, [], '', 2.25,
 //     'siteWeb', null);
-const favorisEmprunteur = [new FavorisEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
-new FavorisEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
 
 
 class ProvideStore extends BaseStore {
@@ -51,7 +48,7 @@ class ProvideStore extends BaseStore {
 
       // profile favoris
       this._favorisEmprunteur = [];
-      this._favorisEmprunteur = favorisEmprunteur;
+    //   this._favorisEmprunteur = favorisEmprunteur;
 
       // explorer
       this._explorer = {};
@@ -265,7 +262,7 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.GET_EXPLORERS_SUCCESS:
-         this.populateExplorer(action.explorers);
+         this.populateExplorer(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;

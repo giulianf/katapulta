@@ -11,15 +11,16 @@ import ProvideActions from '../actions/ProvideActions';
 export default class Explorer extends React.Component {
     constructor (){
         super();
-        ProvideActions.getExplorer();
+        ProvideActions.getExplorer(ProvideStore.getProfile);
 
+        this._onChange = this._onChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this._handleCode = this._handleCode.bind(this);
         this.state = ProvideStore.getExplorer;
     }
 
     _onChange() {
-        this.setState(getProfileState());
+        this.setState(ProvideStore.getExplorer);
     }
 
     componentDidMount() {

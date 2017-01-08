@@ -16,8 +16,9 @@ export class BasicInfo {
      * @param  {string} codePostal    description
      * @param  {string} ville         description
      * @param  {Boolean} isEmprunteur         description
+     * @param  {List} favoris         list of emprunteurs favoris
      */
-    constructor(client, clientId, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur) {
+    constructor(client, clientId, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur, favoris) {
         if (!_.isNil(client)) {
             this.clientId = client._id;
             this.user_id = client.user_id;
@@ -32,6 +33,7 @@ export class BasicInfo {
             this.codePostal = client.codePostal;
             this.ville = client.ville;
             this.isEmprunteur = client.isEmprunteur;
+            this.favoris = client.favoris;
         } else {
             this.clientId= clientId;
             this.user_id= user_id;
@@ -46,6 +48,7 @@ export class BasicInfo {
             this.codePostal= codePostal;
             this.ville= ville;
             this.isEmprunteur= isEmprunteur;
+            this.favoris = client.favoris;
         }
     }
 }

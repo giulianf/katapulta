@@ -297,7 +297,7 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                         <Col sm={4} md={4}>
                             <FormControl type="text" placeholder="Code Postal Siège social" list="list"
-                                onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeSocial: e.target.value})}  value={this.props.basicInfoEmprunteur.codePostalSiegeSocial}/>
+                                onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeSocial: parseInt(e.target.value)})}  value={this.props.basicInfoEmprunteur.codePostalSiegeSocial}/>
                             <datalist id="list">
                                     {cityData}
                                 </datalist>
@@ -327,7 +327,7 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                             <Col sm={4} md={4}>
                                 <FormControl type="text" placeholder="Code Postal Siège d'exploitation" list="list"
-                                    onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeExploitation: e.target.value})}  value={this.props.basicInfoEmprunteur.codePostalSiegeExploitation}/>
+                                    onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeExploitation: parseInt(e.target.value)})}  value={this.props.basicInfoEmprunteur.codePostalSiegeExploitation}/>
                             </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalVilleSiegeExpl" validationState={validateVilleSE}>

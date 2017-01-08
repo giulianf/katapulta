@@ -28,22 +28,15 @@ export class ProfileDao {
              const userId = user;
              let basicProfil = null;
 
-             const clients = _mongodb.collection('clients');
-
             async.series([
                 (callback) => {
-                    // Find some documents
-                    clients.findOne({'user_id': userId}, function(err, client) {
-                      debug("*****  Client found: " + JSON.stringify( client ));
-
-                      if (!_.isNil(client)) {
-                          basicProfil = new BasicInfo(client);
-                      } else {
-                          basicProfil = new BasicInfo(null, null, userId, '' , '', '01/09/1939',
-                            null, email, '', '', '', false);
-                      }
-
-                      callback();
+                    this.getClientByUserId(_mongodb, userId, (profile, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        basicProfil = profile;
+                        callback();
                     });
                 },
                 (callback) => {
@@ -62,6 +55,36 @@ export class ProfileDao {
         } catch( e ) {
             error('error: ' + e);
             res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
+        }
+    }
+
+
+    /**
+     * getClientByUserId - get client by user id
+     *
+     * @param  {type} _mongodb  description
+     * @param  {type} userId   description
+     * @param  {type} callback description
+     * @return {type}          description
+     */
+    getClientByUserId(_mongodb, userId, callback) {
+        try {
+            const clients = _mongodb.collection('clients');
+            let basicProfil = null;
+            // Find some documents
+            clients.findOne({'user_id': userId}, function(err, client) {
+              debug("*****  Client found: " + JSON.stringify( client ));
+
+              if (!_.isNil(client)) {
+                  basicProfil = new BasicInfo(client);
+              } else {
+                  basicProfil = new BasicInfo(null, null, userId, '' , '', '01/09/1939',
+                    null, email, '', '', '', false);
+              }
+              callback(basicProfil);
+          });
+        } catch (e) {
+            callback(null, e);
         }
     }
 
@@ -142,7 +165,7 @@ export class ProfileDao {
                               basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
                           } else {
                               basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '','01/09/1989',
-                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', []);
+                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, []);
                           }
 
                           callback();
@@ -250,14 +273,13 @@ export class ProfileDao {
         }
     }
 
-
     /**
-     * getBasicInfo - Get Basic Info by User id
+     * getContractPreteur - contract preteur within contract tab
      *
-     * @param  {type} res      response
-     * @param  {type} _mongodb db connection
-     * @param  {type} user     user id from auth0
-     * @param  {type} email    email from auth profile
+     * @param  {type} res      description
+     * @param  {type} _mongodb description
+     * @param  {type} user     description
+     * @return {type}          description
      */
     getContractPreteur(res, _mongodb, user) {
         info('Entering getContractPreteur() data: ' + user  );
@@ -302,5 +324,4 @@ export class ProfileDao {
             res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
         }
     }
-
 }
