@@ -1,5 +1,5 @@
 import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API,
-     UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API} from '../constants/WebServiceConstants';
+     UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API, GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API } from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -116,6 +116,35 @@ class ProvideService {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
               `${GET_EXPLORERS_API}${ profile.user_id }`
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    getExplorerByEmprunteurId(userId, emprunteurId) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+              `${GET_EXPLORERS_BY_EMPR_ID_API}${userId}/${ emprunteurId }`
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    favorisEmprunteur(user_id, emprunteurId, removed) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.post(
+             UPDATE_FAVORI_API ,
+             {user_id: user_id, emprunteurId:emprunteurId, removed: removed}
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

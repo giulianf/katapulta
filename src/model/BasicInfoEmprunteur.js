@@ -1,4 +1,4 @@
-import { getDateISO } from '../common/Utility';
+import { getDateISO , getCurrentDate } from '../common/Utility';
 import _ from 'lodash';
 
 export class BasicInfoEmprunteur {
@@ -18,6 +18,7 @@ export class BasicInfoEmprunteur {
      * @param  {type} codePostalSiegeExploitation description
      * @param  {type} villeSiegeExploitation      description
      * @param  {type} representantLegal           description
+     * @param  {string} sectorActivite           description
      * @param  {type} email                       description
      * @param  {type} numTel                      description
      * @param  {Date} dateConstitution            description
@@ -30,16 +31,20 @@ export class BasicInfoEmprunteur {
      * @param  {type} dureeSouhaite               description
      * @param  {Number} tauxInteretOffert           description
      * @param  {type} siteWeb                     description
-     * @param  {type} image                       description
      * @param  {Boolean} isFavoris                       is favoris for user connected
+     * @param  {Date} createDate                       creation date
+     * @param  {Date} endDate                       end date for the emprunt
+     * @param  {Boolean} isOurSelection                      This entrepreneur is our selection
+     * @param  {type} image                       description
      * @param  {type} logo                       description
      * @return {type}                             description
      */
     constructor(emprunteur, user_id, denominationSocial, formeJuridique, numEntreprise,
         adresseSiegeSocial, codePostalSiegeSocial, villeSiegeSocial,
         adresseSiegeExploitation, codePostalSiegeExploitation, villeSiegeExploitation,
-        representantLegal,email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
-        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb, isFavoris, image, logo) {
+        representantLegal, sectorActivite, email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
+        capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb,
+        isFavoris, createDate, endDate, isOurSelection, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
                 this.id= emprunteur._id;
@@ -53,6 +58,7 @@ export class BasicInfoEmprunteur {
                 this.codePostalSiegeExploitation= emprunteur.codePostalSiegeExploitation ;
                 this.villeSiegeExploitation= emprunteur.villeSiegeExploitation ;
                 this.representantLegal= emprunteur.representantLegal;
+                this.sectorActivite= emprunteur.sectorActivite ;
                 this.email= emprunteur.email ;
                 this.numTel= emprunteur.numTel;
                 this.dateConstitution= emprunteur.dateConstitution;
@@ -66,8 +72,11 @@ export class BasicInfoEmprunteur {
                 this.tauxInteretOffert= emprunteur.tauxInteretOffert;
                 this.siteWeb= emprunteur.siteWeb;
                 this.isFavoris= emprunteur.isFavoris;
+                this.endDate= emprunteur.endDate;
+                this.isOurSelection= emprunteur.isOurSelection;
                 this.image= emprunteur.image;
                 this.logo= emprunteur.logo;
+                this.createDate= emprunteur.createDate;
             } else {
                 this.user_id= user_id;
                 this.denominationSocial= denominationSocial;
@@ -80,6 +89,7 @@ export class BasicInfoEmprunteur {
                 this.codePostalSiegeExploitation= codePostalSiegeExploitation ;
                 this.villeSiegeExploitation= villeSiegeExploitation ;
                 this.representantLegal= representantLegal;
+                this.sectorActivite= sectorActivite ;
                 this.email= email ;
                 this.numTel= numTel;
                 this.dateConstitution= getDateISO(dateConstitution);
@@ -93,18 +103,21 @@ export class BasicInfoEmprunteur {
                 this.tauxInteretOffert= tauxInteretOffert;
                 this.siteWeb= siteWeb;
                 this.isFavoris= isFavoris;
+                this.endDate= endDate;
+                this.isOurSelection= isOurSelection;
                 this.image= image;
                 this.logo= logo;
+                this.createDate= createDate;
             }
     }
 
     toLog() {
-        return 'id: ' + this.id + ' user_id: ' + this.user_id + ' denominationSocial: ' +this.denominationSocial + ' formeJuridique: ' + this.formeJuridique +
-        ' numEntreprise: ' + this.numEntreprise + ' codePostalSiegeSocial ' + this.codePostalSiegeSocial +' adresseSiegeSocial '+this.adresseSiegeSocial+
-        ' villeSiegeSocial '+this.villeSiegeSocial +' adresseSiegeExploitation '+this.adresseSiegeExploitation +' codePostalSiegeExploitation '+ this.codePostalSiegeExploitation +
-        ' villeSiegeExploitation '+this.villeSiegeExploitation +' representantLegal '+ this.representantLegal +' email '+ this.email +
-        ' numTel '+this.numTel +' dateConstitution '+this.dateConstitution +' chiffreAffaire '+this.chiffreAffaire+' nbEmploye '+this.nbEmploye +
-        ' capital '+this.capital+' actionnariat '+this.actionnariat +' destinationPret '+this.destinationPret +' montantSouhaite '+this.montantSouhaite+
-        ' dureeSouhaite '+this.dureeSouhaite+' tauxInteretOffert '+this.tauxInteretOffert+' siteWeb '+this.siteWeb;
+        return 'id: ' + this.id + ', user_id: ' + this.user_id + ', denominationSocial: ' +this.denominationSocial + ', formeJuridique: ' + this.formeJuridique +
+        ', numEntreprise: ' + this.numEntreprise + ', codePostalSiegeSocial ' + this.codePostalSiegeSocial +', adresseSiegeSocial '+this.adresseSiegeSocial+
+        ', villeSiegeSocial '+this.villeSiegeSocial +', adresseSiegeExploitation '+this.adresseSiegeExploitation +', codePostalSiegeExploitation '+ this.codePostalSiegeExploitation +
+        ', villeSiegeExploitation '+this.villeSiegeExploitation + ', sectorActivite ' + this.sectorActivite +', representantLegal '+ this.representantLegal +', email '+ this.email +
+        ', numTel '+this.numTel +', dateConstitution '+this.dateConstitution +', chiffreAffaire '+this.chiffreAffaire+', nbEmploye '+this.nbEmploye +
+        ', capital '+this.capital+', actionnariat '+this.actionnariat +', destinationPret '+this.destinationPret +', montantSouhaite '+this.montantSouhaite+
+        ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+', end date '+this.endDate;
     }
 }

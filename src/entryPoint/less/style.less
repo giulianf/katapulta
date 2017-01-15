@@ -19,13 +19,17 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: @blackColor;
+    color: @blueHeader;
     font-family: "Montserrat",sans-serif;
     font-weight: 700;
 }
 
 a {
     color: @blueHeader;
+}
+
+.bgm-green {
+    color: @greenColor;
 }
 
 .bgm-blue {
@@ -146,7 +150,7 @@ Slider navigation
     &:hover,
     &:focus {
         background: #7bb13d;
-        color: @blackColor;
+        color: @blueHeader;
         border-color: #fff;
     }
 
@@ -187,7 +191,7 @@ Slider navigation
     .section-title {
         h2 {
             text-transform: uppercase;
-            color: @blackColor;
+            color: @blueHeader;
             font-family: "Montserrat",sans-serif;
             font-weight: 700;
             span {
@@ -331,7 +335,7 @@ Slider navigation
 	transform: scale(1.1)
 }
 .single_service h4 {
-	color: @blackColor;
+	color: @blueHeader;
 	font-size: 16px;
 	margin: 0;
 	padding-top: 11px;
@@ -523,6 +527,7 @@ EXPLORER SECTION
     /** User Widget View Style 1 **/
 .widget.user-view-style-1 .thumbnail .caption {
   padding: 0px;
+  margin-top: 50px;
 }
 
 .widget.user-view-style-1 {
@@ -534,6 +539,12 @@ EXPLORER SECTION
         -moz-border-radius: 0px;
         border-radius: 0px;
         border:none;
+        width: 290px;
+        height: 460px;
+        > img {
+            width: 290px;
+            height: 200px;
+        }
     }
 
     .favoris-info {
@@ -546,6 +557,7 @@ EXPLORER SECTION
         color: white;
         font-size: 17px;
         margin-left: 10px;
+        // padding-top: 7px;
     }
 
     .user-type {
@@ -562,7 +574,7 @@ EXPLORER SECTION
             border-bottom: 2px solid #eee;
 
             .user-number-tickets {
-                margin-left: 8px;
+                margin-left: 15px;
                 font-weight: bold;
                 top: -15px;
                 position: relative;

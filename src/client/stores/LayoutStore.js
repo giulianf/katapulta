@@ -49,28 +49,30 @@ class LayoutStore extends BaseStore {
 
         // Add callback for lock `authenticated` event
         this.lock.on('authenticated', this._doAuthentication.bind(this));
-        // this.lock.on('authorization_error', this._showError.bind(this) );
+        this.lock.on('hash_parsed', this._doAuthentication.bind(this) );
 
     }
 
     _doAuthentication(authResult) {
-        this.setAccessToken(authResult.accessToken)
-        this.setToken(authResult.idToken );
-        this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
-            if (error) {
-                // callback(error);
-            } else {
-                let isAdmin = false;
-                _.map(userDetail.app_metadata.roles, role => {
-                        if (_.isEqual(role, 'admin')) {
-                            isAdmin = true;
-                        }
-                });
-                this.setUser(userDetail, isAdmin);
-                // in order to emit the profile
-                this.emitChange();
-            }
-        });
+        if (!_.isNil(authResult)) {
+            this.setAccessToken(authResult.accessToken)
+            this.setToken(authResult.idToken );
+            this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
+                if (error) {
+                    // callback(error);
+                } else {
+                    let isAdmin = false;
+                    _.map(userDetail.app_metadata.roles, role => {
+                            if (_.isEqual(role, 'admin')) {
+                                isAdmin = true;
+                            }
+                    });
+                    this.setUser(userDetail, isAdmin);
+                    // in order to emit the profile
+                    this.emitChange();
+                }
+            });
+        }
     }
 
   _registerToActions(action) {
@@ -201,7 +203,7 @@ class LayoutStore extends BaseStore {
 
     parseHash(hash) {
       // uses auth0 parseHash method to extract data from url hash
-      const authResult = this.auth0.parseHash(hash);
+    //   const authResult = this.auth0.parseHash(hash);
       this._doAuthentication(authResult);
     }
 

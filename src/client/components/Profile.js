@@ -32,6 +32,7 @@ export default class Profile extends Component {
     this._onChange = this._onChange.bind(this);
     this._updateBasicInfo = this._updateBasicInfo.bind(this);
     this._updateEmprunteurBasicInfo = this._updateEmprunteurBasicInfo.bind(this);
+    this._handleSelect = this._handleSelect.bind(this);
 
     this.state = getProfileState();
 
@@ -60,6 +61,13 @@ export default class Profile extends Component {
        ProvideActions.updateSaveEmprunteurBasicInfo(basicInfoEmprunteur);
    }
 
+    _handleSelect(key) {
+        // 3 : contract preteur
+        if ( _.isEqual(key, 3) && _.isNil(this.state.tabContracts.contracts) ) {
+            ProvideActions.getContractPreteur(this.state.profile);
+        }
+    }
+
    //
   //  progress(completed) {
   //    if (completed > 100) {
@@ -84,10 +92,10 @@ export default class Profile extends Component {
       ) : null;
 
     const largeTabVisible = (
-        <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example">
+        <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example" onSelect={this._handleSelect}>
             <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
             { basicEmprunteurTab }
-            <Tab eventKey={3} title="Contrats Preteur"><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
+            <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
             { conractEmprunteurTab }
             <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
             { isAdminTab }

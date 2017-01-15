@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
+import { error, debug, info } from '../common/UtilityLog';
+import { getYear, addYear, getBelgiumDate} from '../common/Utility';
 import { SimulateurResultInfo } from '../model/SimulateurResultInfo';
 import { SimulateurResultListInfo } from '../model/SimulateurResultListInfo';
 

@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
+import { error, debug, info } from '../common/UtilityLog';
+import { getCurrentDate, getBelgiumDate, getYear, addYear} from '../common/Utility';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import { ProfileDao } from './ProfileDao';
 import async from 'async';
@@ -16,12 +17,11 @@ export class ExplorerDao {
      * getExplorers - get all contract for emprunteur
      *
      * @param  {type} res      description
-     * @param  {MongoDb} MongoDb description
      * @param  {type} _mongodb description
      * @param  {String} user description
      * @return {type}          description
      */
-    getExplorers(res, MongoDb, _mongodb, user) {
+    getExplorers(res, _mongodb, user) {
         info('Entering getContractPreteur() data: ' );
 
          try {
@@ -33,7 +33,7 @@ export class ExplorerDao {
                 (callback) => {
                     const profileDao = new ProfileDao();
 
-                    profileDao.getClientByUserId(_mongodb, userId, (profile, err) => {
+                    profileDao.getClientByUserId(_mongodb, userId, null, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -56,7 +56,10 @@ export class ExplorerDao {
 
                         for(let i = 0 ; i < contractSize ; i++) {
                             const contract = new BasicInfoEmprunteur(contracts[i]);
-                            debug("****  contract: " + contract.toLog() );
+                            debug("****  contract wihout images: " + contract.toLog() );
+
+                            // remove images and logo from JSON (performane)
+                            delete contract.image;
 
                             contractsPreteur.push( contract );
                         }
@@ -89,6 +92,75 @@ export class ExplorerDao {
                 }
             ], (err) => {
                 error("Unable to getEmprunteurBasicInfo " , err);
+                //   When it's done
+                if (err) {
+                    res.status(500).json(err);
+                    return;
+                }
+            });
+        } catch( e ) {
+            error('error: ' + e);
+            res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
+        }
+    }
+
+    /**
+     * getExplorerByEmprunteurId - description
+     *
+     * @param  {type} res      description
+     * @param  {type} MongoDb  description
+     * @param  {type} _mongodb description
+     * @param  {type} user     description
+     * @return {type}          description
+     */
+    getExplorerByEmprunteurId(res, MongoDb, _mongodb, userId, emprunteurId) {
+        info('Entering getExplorerByEmprunteurId() user id: ' + userId + ' and emprunteur Id: ' + emprunteurId);
+
+         try {
+             let contractEmprunteur = null;
+             let basicProfil = null;
+
+            async.series([
+                (callback) => {
+                    const profileDao = new ProfileDao();
+
+                    profileDao.getClientByUserId(_mongodb, userId, null, (profile, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        basicProfil = profile;
+
+                        callback();
+                    });
+                },
+                (callback) => {
+                    const emprunteurs = _mongodb.collection('emprunteurs');
+
+                    // Find some documents
+                    emprunteurs.findOne({'_id': new MongoDb.ObjectId(emprunteurId)}, (err, emprunteur) => {
+                        contractEmprunteur = new BasicInfoEmprunteur( emprunteur );
+
+                        debug("*****  emprunteur found: " + contractEmprunteur.toLog());
+
+                        for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
+                            const favori = basicProfil.favoris[j];
+                            const emprunteurId = (favori.emprunteurId).toString();
+                            debug("favori id: " + emprunteurId);
+
+                            if (_.isEqual(emprunteurId, contractEmprunteur.id.toString())) {
+                                emprunteur.isFavoris = true;
+                            }
+                        }
+
+                        callback();
+                    });
+                },
+                (callback) => {
+                    res.end( JSON.stringify( contractEmprunteur ) );
+                }
+            ], (err) => {
+                error("Unable to getExplorerByEmprunteurId " , err);
                 //   When it's done
                 if (err) {
                     res.status(500).json(err);

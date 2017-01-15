@@ -6,11 +6,10 @@ import ProvideStore from '../../../stores/ProvideStore';
 export default class ProfileTabContracts extends Component {
     constructor (props){
         super(props);
-
-        ProvideActions.getContractPreteur(this.props.profile);
     }
 
     componentDidMount() {
+        // ProvideActions.getContractPreteur(this.props.profile);
     }
 
     componentWillUnmount() {

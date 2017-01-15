@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox , Image} from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -8,8 +8,7 @@ import Validator from '../../../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
 import belgium from '../../../../data/zipcode-belgium.json';
 let DatePicker = require("react-bootstrap-date-picker");
-
-// import Gallery from 'react-photo-gallery';
+import categories from '../../../../data/categories.json';
 
 class ProfileTabBasicEmprunteur extends Component {
   constructor (props){
@@ -20,6 +19,7 @@ class ProfileTabBasicEmprunteur extends Component {
     this._changeActionnaire = this._changeActionnaire.bind(this);
     this._addActionnaire = this._addActionnaire.bind(this);
     this._handleSaveEmprunteurBasicInfo = this._handleSaveEmprunteurBasicInfo.bind(this);
+    this._addLogoImage = this._addLogoImage.bind(this);
 
     this.state = { removeFiles:[], actionnaire: {titre: "Mr", nomComplet:"", nbPart: 0} };
 
@@ -49,12 +49,61 @@ class ProfileTabBasicEmprunteur extends Component {
        let file = e.target.files[0];
 
         reader.onloadend = () => {
-            const lastImage = reader.result;
+            let lastImage = new Image();
+            let tempImage = {src: null, width: null, height: null};
+            lastImage.src = reader.result;
+
+
+            const MAX_WIDTH = 400;
+            const MAX_HEIGHT = 300;
+            let tempW = lastImage.width;
+            let tempH = lastImage.height;
+            if (tempW > tempH) {
+                if (tempW > MAX_WIDTH) {
+                   tempH *= MAX_WIDTH / tempW;
+                   tempW = MAX_WIDTH;
+                }
+            } else {
+                if (tempH > MAX_HEIGHT) {
+                   tempW *= MAX_HEIGHT / tempH;
+                   tempH = MAX_HEIGHT;
+                }
+            }
+
             let img = this.props.basicInfoEmprunteur.image;
+            tempImage.src =lastImage.src;
+            tempImage.width = tempW;
+            tempImage.height = tempH;
             // lastImage.index = _.size(this.props.basicInfoEmprunteur.image) + 1;
-            img.push(lastImage);
+            img.push(tempImage);
 
             ProvideActions.updateBasicInfoEmprunteur({image: img});
+        }
+
+         reader.readAsDataURL(file);
+ }
+
+  _addLogoImage(e) {
+     const value = e.target.value;
+     e.preventDefault();
+
+       let reader = new FileReader();
+       let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            let lastImage = new Image();
+            let tempImage = {src: null, width: null, height: null};
+            lastImage.src = reader.result;
+
+
+            const MAX_WIDTH = 250;
+            const MAX_HEIGHT = 200;
+
+            tempImage.src =lastImage.src;
+            tempImage.width = MAX_WIDTH;
+            tempImage.height = MAX_HEIGHT;
+
+            ProvideActions.updateBasicInfoEmprunteur({logo: tempImage});
         }
 
          reader.readAsDataURL(file);
@@ -96,9 +145,6 @@ class ProfileTabBasicEmprunteur extends Component {
        _.assign(actionnaire, newObject);
        this.setState(actionnaire);
 
-    //    let actio = this.state.actionnaire;
-    //    actio.nbPart =  e.target.value
-    //    this.setState({actionnaire : {nbPart : e.target.value}})
    }
 
    _addActionnaire() {
@@ -132,6 +178,7 @@ class ProfileTabBasicEmprunteur extends Component {
         const validateAdresseSE = Validator.validateAddress(this.props.basicInfoEmprunteur.adresseSiegeExploitation) ? "success" : "error";
         const validateCodePostalSE = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeExploitation) ? "success" : "error";
         const validateVilleSE = Validator.validateString(this.props.basicInfoEmprunteur.villeSiegeExploitation ) ? "success" : "error";
+        const validateSector = Validator.validateString(this.props.basicInfoEmprunteur.sectorActivite ) ? "success" : "error";
         const validateReprensentantL = Validator.validateString(this.props.basicInfoEmprunteur.representantLegal ) ? "success" : "error";
         const validateEmail = Validator.validateEmailAddress(this.props.basicInfoEmprunteur.email ) ? "success" : "error";
         const validateNumTel = Validator.validateString(this.props.basicInfoEmprunteur.numTel ) ? "success" : "error";
@@ -149,9 +196,9 @@ class ProfileTabBasicEmprunteur extends Component {
         const colImage = !_.isNil(this.state) && !_.isNil(this.props.basicInfoEmprunteur.image) ? (
             _.map(this.props.basicInfoEmprunteur.image , file => {
                 return (
-                    <Col key={file} md={4} lg={4}>
+                    <Col key={file.src} md={4} lg={4}>
                         <a href="#" title="Image 1">
-                            <img className="img-responsive" src={file} alt="image" onClick={() => this.setState({ isOpen: true, photoIndex: 0 })}/>
+                            <img className="img-responsive" src={file.src} alt="image" onClick={() => this.setState({ isOpen: true, photoIndex: 0 })}/>
 
                             <Checkbox className="pull-right" onClick={ this._addRemoveFile.bind(this, file)}></Checkbox>
 
@@ -181,15 +228,6 @@ class ProfileTabBasicEmprunteur extends Component {
             })
 
         ) : null;
-        // const PHOTO_SET = _.map(this.state.imageFiles , file => {
-        //     return {
-        //         src: file,
-        //         width: 50,
-        //         height: 150,
-        //         aspectRatio: 2.5,
-        //         lightboxImage:{src: file, width:200}
-        //     }
-        // })
 
         const styles = {
           button: {
@@ -228,11 +266,33 @@ class ProfileTabBasicEmprunteur extends Component {
         const minTaux = Validator.TAUX_MINIMUM;
         const maxTaux = Validator.TAUX_MAXIMUM;
         const pretMax = Validator.PRET_MAX;
+        const dataSource3 =  _.map( _.sortBy(categories) , (cat) => {
+            return (<option key={cat} value={cat}></option>);
+        });
+
+        const logosrc = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.src : null;
+        const logowidth = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.width : null;
+        const logoheigth = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.height : null;
 
         return (
             <div key='ProfileTabBasicEmprunteur'>
                 <Col md={9} sm={9} className='space-top-bottom'>
                     <Form horizontal>
+                      <FormGroup controlId="formHorizontalLogo">
+                        <Col md={3} lg={4} sd={2}>
+                          <RaisedButton
+                              className='pull-right'
+                            containerElement='label'
+                            label='Photo du profil'
+                            style={styles.button}
+                            icon={<Glyphicon glyph="upload" className='glyphUpload'/>}>
+                              <input type="file" style={styles.exampleImageInput} accept='.jpg,.png' onChange={this._addLogoImage}/>
+                          </RaisedButton>
+                        </Col>
+                        <Col sm={12} md={8}>
+                             <Image src={logosrc} width={logowidth} height={logoheigth} rounded />
+                        </Col>
+                      </FormGroup>
                       <FormGroup controlId="formHorizontalSoc" validationState={validateSociete}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Nom Société
@@ -337,6 +397,18 @@ class ProfileTabBasicEmprunteur extends Component {
                         <Col sm={12} md={8}>
                           <FormControl type="text" placeholder="Ville Siège d'exploitation"
                               onChange={e => ProvideActions.updateBasicInfoEmprunteur({villeSiegeExploitation: e.target.value})}  value={this.props.basicInfoEmprunteur.villeSiegeExploitation}/>
+                        </Col>
+                      </FormGroup>
+                      <FormGroup controlId="formHorizontalRL" validationState={validateSector}>
+                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                          Secteur d'activité
+                        </Col>
+                        <Col sm={12} md={8}>
+                          <FormControl type="text" placeholder="Secteur d'activité" list="cat"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({sectorActivite: e.target.value})}  value={this.props.basicInfoEmprunteur.sectorActivite}/>
+                          <datalist id="cat">
+                                      { dataSource3 }
+                              </datalist>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalRL" validationState={validateReprensentantL}>

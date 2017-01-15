@@ -32,7 +32,7 @@ const parseAuthLoginHash = (nextState, replace) => {
         } else {
             replace({ pathname: nextState.location.pathname })
         }
-    }
+    } 
 }
 
 const routes = (

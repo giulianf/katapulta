@@ -4,6 +4,11 @@ export default keyMirror({
     // Explorer
     GET_EXPLORERS : null,
     GET_EXPLORERS_SUCCESS : null,
+    SEARCH_EXPLORERS: null,
+    FREE_TEXT_EXPLORERS: null,
+        // EMPRUNTEUR ID
+        GET_EXPLORERS_BY_EMPR_ID : null,
+        GET_EXPLORERS_BY_EMPR_ID_SUCCESS : null,
 
     // Simulateur
     SIMULATEUR_DATA : null,
@@ -34,6 +39,7 @@ export default keyMirror({
     CLOSE_STEPPER_DETAIL : null,
 
     FAVORIS_EMPRUNTEUR : null,
+    FAVORIS_EMPRUNTEUR_SUCCCESS : null,
 
     LOGIN_DATA : null,
     LOGIN_DATA_SUCCESS : null,

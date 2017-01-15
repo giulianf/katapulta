@@ -6,7 +6,7 @@ export class BasicInfo {
      * constructor - description
      *
      * @param  {Object} client      description
-     * @param  {string} clientId      description
+     * @param  {string} id      description
      * @param  {string} user_id      description
      * @param  {string} prenom        description
      * @param  {string} nom           description
@@ -17,10 +17,11 @@ export class BasicInfo {
      * @param  {string} ville         description
      * @param  {Boolean} isEmprunteur         description
      * @param  {List} favoris         list of emprunteurs favoris
+     * @param  {Date} createDate                       creation date
      */
-    constructor(client, clientId, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur, favoris) {
+    constructor(client, user_id, prenom, nom, dateNaissance, numNational, email, address, codePostal, ville, isEmprunteur, favoris, createDate) {
         if (!_.isNil(client)) {
-            this.clientId = client._id;
+            this.id = client._id;
             this.user_id = client.user_id;
             this.prenom = client.prenom;
             this.nom = client. nom;
@@ -34,8 +35,8 @@ export class BasicInfo {
             this.ville = client.ville;
             this.isEmprunteur = client.isEmprunteur;
             this.favoris = client.favoris;
+            this.createDate= client.createDate;
         } else {
-            this.clientId= clientId;
             this.user_id= user_id;
             this.prenom=prenom;
             this.nom= nom;
@@ -48,7 +49,15 @@ export class BasicInfo {
             this.codePostal= codePostal;
             this.ville= ville;
             this.isEmprunteur= isEmprunteur;
-            this.favoris = client.favoris;
+            this.favoris = [];
+            this.createDate = createDate;
         }
+    }
+
+    toLog() {
+        return 'id: ' + this.id + ' user_id: ' + this.user_id + ' prenom: ' +this.prenom + ' nom: ' + this.nom +
+        ' dateNaissance: ' + this.dateNaissance + ' numNational ' + this.numNational +' email '+this.email +
+        ' address '+this.address +' codePostal '+this.codePostal +' ville '+ this.ville +
+        ' isEmprunteur '+this.isEmprunteur + ' createDate ' + this.createDate ;
     }
 }

@@ -6,21 +6,24 @@ import _ from 'lodash';
 import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 import zip from '../../data/zipcode-belgium.json';
+import categories from '../../data/categories.json';
 import ProvideActions from '../actions/ProvideActions';
 
 export default class Explorer extends React.Component {
-    constructor (){
+    constructor () {
         super();
         ProvideActions.getExplorer(ProvideStore.getProfile);
 
         this._onChange = this._onChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this._handleCode = this._handleCode.bind(this);
-        this.state = ProvideStore.getExplorer;
+        this._handleCategory = this._handleCategory.bind(this);
+        this._onUpdateCategory = this._onUpdateCategory.bind(this);
+        this.state = ProvideStore.explorerState;
     }
 
     _onChange() {
-        this.setState(ProvideStore.getExplorer);
+        this.setState(ProvideStore.explorerState);
     }
 
     componentDidMount() {
@@ -37,13 +40,34 @@ export default class Explorer extends React.Component {
      });
     }
 
-    _handleCode(chosenRequest, index) {
-        alert(chosenRequest.value.props.secondaryText);
+    _handleCategory(chosenRequest, index) {
+        ProvideActions.searchExplorer({category: chosenRequest});
     }
+
+    _handleCode(chosenRequest, index) {
+        ProvideActions.searchExplorer({codePostal: chosenRequest});
+    }
+
+    _handleSelectExplorer(tabKey) {
+        ProvideActions.searchExplorer({tabSelected: tabKey});
+    }
+
+    _onUpdateCategory(searchText) {
+        // Only update when value is empty
+        if (_.isEqual(searchText, '')) {
+            ProvideActions.searchExplorer({category: searchText});
+        }
+    }
+
+    _onEnterSearch() {
+
+    }
+
     render () {
-      const explorer = _.map(this.state.explorer , expl => {
+      const explorer = _.map(this.state.explorer.selectedExplorers , expl => {
           return (
-                  <EmprunteurComponent key={expl.emprunteurId} dataSociete={expl} col={3} />
+                  <EmprunteurComponent key={expl.emprunteurId} dataSociete={expl} profile={this.state.profile}
+                      loggedIn={this.state.loggedIn} colmd={4} col={3} onClickFavori={ProvideActions.favorisEmprunteur}/>
           )
       });
       const dataSource1 = _.map(zip , code => {
@@ -60,7 +84,8 @@ export default class Explorer extends React.Component {
           )
       });
 
-    const dataSource3 = _.sortBy(['Horeca', 'Services' , 'Construction', 'Technologies']);
+    const dataSource3 =  _.sortBy(categories);
+
     const dataSourceConfig = {
         text: 'zip',
         value: 'commune',
@@ -82,9 +107,11 @@ export default class Explorer extends React.Component {
                                    <Form horizontal>
                                          <Col sm={12} md={12}>
                                                <InputGroup>
-                                                   <FormControl type="text" placeholder="Faites une recherche de la société, d'un lieu ou d'une catégorie" />
+                                                   <FormControl type="text" onChange={e => ProvideActions.changeFreeText({freeText: e.target.value})}
+                                                       value={this.state.searchCriteria.freeText}
+                                                        placeholder="Faites une recherche de la société, d'un lieu ou d'une catégorie" />
                                                        <InputGroup.Button>
-                                                         <Button bsStyle="success">Recherche</Button>
+                                                         <Button bsStyle="success" onClick={e => ProvideActions.searchExplorer() }>Recherche</Button>
                                                        </InputGroup.Button>
                                                </InputGroup>
                                          </Col>
@@ -102,6 +129,7 @@ export default class Explorer extends React.Component {
                                                       dataSource={dataSource1}
                                                       onNewRequest={this._handleCode}
                                                       fullWidth={true}
+                                                      searchText={this.state.searchCriteria.codePostal }
                                                     />
                                               </Col>
                                             </FormGroup>
@@ -110,17 +138,19 @@ export default class Explorer extends React.Component {
                                                   <AutoComplete
                                                       floatingLabelText="Catégories"
                                                       filter={AutoComplete.fuzzyFilter}
-                                                      maxSearchResults={10}
+                                                      maxSearchResults={25}
                                                       openOnFocus={true}
                                                       dataSource={dataSource3}
-                                                      onNewRequest={this._handleCode}
+                                                      onNewRequest={this._handleCategory}
                                                       fullWidth={true}
-                                                    />
+                                                      searchText={this.state.searchCriteria.category }
+                                                      onUpdateInput={this._onUpdateCategory}
+                                                     />
                                               </Col>
                                             </FormGroup>
                                             <FormGroup controlId="formHorizontalRecherche">
                                               <Col sm={12} md={4}>
-                                                 <Button bsStyle="success">Recherche</Button>
+                                                 <Button bsStyle="success" onClick={e => ProvideActions.searchExplorer() }>Recherche</Button>
                                               </Col>
                                             </FormGroup>
                                        </Panel>
@@ -132,20 +162,19 @@ export default class Explorer extends React.Component {
                                     <div className="line-tabs bottom">
                                         <ul className="nav" role="tablist">
                                             <li className="active">
-                                                <a href="#all-results" role="tab" data-toggle="tab">Tous <span className="badge badge-success">217</span></a>
+                                                <a href="#all" onClick={this._handleSelectExplorer.bind(this, 'all') } role="tab" data-toggle="tab">Tous <span className="badge badge-success">{this.state.nbAll}</span></a>
                                             </li>
                                             <li>
-                                                <a href="#php-results" role="tab" data-toggle="tab">Notre sélection <span className="badge badge-primary">85</span></a>
+                                                <a href="#ourSelection"  onClick={this._handleSelectExplorer.bind(this, 'ourSelection') } role="tab" data-toggle="tab">Notre sélection <span className="badge badge-primary">{this.state.nbOurSelection}</span></a>
                                             </li>
                                             <li>
-                                                <a href="#css-html-results" role="tab" data-toggle="tab">Les derniers inscrits<span className="badge badge-info">32</span></a>
+                                                <a href="#latest"  onClick={this._handleSelectExplorer.bind(this, 'latest') } role="tab" data-toggle="tab">Les derniers inscrits <span className="badge badge-info">{this.state.nbLatest}</span></a>
                                             </li>
                                         </ul>
                                     </div>
                                     <Row>
                                     <div className="tab-content">
-                                        <div className="tab-pane fade in active" id="all-results">
-
+                                        <div className="tab-pane fade in active" id="all">
                                             { explorer }
                                         </div>
 
@@ -153,17 +182,21 @@ export default class Explorer extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Pagination
-                                      prev
-                                      next
-                                      first
-                                      last
-                                      ellipsis
-                                      boundaryLinks
-                                      items={20}
-                                      maxButtons={5}
-                                      activePage={this.state.activePage}
-                                      onSelect={this.handleSelect} />
+                                    <div className="tab-content">
+                                        <Col lg={4} md={4}>
+                                            <Pagination
+                                              prev
+                                              next
+                                              first
+                                              last
+                                              ellipsis
+                                              boundaryLinks
+                                              items={20}
+                                              maxButtons={5}
+                                              activePage={this.state.explorer.activePage}
+                                              onSelect={this._handleSelect} />
+                                        </Col>
+                                    </div>
                                 </Row>
                                 </div>
 

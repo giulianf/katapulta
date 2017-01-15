@@ -4,8 +4,7 @@ import BaseStore from './BaseStore';
 import LayoutStore from './LayoutStore';
 import { ContractsPreteur } from '../../model/ContractsPreteur';
 import { SimulateurInfo } from '../../model/SimulateurInfo';
-import { BasicInfoEmprunteur } from '../../model/BasicInfoEmprunteur';
-import { getDateISO, getDateDetails } from '../../common/Utility';
+import { getDate, getBelgiumDate, addDays } from '../../common/Utility';
 import Validator from '../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
 
@@ -20,10 +19,6 @@ new ContractsPreteur(3,  'fumanju', 'United-IT', '01/10/2016 22h30', 'CONTRAT EN
 new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20, 1)];
 
 const stepIndex = 1;
-
-// const basicEmprunteurProfil = new BasicInfoEmprunteur(null,'butacni', 'KATAPULTA', 'SPRL', '', '', '', '', '', '','', '', 'julien.fumanti@g.vom', '0456/55.66.33',
-//     '01/09/1989', 100000, '', 1234567, 3, 12600, [], '', 2.25,
-//     'siteWeb', null);
 
 
 class ProvideStore extends BaseStore {
@@ -52,6 +47,12 @@ class ProvideStore extends BaseStore {
 
       // explorer
       this._explorer = {};
+      this._allExplorer = {};
+      this._emprunteur = {};
+      this._searchCriteria = {freeText: null, codePostal: '', category: '', tabSelected: 'all'};
+      this._nbAll = 0;
+      this._nbOurSelection = 0;
+      this._nbLatest = 0;
     }
 
     openStepperDetail(contractId) {
@@ -131,12 +132,20 @@ class ProvideStore extends BaseStore {
      */
     populateContractsPreteur(contractsPreteur) {
         this._tabContracts.contracts = contractsPreteur ;
-
     }
 
     favorisEmprunteur(dataSociete) {
-        const favoris = _.find(this._favorisEmprunteur, dataSociete.emprunteurId);
-        favoris.isFavoris = !favoris.isFavoris;
+        // explorers is an Array
+        const favoris = _.find(this._explorer.explorers, {"id" : dataSociete.id});
+        // emprunteur is an Object
+        const favorisEmprunteur = _.isEqual(this._emprunteur.id, dataSociete.id) ? this._emprunteur : null;
+
+        if (!_.isNil(favoris)) {
+            favoris.isFavoris = !favoris.isFavoris;
+        }
+        if (!_.isNil(favorisEmprunteur)) {
+            favorisEmprunteur.isFavoris = !favorisEmprunteur.isFavoris;
+        }
     }
 
     /**************************/
@@ -144,7 +153,74 @@ class ProvideStore extends BaseStore {
     /*************************/
 
     populateExplorer(explorers) {
-        this._explorer = {explorer : explorers, activePage: 1};
+        this._allExplorer = explorers;
+        this._explorer = { activePage: 1, selectedExplorers: explorers };
+
+        this.countTab(explorers);
+    }
+
+    countTab(explorers) {
+        this._nbAll = _.size(explorers);
+        this._nbOurSelection = _.size(_.filter(explorers, (c) => {
+            return c.isOurSelection;
+        }));
+        this._nbLatest = _.size(_.filter(explorers, (c) => {
+            const current = addDays(moment(), -7);
+            const createDate = getDate( c.createDate );
+            return current.isBefore( createDate );
+        }));
+    }
+
+    changeFreeText(criteria) {
+        _.assign(this._searchCriteria, criteria);
+    }
+
+    searchExplorer(criteria) {
+        if (!_.isNil(criteria)) {
+            _.assign(this._searchCriteria, criteria);
+        }
+
+        let searchResults = _.cloneDeep(this._allExplorer);
+        // First select in the tab
+        if (_.isEqual(this._searchCriteria.tabSelected , 'all')) {
+            // nothing to do with 'all'
+
+        } else if (_.isEqual(this._searchCriteria.tabSelected , 'ourSelection')) {
+            searchResults = _.filter(searchResults, (c) => {
+                return c.isOurSelection
+            });
+        } else if (_.isEqual(this._searchCriteria.tabSelected , 'latest')) {
+            // Represent last week
+            // Current date - 7 days < Creation date
+            searchResults = _.filter(searchResults, (c) => {
+                const current = addDays(moment(), -7);
+                const createDate = getDate( c.createDate );
+                return current.isBefore( createDate );
+            });
+        }
+
+        if (!_.isEmpty(this._searchCriteria.freeText )) {
+            searchResults = _.filter(searchResults, (c) => {
+                 return _.includes(_.toUpper(c.denominationSocial), _.toUpper( this._searchCriteria.freeText )) || _.includes( _.toUpper(c.sectorActivite ), _.toUpper( this._searchCriteria.freeText ) ) });
+        }
+
+        if (!_.isEmpty(this._searchCriteria.codePostal )) {
+            searchResults = _.filter(searchResults, (c) => {
+                return _.isEqual(c.codePostalSiegeExploitation, this._searchCriteria.codePostal) });
+        }
+
+        if (!_.isEmpty(this._searchCriteria.category )) {
+            searchResults = _.filter(searchResults, (c) => {
+                return _.includes(c.sectorActivite, this._searchCriteria.category) });
+        }
+
+        this.countTab(searchResults);
+
+        this._explorer.selectedExplorers = searchResults;
+    }
+
+    populateEmprunteur(emprunteur) {
+        this._emprunteur = emprunteur;
     }
 
     /**************************/
@@ -256,13 +332,28 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
-      case ProvideConstants.FAVORIS_EMPRUNTEUR:
-         this.favorisEmprunteur(action.dataSociete);
+      case ProvideConstants.FAVORIS_EMPRUNTEUR_SUCCCESS:
+         this.favorisEmprunteur(action.basicInfoEmprunteur);
         // If action was responded to, emit change event
         this.emitChange();
         break;
       case ProvideConstants.GET_EXPLORERS_SUCCESS:
          this.populateExplorer(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.GET_EXPLORERS_BY_EMPR_ID_SUCCESS:
+         this.populateEmprunteur(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.SEARCH_EXPLORERS:
+         this.searchExplorer(action.searchCriteria);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.FREE_TEXT_EXPLORERS:
+         this.changeFreeText(action.searchCriteria);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -340,6 +431,42 @@ class ProvideStore extends BaseStore {
       return this._explorer;
   }
 
+  get getEmprunteur() {
+      return this._emprunteur;
+  }
+
+  get explorerState() {
+      return {
+          explorer: this.getExplorer,
+          loggedIn: LayoutStore.loggedIn,
+          profile: this.getProfile,
+          searchCriteria: this.getSearchCriteria,
+          nbAll: this.getNbAll,
+          nbOurSelection: this.getNbOurSelection,
+          nbLatest: this.getNbLatest,
+      };
+  }
+
+  get emprunteurState() {
+      return {
+          emprunteur: this.getEmprunteur,
+          profile: this.getProfile,
+          loggedIn: LayoutStore.loggedIn,
+      };
+  }
+
+  get getNbAll() {
+      return this._nbAll;
+  }
+
+  get getNbOurSelection() {
+      return this._nbOurSelection;
+  }
+
+  get getNbLatest() {
+      return this._nbLatest;
+  }
+
   get getStepWorkflow() {
       return this._tabContracts.stepWorkflow;
   }
@@ -350,6 +477,10 @@ class ProvideStore extends BaseStore {
 
   get getProfile() {
       return LayoutStore.getProfile;
+  }
+
+  get getSearchCriteria() {
+      return this._searchCriteria;
   }
 
 }

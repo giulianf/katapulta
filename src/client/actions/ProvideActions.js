@@ -5,12 +5,29 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+    changeFreeText: (searchCriteria) => {
+        dispatch(ProvideConstants.FREE_TEXT_EXPLORERS, { searchCriteria });
+    },
+    searchExplorer: (searchCriteria) => {
+        dispatch(ProvideConstants.SEARCH_EXPLORERS, { searchCriteria });
+    },
     getExplorer: (profile) => {
         let promise = ProvideService.getExplorer(profile);
 
         dispatchAsync(promise, {
           request: ProvideConstants.GET_EXPLORERS,
           success: ProvideConstants.GET_EXPLORERS_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
+    getExplorerByEmprunteurId: ( profile, emprunteurId ) => {
+        const userId = profile ? profile.user_id : null;
+        let promise = ProvideService.getExplorerByEmprunteurId(userId, emprunteurId);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GET_EXPLORERS_BY_EMPR_ID,
+          success: ProvideConstants.GET_EXPLORERS_BY_EMPR_ID_SUCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
 
@@ -41,8 +58,15 @@ export default {
     updateBasicInfoEmprunteur: newValue => {
         dispatch(ProvideConstants.UPDATE_BASIC_INFO_EMPRUNTEUR, {newValue});
     },
-    favorisEmprunteur: dataSociete => {
-        dispatch(ProvideConstants.FAVORIS_EMPRUNTEUR, { dataSociete });
+    favorisEmprunteur: (profile, basicInfoEmprunteur) => {
+        // dataSociete.isFavoris if it is true , user click to remove .
+        let promise = ProvideService.favorisEmprunteur(profile.user_id, basicInfoEmprunteur.id , basicInfoEmprunteur.isFavoris);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.FAVORIS_EMPRUNTEUR,
+          success: ProvideConstants.FAVORIS_EMPRUNTEUR_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { basicInfoEmprunteur });
     },
 
     /**

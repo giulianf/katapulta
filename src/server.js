@@ -5,7 +5,7 @@ import cors from 'cors';
 let bodyParser = require('body-parser');
 import _ from 'lodash';
 const jwt = require('express-jwt');
-import {getCurrentDate, getDate, error, debug, info, getYear, addYear, getBelgiumDate} from './common/UtilityLog';
+import { error, debug, info, getVersion } from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
@@ -61,8 +61,13 @@ const url = f('mongodb://%s:%s@%s:%s/%s', user, password, localhostDB, portDB, a
 
 // Use connect method to connect to the server
 MongoClient.connect(url, function(err, db) {
-  info("Mongo db connected successfully to server");
-  _mongodb =  db;
+    if (err) {
+        error('MongoDb is not connected.');
+        return;
+    }
+
+    info("Mongo db connected successfully to server");
+    _mongodb =  db;
 });
 
 
@@ -146,7 +151,6 @@ app.post('/api/updateEmprunteurBasicInfo', (req, res) => {
     profileDao.updateEmprunteurInfo(res, _mongodb, basicInfoEmprunteur);
 });
 
-
 app.get('/api/getContractPreteur/:user', (req, res) => {
     debug("Entering /api/updateEmprunteurBasicInfo ");
 
@@ -155,6 +159,18 @@ app.get('/api/getContractPreteur/:user', (req, res) => {
     const profileDao = new ProfileDao();
 
     profileDao.getContractPreteur(res, _mongodb, user);
+});
+
+app.post('/api/updateFavoris', (req, res) => {
+    debug("Entering /api/updateFavoris ");
+
+    const user_id = req.body.user_id;
+    const emprunteurId = req.body.emprunteurId;
+    const removed = req.body.removed;
+
+    const profileDao = new ProfileDao();
+
+    profileDao.updateFavoris(res, _mongodb, user_id, emprunteurId, removed);
 });
 
 /******************************************/
@@ -173,7 +189,18 @@ app.get('/api/getExplorers/:user', (req, res) => {
 
     const explorerDao = new ExplorerDao();
 
-    explorerDao.getExplorers(res, MongoDb, _mongodb, user);
+    explorerDao.getExplorers(res, _mongodb, user);
+});
+
+app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
+    debug("Entering /api/getExplorerByEmprunteurId ");
+
+    const userId = req.params.userId;
+    const emprunteurId = req.params.emprunteurId;
+
+    const explorerDao = new ExplorerDao();
+
+    explorerDao.getExplorerByEmprunteurId(res, MongoDb, _mongodb, userId, emprunteurId);
 });
 
 /******************************************/
@@ -184,9 +211,13 @@ app.get('/api/getExplorers/:user', (req, res) => {
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;
 const env = process.env.NODE_ENV;
+const version = getVersion();
 server.listen(port, err => {
   if (err) {
     return error(err);
   }
+   info(`*************************************************`);
    info(`Server running on http://${host}:${port} [${env}]`);
+   info(`Version of Katapulta: ${version}`);
+   info(`*********************************`);
 });

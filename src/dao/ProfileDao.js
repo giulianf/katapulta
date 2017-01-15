@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { error, debug, info, getYear, addYear, getBelgiumDate} from '../common/UtilityLog';
+import { error, debug, info } from '../common/UtilityLog';
+import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDays, getCurrentMomentDate, getDateISO } from '../common/Utility';
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import { ContractsPreteur } from '../model/ContractsPreteur';
@@ -28,9 +29,13 @@ export class ProfileDao {
              const userId = user;
              let basicProfil = null;
 
+             if (_.isNil(_mongodb)) {
+                 throw new Error("La base de données n'est pas connectée.");
+             }
+
             async.series([
                 (callback) => {
-                    this.getClientByUserId(_mongodb, userId, (profile, err) => {
+                    this.getClientByUserId(_mongodb, userId, email, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -67,7 +72,7 @@ export class ProfileDao {
      * @param  {type} callback description
      * @return {type}          description
      */
-    getClientByUserId(_mongodb, userId, callback) {
+    getClientByUserId(_mongodb, userId, email, callback) {
         try {
             const clients = _mongodb.collection('clients');
             let basicProfil = null;
@@ -78,8 +83,8 @@ export class ProfileDao {
               if (!_.isNil(client)) {
                   basicProfil = new BasicInfo(client);
               } else {
-                  basicProfil = new BasicInfo(null, null, userId, '' , '', '01/09/1939',
-                    null, email, '', '', '', false);
+                  basicProfil = new BasicInfo(null, userId, '' , '', '01/09/1939',
+                    null, email, '', '', '', false, null, createDateMongo());
               }
               callback(basicProfil);
           });
@@ -109,6 +114,10 @@ export class ProfileDao {
                     // Find some documents
                     clients = _mongodb.collection('clients');
 
+                    if (_.isNil(basicInfo.id)) {
+                        basicInfo.createDate = createDateMongo();
+                    }
+
                     // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
                     clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
                         returnOriginal: false
@@ -117,8 +126,8 @@ export class ProfileDao {
                         if(err) {
                             callback(err);
                         }
-                        debug('Result findOneAndUpdate: ' + JSON.stringify(clientResult.value));
-                        const basicProfil = new BasicInfo(clientResult);
+                        const basicProfil = new BasicInfo(clientResult.value);
+                        debug('Result findOneAndUpdate client: ' + basicProfil.toLog() );
 
                         res.end( JSON.stringify(basicProfil) );
                     });
@@ -164,8 +173,8 @@ export class ProfileDao {
                           if (!_.isNil(emprunteur)) {
                               basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
                           } else {
-                              basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '','01/09/1989',
-                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, []);
+                              basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
+                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
                           }
 
                           callback();
@@ -246,6 +255,18 @@ export class ProfileDao {
                     // Find some documents
                     let emprunteurs = _mongodb.collection('emprunteurs');
 
+                    if ( _.isNil(basicEmprunteurProfil.id) ) {
+                        basicEmprunteurProfil.createDate = createDateMongo();
+                        debug('creation date ' + basicEmprunteurProfil.createDate);
+
+                        let endDate = getBelgiumDate( getCurrentMomentDate() );
+                        endDate = addDays( getDateISO(endDate), 10);
+                        endDate = getBelgiumDateDetails(endDate);
+                        debug('end date ' + endDate);
+
+                        basicEmprunteurProfil.endDate = endDate;
+                    }
+
                     emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id}, basicEmprunteurProfil, {
                         returnOriginal: false
                       , upsert: true
@@ -254,7 +275,7 @@ export class ProfileDao {
                             callback(' error async ' , err);
                         }
                         const basicEmprunteur = new BasicInfoEmprunteur(emprunteurResult.value);
-                        debug('Result findOneAndUpdate: ' + JSON.stringify(basicEmprunteur.toLog()));
+                        debug('Result findOneAndUpdate emprunteur: ' + basicEmprunteur.toLog() );
 
                         res.end( JSON.stringify(basicEmprunteur) );
                     });
@@ -322,6 +343,78 @@ export class ProfileDao {
         } catch( e ) {
             error('error: ' + e);
             res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
+        }
+    }
+
+    updateFavoris(res, _mongodb, user_id, emprunteurId, removed) {
+        info('Entering updateFavoris() user: ' + user_id);
+
+        let clients;
+         try {
+
+             if (_.isNil(user_id)) {
+                throw new Error("Cet utilisateur ne peut sauvegarder de favoris.");
+             }
+
+             let basicProfil = null;
+             async.series([
+                 (callback) => {
+                     this.getClientByUserId(_mongodb, user_id, null, (profile, err) => {
+                         if (err) {
+                             callback(err);
+                             return;
+                         }
+                         basicProfil = profile;
+                         if (!_.isNil(basicProfil) && !_.isNil(basicProfil.id) ) {
+                             callback();
+                         } else {
+                             callback("L'utilisateur n'existe pas");
+                         }
+                     });
+                 },
+                (callback) => {
+                    // Validate basic Info
+                    // ValidatorBasic.validateProfileTabBasic(basicInfo);
+
+                    // Find some documents
+                    clients = _mongodb.collection('clients');
+
+                    if (removed) {
+                        debug('Favoris to remove: '+ emprunteurId );
+                        _.remove(basicProfil.favoris, f => {
+                            return _.isEqual(f.emprunteurId, emprunteurId);
+                        });
+                    } else {
+                        debug('Favoris to add: '+ emprunteurId );
+
+                        basicProfil.favoris.push({emprunteurId: emprunteurId});
+                        basicProfil.favoris = _.sortedUniq(basicProfil.favoris);
+                    }
+                    // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
+                    clients.findOneAndUpdate({'user_id': basicProfil.user_id}, basicProfil, {
+                        returnOriginal: false
+                      , upsert: true
+                    }, (err, clientResult) => {
+                        if(err) {
+                            callback(err);
+                        }
+                        const basicProfil = new BasicInfo(clientResult.value);
+                        debug('Result findOneAndUpdate client: ' + JSON.stringify( basicProfil.toLog() ) );
+
+                        res.end( JSON.stringify(basicProfil) );
+                    });
+                }
+            ], (err) => {
+                error("Unable to updateBasicInfo " , err);
+                //   When it's done
+                if (err) {
+                    res.status(500).json(err);
+                    return;
+                }
+            });
+        } catch( e ) {
+            error('error: ' + e);
+            res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
         }
     }
 }

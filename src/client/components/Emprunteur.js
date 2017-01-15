@@ -1,40 +1,77 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Form, Row, Col, Button, Glyphicon , Image, Table, Tabs, Tab, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import _ from 'lodash';
-import { getDateDetails } from '../../common/Utility';
 import ProvideActions from '../actions/ProvideActions';
 import Gallery from 'react-photo-gallery';
 import CountUp from 'react-countup';
+import ProvideStore from '../stores/ProvideStore';
+import { getFullBelgiumDate, getDateISO } from '../../common/Utility';
 
 class Emprunteur extends Component {
     constructor (props){
         super(props);
+        this._onChange = this._onChange.bind(this);
 
-        this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[] }
+        // this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[] };
+        this.state = ProvideStore.emprunteurState;
+
+    }
+
+    _onChange() {
+        this.setState(ProvideStore.emprunteurState);
+    }
+
+    componentDidMount() {
+        const emprunteurId = this.props.params.emprunteurId;
+
+        ProvideActions.getExplorerByEmprunteurId( this.state.profile, emprunteurId );
+
+        ProvideStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        ProvideStore.removeChangeListener(this._onChange);
     }
 
     render () {
-        const emprunteurId = this.props.params.emprunteurId;
 
-        if ( _.isNil(emprunteurId) ) {
+        if ( _.isNil(this.state.emprunteur) ) {
             return null;
         }
 
-        const PHOTO_SET = _.map(this.state.imageFiles , file => {
+        const PHOTO_SET = _.map(this.state.emprunteur.image , file => {
             return {
-                src: file,
-                width: 50,
-                height: 150,
-                aspectRatio: 2.5,
-                lightboxImage:{src: file, width:200}
+                src: file.src,
+                width: file.width,
+                height: file.height,
+                aspectRatio: 1.5,
+                resize: 1.2,
+                lightboxImage:{src: file.src, width:20, height: 20}
             }
         })
 
         const tooltip = (
-          <Tooltip id="tooltip"><strong>Prêter</strong> de l'argent à Katapulta</Tooltip>
+          <Tooltip id="tooltip"><strong>Prêter</strong> de l'argent à {this.state.emprunteur.denominationSocial}</Tooltip>
         );
-        // const startColor = dataSociete.isFavoris ? 'fa-2x startGold' : 'fa-2x';
+        const endDate = getFullBelgiumDate( getDateISO(this.state.emprunteur.endDate));
 
+        const startColor = this.state.emprunteur.isFavoris ? 'fa-2x startGold' : 'fa-2x';
+
+        const favoriTooltip = (
+          <Tooltip id="tooltip"><strong>Votre favoris.</strong></Tooltip>
+        );
+
+        const favoriButton = this.state.loggedIn ? (
+            <OverlayTrigger placement="top" overlay={favoriTooltip}>
+                <Button className="favoris-info" bsStyle="link" >
+                    <Glyphicon glyph='star' className={startColor} onClick={e => ProvideActions.favorisEmprunteur(this.state.profile , this.state.emprunteur)} />
+                </Button>
+            </OverlayTrigger>
+        ) : null;
+
+        const logosrc = this.state.emprunteur.logo ? this.state.emprunteur.logo.src : null;
+        const logowidth = this.state.emprunteur.logo ? this.state.emprunteur.logo.width : null;
+        const logoheigth = this.state.emprunteur.logo ? this.state.emprunteur.logo.height : null;
 
         return (
             <Grid fluid>
@@ -46,7 +83,7 @@ class Emprunteur extends Component {
                     <Grid>
                         <Row className="tab-content">
                                 <Col xs={12} md={4} lg={4}>
-                                     <Image src="/img/profile.jpg" rounded height="250" width="250"/>
+                                    <Image src={logosrc} width={logowidth} height={logoheigth} rounded />
                                 </Col>
                                 <Col xs={11} md={7} lg={7}>
                                     <h4 className='alignEmprunteur'>Emprunteur</h4>
@@ -54,23 +91,23 @@ class Emprunteur extends Component {
                                         <tbody>
                                           <tr>
                                             <th>Nom de société</th>
-                                            <td>Katapulta</td>
+                                            <td>{this.state.emprunteur.denominationSocial}</td>
                                           </tr>
                                           <tr>
                                               <th>Adresse</th>
-                                              <td>234 Avenue des best of the best 6000 Charleroi</td>
+                                              <td>{this.state.emprunteur.adresseSiegeExploitation}, {this.state.emprunteur.codePostalSiegeExploitation} à {this.state.emprunteur.villeSiegeExploitation}</td>
                                           </tr>
                                           <tr>
                                               <th>Chiffre d'affaire</th>
-                                              <td><CountUp start={1000000} end={12000000} useGrouping={true} separator="." duration={1.5} suffix=" EUR" /></td>
+                                              <td><CountUp start={1000} end={this.state.emprunteur.chiffreAffaire} useGrouping={true} separator="." duration={1.5} suffix=" EUR" /></td>
                                           </tr>
                                           <tr>
                                               <th>Emprunt souhaité</th>
-                                              <td><CountUp start={100} end={10000} useGrouping={true} separator="."  duration={1.5} suffix=" EUR" /></td>
+                                              <td><CountUp start={100} end={this.state.emprunteur.montantSouhaite} useGrouping={true} separator="."  duration={1.5} suffix=" EUR" /></td>
                                           </tr>
                                           <tr>
-                                              <th>Date de création de </th>
-                                              <td>24 décembre 2015</td>
+                                              <th>Date de fin du prêt </th>
+                                              <td>{endDate}</td>
                                           </tr>
                                         </tbody>
                                       </Table>
@@ -79,9 +116,7 @@ class Emprunteur extends Component {
                                         </OverlayTrigger>
                                 </Col>
                                 <Col xs={1} md={1} lg={1}>
-                                    <a href="#" className="favoris-info" >
-                                        <Glyphicon glyph='star' className='fa-2x startGold' onClick={e => ProvideActions.favorisEmprunteur({dataSociete})} />
-                                    </a>
+                                    { favoriButton }
                                 </Col>
                         </Row>
                     </Grid>
@@ -101,7 +136,7 @@ class Emprunteur extends Component {
                                           <Row className="gallery">
                                               <Col md={12}>
                                                   <div className="profile-gallery">
-                                                      blabla
+                                                      {this.state.emprunteur.destinationPret}
                                                   </div>
 
                                               </Col>
@@ -114,10 +149,13 @@ class Emprunteur extends Component {
                               </Col>
                         </Row>
                     </Grid>
-
-
-                <Gallery photos={PHOTO_SET}/>
-
+                    <Grid className='margin-top-16'>
+                        <Row className="tab-content">
+                            <Gallery
+                                lightboxShowImageCount={true}
+                                    photos={PHOTO_SET}/>
+                        </Row>
+                    </Grid>
               </Row>
             </Grid>
         );

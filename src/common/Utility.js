@@ -2,12 +2,9 @@ import _ from 'lodash';
 import moment from 'moment';
 import belgium from '../data/zipcode-belgium.json';
 
-export function getDateDetails() {
-    return moment().format('DD/MM/YYYY HH:mm:ss');
-}
 
-export function getCurrentDate() {
-    return moment.utc(moment()).format('YYYY-MM-DD');
+export function createDateMongo() {
+    return moment().utc().locale("fr").toISOString();
 }
 
 export function getDateISO(dateString) {
@@ -16,22 +13,51 @@ export function getDateISO(dateString) {
 }
 
 export function getDate(dateString) {
-    return moment.utc(dateString, 'DD/MM/YYYY');
+    return moment.utc(dateString, 'YYYY-MM-DD');
 }
 
 export function getHour(hourMilli) {
     return moment(parseInt(hourMilli)).format('HH:mm');
 }
 
+export function getCurrentDate() {
+    return moment.utc().format('DD/MM/YYYY HH:mm:ss');
+}
+
+export function getCurrentMomentDate() {
+    return moment().utc().locale("fr");
+}
+
 export function getBelgiumDate(date) {
     return moment.utc(date).format('DD/MM/YYYY');
+}
+
+export function getBelgiumDateDetails(date) {
+    return moment.utc(date).format('DD/MM/YYYY  HH:mm:ss');
+
+}
+
+export function getFullBelgiumDate(date) {
+    return moment.utc(date).locale("fr").format("Do MMMM YYYY"); // "Dimanche, February 14th 2010, 3:25:50 pm"
+}
+
+export function getYear(date) {
+    return moment(date).year();
+}
+
+export function addYear(date, nb) {
+    return moment(date).add(nb, 'y');
+}
+
+export function addDays(date, nb) {
+    return moment(date).add(nb, 'd');
 }
 
 export function validateEmail(mail) {
     if (!_.isNil(mail) && !_.isEmpty(mail)) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
             return (true);
-        }        
+        }
     }
 
     return (false);

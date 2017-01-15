@@ -26,7 +26,7 @@ export default class ProfileTabFavoris extends Component {
     render () {
         const favoris = _.map(this.props.favoris , favori => {
             return (
-                <EmprunteurComponent key={favori.emprunteurId} dataSociete={favori} col={4} />
+                <EmprunteurComponent key={favori.emprunteurId} dataSociete={favori} col={4} onClickFavori={ProvideActions.favorisEmprunteur}/>
             )
         })
 
