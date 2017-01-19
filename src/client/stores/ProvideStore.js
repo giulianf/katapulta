@@ -46,7 +46,8 @@ class ProvideStore extends BaseStore {
     //   this._favorisEmprunteur = favorisEmprunteur;
 
       // explorer
-      this._explorer = {};
+      this._explorer = { activePage: 1, selectedExplorers: null };
+      // page key within explorer search
       this._allExplorer = {};
       this._emprunteur = {};
       this._searchCriteria = {freeText: null, codePostal: '', category: '', tabSelected: 'all'};
@@ -154,9 +155,15 @@ class ProvideStore extends BaseStore {
 
     populateExplorer(explorers) {
         this._allExplorer = explorers;
-        this._explorer = { activePage: 1, selectedExplorers: explorers };
 
+        this.populateSelectedExplorer(explorers, this._explorer.activePage);
         this.countTab(explorers);
+    }
+
+    populateSelectedExplorer(explorers, activePage) {
+        const skip = (activePage - 1) * 8;
+        const limit = ((activePage) * 8) ;
+        this._explorer.selectedExplorers = _.slice(explorers, skip, limit);
     }
 
     countTab(explorers) {
@@ -175,10 +182,12 @@ class ProvideStore extends BaseStore {
         _.assign(this._searchCriteria, criteria);
     }
 
-    searchExplorer(criteria) {
+    searchExplorer(criteria, activePage) {
         if (!_.isNil(criteria)) {
             _.assign(this._searchCriteria, criteria);
         }
+
+        this._explorer.activePage = activePage;
 
         let searchResults = _.cloneDeep(this._allExplorer);
         // First select in the tab
@@ -216,7 +225,8 @@ class ProvideStore extends BaseStore {
 
         this.countTab(searchResults);
 
-        this._explorer.selectedExplorers = searchResults;
+        this.populateSelectedExplorer(searchResults, activePage);
+
     }
 
     populateEmprunteur(emprunteur) {
@@ -348,7 +358,7 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.SEARCH_EXPLORERS:
-         this.searchExplorer(action.searchCriteria);
+         this.searchExplorer(action.searchCriteria, action.activePage);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -431,6 +441,10 @@ class ProvideStore extends BaseStore {
       return this._explorer;
   }
 
+  get getAllExplorer() {
+      return this._allExplorer;
+  }
+
   get getEmprunteur() {
       return this._emprunteur;
   }
@@ -438,6 +452,7 @@ class ProvideStore extends BaseStore {
   get explorerState() {
       return {
           explorer: this.getExplorer,
+          allExplorer: this.getAllExplorer,
           loggedIn: LayoutStore.loggedIn,
           profile: this.getProfile,
           searchCriteria: this.getSearchCriteria,

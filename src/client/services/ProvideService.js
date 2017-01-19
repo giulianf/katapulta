@@ -1,5 +1,6 @@
 import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API,
-     UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API, GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API } from '../constants/WebServiceConstants';
+     UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API,
+     GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API, GET_CONTRACTS_EMPRUNTEUR_API } from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -98,6 +99,20 @@ class ProvideService {
       });
     }
 
+    getContractEmprunteur(profile) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+              `${GET_CONTRACTS_EMPRUNTEUR_API}${ profile.user_id }`
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
     getContractPreteur(profile) {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
@@ -112,10 +127,10 @@ class ProvideService {
       });
     }
 
-    getExplorer(profile) {
+    getExplorer(profile, pageKey) {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
-              `${GET_EXPLORERS_API}${ profile.user_id }`
+              `${GET_EXPLORERS_API}${ profile.user_id }/${pageKey}`
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

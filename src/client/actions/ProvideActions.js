@@ -8,11 +8,11 @@ export default {
     changeFreeText: (searchCriteria) => {
         dispatch(ProvideConstants.FREE_TEXT_EXPLORERS, { searchCriteria });
     },
-    searchExplorer: (searchCriteria) => {
-        dispatch(ProvideConstants.SEARCH_EXPLORERS, { searchCriteria });
+    searchExplorer: (searchCriteria, activePage) => {
+        dispatch(ProvideConstants.SEARCH_EXPLORERS, { searchCriteria, activePage });
     },
-    getExplorer: (profile) => {
-        let promise = ProvideService.getExplorer(profile);
+    getExplorer: (profile, pageKey) => {
+        let promise = ProvideService.getExplorer(profile, pageKey);
 
         dispatchAsync(promise, {
           request: ProvideConstants.GET_EXPLORERS,
@@ -117,6 +117,18 @@ export default {
         dispatchAsync(promise, {
           request: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR,
           success: ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+    /**
+     * get contracts emprunteur within TAB contract emprunteur
+     */
+    getContractEmprunteur: (profile) => {
+        let promise = ProvideService.getContractEmprunteur(profile);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.CONTRACTS_EMPRUNTEUR,
+          success: ProvideConstants.CONTRACTS_EMPRUNTEUR_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     },

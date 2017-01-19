@@ -18,7 +18,7 @@ export default class Footer extends React.Component {
             <Col md={12} sm={12} xs={12} className="text-center" >
               <div className="footer_content">
                   <Col md={12} sm={2} xs={12} className="text-center">
-                    <Link to="/"><img src="/img/logo.png" alt="" /></Link>
+                    <Link to="/"><img src="/img/logo.png" alt="" width="150"/></Link>
                   </Col>
                 <div className="footer_social">
                   <ul>

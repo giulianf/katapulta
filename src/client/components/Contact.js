@@ -5,6 +5,12 @@ import FieldGroup from './FieldGroup';
 export default class Contact extends Component {
   constructor (){
     super();
+
+    this._sendMessage = this._sendMessage.bind();
+  }
+
+  _sendMessage() {
+      
   }
 
   render () {
@@ -30,6 +36,15 @@ export default class Contact extends Component {
                     />
                     <FormGroup controlId="formControlsTextarea">
                       <FormControl componentClass="textarea" rows={6} placeholder="Votre message" />
+                    </FormGroup>
+                    <FormGroup>
+                      <Col smOffset={8} sm={2}>
+                          <Button
+                              bsStyle='primary'
+                              onClick={ this._sendMessage }>
+                              Envoyer
+                          </Button>
+                      </Col>
                     </FormGroup>
                 </form>
               </Col>

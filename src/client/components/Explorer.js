@@ -12,14 +12,14 @@ import ProvideActions from '../actions/ProvideActions';
 export default class Explorer extends React.Component {
     constructor () {
         super();
-        ProvideActions.getExplorer(ProvideStore.getProfile);
 
         this._onChange = this._onChange.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
+        this._handleSelect = this._handleSelect.bind(this);
         this._handleCode = this._handleCode.bind(this);
         this._handleCategory = this._handleCategory.bind(this);
         this._onUpdateCategory = this._onUpdateCategory.bind(this);
         this.state = ProvideStore.explorerState;
+        ProvideActions.getExplorer(ProvideStore.getProfile, this.state.explorer.activePage);
     }
 
     _onChange() {
@@ -34,28 +34,26 @@ export default class Explorer extends React.Component {
         ProvideStore.removeChangeListener(this._onChange);
     }
 
-    handleSelect(eventKey) {
-     this.setState({
-       activePage: eventKey
-     });
+    _handleSelect(eventKey) {
+        ProvideActions.searchExplorer(null, eventKey);
     }
 
     _handleCategory(chosenRequest, index) {
-        ProvideActions.searchExplorer({category: chosenRequest});
+        ProvideActions.searchExplorer({category: chosenRequest}, this.state.explorer.activePage);
     }
 
     _handleCode(chosenRequest, index) {
-        ProvideActions.searchExplorer({codePostal: chosenRequest});
+        ProvideActions.searchExplorer({codePostal: chosenRequest}, this.state.explorer.activePage);
     }
 
     _handleSelectExplorer(tabKey) {
-        ProvideActions.searchExplorer({tabSelected: tabKey});
+        ProvideActions.searchExplorer({tabSelected: tabKey}, this.state.explorer.activePage);
     }
 
     _onUpdateCategory(searchText) {
         // Only update when value is empty
         if (_.isEqual(searchText, '')) {
-            ProvideActions.searchExplorer({category: searchText});
+            ProvideActions.searchExplorer({category: searchText}, this.state.explorer.activePage);
         }
     }
 
@@ -70,6 +68,7 @@ export default class Explorer extends React.Component {
                       loggedIn={this.state.loggedIn} colmd={4} col={3} onClickFavori={ProvideActions.favorisEmprunteur}/>
           )
       });
+
       const dataSource1 = _.map(zip , code => {
           return (
               {
@@ -90,6 +89,8 @@ export default class Explorer extends React.Component {
         text: 'zip',
         value: 'commune',
     };
+
+    const explorersSize = ( _.floor(_.size(this.state.allExplorer) / 8) ) + 1;
 
 
     return (
@@ -183,7 +184,7 @@ export default class Explorer extends React.Component {
 
                                 <Row>
                                     <div className="tab-content">
-                                        <Col lg={4} md={4}>
+                                        <Col lg={5} md={5}>
                                             <Pagination
                                               prev
                                               next
@@ -191,7 +192,7 @@ export default class Explorer extends React.Component {
                                               last
                                               ellipsis
                                               boundaryLinks
-                                              items={20}
+                                              items={explorersSize}
                                               maxButtons={5}
                                               activePage={this.state.explorer.activePage}
                                               onSelect={this._handleSelect} />

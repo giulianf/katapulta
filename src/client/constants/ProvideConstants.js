@@ -28,6 +28,9 @@ export default keyMirror({
         UPDATE_BASIC_INFO_EMPRUNTEUR: null,
         SAVE_BASIC_INFO_EMPRUNTEUR: null,
         SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS: null,
+        // CONTRACT emprunteur
+        CONTRACTS_EMPRUNTEUR: null,
+        CONTRACTS_EMPRUNTEUR_SUCCCESS: null,
         // CONTRACT Preteur
         CONTRACTS_PRETEUR: null,
         CONTRACTS_PRETEUR_SUCCCESS: null,

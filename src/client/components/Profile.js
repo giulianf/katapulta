@@ -65,6 +65,8 @@ export default class Profile extends Component {
         // 3 : contract preteur
         if ( _.isEqual(key, 3) && _.isNil(this.state.tabContracts.contracts) ) {
             ProvideActions.getContractPreteur(this.state.profile);
+        } else if ( _.isEqual(key, 4) && _.isNil(this.state.tabContracts.contracts) ) {
+            ProvideActions.getContractEmprunteur(this.state.profile);
         }
     }
 

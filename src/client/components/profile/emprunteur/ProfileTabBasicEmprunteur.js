@@ -9,6 +9,7 @@ import Toastr from 'toastr';
 import belgium from '../../../../data/zipcode-belgium.json';
 let DatePicker = require("react-bootstrap-date-picker");
 import categories from '../../../../data/categories.json';
+const imageLoad = require('blueimp-load-image-npm');
 
 class ProfileTabBasicEmprunteur extends Component {
   constructor (props){
@@ -41,18 +42,19 @@ class ProfileTabBasicEmprunteur extends Component {
       }
   }
 
-  _addImage(e) {
+    _addImage(e) {
      const value = e.target.value;
      e.preventDefault();
 
        let reader = new FileReader();
        let file = e.target.files[0];
+         const blob = e.target.files[0];
+         const images = this.props.basicInfoEmprunteur.image;
 
         reader.onloadend = () => {
             let lastImage = new Image();
             let tempImage = {src: null, width: null, height: null};
             lastImage.src = reader.result;
-
 
             const MAX_WIDTH = 400;
             const MAX_HEIGHT = 300;
@@ -79,35 +81,48 @@ class ProfileTabBasicEmprunteur extends Component {
 
             ProvideActions.updateBasicInfoEmprunteur({image: img});
         }
-
          reader.readAsDataURL(file);
- }
+}
 
-  _addLogoImage(e) {
-     const value = e.target.value;
-     e.preventDefault();
+    _addLogoImage(e) {
+        const value = e.target.value;
+        e.preventDefault();
 
-       let reader = new FileReader();
-       let file = e.target.files[0];
+        const blob = e.target.files[0];
 
-        reader.onloadend = () => {
-            let lastImage = new Image();
-            let tempImage = {src: null, width: null, height: null};
-            lastImage.src = reader.result;
+        imageLoad.parseMetaData(blob, function(data) {
+            let ori = 0;
+            let type = 0;
+            if (data.exif) {
+                ori = data.exif.get('Orientation');
+                type = data.exif.get('Type');
+            }
 
+            const loadingImage = imageLoad(
+                blob,
+                function(img) {
+                    let tempImage = {src: null, width: null, height: null};
+                    // lastImage.src = reader.result;
 
-            const MAX_WIDTH = 250;
-            const MAX_HEIGHT = 200;
+                    const MAX_WIDTH = 250;
+                    const MAX_HEIGHT = 200;
 
-            tempImage.src =lastImage.src;
-            tempImage.width = MAX_WIDTH;
-            tempImage.height = MAX_HEIGHT;
+                    tempImage.src =img.toDataURL();
+                    tempImage.width = MAX_WIDTH;
+                    tempImage.height = MAX_HEIGHT;
 
-            ProvideActions.updateBasicInfoEmprunteur({logo: tempImage});
-        }
-
-         reader.readAsDataURL(file);
- }
+                    ProvideActions.updateBasicInfoEmprunteur({logo: tempImage});
+                }, {
+                    canvas: true,
+                    orientation: ori
+                }
+            );
+        },
+        {
+        maxMetaDataSize: 262144,
+        disableImageHead: false
+    });
+    }
 
  _removeImage() {
      let img = this.props.basicInfoEmprunteur.image;

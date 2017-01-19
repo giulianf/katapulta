@@ -4,14 +4,15 @@ import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDay
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import { ContractsPreteur } from '../model/ContractsPreteur';
+import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 let soap = require('soap');
 
 export class ProfileDao {
-    constructor() {
-
+    constructor(_mongodb) {
+        this._mongodb = _mongodb;
     }
 
 
@@ -22,20 +23,20 @@ export class ProfileDao {
      * @param  {type} user description
      * @return {type}      description
      */
-    getBasicInfo(res, _mongodb, user, email) {
+    getBasicInfo(res, user, email) {
         info('Entering getBasicInfo() data: ' + JSON.stringify( user ) + ' email: ' + email);
 
          try {
              const userId = user;
              let basicProfil = null;
 
-             if (_.isNil(_mongodb)) {
+             if (_.isNil(this._mongodb)) {
                  throw new Error("La base de données n'est pas connectée.");
              }
 
             async.series([
                 (callback) => {
-                    this.getClientByUserId(_mongodb, userId, email, (profile, err) => {
+                    this.getClientByUserId( userId, email, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -67,14 +68,13 @@ export class ProfileDao {
     /**
      * getClientByUserId - get client by user id
      *
-     * @param  {type} _mongodb  description
      * @param  {type} userId   description
      * @param  {type} callback description
      * @return {type}          description
      */
-    getClientByUserId(_mongodb, userId, email, callback) {
+    getClientByUserId( userId, email, callback) {
         try {
-            const clients = _mongodb.collection('clients');
+            const clients = this._mongodb.collection('clients');
             let basicProfil = null;
             // Find some documents
             clients.findOne({'user_id': userId}, function(err, client) {
@@ -98,11 +98,10 @@ export class ProfileDao {
      * updateBasicInfo - Update basic info
      *
      * @param  {type} res       description
-     * @param  {type} _mongodb  description
      * @param  {type} basicInfo description
      * @return {type}           description
      */
-    updateBasicInfo(res, _mongodb, basicInfo) {
+    updateBasicInfo(res, basicInfo) {
         info('Entering updateBasicInfo() basic info: ' + basicInfo.user_id);
         let clients;
          try {
@@ -112,13 +111,13 @@ export class ProfileDao {
                     ValidatorBasic.validateProfileTabBasic(basicInfo);
 
                     // Find some documents
-                    clients = _mongodb.collection('clients');
+                    clients = this._mongodb.collection('clients');
 
                     if (_.isNil(basicInfo.id)) {
                         basicInfo.createDate = createDateMongo();
                     }
 
-                    // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
+                    // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
                     clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
                         returnOriginal: false
                       , upsert: true
@@ -151,18 +150,17 @@ export class ProfileDao {
          * getBasicInfo - Get Basic Info by User id
          *
          * @param  {type} res      response
-         * @param  {type} _mongodb db connection
          * @param  {type} user     user id from auth0
          * @param  {type} email    email from auth profile
          */
-        getEmprunteurBasicInfo(res, _mongodb, user) {
+        getEmprunteurBasicInfo(res, user) {
             info('Entering getEmprunteurBasicInfo() data: ' + JSON.stringify( user ) );
 
              try {
                  const userId = user;
                  let basicInfoEmprunteur = null;
 
-                 const emprunteurs = _mongodb.collection('emprunteurs');
+                 const emprunteurs = this._mongodb.collection('emprunteurs');
 
                 async.series([
                     (callback) => {
@@ -204,13 +202,13 @@ export class ProfileDao {
      * updateEmprunteurInfo - Update emprunteur basic info profile tab
      *
      * @param  {type} res                   response
-     * @param  {type} _mongodb              DB connection
      * @param  {Object} basicEmprunteurProfil description
      */
-    updateEmprunteurInfo (res, _mongodb, basicEmprunteurProfil) {
+    updateEmprunteurInfo (res, basicEmprunteurProfil) {
         try {
             let emprunteur = _.cloneDeep(basicEmprunteurProfil);
             emprunteur.image = [];
+            emprunteur.logo = {};
             info('Entering updateEmprunteurInfo() emprunteur info: ' + JSON.stringify(emprunteur));
 
             const urlSoap = process.env.SOAP_VAT_URL;
@@ -238,7 +236,7 @@ export class ProfileDao {
                     clientSoap.checkVat(args, function(err, result) {
                          if (err) {
                              error("Error during VAT. " , err);
-                             callback("Le numéro de TVA n'est pas valid.");
+                             callback("Problème durant la validation de la tva. Réessayer plus tard, merci.");
                              return;
                          }
                          debug("Result of VAT: " + JSON.stringify(result));
@@ -253,7 +251,8 @@ export class ProfileDao {
                 },
                 (callback) => {
                     // Find some documents
-                    let emprunteurs = _mongodb.collection('emprunteurs');
+                    let emprunteurs = this._mongodb.collection('emprunteurs');
+                    debug('test emprunteurs')
 
                     if ( _.isNil(basicEmprunteurProfil.id) ) {
                         basicEmprunteurProfil.createDate = createDateMongo();
@@ -294,59 +293,7 @@ export class ProfileDao {
         }
     }
 
-    /**
-     * getContractPreteur - contract preteur within contract tab
-     *
-     * @param  {type} res      description
-     * @param  {type} _mongodb description
-     * @param  {type} user     description
-     * @return {type}          description
-     */
-    getContractPreteur(res, _mongodb, user) {
-        info('Entering getContractPreteur() data: ' + user  );
-
-         try {
-             const userId = user;
-             let contractsPreteur = [];
-
-             const emprunteurs = _mongodb.collection('emprunteurs');
-
-            async.series([
-                (callback) => {
-                    // Find some documents
-                    emprunteurs.find({'user_id': userId}, function(err, contracts) {
-                        const contractSize = _.size( contracts );
-                        debug("*****  contract found: " + contractSize);
-
-                        for(let i = 0 ; i < contractSize ; i++) {
-                            const contract = contracts[i];
-
-                            contractsPreteur.push( new ContractsPreteur(contract) );
-                        }
-
-                        callback();
-                    });
-                },
-                (callback) => {
-                    debug("****  contractsPreteur: " + JSON.stringify( contractsPreteur ) );
-
-                    res.end( JSON.stringify( contractsPreteur ) );
-                }
-            ], (err) => {
-                error("Unable to getEmprunteurBasicInfo " , err);
-                //   When it's done
-                if (err) {
-                    res.status(500).json(err);
-                    return;
-                }
-            });
-        } catch( e ) {
-            error('error: ' + e);
-            res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
-        }
-    }
-
-    updateFavoris(res, _mongodb, user_id, emprunteurId, removed) {
+    updateFavoris(res, user_id, emprunteurId, removed) {
         info('Entering updateFavoris() user: ' + user_id);
 
         let clients;
@@ -359,7 +306,7 @@ export class ProfileDao {
              let basicProfil = null;
              async.series([
                  (callback) => {
-                     this.getClientByUserId(_mongodb, user_id, null, (profile, err) => {
+                     this.getClientByUserId(user_id, null, (profile, err) => {
                          if (err) {
                              callback(err);
                              return;
@@ -377,7 +324,7 @@ export class ProfileDao {
                     // ValidatorBasic.validateProfileTabBasic(basicInfo);
 
                     // Find some documents
-                    clients = _mongodb.collection('clients');
+                    clients = this._mongodb.collection('clients');
 
                     if (removed) {
                         debug('Favoris to remove: '+ emprunteurId );
@@ -390,7 +337,7 @@ export class ProfileDao {
                         basicProfil.favoris.push({emprunteurId: emprunteurId});
                         basicProfil.favoris = _.sortedUniq(basicProfil.favoris);
                     }
-                    // _mongodb.collection('clients').insert( basicInfo, function(err, r) {
+                    // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
                     clients.findOneAndUpdate({'user_id': basicProfil.user_id}, basicProfil, {
                         returnOriginal: false
                       , upsert: true

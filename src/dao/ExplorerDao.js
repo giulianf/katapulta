@@ -8,32 +8,32 @@ import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 
 export class ExplorerDao {
-    constructor() {
-
+    constructor(_mongodb) {
+        this._mongodb = _mongodb;
     }
-
 
     /**
      * getExplorers - get all contract for emprunteur
      *
      * @param  {type} res      description
-     * @param  {type} _mongodb description
-     * @param  {String} user description
+     * @param  {type} user     description
+     * @param  {type} pageKey    starting from 20 "limit"
      * @return {type}          description
      */
-    getExplorers(res, _mongodb, user) {
-        info('Entering getContractPreteur() data: ' );
+    getExplorers(res, user, pageKey) {
+        info('Entering getExplorers() data: ' );
 
          try {
+             const EXPLORERS_PAGE = 8;
              let contractsPreteur = [];
              const userId = user;
              let basicProfil = null;
 
             async.series([
                 (callback) => {
-                    const profileDao = new ProfileDao();
+                    const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getClientByUserId(_mongodb, userId, null, (profile, err) => {
+                    profileDao.getClientByUserId( userId, null, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -44,9 +44,15 @@ export class ExplorerDao {
                     });
                 },
                 (callback) => {
-                    const emprunteurs = _mongodb.collection('emprunteurs');
+                    const emprunteurs = this._mongodb.collection('emprunteurs');
+
+                    // retrieves 8 elements starting from "limit"
+                    const skip = (pageKey - 1) * EXPLORERS_PAGE;
+                    const limit = (pageKey) * EXPLORERS_PAGE;
+                    debug('limit: ' + limit);
 
                     // Find some documents
+                    // emprunteurs.find().skip(skip).limit(limit).toArray(function(err, contracts) {
                     emprunteurs.find().toArray(function(err, contracts) {
 
                         const contractSize = _.size( contracts );
@@ -109,11 +115,10 @@ export class ExplorerDao {
      *
      * @param  {type} res      description
      * @param  {type} MongoDb  description
-     * @param  {type} _mongodb description
      * @param  {type} user     description
      * @return {type}          description
      */
-    getExplorerByEmprunteurId(res, MongoDb, _mongodb, userId, emprunteurId) {
+    getExplorerByEmprunteurId(res, MongoDb, userId, emprunteurId) {
         info('Entering getExplorerByEmprunteurId() user id: ' + userId + ' and emprunteur Id: ' + emprunteurId);
 
          try {
@@ -122,9 +127,9 @@ export class ExplorerDao {
 
             async.series([
                 (callback) => {
-                    const profileDao = new ProfileDao();
+                    const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getClientByUserId(_mongodb, userId, null, (profile, err) => {
+                    profileDao.getClientByUserId( userId, null, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -135,7 +140,7 @@ export class ExplorerDao {
                     });
                 },
                 (callback) => {
-                    const emprunteurs = _mongodb.collection('emprunteurs');
+                    const emprunteurs = this._mongodb.collection('emprunteurs');
 
                     // Find some documents
                     emprunteurs.findOne({'_id': new MongoDb.ObjectId(emprunteurId)}, (err, emprunteur) => {

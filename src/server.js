@@ -108,9 +108,9 @@ app.get('/api/getBasicInfo/:user/:email', (req, res) => {
     const user = req.params.user;
     const email = req.params.email;
 
-    const profileDao = new ProfileDao();
+    const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.getBasicInfo(res, _mongodb, user, email);
+    profileDao.getBasicInfo(res, user, email);
 });
 
 /**
@@ -121,9 +121,9 @@ app.post('/api/updateBasicInfo', (req, res) => {
 
     const basicInfo = req.body.basicInfo;
 
-    const profileDao = new ProfileDao();
+    const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.updateBasicInfo(res, _mongodb, basicInfo);
+    profileDao.updateBasicInfo(res, basicInfo);
 });
 /**
  * get emprunteur Basic info by user id
@@ -133,9 +133,9 @@ app.get('/api/getEmprunteurBasicInfo/:user', (req, res) => {
 
     const user = req.params.user;
 
-    const profileDao = new ProfileDao();
+    const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.getEmprunteurBasicInfo(res, _mongodb, user);
+    profileDao.getEmprunteurBasicInfo(res, user);
 });
 
 /**
@@ -146,19 +146,29 @@ app.post('/api/updateEmprunteurBasicInfo', (req, res) => {
 
     const basicInfoEmprunteur = req.body.basicInfoEmprunteur;
 
-    const profileDao = new ProfileDao();
+    const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.updateEmprunteurInfo(res, _mongodb, basicInfoEmprunteur);
+    profileDao.updateEmprunteurInfo(res, basicInfoEmprunteur);
 });
 
-app.get('/api/getContractPreteur/:user', (req, res) => {
-    debug("Entering /api/updateEmprunteurBasicInfo ");
+app.get('/api/getContractEmprunteur/:user', (req, res) => {
+    debug("Entering /api/getContractEmprunteur ");
 
     const user = req.params.user;
 
-    const profileDao = new ProfileDao();
+    const contractDao = new ContractDao(_mongodb);
 
-    profileDao.getContractPreteur(res, _mongodb, user);
+    contractDao.getContractEmprunteur(res, user);
+});
+
+app.get('/api/getContractPreteur/:user', (req, res) => {
+    debug("Entering /api/getContractPreteur ");
+
+    const user = req.params.user;
+
+    const profileDao = new ProfileDao(_mongodb);
+
+    profileDao.getContractPreteur(res, user);
 });
 
 app.post('/api/updateFavoris', (req, res) => {
@@ -168,9 +178,9 @@ app.post('/api/updateFavoris', (req, res) => {
     const emprunteurId = req.body.emprunteurId;
     const removed = req.body.removed;
 
-    const profileDao = new ProfileDao();
+    const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.updateFavoris(res, _mongodb, user_id, emprunteurId, removed);
+    profileDao.updateFavoris(res, user_id, emprunteurId, removed);
 });
 
 /******************************************/
@@ -182,14 +192,17 @@ app.post('/api/updateFavoris', (req, res) => {
 /************ START EXPLORER API *************/
 /******************************************/
 
-app.get('/api/getExplorers/:user', (req, res) => {
+app.get('/api/getExplorers/:user/:pageKey', (req, res) => {
     debug("Entering /api/getExplorers ");
 
     const user = req.params.user;
+    const pageKey = req.params.pageKey;
 
-    const explorerDao = new ExplorerDao();
+    debug('User: ' + user);
+    debug('Page to search: ' + pageKey);
+    const explorerDao = new ExplorerDao(_mongodb);
 
-    explorerDao.getExplorers(res, _mongodb, user);
+    explorerDao.getExplorers(res, user, pageKey);
 });
 
 app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
@@ -198,9 +211,9 @@ app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
     const userId = req.params.userId;
     const emprunteurId = req.params.emprunteurId;
 
-    const explorerDao = new ExplorerDao();
+    const explorerDao = new ExplorerDao(_mongodb);
 
-    explorerDao.getExplorerByEmprunteurId(res, MongoDb, _mongodb, userId, emprunteurId);
+    explorerDao.getExplorerByEmprunteurId(res, MongoDb, userId, emprunteurId);
 });
 
 /******************************************/

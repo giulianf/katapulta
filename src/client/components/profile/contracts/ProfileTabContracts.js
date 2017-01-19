@@ -9,7 +9,6 @@ export default class ProfileTabContracts extends Component {
     }
 
     componentDidMount() {
-        // ProvideActions.getContractPreteur(this.props.profile);
     }
 
     componentWillUnmount() {
