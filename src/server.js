@@ -166,9 +166,19 @@ app.get('/api/getContractPreteur/:user', (req, res) => {
 
     const user = req.params.user;
 
-    const profileDao = new ProfileDao(_mongodb);
+    const contractDao = new ContractDao(_mongodb);
 
-    profileDao.getContractPreteur(res, user);
+    contractDao.getContractPreteur(res, user);
+});
+
+app.post('/api/requestNewEmprunt', (req, res) => {
+    debug("Entering /api/requestNewEmprunt ");
+
+    const user = req.body.user;
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.requestNewEmprunt(res, user);
 });
 
 app.post('/api/updateFavoris', (req, res) => {

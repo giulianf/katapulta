@@ -11,13 +11,13 @@ export class ProfileDao {
         this._mongodb = _mongodb;
     }
 
-    askNewEmprunt(res, user) {
-        info('Entering askNewEmprunt() data: ' + user  );
+    requestNewEmprunt(res, user) {
+        info('Entering requestNewEmprunt() data: ' + user  );
 
          try {
              const userId = user;
              let contractsList = [];
-
+             let basicInfoEmprunteur;
              const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
             async.series([
@@ -25,9 +25,10 @@ export class ProfileDao {
                     const profileDao = new ProfileDao(this._mongodb);
                     // TO DO
                     // profileDao.getEmprunteurBasicInfo(res, user);
+                    // new ContractsEmprunteur(contract)
                 },
                 (callback) => {
-                    contractEmprunteurs.findOneAndUpdate({'user_id': basicProfil.user_id}, basicProfil, {
+                    contractEmprunteurs.findOneAndUpdate({'user_id': basicProfil.user_id}, basicInfoEmprunteur, {
                         returnOriginal: false
                       , upsert: true
                     }, (err, clientResult) => {
