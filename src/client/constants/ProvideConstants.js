@@ -9,6 +9,9 @@ export default keyMirror({
         // EMPRUNTEUR ID
         GET_EXPLORERS_BY_EMPR_ID : null,
         GET_EXPLORERS_BY_EMPR_ID_SUCCESS : null,
+        // CONTRACT EMPRUNTEUR ID
+        NEW_CONTRACTS_EMPRUNTEUR : null,
+        NEW_CONTRACTS_EMPRUNTEUR_SUCCESS : null,
 
     // Simulateur
     SIMULATEUR_DATA : null,

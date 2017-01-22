@@ -29,11 +29,7 @@ class ProvideStore extends BaseStore {
       this._simulateur = simulator;
       this._simulateurResult = null;
 
-      // contracts list, stepIndex
-      this._tabContracts = {};
-      this._tabContracts.stepWorkflow = {} ;
-      this._tabContracts.stepWorkflow.visible = false ;
-      this._tabContracts.stepWorkflow.stepIndex = stepIndex ;
+      this.resetTabContract();
 
       // profile
       this._tabBasic = {};
@@ -61,6 +57,14 @@ class ProvideStore extends BaseStore {
         const contrat = _.find(this._tabContracts.contracts, {contractId: contractId}); ;
         this._tabContracts.stepWorkflow.nomEmprunteur = contrat.nomEmprunteur;
         this._tabContracts.stepWorkflow.stepIndex = contrat.stepWorkflow;
+    }
+
+    resetTabContract() {
+        // contracts list, stepIndex
+        this._tabContracts = {};
+        this._tabContracts.stepWorkflow = {} ;
+        this._tabContracts.stepWorkflow.visible = false ;
+        this._tabContracts.stepWorkflow.stepIndex = stepIndex ;
     }
 
     closeStepperDetail() {
@@ -132,6 +136,16 @@ class ProvideStore extends BaseStore {
      * @return {type}                  description
      */
     populateContractsPreteur(contractsPreteur) {
+        this._tabContracts.contracts = contractsPreteur ;
+    }
+
+    /**
+     * populateContractsEmprunteur - to show contracts emprunteur tab within profile
+     *
+     * @param  {type} contractsEmprunteur description
+     * @return {type}                     description
+     */
+    populateContractsEmprunteur(contractsEmprunteur) {
         this._tabContracts.contracts = contractsPreteur ;
     }
 
@@ -364,6 +378,11 @@ class ProvideStore extends BaseStore {
         break;
       case ProvideConstants.FREE_TEXT_EXPLORERS:
          this.changeFreeText(action.searchCriteria);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.NEW_CONTRACTS_EMPRUNTEUR_SUCCESS:
+         this.populateContractsEmprunteur(action.ContractsEmprunteur);
         // If action was responded to, emit change event
         this.emitChange();
         break;

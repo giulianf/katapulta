@@ -147,39 +147,33 @@ export class ProfileDao {
 
 
         /**
-         * getBasicInfo - Get Basic Info by User id
+         * getEmprunteurBasicInfo- return emprunteur by user Id
          *
          * @param  {type} res      response
          * @param  {type} user     user id from auth0
-         * @param  {type} email    email from auth profile
          */
-        getEmprunteurBasicInfo(res, user) {
+        getEmprunteurBasicInfoResponse(res, user) {
             info('Entering getEmprunteurBasicInfo() data: ' + JSON.stringify( user ) );
 
              try {
                  const userId = user;
                  let basicInfoEmprunteur = null;
 
-                 const emprunteurs = this._mongodb.collection('emprunteurs');
 
                 async.series([
                     (callback) => {
-                        // Find some documents
-                        emprunteurs.findOne({'user_id': userId}, function(err, emprunteur) {
-                          debug("*****  emprunteur found: " + _.isEmpty( emprunteur ));
+                        this.getEmprunteurBasicInfoByUserId(userId, (emprunteur, err) => {
+                            if (err) {
+                                callback(err);
+                                return;
+                            }
+                            basicInfoEmprunteur = emprunteur;
 
-                          if (!_.isNil(emprunteur)) {
-                              basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
-                          } else {
-                              basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
-                               0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
-                          }
-
-                          callback();
+                            callback();
                         });
                     },
                     (callback) => {
-                        debug("****  BasicInfoEmprunteur: " + JSON.stringify( basicInfoEmprunteur.toLog() ) );
+                        debug("****  getEmprunteurBasicInfoResponse: " + JSON.stringify( basicInfoEmprunteur.toLog() ) );
 
                         res.end( JSON.stringify( basicInfoEmprunteur ) );
                     }
@@ -196,6 +190,37 @@ export class ProfileDao {
                 res.status(500).send('Problème pendant la récupération des infos. ' + e.message);
             }
         }
+
+    /**
+     * getEmprunteurBasicInfoByUserId - return emprunteur by user Id
+     *
+     * @param  {type} userId   description
+     * @param  {type} callback description
+     * @return {type}          description
+     */
+    getEmprunteurBasicInfoByUserId(userId, callback) {
+        try {
+            let basicInfoEmprunteur;
+            const emprunteurs = this._mongodb.collection('emprunteurs');
+
+            // Find some documents
+            emprunteurs.findOne({'user_id': userId}, function(err, emprunteur) {
+              debug("*****  emprunteur found: " + _.isEmpty( emprunteur ));
+
+              if (!_.isNil(emprunteur)) {
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
+              } else {
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
+                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
+              }
+
+              callback(basicInfoEmprunteur);
+            });
+        } catch(e) {
+            error('Error During getEmprunteurBasicInfo.', e);
+            callback(null, e)
+        }
+    }
 
 
     /**

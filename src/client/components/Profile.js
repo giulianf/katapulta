@@ -33,6 +33,7 @@ export default class Profile extends Component {
     this._updateBasicInfo = this._updateBasicInfo.bind(this);
     this._updateEmprunteurBasicInfo = this._updateEmprunteurBasicInfo.bind(this);
     this._handleSelect = this._handleSelect.bind(this);
+    this._requestNewEmprunt = this._requestNewEmprunt.bind(this);
 
     this.state = getProfileState();
 
@@ -51,6 +52,10 @@ export default class Profile extends Component {
    componentWillUnmount() {
     //  clearTimeout(this.timer);
      ProvideStore.removeChangeListener(this._onChange);
+   }
+
+   _requestNewEmprunt() {
+       ProvideActions.requestNewEmprunt(this.state.profile);
    }
 
    _updateBasicInfo(basicInfo) {
@@ -82,23 +87,34 @@ export default class Profile extends Component {
   //  }
 
   render () {
-      const basicEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
+      // BASIC TAB
+      const basicTab = !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo) ? (
+          <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
+      ) : null;
+
+      // EMPRUNTEUR TAB
+      const basicEmprunteurTab =  !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
           <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo}
               {...this.state} /></Tab>
       ) : null;
-      const conractEmprunteurTab = !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur  tabContracts={this.state.tabContracts}  /></Tab>
+
+      const contractPreteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) ? (
+          <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
+      ) : null;
+
+      const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) && this.state.basicInfo.isEmprunteur ? (
+          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabContracts={this.state.tabContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin ? (
-              <Tab eventKey={6} title="Admin">Tab 4 content</Tab>
+              <Tab eventKey={6} title="Admin">Tab 6 content</Tab>
       ) : null;
 
     const largeTabVisible = (
         <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example" onSelect={this._handleSelect}>
-            <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
+            { basicTab }
             { basicEmprunteurTab }
-            <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
-            { conractEmprunteurTab }
+            { contractPreteurTab }
+            { contractEmprunteurTab }
             <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
             { isAdminTab }
         </Tabs>

@@ -4,13 +4,32 @@ import { Grid, Form, Row, Col, Button, Panel, Tooltip, OverlayTrigger, Glyphicon
 import _ from 'lodash';
 import HorizontalLinearStepper from '../../HorizontalLinearStepper';
 import ContractsList from '../contracts/ContractsList';
+import ConfirmPopup from '../ConfirmPopup';
 
 export default class ProfileTabContractEmprunteur extends Component {
   constructor (props){
     super(props);
 
-    this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[] }
+    this._showEmprunteurPopup = this._showEmprunteurPopup.bind(this);
+    this._closeEmprunteurPopup = this._closeEmprunteurPopup.bind(this);
+    this._requestEmprunteur= this._requestEmprunteur.bind(this);
 
+    this.state = {openRequest: false};
+
+  }
+
+  _showEmprunteurPopup() {
+      this.setState({ openRequest: true });
+  }
+
+  _closeEmprunteurPopup() {
+      this.setState({ openRequest: false });
+  }
+
+  _requestEmprunteur() {
+      this.props.requestNewEmprunt();
+    //   alert('envoyer');
+    //   this.setState({ openRequest: true });
   }
 
   componentDidMount() {
@@ -31,7 +50,7 @@ export default class ProfileTabContractEmprunteur extends Component {
             <Grid keyTab='profileTabEmprunteurContract' >
                 <Col md={10} sm={10}>
                     <OverlayTrigger placement="right" overlay={tooltip}>
-                        <Button bsStyle='primary' className='btn-flat'><Glyphicon  glyph='plus' ></Glyphicon> Demande d'emprunt</Button>
+                        <Button bsStyle='primary' className='btn-flat' onClick={this._showEmprunteurPopup}><Glyphicon  glyph='plus' ></Glyphicon> Demande d'emprunt</Button>
                     </OverlayTrigger>
                 </Col>
                 <Col md={10} sm={10} smHidden xsHidden className='space-top-bottom'>
@@ -50,9 +69,15 @@ export default class ProfileTabContractEmprunteur extends Component {
                       <HorizontalLinearStepper orientation="vertical"></HorizontalLinearStepper>
                  </Panel>
                 </Col>
-                    <Col md={10} sm={10} className='space-top-bottom'>
-                        <ContractsList  keyTab='profileTabEmpContract' {...this.props}/>
-                    </Col>
+                <Col md={10} sm={10} className='space-top-bottom'>
+                    <ContractsList  keyTab='profileTabEmpContract' {...this.props}/>
+                </Col>
+
+                    <ConfirmPopup showModal={this.state.openRequest} title="Demande d'emprunt"
+                        message="Vous êtes sur le point de faire une demande de prêt à l'aide de Katapulta. Êtes-vous sûre?"
+                        closeModal={ this._closeEmprunteurPopup }
+                        buttonConfirmMessage="Envoyer" callback={this._requestEmprunteur} />
+
             </Grid>
         )
     }

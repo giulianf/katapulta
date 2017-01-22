@@ -9,6 +9,8 @@ import { error, debug, info, getVersion } from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
+import { ContractDao } from './dao/ContractDao';
+
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -135,7 +137,7 @@ app.get('/api/getEmprunteurBasicInfo/:user', (req, res) => {
 
     const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.getEmprunteurBasicInfo(res, user);
+    profileDao.getEmprunteurBasicInfoResponse(res, user);
 });
 
 /**

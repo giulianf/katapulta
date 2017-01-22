@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { error, debug, info } from '../common/UtilityLog';
-import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDays, getCurrentMomentDate, getDateISO } from '../common/Utility';
+import { createDateMongo } from '../common/Utility';
 import { ContractsPreteur } from '../model/ContractsPreteur';
 import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+import statusEmprunteur from '../data/statusEmprunteur';
 import async from 'async';
-let soap = require('soap');
 
-export class ProfileDao {
+export class ContractDao {
     constructor(_mongodb) {
         this._mongodb = _mongodb;
     }
@@ -18,27 +18,39 @@ export class ProfileDao {
              const userId = user;
              let contractsList = [];
              let basicInfoEmprunteur;
-             const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
             async.series([
                 (callback) => {
                     const profileDao = new ProfileDao(this._mongodb);
+
+                    profileDao.getEmprunteurBasicInfoByUserId(userId, (emprunteur, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        basicInfoEmprunteur = emprunteur;
+
+                        callback();
+                    });
                     // TO DO
                     // profileDao.getEmprunteurBasicInfo(res, user);
                     // new ContractsEmprunteur(contract)
                 },
                 (callback) => {
-                    contractEmprunteurs.findOneAndUpdate({'user_id': basicProfil.user_id}, basicInfoEmprunteur, {
+                    const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
+
+                    const status = this.getStatus(1);
+                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id, createDateMongo(), status, this.getProgress(), this.getStepWorkflow(status));
+
+                    contractEmprunteurs.insertOne({'user_id': user_id}, emprunteur, {
                         returnOriginal: false
                       , upsert: true
-                    }, (err, clientResult) => {
+                    }, (err, emprunteurResult) => {
                         if(err) {
                             callback(err);
                         }
-                        const basicProfil = new BasicInfo(clientResult.value);
-                        debug('Result findOneAndUpdate client: ' + JSON.stringify( basicProfil.toLog() ) );
-
-                        res.end( JSON.stringify(basicProfil) );
+                        
+                        callback();
                     });
                 },
                 (callback) => {
@@ -66,6 +78,23 @@ export class ProfileDao {
         }
     }
 
+    getStatus(index) {
+        return status = _.find({"index": index}, statusEmprunteur);
+    }
+
+    getProgress(status) {
+        const nbStatus = _.size(statusEmprunteur);
+        const step = this.getStepWorkflow(status);
+        debug("nombre de status: " + nbStatus);
+        debug("step: " + step);
+        return nbStatus / step;
+    }
+
+    getStepWorkflow(statusLabel) {
+        return step = _.find({"label": statusLabel}, statusEmprunteur);
+    }
+
+
     /**
      * getContractEmprunteur - contract emprunteur within contract tab
      *
@@ -77,9 +106,11 @@ export class ProfileDao {
         info('Entering getContractEmprunteur() data: ' + user  );
 
          try {
+             let contractsList = [];
+
              this.getContractEmprunteurList(user, (contracts, err) => {
                  if (err) {
-                     throw new Error(err);
+                     throw new Error(err.message);
                      return;
                  }
                  debug("****  contractEmprunteurs: " + JSON.stringify( contractsList ) );
@@ -92,19 +123,25 @@ export class ProfileDao {
         }
     }
 
-    getContractEmprunteurList(user, callback) {
+    getContractEmprunteurList(user, callbackFunction) {
         try {
             const userId = user;
             let contractsList = [];
 
-            const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
            async.series([
                (callback) => {
+                   const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
+
                    // Find some documents
-                   contractEmprunteurs.find({'user_id': userId}, function(err, contracts) {
+                   contractEmprunteurs.find({'user_id': userId}).toArray( function(err, contracts) {
+                       if (err) {
+                           callback(err);
+                           return;
+                       }
+
                        const contractSize = _.size( contracts );
-                       debug("*****  contract found: " + contractSize);
+                       debug("*****  contract found: " + contractSize );
 
                        for(let i = 0 ; i < contractSize ; i++) {
                            const contract = contracts[i];
@@ -116,22 +153,22 @@ export class ProfileDao {
                    });
                },
                (callback) => {
-                   debug("****  contractEmprunteurs: " + JSON.stringify( contractsList ) );
+                   debug("****  getContractEmprunteurList: " + JSON.stringify( contractsList ) );
 
-                   callback( contractsList );
+                   callbackFunction( contractsList );
                }
            ], (err) => {
                error("Unable to getContractEmprunteurList " , err);
                //   When it's done
                if (err) {
-                   error('error: ' + e);
-                   callback(null, e);
+                   error('error: ' + err);
+                   callbackFunction(null, err);
                    return;
                }
            });
        } catch( e ) {
            error('error: ' + e);
-           callback(null, e);
+           callbackFunction(null, e);
        }
     }
 

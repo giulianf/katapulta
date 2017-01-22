@@ -4,7 +4,7 @@ import { getDateISO } from '../common/Utility';
 export class ContractsEmprunteur {
 
     /**
-     * constructor - Dans le profil afficher le(s) contrat(s) preteur(s)
+     * constructor - Dans le profil afficher le(s) contrat(s) emprunter(s)
      *
      * @param  {Object} contractsEmprunteur      existing object
      * @param  {string} user_id  user_id du preteur afin de l'identifier

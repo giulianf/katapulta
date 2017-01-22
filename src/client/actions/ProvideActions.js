@@ -123,6 +123,18 @@ export default {
     /**
      * get contracts emprunteur within TAB contract emprunteur
      */
+    requestNewEmprunt: (profile) => {
+        let promise = ProvideService.requestNewEmprunt(profile);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.NEW_CONTRACTS_EMPRUNTEUR,
+          success: ProvideConstants.NEW_CONTRACTS_EMPRUNTEUR_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+    /**
+     * get contracts emprunteur within TAB contract emprunteur
+     */
     getContractEmprunteur: (profile) => {
         let promise = ProvideService.getContractEmprunteur(profile);
 
