@@ -29,7 +29,7 @@ export default class ContractsList extends Component {
             <Col className='space-top-bottom'>
                 <Griddle results={ contracts } showFilter={true} showSettings={true} useGriddleStyles={true}
                    noDataMessage="Il n'y a pas de contrats prêteur"
-                    columnMetadata={this.customPreteurColumnMetadata} columns={["contractId", "nomEmprunteur", "creationDate", "progress"]}/>
+                    columnMetadata={this.customPreteurColumnMetadata} columns={["id", "nomEmprunteur", "creationDate", "progress"]}/>
             </Col>
                 {verticalLinearVisible}
         </div>
@@ -40,7 +40,7 @@ export default class ContractsList extends Component {
    return (
      [
         {
-            "columnName": "contractId",
+            "columnName": "id",
             "order": 1,
             "locked": true,
             "visible": true,

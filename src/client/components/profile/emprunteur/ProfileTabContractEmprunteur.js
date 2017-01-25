@@ -28,6 +28,7 @@ export default class ProfileTabContractEmprunteur extends Component {
 
   _requestEmprunteur() {
       this.props.requestNewEmprunt();
+      
     //   alert('envoyer');
     //   this.setState({ openRequest: true });
   }

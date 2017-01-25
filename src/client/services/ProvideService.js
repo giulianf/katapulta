@@ -116,7 +116,8 @@ class ProvideService {
     requestNewEmprunt(profile) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
-              `${REQUEST_EMPRUNT_API}${ profile.user_id }`
+              `${REQUEST_EMPRUNT_API}`,
+              {user_id: profile.user_id }
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

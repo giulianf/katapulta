@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getDateISO } from '../common/Utility';
+import { getDateISO, getProgress, getStepWorkflow } from '../common/Utility';
 
 export class ContractsEmprunteur {
 
@@ -21,12 +21,12 @@ export class ContractsEmprunteur {
 			this.user_idEmprunteur= contractsEmprunteur.user_idEmprunteur;
 			this.creationDate= contractsEmprunteur.creationDate;
 			this.status= contractsEmprunteur.status;
-			this.progress= contractsEmprunteur.progress;
-			this.stepWorkflow= contractsEmprunteur.stepWorkflow;
+			this.progress= getProgress(contractsEmprunteur.progress);
+			this.stepWorkflow= getStepWorkflow(contractsEmprunteur.stepWorkflow);
 		} else {
 			this.user_id= user_id;
             this.user_idEmprunteur= user_idEmprunteur;
-			this.creationDate= getDateISO(creationDate);
+			this.creationDate= creationDate;
 			this.status= status;
 			this.progress= progress;
 			this.stepWorkflow= stepWorkflow;

@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import { error, debug, info } from '../common/UtilityLog';
-import { createDateMongo } from '../common/Utility';
+import { createDateMongo , getProgress, getStepWorkflow } from '../common/Utility';
 import { ContractsPreteur } from '../model/ContractsPreteur';
 import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+import { ProfileDao } from '../dao/ProfileDao';
 import statusEmprunteur from '../data/statusEmprunteur';
 import async from 'async';
 
@@ -40,16 +41,17 @@ export class ContractDao {
                     const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
                     const status = this.getStatus(1);
-                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id, createDateMongo(), status, this.getProgress(), this.getStepWorkflow(status));
+                    debug('Status contract: '+ status);
+                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id , createDateMongo(), status, getProgress(status), getStepWorkflow(status));
 
-                    contractEmprunteurs.insertOne({'user_id': user_id}, emprunteur, {
+                    contractEmprunteurs.insertOne( emprunteur, {
                         returnOriginal: false
                       , upsert: true
                     }, (err, emprunteurResult) => {
                         if(err) {
                             callback(err);
                         }
-                        
+
                         callback();
                     });
                 },
@@ -79,21 +81,10 @@ export class ContractDao {
     }
 
     getStatus(index) {
-        return status = _.find({"index": index}, statusEmprunteur);
+        const status =  _.find(statusEmprunteur, {"index": index});
+        debug('Status label: ' + status.label);
+        return status.label;
     }
-
-    getProgress(status) {
-        const nbStatus = _.size(statusEmprunteur);
-        const step = this.getStepWorkflow(status);
-        debug("nombre de status: " + nbStatus);
-        debug("step: " + step);
-        return nbStatus / step;
-    }
-
-    getStepWorkflow(statusLabel) {
-        return step = _.find({"label": statusLabel}, statusEmprunteur);
-    }
-
 
     /**
      * getContractEmprunteur - contract emprunteur within contract tab
@@ -113,6 +104,8 @@ export class ContractDao {
                      throw new Error(err.message);
                      return;
                  }
+
+                 contractsList = contracts;
                  debug("****  contractEmprunteurs: " + JSON.stringify( contractsList ) );
 
                  res.end( JSON.stringify( contractsList ) );

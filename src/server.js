@@ -176,7 +176,7 @@ app.get('/api/getContractPreteur/:user', (req, res) => {
 app.post('/api/requestNewEmprunt', (req, res) => {
     debug("Entering /api/requestNewEmprunt ");
 
-    const user = req.body.user;
+    const user = req.body.user_id;
 
     const contractDao = new ContractDao(_mongodb);
 

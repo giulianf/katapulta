@@ -146,7 +146,7 @@ class ProvideStore extends BaseStore {
      * @return {type}                     description
      */
     populateContractsEmprunteur(contractsEmprunteur) {
-        this._tabContracts.contracts = contractsPreteur ;
+        this._tabContracts.contracts = contractsEmprunteur ;
     }
 
     favorisEmprunteur(dataSociete) {
@@ -382,7 +382,12 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.NEW_CONTRACTS_EMPRUNTEUR_SUCCESS:
-         this.populateContractsEmprunteur(action.ContractsEmprunteur);
+         this.populateContractsEmprunteur(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.CONTRACTS_EMPRUNTEUR_SUCCCESS:
+         this.populateContractsEmprunteur(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;

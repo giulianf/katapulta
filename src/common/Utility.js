@@ -124,3 +124,17 @@ export function validateCodePostal(codePostal) {
     const zipObject = _.find(belgium, {'zip': codePostal});
     return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;
 }
+
+export function getProgress(status) {
+    const nbStatus = _.size(statusEmprunteur);
+    const step = this.getStepWorkflow(status);
+    debug("nombre de status: " + nbStatus);
+    debug("step: " + step);
+    return nbStatus / step;
+}
+
+export function getStepWorkflow(statusLabel) {
+    const status = _.find(statusEmprunteur ,{"label": statusLabel});
+    debug('Step index: ' + status.index);
+    return status.index;
+}

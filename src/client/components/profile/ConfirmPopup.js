@@ -15,6 +15,7 @@ class ConfirmPopup extends Component {
 
     _callbackFunction() {
         this.props.callback();
+        this.props.closeModal();
     }
 
     render () {
