@@ -11,7 +11,7 @@ export default class DetailButton extends Component{
 
   _handleDetails() {
       // Action to see stepper
-      ProvideActions.stepperDetail(this.props.rowData.contractId);
+      ProvideActions.stepperDetail(this.props.rowData.id);
   }
 
   render() {

@@ -2,7 +2,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import belgium from '../data/zipcode-belgium.json';
 
-
 export function createDateMongo() {
     return moment().utc().locale("fr").toISOString();
 }
@@ -125,16 +124,21 @@ export function validateCodePostal(codePostal) {
     return !_.isNil(codePostal) && !_.isNil(zipObject) ? true : false;
 }
 
-export function getProgress(status) {
-    const nbStatus = _.size(statusEmprunteur);
-    const step = this.getStepWorkflow(status);
-    debug("nombre de status: " + nbStatus);
-    debug("step: " + step);
+export function getProgress(list, status) {
+    const nbStatus = _.size(list);
+    const step = getStepWorkflow(list, status) + 1;
     return nbStatus / step;
 }
 
-export function getStepWorkflow(statusLabel) {
-    const status = _.find(statusEmprunteur ,{"label": statusLabel});
-    debug('Step index: ' + status.index);
-    return status.index;
+export function getStepWorkflow(list , statusLabel) {
+    const status = _.findIndex(list ,{"label": statusLabel});
+    return status ;
+}
+
+export function getStatusDetail(statusList) {
+    return _.filter(statusList ,{"headerStatus": false});
+}
+
+export function getStatusHeader(statusList) {
+    return _.filter(statusList ,{"headerStatus": true});
 }

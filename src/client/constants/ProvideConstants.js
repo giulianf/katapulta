@@ -12,6 +12,9 @@ export default keyMirror({
         // CONTRACT EMPRUNTEUR ID
         NEW_CONTRACTS_EMPRUNTEUR : null,
         NEW_CONTRACTS_EMPRUNTEUR_SUCCESS : null,
+        // new request preteur
+        NEW_CONTRACTS_PRETEUR : null,
+        NEW_CONTRACTS_PRETEUR_SUCCESS : null,
 
     // Simulateur
     SIMULATEUR_DATA : null,

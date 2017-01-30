@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+
 import {
   Step,
   Stepper,
@@ -19,12 +20,12 @@ import ProvideStore from '../stores/ProvideStore';
  *
  * <small>(The vertical stepper can also be used without `<StepContent>` to display a basic stepper.)</small>
  */
-class VerticalLinearStepper extends React.Component {
+class VerticalLinearStepper extends Component {
     constructor (props){
       super(props);
-      this.state = {
-        stepWorkflow: ProvideStore.getStepWorkflow
-      };
+    //   this.state = {
+    //     stepWorkflow: ProvideStore.getStepWorkflow
+    //   };
 
       this._close = this._close.bind(this);
     }
@@ -34,7 +35,20 @@ class VerticalLinearStepper extends React.Component {
     }
 
   render() {
-    const { visible, stepIndex, nomEmprunteur } = this.state.stepWorkflow;
+    const { visible, stepIndex, nomEmprunteur } = this.props.stepWorkflow;
+
+    const statusStep = _.map( this.props.list, status => {
+        return (
+            <Step>
+              <StepLabel>{status.label}</StepLabel>
+              <StepContent>
+                <p>
+                  { status.description }
+                </p>
+              </StepContent>
+            </Step>
+        );
+    });
 
     return (
         <Col md={6} lgHidden>
@@ -43,33 +57,9 @@ class VerticalLinearStepper extends React.Component {
                <Modal.Title>Suivi du contrat {nomEmprunteur}</Modal.Title>
              </Modal.Header>
              <Modal.Body>
-                 <div style={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}>
+                 <div style={{maxWidth: 380, margin: 'auto'}}>
                    <Stepper activeStep={stepIndex} orientation="vertical">
-                     <Step>
-                       <StepLabel>Informations de base</StepLabel>
-                       <StepContent>
-                         <p>
-                           Veuillez remplir vos coordonnées de votre profil.
-                         </p>
-                       </StepContent>
-                     </Step>
-                     <Step>
-                       <StepLabel>Selection emprunteur</StepLabel>
-                       <StepContent>
-                         <p>Selectionnez un emprunteur que vous souhaitez financer.</p>
-                       </StepContent>
-                     </Step>
-                     <Step>
-                       <StepLabel>Create an ad</StepLabel>
-                       <StepContent>
-                         <p>
-                           Try out different ad text to see what brings in the most customers,
-                           and learn how to enhance your ads using features like ad extensions.
-                           If you run into any problems with your ads, find out how to tell if
-                           they're running and how to resolve approval issues.
-                         </p>
-                       </StepContent>
-                     </Step>
+                       { statusStep }
                    </Stepper>
                  </div>
                 </Modal.Body>
@@ -81,5 +71,10 @@ class VerticalLinearStepper extends React.Component {
     );
   }
 }
+
+VerticalLinearStepper.propTypes = {
+  stepWorkflow: PropTypes.object.isRequired,
+  list: PropTypes.func.isRequired,
+};
 
 export default VerticalLinearStepper;

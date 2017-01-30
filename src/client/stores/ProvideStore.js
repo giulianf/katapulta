@@ -53,22 +53,32 @@ class ProvideStore extends BaseStore {
     }
 
     openStepperDetail(contractId) {
-        this._tabContracts.stepWorkflow.visible = true ;
-        const contrat = _.find(this._tabContracts.contracts, {contractId: contractId}); ;
-        this._tabContracts.stepWorkflow.nomEmprunteur = contrat.nomEmprunteur;
-        this._tabContracts.stepWorkflow.stepIndex = contrat.stepWorkflow;
+        if (!_.isNil(this._tabContracts) && !_.isEmpty(this._tabContracts.contracts)) {
+            this._tabContracts.stepWorkflow.visible = true ;
+            const contrat = _.find(this._tabContracts.contracts, {id: contractId}); ;
+            this._tabContracts.stepWorkflow.user_idEmprunteur = contrat.user_idEmprunteur;
+            this._tabContracts.stepWorkflow.stepIndex = contrat.stepWorkflow;
+        } else if (!_.isNil(this._tabContractsEmprunteur) && !_.isEmpty(this._tabContractsEmprunteur.contracts)) {
+            this._tabContractsEmprunteur.stepWorkflow.visible = true ;
+            const contrat = _.find(this._tabContractsEmprunteur.contracts, {id: contractId}); ;
+            this._tabContractsEmprunteur.stepWorkflow.user_idEmprunteur = contrat.user_idEmprunteur;
+            this._tabContractsEmprunteur.stepWorkflow.stepIndex = contrat.stepWorkflow;
+        }
     }
 
     resetTabContract() {
-        // contracts list, stepIndex
-        this._tabContracts = {};
-        this._tabContracts.stepWorkflow = {} ;
-        this._tabContracts.stepWorkflow.visible = false ;
-        this._tabContracts.stepWorkflow.stepIndex = stepIndex ;
+        const contract = {contracts: null ,stepWorkflow: {visible:false, stepIndex: stepIndex, user_idEmprunteur: null}};
+
+        this._tabContracts = _.cloneDeep(contract);
+
+        this._tabContractsEmprunteur = _.cloneDeep(contract);
+
+
     }
 
     closeStepperDetail() {
         this._tabContracts.stepWorkflow.visible = false ;
+        this._tabContractsEmprunteur.stepWorkflow.visible = false ;
     }
 
     /**
@@ -136,6 +146,7 @@ class ProvideStore extends BaseStore {
      * @return {type}                  description
      */
     populateContractsPreteur(contractsPreteur) {
+        this.resetTabContract();
         this._tabContracts.contracts = contractsPreteur ;
     }
 
@@ -146,7 +157,8 @@ class ProvideStore extends BaseStore {
      * @return {type}                     description
      */
     populateContractsEmprunteur(contractsEmprunteur) {
-        this._tabContracts.contracts = contractsEmprunteur ;
+        this.resetTabContract();
+        this._tabContractsEmprunteur.contracts = contractsEmprunteur ;
     }
 
     favorisEmprunteur(dataSociete) {
@@ -351,7 +363,7 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.CONTRACTS_PRETEUR_SUCCCESS:
-         this.populateContractsPreteur(action.contractsPreteur);
+         this.populateContractsPreteur(action.body);
 
         // If action was responded to, emit change event
         this.emitChange();
@@ -383,6 +395,11 @@ class ProvideStore extends BaseStore {
         break;
       case ProvideConstants.NEW_CONTRACTS_EMPRUNTEUR_SUCCESS:
          this.populateContractsEmprunteur(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.NEW_CONTRACTS_PRETEUR_SUCCESS:
+         this.populateContractsPreteur(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -455,6 +472,15 @@ class ProvideStore extends BaseStore {
       return this._tabContracts;
   }
 
+  /**
+   * get - Contract emprunteur tab within profile
+   *
+   * @return {type}  description
+   */
+  get getTabEmprunteurContract() {
+      return this._tabContractsEmprunteur;
+  }
+
 
   /**
    * get - explorer page
@@ -491,6 +517,7 @@ class ProvideStore extends BaseStore {
           emprunteur: this.getEmprunteur,
           profile: this.getProfile,
           loggedIn: LayoutStore.loggedIn,
+          openRequest: false
       };
   }
 
@@ -507,7 +534,11 @@ class ProvideStore extends BaseStore {
   }
 
   get getStepWorkflow() {
-      return this._tabContracts.stepWorkflow;
+      if (!_.isNil(this._tabContracts) && !_.isEmpty(this._tabContracts.contracts)) {
+          return this._tabContracts.stepWorkflow;
+      } else if (!_.isNil(this._tabContractsEmprunteur) && !_.isEmpty(this._tabContractsEmprunteur.contracts)) {
+          return this._tabContractsEmprunteur.stepWorkflow;
+      }
   }
 
   get isAdmin() {

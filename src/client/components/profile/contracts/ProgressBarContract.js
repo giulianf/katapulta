@@ -17,7 +17,7 @@ export default class ProgressBarContract extends Component{
           style='info';
       }
     return (
-        <ProgressBar bsStyle={style} now={progress}/>
+        <ProgressBar bsStyle={style} now={progress} label={`${progress}%`}/>
     );
   }
 }

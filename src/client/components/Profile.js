@@ -15,6 +15,7 @@ function getProfileState() {
   return {
       completed: 0,
       tabContracts: ProvideStore.getTabContract,
+      tabEmprunteurContracts: ProvideStore.getTabEmprunteurContract,
       basicInfo: ProvideStore.getBasicInfo,
       basicInfoEmprunteur: ProvideStore.getBasicInfoEmprunteur,
       favoris: ProvideStore.getFavorisEmprunteur,
@@ -68,9 +69,9 @@ export default class Profile extends Component {
 
     _handleSelect(key) {
         // 3 : contract preteur
-        if ( _.isEqual(key, 3) && _.isNil(this.state.tabContracts.contracts) ) {
+        if ( _.isEqual(key, 3) && _.isEmpty(this.state.tabContracts.contracts) ) {
             ProvideActions.getContractPreteur(this.state.profile);
-        } else if ( _.isEqual(key, 4) && _.isNil(this.state.tabContracts.contracts) ) {
+        } else if ( _.isEqual(key, 4) && _.isEmpty(this.state.tabEmprunteurContracts.contracts) ) {
             ProvideActions.getContractEmprunteur(this.state.profile);
         }
     }
@@ -99,11 +100,11 @@ export default class Profile extends Component {
       ) : null;
 
       const contractPreteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) ? (
-          <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts {...this.state} keyTab='profileTabContract' /></Col></Tab>
+          <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts requestPreteur={this._requestPreteur} tabContracts={this.state.tabContracts} keyTab='profileTabContract' /></Col></Tab>
       ) : null;
 
-      const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabContracts={this.state.tabContracts}  /></Tab>
+      const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && this.state.basicInfo.isEmprunteur ? (
+          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin ? (
               <Tab eventKey={6} title="Admin">Tab 6 content</Tab>

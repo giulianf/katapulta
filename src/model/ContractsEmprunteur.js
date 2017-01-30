@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getDateISO, getProgress, getStepWorkflow } from '../common/Utility';
+import { getFullBelgiumDate } from '../common/Utility';
 
 export class ContractsEmprunteur {
 
@@ -19,10 +19,10 @@ export class ContractsEmprunteur {
 			this.id= contractsEmprunteur._id;
 			this.user_id= contractsEmprunteur.user_id;
 			this.user_idEmprunteur= contractsEmprunteur.user_idEmprunteur;
-			this.creationDate= contractsEmprunteur.creationDate;
+            this.creationDate = getFullBelgiumDate( contractsEmprunteur.creationDate);
 			this.status= contractsEmprunteur.status;
-			this.progress= getProgress(contractsEmprunteur.progress);
-			this.stepWorkflow= getStepWorkflow(contractsEmprunteur.stepWorkflow);
+			this.progress= contractsEmprunteur.progress;
+			this.stepWorkflow= contractsEmprunteur.stepWorkflow;
 		} else {
 			this.user_id= user_id;
             this.user_idEmprunteur= user_idEmprunteur;

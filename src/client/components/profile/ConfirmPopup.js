@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row, Col } from 'react-bootstrap';
 
 class ConfirmPopup extends Component {
     constructor (props){
@@ -19,6 +19,7 @@ class ConfirmPopup extends Component {
     }
 
     render () {
+        const { message } = this.props;
 
         return (
             <Modal show={this.props.showModal} onHide={this._close}>
@@ -27,7 +28,11 @@ class ConfirmPopup extends Component {
               </Modal.Header>
 
               <Modal.Body>
-                {this.props.message}
+                  <Row>
+                      <Col md={12}>
+                          { message }
+                      </Col>
+                  </Row>
               </Modal.Body>
 
               <Modal.Footer>

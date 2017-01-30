@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   Step,
   Stepper,
@@ -13,18 +13,26 @@ import FlatButton from 'material-ui/FlatButton';
  *
  * Linear steppers require users to complete one step in order to move on to the next.
  */
-class HorizontalLinearStepper extends React.Component {
+class HorizontalLinearStepper extends Component {
 
-  state = {
-    finished: false,
-    stepIndex: 0,
-  };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+          finished: false,
+          stepIndex: 0,
+        };
+    }
 
   handleNext = () => {
     const {stepIndex} = this.state;
+    const statusSize = _.size(this.props.list);
+
+
+    // find the next one
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 4,
+      finished: stepIndex >= statusSize - 1,
     });
   };
 
@@ -36,44 +44,31 @@ class HorizontalLinearStepper extends React.Component {
   };
 
   getStepContent(stepIndex) {
-    switch (stepIndex) {
-      case 0:
-        return "Demande d'un nouvel emprunt à partir du site Katapulta (n'engage à rien)";
-      case 1:
-        return "Traitement de la demande en vue de l'acceptation";
-      case 2:
-        return 'Votre dossier a été traité, il est en acceptation';
-      case 3:
-        return "Mise en ligne de la demande sur le site Katapulta";
-      case 4:
-        return "Cloture du dossier";
-      default:
-        return 'You\'re a long way from home sonny jim!';
-    }
+     const step = this.props.list;
+     const stepDescription = step[stepIndex];
+
+    //  return "Ceci n'appartient pas à notre procédure";
+     return !_.isNil(stepDescription) ? stepDescription.description : "Ceci n'appartient pas à notre procédure";
   }
 
   render() {
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px'};
+    const statusSize = _.size(this.props.list);
+
+    const statusStep = _.map( this.props.list, status => {
+        return (
+            <Step>
+              <StepLabel>{status.label}</StepLabel>
+            </Step>
+        );
+    });
+
 
     return (
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
         <Stepper activeStep={stepIndex} orientation={this.props.orientation}>
-          <Step>
-            <StepLabel>Demande d'emprunt</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Traitement</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Acceptation</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Mise en ligne</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Cloture du dossier</StepLabel>
-          </Step>
+            { statusStep }
         </Stepper>
         <div style={contentStyle}>
           {finished ? (
@@ -99,7 +94,7 @@ class HorizontalLinearStepper extends React.Component {
                   style={{marginRight: 12}}
                 />
                 <RaisedButton
-                  label={stepIndex === 2 ? 'Finish' : 'Next'}
+                  label={stepIndex === statusSize - 1 ? 'Finish' : 'Next'}
                   primary={true}
                   onTouchTap={this.handleNext}
                 />
@@ -111,5 +106,10 @@ class HorizontalLinearStepper extends React.Component {
     );
   }
 }
+
+HorizontalLinearStepper.propTypes = {
+  list: PropTypes.func.isRequired,
+  orientation: PropTypes.string.isRequired,
+};
 
 export default HorizontalLinearStepper;

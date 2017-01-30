@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
@@ -8,7 +8,7 @@ import StatusContract from './StatusContract';
 import ProgressBarContract from './ProgressBarContract';
 import VerticalLinearStepper from '../../VerticalLinearStepper';
 
-export default class ContractsList extends Component {
+class ContractsList extends Component {
   constructor (props){
     super(props);
 
@@ -21,15 +21,15 @@ export default class ContractsList extends Component {
    }
 
     render () {
-        const verticalLinearVisible = !_.isNil(this.props.tabContracts) && this.props.tabContracts.stepWorkflow.visible ?  (<VerticalLinearStepper />) : null;
-        const contracts = !_.isNil(this.props.tabContracts) ? this.props.tabContracts.contracts : [];
+        const verticalLinearVisible = !_.isNil(this.props.tabContracts) && this.props.tabContracts.stepWorkflow.visible ?  (<VerticalLinearStepper list={this.props.statusContract} stepWorkflow={this.props.stepWorkflow} />) : null;
+        const contracts = !_.isNil(this.props.tabContracts) && !_.isNil(this.props.tabContracts.contracts) ? this.props.tabContracts.contracts : [];
 
     return (
         <div key={this.props.keyTab}>
             <Col className='space-top-bottom'>
                 <Griddle results={ contracts } showFilter={true} showSettings={true} useGriddleStyles={true}
                    noDataMessage="Il n'y a pas de contrats prêteur"
-                    columnMetadata={this.customPreteurColumnMetadata} columns={["id", "nomEmprunteur", "creationDate", "progress"]}/>
+                    columnMetadata={this.customPreteurColumnMetadata} columns={["id", "creationDate", "progress"]}/>
             </Col>
                 {verticalLinearVisible}
         </div>
@@ -50,15 +50,7 @@ export default class ContractsList extends Component {
             "cssClassName": "detailClass"
         },
         {
-            "columnName": "nomEmprunteur",
-            "order": 2,
-            "locked": true,
-            "visible": true,
-            "displayName": "Nom de la société",
-            "cssClassName": "contractClass"
-        },
-        {
-            "columnName": "dateCreation",
+            "columnName": "creationDate",
             "order": 3,
             "locked": false,
             "visible": true,
@@ -102,3 +94,10 @@ export default class ContractsList extends Component {
    );
  }
 }
+
+
+ContractsList.contextTypes = {
+    tabContracts: React.PropTypes.object.isRequired,
+};
+
+export default ContractsList ;

@@ -183,6 +183,16 @@ app.post('/api/requestNewEmprunt', (req, res) => {
     contractDao.requestNewEmprunt(res, user);
 });
 
+app.post('/api/requestNewPreteur', (req, res) => {
+    debug("Entering /api/requestNewPreteur ");
+
+    const user = req.body.user_id;
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.requestNewPreteur(res, user);
+});
+
 app.post('/api/updateFavoris', (req, res) => {
     debug("Entering /api/updateFavoris ");
 

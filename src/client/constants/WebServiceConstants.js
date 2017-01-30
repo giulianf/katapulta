@@ -12,4 +12,5 @@ export const GET_CONTRACTS_EMPRUNTEUR_API = `${BASE_API_URL}getContractEmprunteu
 export const GET_EXPLORERS_API = `${BASE_API_URL}getExplorers/`;
 export const GET_EXPLORERS_BY_EMPR_ID_API = `${BASE_API_URL}getExplorerByEmprunteurId/`;
 export const REQUEST_EMPRUNT_API = `${BASE_API_URL}requestNewEmprunt`;
+export const REQUEST_PRETEUR_API = `${BASE_API_URL}requestNewPreteur`;
 export const UPDATE_FAVORI_API = `${BASE_API_URL}updateFavoris`;

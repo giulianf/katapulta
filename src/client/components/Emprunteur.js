@@ -6,15 +6,29 @@ import Gallery from 'react-photo-gallery';
 import CountUp from 'react-countup';
 import ProvideStore from '../stores/ProvideStore';
 import { getFullBelgiumDate, getDateISO } from '../../common/Utility';
+import ConfirmPopup from './profile/ConfirmPopup';
 
 class Emprunteur extends Component {
     constructor (props){
         super(props);
         this._onChange = this._onChange.bind(this);
+        this._showPreteurPopup = this._showPreteurPopup.bind(this);
+        this._closePreteurPopup = this._closePreteurPopup.bind(this);
+        this._requestPreteur= this._requestPreteur.bind(this);
 
-        // this.state = {file: {}, imagePreviewUrl : {}, imageFiles:[] };
         this.state = ProvideStore.emprunteurState;
+    }
 
+    _showPreteurPopup() {
+        this.setState({ openRequest: true });
+    }
+
+    _closePreteurPopup() {
+        this.setState({ openRequest: false });
+    }
+
+    _requestPreteur() {
+        ProvideActions.requestNewPreteur(this.state.profile);
     }
 
     _onChange() {
@@ -73,6 +87,7 @@ class Emprunteur extends Component {
         const logowidth = this.state.emprunteur.logo ? this.state.emprunteur.logo.width : null;
         const logoheigth = this.state.emprunteur.logo ? this.state.emprunteur.logo.height : null;
 
+        const messageNewRequest = `Vous faites une demande pour prêter de l'argent à ${this.state.emprunteur.denominationSocial} avec l'aide de Katapulta. Êtes-vous sûre?`;
         return (
             <Grid fluid>
               <Row className='section section-padding section-emprunteur'>
@@ -112,7 +127,8 @@ class Emprunteur extends Component {
                                         </tbody>
                                       </Table>
                                       <OverlayTrigger placement="right" overlay={tooltip}>
-                                          <Button bsStyle='success' className='btn-flat'>Prêter de l'argent</Button>
+                                          <Button onClick={this._showPreteurPopup}
+                                               bsStyle='success' className='btn-flat'>Prêter de l'argent</Button>
                                         </OverlayTrigger>
                                 </Col>
                                 <Col xs={1} md={1} lg={1}>
@@ -157,6 +173,11 @@ class Emprunteur extends Component {
                         </Row>
                     </Grid>
               </Row>
+
+              <ConfirmPopup showModal={this.state.openRequest} title="Prêter de l'argent"
+                  message={messageNewRequest}
+                  closeModal={ this._closePreteurPopup }
+                  buttonConfirmMessage="Envoyer" callback={this._requestPreteur} />
             </Grid>
         );
     }

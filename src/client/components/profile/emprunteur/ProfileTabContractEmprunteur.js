@@ -5,7 +5,8 @@ import _ from 'lodash';
 import HorizontalLinearStepper from '../../HorizontalLinearStepper';
 import ContractsList from '../contracts/ContractsList';
 import ConfirmPopup from '../ConfirmPopup';
-
+import { getStatusHeader, getStatusDetail } from '../../../../common/Utility';
+import statusEmprunteur from '../../../../data/statusEmprunteur';
 export default class ProfileTabContractEmprunteur extends Component {
   constructor (props){
     super(props);
@@ -28,7 +29,7 @@ export default class ProfileTabContractEmprunteur extends Component {
 
   _requestEmprunteur() {
       this.props.requestNewEmprunt();
-      
+
     //   alert('envoyer');
     //   this.setState({ openRequest: true });
   }
@@ -59,7 +60,7 @@ export default class ProfileTabContractEmprunteur extends Component {
                       en savoir plus
                   </a>
                   <Panel collapsible expanded={this.state.open}>
-                      <HorizontalLinearStepper orientation="horizontal"></HorizontalLinearStepper>
+                      <HorizontalLinearStepper orientation="horizontal" list={getStatusHeader(statusEmprunteur)}></HorizontalLinearStepper>
                  </Panel>
                 </Col>
                 <Col md={10} sm={10} lgHidden mdHidden className='space-top-bottom'>
@@ -67,11 +68,12 @@ export default class ProfileTabContractEmprunteur extends Component {
                       en savoir plus
                   </a>
                   <Panel collapsible expanded={this.state.open}>
-                      <HorizontalLinearStepper orientation="vertical"></HorizontalLinearStepper>
+                      <HorizontalLinearStepper orientation="vertical" list={getStatusHeader(statusEmprunteur)}></HorizontalLinearStepper>
                  </Panel>
                 </Col>
                 <Col md={10} sm={10} className='space-top-bottom'>
-                    <ContractsList  keyTab='profileTabEmpContract' {...this.props}/>
+                    <ContractsList  keyTab='profileTabEmpContract' tabContracts={this.props.tabEmprunteurContracts}
+                        statusContract={getStatusDetail(statusEmprunteur)} stepWorkflow={this.props.tabEmprunteurContracts.stepWorkflow} />
                 </Col>
 
                     <ConfirmPopup showModal={this.state.openRequest} title="Demande d'emprunt"
