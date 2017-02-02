@@ -40,6 +40,9 @@ export default keyMirror({
         // CONTRACT Preteur
         CONTRACTS_PRETEUR: null,
         CONTRACTS_PRETEUR_SUCCCESS: null,
+        // ADMIMN CONTRACT Preteur emprunteur
+        ADMIN_CONTRACTS: null,
+        ADMIN_CONTRACTS_SUCCCESS: null,
 
 
 

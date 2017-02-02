@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
-// import Auth0 from 'auth0-js';
+import Auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock'
 import { isTokenExpired } from './jwtHelper'
 import _ from 'lodash';
@@ -23,11 +23,12 @@ class LayoutStore extends BaseStore {
         this._profile = {};
 
         // Configure Auth0
-        // this.auth0 = new Auth0({
-        //   clientID: process.env.AUTH_CLIENT_ID,
-        //   domain: process.env.AUTH_AUDIENCE,
-        //   responseType: 'token'
-        // });
+        this.auth0 = new Auth0({
+          clientID: process.env.AUTH_CLIENT_ID,
+          domain: process.env.AUTH_AUDIENCE,
+          responseType: 'token'
+        });
+
         const options = {
             closable: false,
             language: 'fr',
@@ -44,35 +45,25 @@ class LayoutStore extends BaseStore {
                title: "Katapulta",
            },
            options
-            };
+        };
+
         this.lock = new Auth0Lock(process.env.AUTH_CLIENT_ID, process.env.AUTH_AUDIENCE, options);
 
-        // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this));
-        this.lock.on('hash_parsed', this._doAuthentication.bind(this) );
-
-    }
-
-    _doAuthentication(authResult) {
-        if (!_.isNil(authResult)) {
-            this.setAccessToken(authResult.accessToken)
-            this.setToken(authResult.idToken );
-            this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
-                if (error) {
-                    // callback(error);
-                } else {
-                    let isAdmin = false;
-                    _.map(userDetail.app_metadata.roles, role => {
-                            if (_.isEqual(role, 'admin')) {
-                                isAdmin = true;
-                            }
-                    });
-                    this.setUser(userDetail, isAdmin);
-                    // in order to emit the profile
-                    this.emitChange();
-                }
-            });
-        }
+        this.lock.getUserInfo(this.getAccessToken, (error, userDetail) => {
+            if (error) {
+                // callback(error);
+            } else {
+                let isAdmin = false;
+                _.map(userDetail.app_metadata.roles, role => {
+                        if (_.isEqual(role, 'admin')) {
+                            isAdmin = true;
+                        }
+                });
+                this.setUser(userDetail, isAdmin);
+                // in order to emit the profile
+                // this.emitChange();
+            }
+        });
     }
 
   _registerToActions(action) {
@@ -120,8 +111,6 @@ class LayoutStore extends BaseStore {
             token: this.getToken,
             signUser: this.getSignUser,
             loggedIn: this.loggedIn,
-            // auth: this.getAuth,
-            oublipwd: false,
             lock: this.getLock,
         };
     }
@@ -152,11 +141,7 @@ class LayoutStore extends BaseStore {
     }
 
     get getProfile() {
-        if ( localStorage.getItem('_profile') ) {
-            return JSON.parse(localStorage.getItem('_profile') );
-        } else {
-            return this._profile;
-        }
+        return this._profile;
     }
 
     get loggedIn() {
@@ -191,25 +176,14 @@ class LayoutStore extends BaseStore {
     }
 
     setUser(profile, isAdmin) {
-        localStorage.setItem('_profile', JSON.stringify(profile));
+        this._profile = profile;
         this._isAdmin = isAdmin;
     }
 
     removeUser() {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('id_token');
-        localStorage.removeItem('_profile');
     }
-
-    parseHash(hash) {
-      // uses auth0 parseHash method to extract data from url hash
-    //   const authResult = this.auth0.parseHash(hash);
-      this._doAuthentication(authResult);
-    }
-
-    // get getAuth() {
-    //     return this.auth0;
-    // }
 
     get getLock() {
         return this.lock ;
@@ -218,6 +192,42 @@ class LayoutStore extends BaseStore {
     get isAdmin() {
         return this._isAdmin;
     }
+
+    parseHash(hash) {
+        if (/access_token|id_token|error/.test(hash)) {
+            const authResult = this.auth0.parseHash(hash);
+            // uses auth0 parseHash method to extract data from url hash
+            //   const authResult = this.auth0.parseHash(hash);
+            this._doAuthentication(authResult);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    _doAuthentication(authResult) {
+        if (!_.isNil(authResult)) {
+            this.setAccessToken(authResult.accessToken)
+            this.setToken(authResult.idToken );
+            this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
+                if (error) {
+                    // callback(error);
+                } else {
+                    let isAdmin = false;
+                    _.map(userDetail.app_metadata.roles, role => {
+                            if (_.isEqual(role, 'admin')) {
+                                isAdmin = true;
+                            }
+                    });
+                    this.setUser(userDetail, isAdmin);
+                    // in order to emit the profile
+                    this.emitChange();
+                }
+            });
+        }
+    }
+
+
 
 }
 export default new LayoutStore();

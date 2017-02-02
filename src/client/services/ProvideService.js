@@ -1,6 +1,7 @@
 import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API,
      UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API,
-     GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API, GET_CONTRACTS_EMPRUNTEUR_API, REQUEST_EMPRUNT_API, REQUEST_PRETEUR_API } from '../constants/WebServiceConstants';
+     GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API, GET_CONTRACTS_EMPRUNTEUR_API, REQUEST_EMPRUNT_API,
+     REQUEST_PRETEUR_API, ADMIN_CONTRACTS_API } from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -190,6 +191,20 @@ class ProvideService {
           ApiService.post(
              UPDATE_FAVORI_API ,
              {user_id: user_id, emprunteurId:emprunteurId, removed: removed}
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    getAdminContracts() {
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+             ADMIN_CONTRACTS_API 
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

@@ -205,6 +205,14 @@ app.post('/api/updateFavoris', (req, res) => {
     profileDao.updateFavoris(res, user_id, emprunteurId, removed);
 });
 
+app.get('/api/getAdminContracts', (req, res) => {
+    debug("Entering /api/getAdminContracts ");
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.getAdminContracts(res);
+});
+
 /******************************************/
 /************ END PROFILE API *************/
 /******************************************/

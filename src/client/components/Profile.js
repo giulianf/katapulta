@@ -9,6 +9,7 @@ import ProfileTabBasic from './profile/basic/ProfileTabBasic';
 import ProfileTabBasicEmprunteur from './profile/emprunteur/ProfileTabBasicEmprunteur';
 import ProfileTabFavoris from './profile/favoris/ProfileTabFavoris';
 import ProfileTabContractEmprunteur from './profile/emprunteur/ProfileTabContractEmprunteur';
+import ProfileTabAdmin from './profile/admin/ProfileTabAdmin';
 import async from 'async';
 
 function getProfileState() {
@@ -19,6 +20,7 @@ function getProfileState() {
       basicInfo: ProvideStore.getBasicInfo,
       basicInfoEmprunteur: ProvideStore.getBasicInfoEmprunteur,
       favoris: ProvideStore.getFavorisEmprunteur,
+      admin: ProvideStore.getAdmin,
       isAdmin: ProvideStore.isAdmin,
       profile: ProvideStore.getProfile
   };
@@ -73,6 +75,8 @@ export default class Profile extends Component {
             ProvideActions.getContractPreteur(this.state.profile);
         } else if ( _.isEqual(key, 4) && _.isEmpty(this.state.tabEmprunteurContracts.contracts) ) {
             ProvideActions.getContractEmprunteur(this.state.profile);
+        } else if ( _.isEqual(key, 6) && (_.isEmpty(this.state.admin.adminEmprunteur.contracts) || _.isEmpty(this.state.admin.adminPreteur.contracts)) ) {
+            ProvideActions.getAdminContracts();
         }
     }
 
@@ -106,8 +110,10 @@ export default class Profile extends Component {
       const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && this.state.basicInfo.isEmprunteur ? (
           <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
       ) : null;
-      const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin ? (
-              <Tab eventKey={6} title="Admin">Tab 6 content</Tab>
+      const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (
+          <Tab eventKey={6} title="Admin">
+                   <ProfileTabAdmin adminEmprunteur={this.state.admin.adminEmprunteur} adminPreteur={this.state.admin.adminPreteur} />
+               </Tab>
       ) : null;
 
     const largeTabVisible = (
@@ -129,7 +135,7 @@ export default class Profile extends Component {
               <div></div>
             </div>
 
-            <Col md={12} className='space-top-bottom'>
+            <Col md={12} lg={12} className='space-top-bottom'>
                 { largeTabVisible }
             </Col>
 

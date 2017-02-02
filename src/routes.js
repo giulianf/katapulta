@@ -17,7 +17,16 @@ import LayoutActions from './client/actions/LayoutActions';
 import Toastr from 'toastr';
 import _ from 'lodash';
 // onEnter callback to validate authentication in private routes
+const requireBasicAuth = (nextState, replace, callback) => {
+    LayoutStore.parseHash(nextState.location.hash);
+
+    callback();
+}
+
+// onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
+    const loggedBool= LayoutStore.parseHash(nextState.location.hash);
+
     if (!LayoutStore.loggedIn) {
         replace({ pathname: '/login' });
     }
@@ -26,25 +35,26 @@ const requireAuth = (nextState, replace, callback) => {
 
 // OnEnter for callback url to parse access_token
 const parseAuthLoginHash = (nextState, replace) => {
+    const loggedBool= LayoutStore.parseHash(nextState.location.hash);
+
     if (LayoutStore.loggedIn) {
         if (_.isEqual(nextState.location.pathname, '/login')) {
             replace({ pathname: 'profile' })
         } else {
             replace({ pathname: nextState.location.pathname })
         }
-    } 
+    }
 }
 
 const routes = (
         <Route path='/' component={Layout}>
-            <IndexRoute component={IndexPage}/>
-            <Route path="explorer" component={Explorer} />
-            <Route path="/emprunteur/:emprunteurId" component={ Emprunteur }/>
-            <Route path='simulateur' component={Simulateur} />
-            <Route path='/faq' component={Faq} />
-            <Route path='/contact' component={Contact} />
-            <Route path='/profile' component={Profile} onEnter={requireAuth}/>
-            <Route path='/login' component={Login} onEnter={parseAuthLoginHash}/>
+            <IndexRoute component={IndexPage} onEnter={ requireBasicAuth } />
+            <Route path="explorer" component={Explorer} onEnter={ requireBasicAuth } />
+            <Route path="/emprunteur/:emprunteurId" component={ Emprunteur } onEnter={ requireBasicAuth } />
+            <Route path='simulateur' component={Simulateur} onEnter={ requireBasicAuth }/>
+            <Route path='/faq' component={Faq} onEnter={ requireBasicAuth }/>
+            <Route path='/profile' component={Profile} onEnter={ requireAuth } />
+            <Route path='/login' component={Login} onEnter={ parseAuthLoginHash } />
             <Route path="*" component={NoMatch} />
         </Route>
 );

@@ -39,7 +39,9 @@ class ProvideStore extends BaseStore {
 
       // profile favoris
       this._favorisEmprunteur = [];
-    //   this._favorisEmprunteur = favorisEmprunteur;
+
+      // admin
+      this._admin = { adminEmprunteur: { contracts: null }, adminPreteur: { contracts: null } };
 
       // explorer
       this._explorer = { activePage: 1, selectedExplorers: null };
@@ -173,6 +175,11 @@ class ProvideStore extends BaseStore {
         if (!_.isNil(favorisEmprunteur)) {
             favorisEmprunteur.isFavoris = !favorisEmprunteur.isFavoris;
         }
+    }
+
+    populateAdminContracts(adminContracts) {
+        this._admin.adminEmprunteur.contracts = adminContracts.adminEmprunteur.contracts;
+        this._admin.adminPreteur.contracts = adminContracts.adminPreteur.contracts;
     }
 
     /**************************/
@@ -408,6 +415,11 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
+      case ProvideConstants.ADMIN_CONTRACTS_SUCCCESS:
+         this.populateAdminContracts(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
       default:
         break;
     }
@@ -551,6 +563,10 @@ class ProvideStore extends BaseStore {
 
   get getSearchCriteria() {
       return this._searchCriteria;
+  }
+
+  get getAdmin() {
+      return this._admin;
   }
 
 }

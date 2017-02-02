@@ -9,6 +9,9 @@
 @headerBlackColor: #222222;
 @headerGreyColor: #f7f7f7;
 @blueHeader: #363061;
+@badgeInfo: #5bc0de;
+@badgeWarning: #f0ad4e;
+@badgeSuccess: #5cb85c;
 body {
     background-color: #fff;
     color: #777;
@@ -791,15 +794,15 @@ END EXPLORER SECTION
 }
 
 .badge-info {
-    background-color: #5bc0de;
+    background-color: @badgeInfo !important;
 }
 
 .badge-warning {
-    background-color: #f0ad4e;
+    background-color: @badgeWarning !important;
 }
 
 .badge-success {
-    background-color: #5cb85c;
+    background-color: @badgeSuccess !important;
 }
 
 .griddle-filter {
@@ -1040,7 +1043,7 @@ box-shadow: none;
            border-bottom: 0;
    }
 
-   .panel-group .panel-heading [data-toggle='collapse']{
+   .panel-title > a {
        width: 100%;
        display: block;
        height: 100%;
@@ -1074,7 +1077,7 @@ box-shadow: none;
    }
 
    .panel-group .panel-success>.panel-heading {
-       background-color: #5cb85c;
+       background-color: @badgeSuccess;
        border-top-left-radius: 0px;
        border-top-right-radius: 0px;
 
@@ -1085,7 +1088,7 @@ box-shadow: none;
    }
 
    .panel-group .panel-info>.panel-heading {
-       background-color: #5bc0de;
+       background-color: @badgeInfo;
        border-top-left-radius: 0px;
        border-top-right-radius: 0px;
 
@@ -1096,7 +1099,7 @@ box-shadow: none;
    }
 
    .panel-group .panel-warning>.panel-heading {
-       background-color: #f0ad4e;
+       background-color: @badgeWarning;
        border-top-left-radius: 0px;
        border-top-right-radius: 0px;
 
@@ -1128,4 +1131,10 @@ box-shadow: none;
 
 .simulatorRendement {
         margin-top: 0px;
+}
+
+.adminClass {
+    padding: 20px;
+    margin: -20px;
+    .section-emprunteur;
 }

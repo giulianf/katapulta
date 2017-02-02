@@ -332,4 +332,78 @@ export class ContractDao {
            callbackFunction(null, e);
        }
     }
+
+    getAdminContracts(res) {
+        try {
+            let contractsEmprunteur = [];
+            let contractsPreteur = [];
+
+
+           async.series([
+               (callback) => {
+                   const contractEmprunteursdb = this._mongodb.collection('contractEmprunteurs');
+
+                   // Find some documents
+                   contractEmprunteursdb.find().toArray( function(err, contracts) {
+                       if (err) {
+                           callback(err);
+                           return;
+                       }
+
+                       const contractSize = _.size( contracts );
+                       debug("*****  contract found: " + contractSize );
+
+                       for(let i = 0 ; i < contractSize ; i++) {
+                           const contract = contracts[i];
+
+                           contractsEmprunteur.push( new ContractsEmprunteur(contract) );
+                       }
+
+                       callback();
+                   });
+               },
+               (callback) => {
+                   const preteurs = this._mongodb.collection('contractPreteur');
+
+                   // Find some documents
+                   preteurs.find().toArray( function(err, contracts) {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+
+                        const contractSize = _.size( contracts );
+                        debug("*****  contract found: " + contractSize);
+
+                       for(let i = 0 ; i < contractSize ; i++) {
+                           const contract = contracts[i];
+
+                           contractsPreteur.push( new ContractsPreteur(contract) );
+                       }
+
+                       callback();
+                   });
+               },
+               (callback) => {
+                   debug("****  contracts Emprunteur: " + JSON.stringify( contractsEmprunteur ) );
+                   debug("****  contracts Preteur: " + JSON.stringify( contractsPreteur ) );
+
+                   const adminContract = { adminEmprunteur : {contracts: contractsEmprunteur}, adminPreteur: {contracts: contractsPreteur} };
+
+                   res.end(  JSON.stringify( adminContract ) );
+               }
+           ], (err) => {
+               error("Unable to getContractPreteurList " , err);
+               //   When it's done
+               if (err) {
+                   error('error: ' + err);
+                   callbackFunction(null, err);
+                   return;
+               }
+           });
+       } catch( e ) {
+           error('error: ' + e);
+           callbackFunction(null, e);
+       }
+    }
 }

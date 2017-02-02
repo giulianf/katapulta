@@ -167,5 +167,18 @@ export default {
           success: ProvideConstants.CONTRACTS_PRETEUR_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
+    },
+
+    /**
+     * get all conracts for preteur and emprunteur
+     */
+    getAdminContracts: () => {
+        let promise = ProvideService.getAdminContracts();
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.ADMIN_CONTRACTS,
+          success: ProvideConstants.ADMIN_CONTRACTS_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
     }
 }
