@@ -23,6 +23,7 @@ class ContractsStatusAdmin extends Component {
         }
 
         let index = 0;
+        // list all possible status contract
         const panelContracts = _.map(getStatusDetail(this.props.contractStatus), status => {
             index ++;
             const nbContract = 0;
@@ -37,6 +38,14 @@ class ContractsStatusAdmin extends Component {
                         <span className={`badge ${className} floatRight`}>{ nbContract }</span>
                     </span>
             );
+
+            const contracts = _.map(this.props.contracts, con => {
+                if (_.isEqual(status.label, con.status)) {
+                    return (
+                        <div>{con.creationDate}</div>
+                    );
+                }
+            });
 
             return (
                 <Panel header={headder} eventKey={index} className="panelFaq">
