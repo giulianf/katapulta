@@ -10,7 +10,7 @@ import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
 import { ContractDao } from './dao/ContractDao';
-
+import { MailDao } from './dao/MailDao';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -20,6 +20,10 @@ require('dotenv').config({
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
+
+const ses = require('node-ses')
+  , clientSES = ses.createClient({ key: process.env.AWS_KEY, secret: process.env.AWS_SECRET });
+
 const MongoDb =  require('mongodb');
 const MongoClient = MongoDb.MongoClient,
   f = require('util').format;
@@ -249,6 +253,15 @@ app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
 /******************************************/
 /************ END EXPLORER API *************/
 /******************************************/
+
+app.post('/api/mailtest', (req, res) => {
+    debug("Entering /api/mailtest ");
+
+    const mail = new MailDao(_mongodb, clientSES);
+
+    mail.insertNewEvent(res, 'ME');
+
+})
 
 // start the server
 const port = process.env.SERVER_PORT ;

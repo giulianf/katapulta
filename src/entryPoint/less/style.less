@@ -89,7 +89,15 @@ a {
 }
 
 .navbar-right {
-    margin-right: -85px;
+    .margin-right(@margin: -85px);
+}
+
+.margin-right(@margin) {
+    margin-right: @margin;
+
+}
+.marginRight5 {
+    .margin-right(@margin: 5px);
 }
 
 ul, li {
@@ -551,7 +559,7 @@ EXPLORER SECTION
     }
 
     .favoris-info {
-        margin-top: -55%;
+        margin-top: -65%;
     }
 
     .user-info {

@@ -21,6 +21,7 @@ function getProfileState() {
       basicInfoEmprunteur: ProvideStore.getBasicInfoEmprunteur,
       favoris: ProvideStore.getFavorisEmprunteur,
       admin: ProvideStore.getAdmin,
+      adminContractSelected: ProvideStore.getAdminContractSelected,
       isAdmin: ProvideStore.isAdmin,
       profile: ProvideStore.getProfile
   };
@@ -112,7 +113,7 @@ export default class Profile extends Component {
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (
           <Tab eventKey={6} title="Admin">
-                   <ProfileTabAdmin adminEmprunteur={this.state.admin.adminEmprunteur} adminPreteur={this.state.admin.adminPreteur} />
+                   <ProfileTabAdmin adminContractSelected={ this.state.adminContractSelected} adminEmprunteur={this.state.admin.adminEmprunteur} adminPreteur={this.state.admin.adminPreteur} />
                </Tab>
       ) : null;
 

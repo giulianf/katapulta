@@ -61,6 +61,20 @@ export default class Explorer extends React.Component {
 
     }
 
+    getExplorerSize() {
+        if (_.isEqual(this.state.searchCriteria.tabSelected , 'all')) {
+            // nothing to do with 'all'
+            return ( _.floor( this.state.nbAll / 8) ) + 1;
+
+        } else if (_.isEqual(this.state.searchCriteria.tabSelected , 'ourSelection')) {
+            return ( _.floor( this.state.nbOurSelection / 8) ) + 1;
+
+        } else if (_.isEqual(this.state.searchCriteria.tabSelected , 'latest')) {
+            return ( _.floor( this.state.nbLatest / 8) ) + 1;
+
+        }
+    }
+
     render () {
       const explorer = _.map(this.state.explorer.selectedExplorers , expl => {
           return (
@@ -90,8 +104,7 @@ export default class Explorer extends React.Component {
         value: 'commune',
     };
 
-    const explorersSize = ( _.floor(_.size(this.state.allExplorer) / 8) ) + 1;
-
+    const explorersSize = this.getExplorerSize();
 
     return (
         <Grid fluid className='marginLeftContainer our_service c_panel'>

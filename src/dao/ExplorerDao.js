@@ -53,7 +53,7 @@ export class ExplorerDao {
 
                     // Find some documents
                     // emprunteurs.find().skip(skip).limit(limit).toArray(function(err, contracts) {
-                    emprunteurs.find().toArray(function(err, contracts) {
+                    emprunteurs.find({ status: { $eq: 'MISE_EN_LIGNE' } }).toArray(function(err, contracts) {
 
                         const contractSize = _.size( contracts );
                         debug("*****  contract found: " + contractSize);

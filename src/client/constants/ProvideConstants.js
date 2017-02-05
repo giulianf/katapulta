@@ -43,6 +43,7 @@ export default keyMirror({
         // ADMIMN CONTRACT Preteur emprunteur
         ADMIN_CONTRACTS: null,
         ADMIN_CONTRACTS_SUCCCESS: null,
+        CHECKBOX_CONTRACT_SELECTED: null,
 
 
 

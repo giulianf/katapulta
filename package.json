@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production webpack-dev-server",
     "lint": "eslint src",
-    "start-dev": "node_modules/.bin/babel-node --presets 'react,es2015,stage-2' src/server.js",
+    "start-dev": "babel-node --presets 'react,es2015,stage-2' src/server.js",
     "start-dev-ui": "npm run start-dev-hmr",
     "start-dev-hmr": "webpack --bail --progress --colors --config webpack.config.js",
     "auto-start": "NODE_ENV=development nodemon --exec \"cp -rf src/img/ ./src/webapp/resources/img && npm run start-dev\" --ignore public/js",
@@ -28,6 +28,7 @@
     "async": "^2.1.4",
     "auth0-js": "^7.6.0",
     "auth0-lock": "^10.8.1",
+    "aws-sdk": "^2.9.0",
     "axios": "^0.15.2",
     "babel-polyfill": "^6.16.0",
     "bluebird": "^3.4.6",

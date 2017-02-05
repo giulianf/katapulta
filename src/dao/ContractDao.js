@@ -51,7 +51,7 @@ export class ContractDao {
                     debug('Status contract: '+ status);
                     const progress =  getProgress(statusList, status);
                     debug('Progress: ' + progress);
-                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id , createDateMongo(), status, progress, getStepWorkflow(statusList, status));
+                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, getStepWorkflow(statusList, status));
 
                     contractEmprunteurs.insertOne( emprunteur, {
                         returnOriginal: false
@@ -128,7 +128,7 @@ export class ContractDao {
                     debug('step: ' + step);
 
 
-                    const preteur = new ContractsPreteur(null, userId, null, basicInfoEmprunteur.id , createDateMongo(), status, progress, step);
+                    const preteur = new ContractsPreteur(null, userId, null, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, step);
 
                     contractPreteur.insertOne( preteur, {
                         returnOriginal: false

@@ -8,6 +8,7 @@ export class BasicInfoEmprunteur {
      *
      * @param  {Object} emprunteur                     description
      * @param  {type} user_id                     description
+     * @param  {string} status                     description
      * @param  {type} denominationSocial          description
      * @param  {type} formeJuridique              description
      * @param  {type} numEntreprise               description
@@ -39,7 +40,7 @@ export class BasicInfoEmprunteur {
      * @param  {type} logo                       description
      * @return {type}                             description
      */
-    constructor(emprunteur, user_id, denominationSocial, formeJuridique, numEntreprise,
+    constructor(emprunteur, user_id, status, denominationSocial, formeJuridique, numEntreprise,
         adresseSiegeSocial, codePostalSiegeSocial, villeSiegeSocial,
         adresseSiegeExploitation, codePostalSiegeExploitation, villeSiegeExploitation,
         representantLegal, sectorActivite, email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
@@ -47,6 +48,7 @@ export class BasicInfoEmprunteur {
         isFavoris, createDate, endDate, isOurSelection, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
+                this.status= emprunteur.status;
                 this.id= emprunteur._id;
                 this.denominationSocial= emprunteur.denominationSocial;
                 this.formeJuridique= emprunteur.formeJuridique ;
@@ -79,6 +81,7 @@ export class BasicInfoEmprunteur {
                 this.createDate= emprunteur.createDate;
             } else {
                 this.user_id= user_id;
+                this.status= status;
                 this.denominationSocial= denominationSocial;
                 this.formeJuridique= formeJuridique ;
                 this.numEntreprise= numEntreprise ;

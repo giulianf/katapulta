@@ -42,6 +42,7 @@ class ProvideStore extends BaseStore {
 
       // admin
       this._admin = { adminEmprunteur: { contracts: null }, adminPreteur: { contracts: null } };
+      this._adminContractSelected =[];
 
       // explorer
       this._explorer = { activePage: 1, selectedExplorers: null };
@@ -101,6 +102,10 @@ class ProvideStore extends BaseStore {
      */
     populateEmprunteurBasicInfo(basicEmprunteurProfil) {
         this._tabBasicEmprunteur = basicEmprunteurProfil;
+    }
+
+    populateEmprunteurFavoris(favoris) {
+        this._favorisEmprunteur = favoris;
     }
 
     /**
@@ -165,7 +170,7 @@ class ProvideStore extends BaseStore {
 
     favorisEmprunteur(dataSociete) {
         // explorers is an Array
-        const favoris = _.find(this._explorer.explorers, {"id" : dataSociete.id});
+        const favoris = _.find(this._explorer.selectedExplorers, {"id" : dataSociete.id});
         // emprunteur is an Object
         const favorisEmprunteur = _.isEqual(this._emprunteur.id, dataSociete.id) ? this._emprunteur : null;
 
@@ -180,6 +185,18 @@ class ProvideStore extends BaseStore {
     populateAdminContracts(adminContracts) {
         this._admin.adminEmprunteur.contracts = adminContracts.adminEmprunteur.contracts;
         this._admin.adminPreteur.contracts = adminContracts.adminPreteur.contracts;
+    }
+
+    populateAdminContractsSelected(contractId, checked) {
+        if (!_.isNil(contractId) && !_.isNil(checked)) {
+            if (!checked) {
+                this._adminContractSelected.push(contractId);
+            } else {
+                this._adminContractSelected = _.remove(this._adminContractSelected, item => {
+                  return item === contractId;
+                });
+            }
+        }
     }
 
     /**************************/
@@ -200,11 +217,11 @@ class ProvideStore extends BaseStore {
     }
 
     countTab(explorers) {
-        this._nbAll = _.size(explorers);
-        this._nbOurSelection = _.size(_.filter(explorers, (c) => {
+        this._nbAll = _.size(this._allExplorer);
+        this._nbOurSelection = _.size(_.filter(this._allExplorer, (c) => {
             return c.isOurSelection;
         }));
-        this._nbLatest = _.size(_.filter(explorers, (c) => {
+        this._nbLatest = _.size(_.filter(this._allExplorer, (c) => {
             const current = addDays(moment(), -7);
             const createDate = getDate( c.createDate );
             return current.isBefore( createDate );
@@ -419,6 +436,10 @@ class ProvideStore extends BaseStore {
          this.populateAdminContracts(action.body);
         // If action was responded to, emit change event
         this.emitChange();
+      case ProvideConstants.CHECKBOX_CONTRACT_SELECTED:
+         this.populateAdminContractsSelected(action.contractId, action.checked);
+        // If action was responded to, emit change event
+        this.emitChange();
         break;
       default:
         break;
@@ -567,6 +588,10 @@ class ProvideStore extends BaseStore {
 
   get getAdmin() {
       return this._admin;
+  }
+
+  get getAdminContractSelected() {
+      return this._adminContractSelected;
   }
 
 }

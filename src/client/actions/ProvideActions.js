@@ -5,6 +5,9 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+    checkBoxAdminContract: (contractId, checked) => {
+        dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { contractId , checked});
+    },
     changeFreeText: (searchCriteria) => {
         dispatch(ProvideConstants.FREE_TEXT_EXPLORERS, { searchCriteria });
     },

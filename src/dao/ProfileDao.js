@@ -3,8 +3,6 @@ import { error, debug, info } from '../common/UtilityLog';
 import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDays, getCurrentMomentDate, getDateISO } from '../common/Utility';
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
-import { ContractsPreteur } from '../model/ContractsPreteur';
-import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
@@ -210,7 +208,7 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
                    0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
               }
 
