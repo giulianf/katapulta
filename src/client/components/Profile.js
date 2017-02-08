@@ -38,6 +38,10 @@ export default class Profile extends Component {
     this._updateEmprunteurBasicInfo = this._updateEmprunteurBasicInfo.bind(this);
     this._handleSelect = this._handleSelect.bind(this);
     this._requestNewEmprunt = this._requestNewEmprunt.bind(this);
+    // Admin
+    this._changeStatus = this._changeStatus.bind(this);
+    this._blockStatus = this._blockStatus.bind(this);
+    this._rappelStatus = this.rappelStatus.bind(this);
 
     this.state = getProfileState();
 
@@ -47,14 +51,23 @@ export default class Profile extends Component {
       this.setState(getProfileState());
   }
 
+  _changeStatus(isEmprunteur) {
+      ProvideActions.changeStatus(this.state.adminContractSelected, isEmprunteur);
+  }
+
+  _blockStatus(isEmprunteur) {
+      ProvideActions.blockStatus(this.state.adminContractSelected, isEmprunteur);
+  }
+
+  _rappelStatus(isEmprunteur) {
+      ProvideActions.rappelStatus(this.state.adminContractSelected, isEmprunteur);
+  }
+
   componentDidMount() {
     ProvideStore.addChangeListener(this._onChange);
-
-    //  this.timer = setTimeout(() => this.progress(5), 10);
    }
 
    componentWillUnmount() {
-    //  clearTimeout(this.timer);
      ProvideStore.removeChangeListener(this._onChange);
    }
 
@@ -81,17 +94,6 @@ export default class Profile extends Component {
         }
     }
 
-   //
-  //  progress(completed) {
-  //    if (completed > 100) {
-  //      this.setState({completed: 100});
-  //    } else {
-  //      this.setState({completed});
-  //      const diff = Math.random() * 10;
-  //      this.timer = setTimeout(() => this.progress(completed + diff), 100);
-  //    }
-  //  }
-
   render () {
       // BASIC TAB
       const basicTab = !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo) ? (
@@ -113,7 +115,12 @@ export default class Profile extends Component {
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (
           <Tab eventKey={6} title="Admin">
-                   <ProfileTabAdmin adminContractSelected={ this.state.adminContractSelected} adminEmprunteur={this.state.admin.adminEmprunteur} adminPreteur={this.state.admin.adminPreteur} />
+                   <ProfileTabAdmin
+                       changeStatus={this._changeStatus}
+                       blockStatus={this._blockStatus}
+                       rappelStatus={this._rappelStatus}
+                       adminContractSelected={ this.state.adminContractSelected }
+                       adminEmprunteur={this.state.admin.adminEmprunteur} adminPreteur={this.state.admin.adminPreteur} />
                </Tab>
       ) : null;
 

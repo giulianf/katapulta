@@ -5,6 +5,37 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+
+    changeStatus: ( selectedContracts, isEmprunteur ) => {
+        let promise = ProvideService.changeStatus(selectedContracts, isEmprunteur);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.CHANGE_STATUS_ADMIN,
+          success: ProvideConstants.CHANGE_STATUS_ADMIN_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
+    blockStatus: ( selectedContracts, isEmprunteur ) => {
+        let promise = ProvideService.blockStatus(selectedContracts, isEmprunteur);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.BLOCK_STATUS_ADMIN,
+          success: ProvideConstants.BLOCK_STATUS_ADMIN_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
+    rappelStatus: ( selectedContracts, isEmprunteur ) => {
+        let promise = ProvideService.rappelStatus(selectedContracts, isEmprunteur);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.CHANGE_STATUS_ADMIN,
+          success: ProvideConstants.CHANGE_STATUS_ADMIN_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
     checkBoxAdminContract: (contractId, checked) => {
         dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { contractId , checked});
     },

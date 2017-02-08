@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, PanelGroup, Panel, Button, Table, Checkbox } from 'react-bootstrap';
+import { Grid, Form, Row, Col, PanelGroup, Panel, Button, Glyphicon, Table, Checkbox , Tooltip, OverlayTrigger} from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import { getStatusDetail } from '../../../../common/Utility';
@@ -9,7 +9,22 @@ class ContractsStatusAdmin extends Component {
   constructor (props){
     super(props);
 
+    this._changeContractStatus = this._changeContractStatus.bind(this);
+    this._blockContract = this._blockContract.bind(this);
+    this._rappelContract = this._rappelContract.bind(this);
 
+  }
+
+  _changeContractStatus() {
+      this.props.changeContractStatus;
+  }
+
+  _blockContract() {
+      this.props.blockContract;
+  }
+
+  _rappelContract() {
+      this.props.rappelContract;
   }
 
   componentDidMount() {
@@ -22,7 +37,15 @@ class ContractsStatusAdmin extends Component {
         if (_.isNil(this.props.contracts)) {
             return null;
         }
-
+        const rightTooltip = (
+            <Tooltip id="righttooltip">Modifier le <strong>Statut.</strong></Tooltip>
+        );
+        const blockTooltip = (
+            <Tooltip id="righttooltip">Bloquer.</Tooltip>
+        );
+        const rappelTooltip = (
+            <Tooltip id="righttooltip">Rappel.</Tooltip>
+        );
         let index = 0;
         // list all possible status contract
         const panelContracts = _.map(getStatusDetail(this.props.contractStatus), status => {
@@ -89,6 +112,25 @@ class ContractsStatusAdmin extends Component {
 
         return (
             <Grid fluid>
+                <Row className='space-top-bottom'>
+                    <Col lg={12}>
+                        <OverlayTrigger placement="right" overlay={rightTooltip}>
+                           <Button onClick={this._changeContractStatus} bsStyle='primary' className='floatRight'>
+                               <Glyphicon glyph='pencil'></Glyphicon>
+                           </Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={blockTooltip}>
+                            <Button onClick={this._changeContractStatus} bsStyle='danger' className='floatRight marginRight5'>
+                                <Glyphicon glyph='ban-circle'></Glyphicon>
+                            </Button>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={rappelTooltip}>
+                            <Button onClick={this._changeContractStatus} bsStyle='warning' className='floatRight marginRight5'>
+                                <Glyphicon glyph='repeat'></Glyphicon>
+                            </Button>
+                        </OverlayTrigger>
+                    </Col>
+                </Row>
                 <PanelGroup defaultActiveKey="1" accordion className="toggle-carret">
                     { panelContracts }
                 </PanelGroup>
@@ -99,7 +141,10 @@ class ContractsStatusAdmin extends Component {
 
 ContractsStatusAdmin.contextTypes = {
     contracts: React.PropTypes.array.isRequired,
-    contractStatus: React.PropTypes.array.isRequired
+    contractStatus: React.PropTypes.array.isRequired,
+    changeContractStatus: React.PropTypes.func.isRequired,
+    blockContract: React.PropTypes.func.isRequired,
+    rappelContract: React.PropTypes.func.isRequired
 };
 
 

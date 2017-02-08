@@ -29,6 +29,73 @@ class ProvideService {
       });
     }
 
+    /**
+     * changeStatus - change contract status
+     *
+     * @param  {type} selectedContracts description
+     * @param  {type} isEmprunteur      description
+     * @return {type}                   description
+     */
+    changeStatus( selectedContracts, isEmprunteur ) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.put(
+             SIMULATE_API,
+             { selectedContracts , isEmprunteur}
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+
+    /**
+     * blockStatus - block contract status
+     *
+     * @param  {type} selectedContracts description
+     * @param  {type} isEmprunteur      description
+     * @return {type}                   description
+     */
+    blockStatus( selectedContracts, isEmprunteur ) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.put(
+             SIMULATE_API,
+             { selectedContracts , isEmprunteur}
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    /**
+     * rappelStatus - description
+     *
+     * @param  {type} selectedContracts description
+     * @param  {type} isEmprunteur      description
+     * @return {type}                   description
+     */
+    rappelStatus( selectedContracts, isEmprunteur ) {
+      return new bluebird( (resolve, reject) => {
+          ApiService.put(
+             SIMULATE_API,
+             { selectedContracts , isEmprunteur}
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
 
     /**
      * getBasicInfo - Get Basic Info by user
@@ -204,7 +271,7 @@ class ProvideService {
     getAdminContracts() {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
-             ADMIN_CONTRACTS_API 
+             ADMIN_CONTRACTS_API
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

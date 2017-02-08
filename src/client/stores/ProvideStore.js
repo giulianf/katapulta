@@ -13,11 +13,6 @@ import moment from 'moment';
 
 const simulator = new SimulateurInfo( moment(), 5000, 3, 2.25);
 
-const contracts = [
-new ContractsPreteur(1,  'fumanju', 'Coca Cola', '01/10/2016 22h30', 'PAIEMENT RECU', 55, 2),
-new ContractsPreteur(3,  'fumanju', 'United-IT', '01/10/2016 22h30', 'CONTRAT ENVOYE', 100, 3),
-new ContractsPreteur(2,  'fumanju', 'Facebook', '01/11/2016 22h30', 'START', 20, 1)];
-
 const stepIndex = 1;
 
 

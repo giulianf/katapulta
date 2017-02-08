@@ -1,4 +1,4 @@
-var React = require('react');
+import React, { Component } from 'react';
 import { Grid, Row, Col, Pagination, Panel, Form, FormGroup, FormControl ,HelpBlock , InputGroup, Button} from 'react-bootstrap';
 import EmprunteurComponent from './profile/EmprunteurComponent';
 import ProvideStore from '../stores/ProvideStore';
@@ -9,7 +9,7 @@ import zip from '../../data/zipcode-belgium.json';
 import categories from '../../data/categories.json';
 import ProvideActions from '../actions/ProvideActions';
 
-export default class Explorer extends React.Component {
+export default class Explorer extends Component {
     constructor () {
         super();
 

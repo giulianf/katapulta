@@ -14,6 +14,36 @@ class ProfileTabAdmin extends Component {
         super(props);
 
         this._handleSelect = this._handleSelect.bind(this);
+        this._changeStatusEmprunteur = this._changeStatusEmprunteur.bind(this);
+        this._blockStatusEmprunteur = this._blockStatusEmprunteur.bind(this);
+        this._rappelStatusEmprunteur = this._rappelStatusEmprunteur.bind(this);
+        this._changeStatusPreteur = this._changeStatusPreteur.bind(this);
+        this._blockStatusPreteur = this._blockStatusPreteur.bind(this);
+        this._rappelStatusPreteur = this._rappelStatusPreteur.bind(this);
+    }
+
+    _changeStatusEmprunteur() {
+        this.props.changeStatus(true);
+    }
+
+    _blockStatusEmprunteur() {
+        this.props.blockStatus(true);
+    }
+
+    _rappelStatusEmprunteur() {
+        this.props.rappelStatus(true);
+    }
+
+    _changeStatusPreteur() {
+        this.props.changeStatus(false);
+    }
+
+    _blockStatusPreteur() {
+        this.props.blockStatus(false);
+    }
+
+    _rappelStatusPreteur() {
+        this.props.rappelStatus(false);
     }
 
     componentDidMount() {
@@ -32,44 +62,29 @@ class ProfileTabAdmin extends Component {
     }
 
     render () {
-            const leftTooltip = (
-                <Tooltip id="lefttooltip">Statut <strong>Précédent.</strong></Tooltip>
-            );
-            const rightTooltip = (
-                <Tooltip id="righttooltip">Statut <strong>Suivant.</strong></Tooltip>
-            );
-            const blockTooltip = (
-                <Tooltip id="righttooltip">Bloquer.</Tooltip>
-            );
-            const rappelTooltip = (
-                <Tooltip id="righttooltip">Rappel.</Tooltip>
-            );
 
         return (
             <Grid >
                 <Row>
                     <Col lg={10} md={10} >
-                        <OverlayTrigger placement="right" overlay={rightTooltip}>
-                           <Button bsStyle='primary' className='floatRight'><Glyphicon glyph='arrow-right'></Glyphicon></Button>
-                       </OverlayTrigger>
-                       <OverlayTrigger placement="left" overlay={leftTooltip}>
-                            <Button bsStyle='primary' className='floatRight marginRight5'><Glyphicon glyph='arrow-left'></Glyphicon></Button>
-                        </OverlayTrigger>
-                       <OverlayTrigger placement="top" overlay={blockTooltip}>
-                            <Button bsStyle='danger' className='floatRight marginRight5'><Glyphicon glyph='ban-circle'></Glyphicon></Button>
-                        </OverlayTrigger>
-                       <OverlayTrigger placement="top" overlay={rappelTooltip}>
-                            <Button bsStyle='warning' className='floatRight marginRight5'><Glyphicon glyph='repeat'></Glyphicon></Button>
-                        </OverlayTrigger>
 
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-admin" onSelect={this._handleSelect} className="adminClass">
                             <Tab eventKey={1} title="Emprunteurs" >
-                                <ContractsStatusAdmin adminContractSelected={this.props.adminContractSelected} contractStatus={statusEmprunteur} contracts={ this.props.adminEmprunteur.contracts } />
+                                <ContractsStatusAdmin adminContractSelected={this.props.adminContractSelected}
+                                    changeContractStatus={this._changeStatusEmprunteur}
+                                    blockContract={this._blockStatusEmprunteur}
+                                    rappelContract={this._rappelStatusEmprunteur}
+                                    contractStatus={statusEmprunteur} contracts={ this.props.adminEmprunteur.contracts } />
                             </Tab>
                             <Tab eventKey={2} title="Preteur">
-                                <ContractsStatusAdmin  adminContractSelected={this.props.adminContractSelected} contractStatus={statusPreteur} contracts={ this.props.adminPreteur.contracts } />
+                                <ContractsStatusAdmin  adminContractSelected={this.props.adminContractSelected}
+                                    changeContractStatus={this._changeStatusPreteur}
+                                    blockContract={this._blockStatusPreteur}
+                                    rappelContract={this._rappelStatusPreteur}
+                                    contractStatus={statusPreteur} contracts={ this.props.adminPreteur.contracts } />
                             </Tab>
                         </Tabs>
+
                     </Col>
                 </Row>
             </Grid>
@@ -80,7 +95,10 @@ class ProfileTabAdmin extends Component {
 ProfileTabAdmin.contextTypes = {
     adminContractSelected: React.PropTypes.array.isRequired,
     adminEmprunteur: React.PropTypes.object.isRequired,
-    adminPreteur: React.PropTypes.object.isRequired
+    adminPreteur: React.PropTypes.object.isRequired,
+    changeStatus: React.PropTypes.func.isRequired,
+    blockStatus: React.PropTypes.func.isRequired,
+    rappelStatus: React.PropTypes.func.isRequired
 };
 
 
