@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, PanelGroup, Panel, Button, Glyphicon, Table, Checkbox , Tooltip, OverlayTrigger} from 'react-bootstrap';
+import { Grid, Form, Row, Col, PanelGroup, Panel, Button, Glyphicon , Tooltip, OverlayTrigger} from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import { getStatusDetail } from '../../../../common/Utility';
 import ProvideActions from '../../../actions/ProvideActions';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import {ConfirmStatusPopup} from '../ConfirmStatusPopup';
 
 class ContractsStatusAdmin extends Component {
   constructor (props){
@@ -12,7 +14,14 @@ class ContractsStatusAdmin extends Component {
     this._changeContractStatus = this._changeContractStatus.bind(this);
     this._blockContract = this._blockContract.bind(this);
     this._rappelContract = this._rappelContract.bind(this);
+    this._openPopup = this._openPopup.bind(this);
 
+    this.state = { openChangeStatus : false, openBlockStatus: false, openRappelStatus: false};
+
+  }
+
+  _openPopup() {
+        this.setState({openChangeStatus: true});
   }
 
   _changeContractStatus() {
@@ -72,35 +81,35 @@ class ContractsStatusAdmin extends Component {
                     </span>
             );
 
-            const contracts = _.map(this.props.contracts, con => {
-                if (_.isEqual(status.label, con.status)) {
-                    // if checked
-                    const checked = _.find(this.props.adminContractSelected, {id:  con.id }) ? true : false;
+            const contractResult =  _.filter(this.props.contracts, {status : status.label} );
+            const contracts = !_.isNil(this.props.contracts) && !_.isNil(contractResult) ? contractResult : [];
 
-                    return (
-                        <tr key={con.status}>
-                          <td><Checkbox checked={ checked } onChange={e => ProvideActions.checkBoxAdminContract({id: con.id}, checked)} >
-                        </Checkbox></td>
-                          <td>{con.creationDate}</td>
-                          <td>{con.nameCompany}</td>
-                        </tr>
-                    );
-                }
-            });
+            const onRowSelect = ({ id }, isSelected) => {
+                ProvideActions.checkBoxAdminContract({ id: id }, isSelected)
+
+                };
+
+            const selectRowProp = {
+              mode: 'checkbox',
+              clickToSelect: true,  // enable click to select
+              onSelect: onRowSelect
+            };
+
+            const optionsTable = {
+                sizePerPageList: [ 5, 10, 15, 20 ],
+                 sizePerPage: 5,
+                 sortName: 'id',
+                 sortOrder: 'desc',
+                 noDataText: 'Pas de contrat'
+            };
 
             const contractTable = nbContract > 0 ? (
-                <Table striped bordered condensed hover>
-                   <thead>
-                     <tr>
-                       <th>#</th>
-                       <th>Date de création</th>
-                       <th>Société</th>
-                     </tr>
-                   </thead>
-                   <tbody>
-                       {contracts}
-                   </tbody>
-                 </Table>
+                <BootstrapTable data={ contracts } striped={true} hover={true} pagination={ true }
+                    selectRow={ selectRowProp } options={ optionsTable }>
+                    <TableHeaderColumn dataField="id" hidden isKey={true} dataAlign="center" dataSort={false}>ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField="nameCompany" dataAlign="center" dataSort={true}>Nom de la société</TableHeaderColumn>
+                    <TableHeaderColumn dataField="creationDate" dataSort={true}>Date de création</TableHeaderColumn>
+                </BootstrapTable>
             ) : null;
 
             return (
@@ -115,17 +124,17 @@ class ContractsStatusAdmin extends Component {
                 <Row className='space-top-bottom'>
                     <Col lg={12}>
                         <OverlayTrigger placement="right" overlay={rightTooltip}>
-                           <Button onClick={this._changeContractStatus} bsStyle='primary' className='floatRight'>
+                           <Button onClick={this._openPopup.bind('CHANGE')} bsStyle='primary' className='floatRight'>
                                <Glyphicon glyph='pencil'></Glyphicon>
                            </Button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={blockTooltip}>
-                            <Button onClick={this._changeContractStatus} bsStyle='danger' className='floatRight marginRight5'>
+                            <Button onClick={this._blockContract} bsStyle='danger' className='floatRight marginRight5'>
                                 <Glyphicon glyph='ban-circle'></Glyphicon>
                             </Button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={rappelTooltip}>
-                            <Button onClick={this._changeContractStatus} bsStyle='warning' className='floatRight marginRight5'>
+                            <Button onClick={this._rappelContract} bsStyle='warning' className='floatRight marginRight5'>
                                 <Glyphicon glyph='repeat'></Glyphicon>
                             </Button>
                         </OverlayTrigger>
@@ -134,6 +143,13 @@ class ContractsStatusAdmin extends Component {
                 <PanelGroup defaultActiveKey="1" accordion className="toggle-carret">
                     { panelContracts }
                 </PanelGroup>
+
+                    <ConfirmStatusPopup showModal={this.state.openChangeStatus} title="Changement statut"
+                        message="Vous êtes sur le point de modifier le status des contrats"
+                        contractStatus={this.props.contractStatus}
+                        contract={this.props.adminContractSelected}
+                        closeModal={ this._closePreteurPopup }
+                        buttonConfirmMessage="Soumettre" callback={this._changeContractStatus} />
             </Grid>
         );
     }

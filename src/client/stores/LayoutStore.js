@@ -30,7 +30,7 @@ class LayoutStore extends BaseStore {
         });
 
         const options = {
-            closable: false,
+            closable: true,
             language: 'fr',
             auth: {
                responseType: "token",
@@ -49,21 +49,27 @@ class LayoutStore extends BaseStore {
 
         this.lock = new Auth0Lock(process.env.AUTH_CLIENT_ID, process.env.AUTH_AUDIENCE, options);
 
-        this.lock.getUserInfo(this.getAccessToken, (error, userDetail) => {
-            if (error) {
-                // callback(error);
-            } else {
-                let isAdmin = false;
-                _.map(userDetail.app_metadata.roles, role => {
-                        if (_.isEqual(role, 'admin')) {
-                            isAdmin = true;
-                        }
-                });
-                this.setUser(userDetail, isAdmin);
-                // in order to emit the profile
-                // this.emitChange();
-            }
-        });
+        if (this.getAccessToken) {
+            this.lock.getUserInfo(this.getAccessToken, (error, userDetail) => {
+                if (error) {
+                    // callback(error);
+                } else {
+                    let isAdmin = false;
+                    _.map(userDetail.app_metadata.roles, role => {
+                            if (_.isEqual(role, 'admin')) {
+                                isAdmin = true;
+                            }
+                    });
+                    this.setUser(userDetail, isAdmin);
+                    // in order to emit the profile
+                    // this.emitChange();
+                }
+            });
+        }
+
+        // Listening for the authenticated event
+        this.lock.on('authenticated', this._doAuthentication.bind(this));
+       this.lock.on('hash_parsed', this._doAuthentication.bind(this) );
     }
 
   _registerToActions(action) {

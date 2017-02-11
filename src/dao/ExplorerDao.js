@@ -6,6 +6,7 @@ import { ProfileDao } from './ProfileDao';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
+import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
 
 export class ExplorerDao {
     constructor(_mongodb) {
@@ -28,6 +29,7 @@ export class ExplorerDao {
              let contractsPreteur = [];
              const userId = user;
              let basicProfil = null;
+             let contractsList = [];
 
             async.series([
                 (callback) => {
@@ -44,54 +46,84 @@ export class ExplorerDao {
                     });
                 },
                 (callback) => {
-                    const emprunteurs = this._mongodb.collection('emprunteurs');
+                    const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
+                    // Find some documents
+                    contractEmprunteurs.find( { status: { $eq: 'MISE_EN_LIGNE' } } ).toArray( function(err, contracts) {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+
+                        const contractSize = _.size( contracts );
+                        debug("*****  contract found: " + contractSize );
+
+                        for(let i = 0 ; i < contractSize ; i++) {
+                            const contract = contracts[i];
+
+                            contractsList.push( new ContractsEmprunteur(contract) );
+                        }
+
+                        callback();
+                    });
+                },
+                (callback) => {
+                    const emprunteurs = this._mongodb.collection('emprunteurs');
                     // retrieves 8 elements starting from "limit"
                     const skip = (pageKey - 1) * EXPLORERS_PAGE;
                     const limit = (pageKey) * EXPLORERS_PAGE;
                     debug('limit: ' + limit);
 
-                    // Find some documents
-                    // emprunteurs.find().skip(skip).limit(limit).toArray(function(err, contracts) {
-                    emprunteurs.find({ status: { $eq: 'MISE_EN_LIGNE' } }).toArray(function(err, contracts) {
+                    async.eachSeries(contractsList, (contractDB, callback) => {
+                       info('contract user id: ' + contractDB.user_id);
 
-                        const contractSize = _.size( contracts );
-                        debug("*****  contract found: " + contractSize);
-                        // const favorisEmprunteur = [new ThumbEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
-                        // new ThumbEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
+                       // Find some documents
+                       // emprunteurs.find().skip(skip).limit(limit).toArray(function(err, contracts) {
+                       emprunteurs.findOne({ user_id: contractDB.user_id }, function(err, emprunteur) {
+                           if (err) {
+                               error('No emprunteur found: ', err);
+                               callback();
+                           }
+                           info('emprunteur ' + emprunteur);
+                        //    callback();
+                           const contractSize = _.size( emprunteur );
+                           debug("*****  contract found: " + contractSize);
+                           // const favorisEmprunteur = [new ThumbEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
+                           // new ThumbEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
 
-                        for(let i = 0 ; i < contractSize ; i++) {
-                            const contract = new BasicInfoEmprunteur(contracts[i]);
-                            debug("****  contract wihout images: " + contract.toLog() );
+                        //    for(let i = 0 ; i < contractSize ; i++) {
+                               const contract = new BasicInfoEmprunteur(emprunteur);
+                               debug("****  contract wihout images: " + contract.toLog() );
 
-                            // remove images and logo from JSON (performane)
-                            delete contract.image;
+                               // remove images and logo from JSON (performane)
+                               delete contract.image;
 
-                            contractsPreteur.push( contract );
-                        }
+                               contractsPreteur.push( contract );
+                        //    }
 
-                        for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
-                            const favori = basicProfil.favoris[j];
-                            const emprunteurId = (favori.emprunteurId).toString();
-                            debug("favori id: " + emprunteurId);
+                           for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
+                               const favori = basicProfil.favoris[j];
+                               const emprunteurId = (favori.emprunteurId).toString();
+                               debug("favori id: " + emprunteurId);
 
-                            const contrats = _.find(contractsPreteur, c => {
-                                const id = (c.id).toString();
-                                return _.isEqual( id, emprunteurId);
-                            });
-                            debug("contract size with favoris: " + contrats);
+                               const contrats = _.find(contractsPreteur, c => {
+                                   const id = (c.id).toString();
+                                   return _.isEqual( id, emprunteurId);
+                               });
+                               debug("contract size with favoris: " + contrats);
 
-                            if (!_.isNil(contrats) && _.isArray(contrats)) {
-                                _.forEach(contrats, con => {
-                                    con.isFavoris = true;
-                                })
-                            } else if (!_.isNil(contrats)) {
-                                contrats.isFavoris = true;
-                            }
-                        }
+                               if (!_.isNil(contrats) && _.isArray(contrats)) {
+                                   _.forEach(contrats, con => {
+                                       con.isFavoris = true;
+                                   })
+                               } else if (!_.isNil(contrats)) {
+                                   contrats.isFavoris = true;
+                               }
+                           }
 
-                        callback();
-                    });
+                           callback();
+                       });
+                   }, callback);
                 },
                 (callback) => {
                     res.end( JSON.stringify( contractsPreteur ) );

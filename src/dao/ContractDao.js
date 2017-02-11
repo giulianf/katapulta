@@ -13,6 +13,23 @@ export class ContractDao {
         this._mongodb = _mongodb;
     }
 
+    updateChangeStatus(res, selectedContracts, isEmprunteur) {
+        info('Entering updateChangeStatus() isEmprunteur: ' + isEmprunteur);
+
+
+    }
+
+    updateBlockStatus(res, selectedContracts, isEmprunteur) {
+        info('Entering updateBlockStatus() isEmprunteur: ' + isEmprunteur);
+
+
+    }
+
+    updateRappelStatus(res, selectedContracts, isEmprunteur) {
+        info('Entering updateRappelStatus() isEmprunteur: ' + isEmprunteur);
+
+
+    }
 
     /**
      * requestNewEmprunt - request a new contract for emprunt
@@ -216,7 +233,7 @@ export class ContractDao {
                    const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
                    // Find some documents
-                   contractEmprunteurs.find({'user_id': userId}).toArray( function(err, contracts) {
+                   contractEmprunteurs.find({'user_id': userId}).sort( { _id: -1 } ).toArray( function(err, contracts) {
                        if (err) {
                            callback(err);
                            return;
@@ -228,7 +245,7 @@ export class ContractDao {
                        for(let i = 0 ; i < contractSize ; i++) {
                            const contract = contracts[i];
 
-                           contractsList.push( new ContractsEmprunteur(contract) );
+                               contractsList.push( new ContractsEmprunteur(contract) );
                        }
 
                        callback();

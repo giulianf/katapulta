@@ -30,8 +30,6 @@ function getProfileState() {
 export default class Profile extends Component {
   constructor (props){
     super(props);
-    ProvideActions.getBasicInfo(ProvideStore.getProfile);
-    ProvideActions.getEmprunteurBasicInfo(ProvideStore.getProfile);
 
     this._onChange = this._onChange.bind(this);
     this._updateBasicInfo = this._updateBasicInfo.bind(this);
@@ -41,7 +39,7 @@ export default class Profile extends Component {
     // Admin
     this._changeStatus = this._changeStatus.bind(this);
     this._blockStatus = this._blockStatus.bind(this);
-    this._rappelStatus = this.rappelStatus.bind(this);
+    this._rappelStatus = this._rappelStatus.bind(this);
 
     this.state = getProfileState();
 
@@ -64,6 +62,9 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
+      ProvideActions.getBasicInfo(ProvideStore.getProfile);
+      ProvideActions.getEmprunteurBasicInfo(ProvideStore.getProfile);
+
     ProvideStore.addChangeListener(this._onChange);
    }
 

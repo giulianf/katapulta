@@ -15,3 +15,6 @@ export const REQUEST_EMPRUNT_API = `${BASE_API_URL}requestNewEmprunt`;
 export const REQUEST_PRETEUR_API = `${BASE_API_URL}requestNewPreteur`;
 export const UPDATE_FAVORI_API = `${BASE_API_URL}updateFavoris`;
 export const ADMIN_CONTRACTS_API = `${BASE_API_URL}getAdminContracts`;
+export const ADMIN_CHANGE_STATUS = `${BASE_API_URL}updateChangeStatus`;
+export const ADMIN_BLOCK_STATUS = `${BASE_API_URL}updateBlockStatus`;
+export const ADMIN_RAPPEL_STATUS = `${BASE_API_URL}updateRappelStatus`;

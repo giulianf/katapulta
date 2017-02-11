@@ -92,7 +92,7 @@ class ProfileTabBasic extends Component {
                               onChange={e => ProvideActions.updateBasicInfo({email: e.target.value})}  value={this.props.basicInfo.email}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontaladdress" validationState={validateNom}>
+                      <FormGroup controlId="formHorizontaladdress" validationState={validateAddress}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Adresse
                         </Col>
@@ -113,7 +113,7 @@ class ProfileTabBasic extends Component {
                                 </datalist>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalville" validationState={validateNom}>
+                      <FormGroup controlId="formHorizontalville" validationState={validateVille}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Ville
                         </Col>
@@ -122,7 +122,7 @@ class ProfileTabBasic extends Component {
                               onChange={e => ProvideActions.updateBasicInfo({ville: e.target.value})}  value={this.props.basicInfo.ville}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalville" validationState={validateNom}>
+                      <FormGroup controlId="formHorizontalisEmp" >
                         <Col sm={12} md={8}>
                             <Checkbox checked={ this.props.basicInfo.isEmprunteur } onChange={e => ProvideActions.updateBasicInfo({isEmprunteur: !this.props.basicInfo.isEmprunteur})} >
                             Souhaitez-vous emprunter

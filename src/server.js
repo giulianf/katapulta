@@ -217,6 +217,33 @@ app.get('/api/getAdminContracts', (req, res) => {
     contractDao.getAdminContracts(res);
 });
 
+app.put('/api/updateChangeStatus', (req, res) => {
+    debug("Entering /api/updateChangeStatus ");
+
+    const selectedContracts = req.body.selectedContracts;
+    const isEmprunteur = req.body.isEmprunteur;
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.updateChangeStatus(res, selectedContracts, isEmprunteur);
+});
+
+app.put('/api/updateBlockStatus', (req, res) => {
+    debug("Entering /api/updateBlockStatus ");
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.updateBlockStatus(res, selectedContracts, isEmprunteur);
+});
+
+app.put('/api/updateRappelStatus', (req, res) => {
+    debug("Entering /api/updateRappelStatus ");
+
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.updateRappelStatus(res, selectedContracts, isEmprunteur);
+});
+
 /******************************************/
 /************ END PROFILE API *************/
 /******************************************/

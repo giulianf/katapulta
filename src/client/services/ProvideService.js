@@ -1,7 +1,7 @@
 import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTEUR_BASIC_INFO_API,
      UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API,
      GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API, GET_CONTRACTS_EMPRUNTEUR_API, REQUEST_EMPRUNT_API,
-     REQUEST_PRETEUR_API, ADMIN_CONTRACTS_API } from '../constants/WebServiceConstants';
+     REQUEST_PRETEUR_API, ADMIN_CONTRACTS_API, ADMIN_CHANGE_STATUS, ADMIN_BLOCK_STATUS, ADMIN_RAPPEL_STATUS } from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -9,6 +9,49 @@ import ApiService from './ApiService';
 var _ = require('lodash');
 
 class ProvideService {
+    changeStatus ( selectedContracts, isEmprunteur : boolean) {
+        return new bluebird( (resolve, reject) => {
+            ApiService.put(
+               ADMIN_CHANGE_STATUS ,
+               {selectedContracts, isEmprunteur}
+            ).then(response => {
+              if (!_.isNil(response)) {
+                  return resolve(response.data);
+              }
+            }).catch( err => {
+              return reject(err);
+            });
+        });
+    }
+    blockStatus ( selectedContracts, isEmprunteur ) {
+        return new bluebird( (resolve, reject) => {
+            ApiService.put(
+               ADMIN_BLOCK_STATUS ,
+               {selectedContracts, isEmprunteur}
+            ).then(response => {
+              if (!_.isNil(response)) {
+                  return resolve(response.data);
+              }
+            }).catch( err => {
+              return reject(err);
+            });
+        });
+    }
+    rappelStatus ( selectedContracts, isEmprunteur ) {
+        return new bluebird( (resolve, reject) => {
+            ApiService.put(
+               ADMIN_RAPPEL_STATUS ,
+               {selectedContracts, isEmprunteur}
+            ).then(response => {
+              if (!_.isNil(response)) {
+                  return resolve(response.data);
+              }
+            }).catch( err => {
+              return reject(err);
+            });
+        });
+    }
+
     /**
      * simulate - CALCULATE simulator
      *

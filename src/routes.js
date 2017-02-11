@@ -34,20 +34,21 @@ const requireAuth = (nextState, replace, callback) => {
 }
 
 // OnEnter for callback url to parse access_token
-const parseAuthLoginHash = (nextState, replace) => {
+const parseAuthLoginHash = (nextState, replace, callback) => {
     const loggedBool= LayoutStore.parseHash(nextState.location.hash);
 
     if (LayoutStore.loggedIn) {
         if (_.isEqual(nextState.location.pathname, '/login')) {
             replace({ pathname: 'profile' })
         } else {
-            replace({ pathname: nextState.location.pathname })
+            replace({ pathname: _.replace(nextState.location.pathname, '#', '') })
         }
     }
+    callback();
 }
 
 const routes = (
-        <Route path='/' component={Layout}>
+        <Route path='/' component={Layout} onEnter={ requireBasicAuth }>
             <IndexRoute component={IndexPage} onEnter={ requireBasicAuth } />
             <Route path="explorer" component={Explorer} onEnter={ requireBasicAuth } />
             <Route path="/emprunteur/:emprunteurId" component={ Emprunteur } onEnter={ requireBasicAuth } />
