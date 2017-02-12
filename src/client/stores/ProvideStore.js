@@ -182,13 +182,13 @@ class ProvideStore extends BaseStore {
         this._admin.adminPreteur.contracts = adminContracts.adminPreteur.contracts;
     }
 
-    populateAdminContractsSelected(contractId, checked) {
+    populateAdminContractsSelected(contractId, nameCompany, checked) {
         if (!_.isNil(contractId) && !_.isNil(checked)) {
             if (checked) {
-                this._adminContractSelected.push(contractId);
+                this._adminContractSelected.push({contractId, nameCompany});
             } else {
                 this._adminContractSelected = _.remove(this._adminContractSelected, item => {
-                  return item === contractId;
+                  return item.contractId === contractId;
                 });
             }
         }
@@ -432,7 +432,7 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
       case ProvideConstants.CHECKBOX_CONTRACT_SELECTED:
-         this.populateAdminContractsSelected(action.contractId, action.checked);
+         this.populateAdminContractsSelected(action.id, action.nameCompany, action.checked);
         // If action was responded to, emit change event
         this.emitChange();
         break;

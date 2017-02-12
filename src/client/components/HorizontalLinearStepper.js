@@ -108,7 +108,7 @@ class HorizontalLinearStepper extends Component {
 }
 
 HorizontalLinearStepper.propTypes = {
-  list: PropTypes.func.isRequired,
+  list: PropTypes.array.isRequired,
   orientation: PropTypes.string.isRequired,
 };
 

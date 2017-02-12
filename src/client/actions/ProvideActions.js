@@ -36,8 +36,8 @@ export default {
         }, { });
 
     },
-    checkBoxAdminContract: (contractId, checked) => {
-        dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { contractId , checked});
+    checkBoxAdminContract: ({id, nameCompany}, checked) => {
+        dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { id, nameCompany , checked});
     },
     changeFreeText: (searchCriteria) => {
         dispatch(ProvideConstants.FREE_TEXT_EXPLORERS, { searchCriteria });

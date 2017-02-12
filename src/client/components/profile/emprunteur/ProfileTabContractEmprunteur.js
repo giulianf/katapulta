@@ -49,7 +49,7 @@ export default class ProfileTabContractEmprunteur extends Component {
         );
 
         return (
-            <Grid keyTab='profileTabEmprunteurContract' >
+            <Grid key='profileTabEmprunteurContract' >
                 <Col md={10} sm={10}>
                     <OverlayTrigger placement="right" overlay={tooltip}>
                         <Button bsStyle='primary' className='btn-flat' onClick={this._showEmprunteurPopup}><Glyphicon  glyph='plus' ></Glyphicon> Demande d'emprunt</Button>

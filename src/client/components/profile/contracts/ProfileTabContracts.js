@@ -14,7 +14,7 @@ export default class ProfileTabContracts extends Component {
 
     render () {
         return (
-            <Grid keyTab={ this.props.keyTab } >
+            <Grid key={ this.props.keyTab } >
                 <Col md={10} sm={10} smHidden xsHidden className='space-top-bottom'>
                     <a href="#" onClick={ ()=> this.setState({ open: !this.state.open })}>
                       en savoir plus

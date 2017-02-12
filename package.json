@@ -4,7 +4,7 @@
   "description": "Pour emprunter ou preter son argent",
   "main": "src/server.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "lint": "eslint src",
     "start-dev": "babel-node --presets 'react,es2015,stage-2' src/server.js",
     "start-dev-ui": "npm run start-dev-hmr",

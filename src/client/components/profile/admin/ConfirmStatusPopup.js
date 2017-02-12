@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Modal, Button, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
-const isNil = require('lodash/isNil');
-import { getStatusDetail } from '../../../common/Utility';
+import { Modal, Button, Row, Col, FormGroup, ControlLabel, FormControl , Checkbox} from 'react-bootstrap';
+// const isNil = require('lodash/isNil');
+import _ from 'lodash';
+import { getStatusDetail } from '../../../../common/Utility';
 
 class ConfirmStatusPopup extends Component {
     constructor (props){
@@ -9,6 +10,8 @@ class ConfirmStatusPopup extends Component {
 
         this._close = this._close.bind(this);
         this._callbackFunction = this._callbackFunction.bind(this);
+
+        this.state = {status : 'select', notifyUser : true};
     }
 
     _close() {
@@ -24,20 +27,28 @@ class ConfirmStatusPopup extends Component {
         const { message } = this.props;
 
         const panelContracts = _.map(getStatusDetail(this.props.contractStatus), status => {
-            return (<option value={status.value}>{status.label}</option>);
+            return (<option key={status.value} value={status.value}>{status.label}</option>);
         });
 
-        const contract = !isNil(this.props.contract) ? (<Row>
-            <Col md={12}>
-                { this.props.contract }
+        const userList =  !_.isNil(this.props.contract) ? (
+            _.map(this.props.contract, con => {
+                    return (<li><p>{con.nameCompany}</p></li>);
+            })
+        )
+        : null;
+
+        const contract = !_.isNil(this.props.contract) ? (
+            <Row>
+            <Col offsetmd={1} md={12}>
+                <ul>{ userList }</ul>
             </Col>
             <FormGroup controlId="formHorizontalstatuspopup" >
               <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                 Statut
               </Col>
-              <Col xs={2} sm={2} md={2}>
+              <Col xs={8} sm={8} md={8} lg={8}>
                   <FormControl componentClass="select" placeholder="select"
-                      value={ this.state.status } >
+                      value={ this.state.status }  onChange={e => { this.setState({ status : e.target.value })}}>
                     <option value="select">select</option>
                     { panelContracts }
                   </FormControl>
@@ -45,12 +56,13 @@ class ConfirmStatusPopup extends Component {
             </FormGroup>
             <FormGroup controlId="formHorizontalnot" >
               <Col sm={12} md={8}>
-                  <Checkbox checked={ this.state.notifyUser } >
+                  <Checkbox checked={ this.state.notifyUser } onChange={e => { this.setState({ notifyUser : !this.state.notifyUser })}}>
                   Notifiez utilisateur?
                 </Checkbox>
               </Col>
             </FormGroup>
-        </Row>)  : null;
+        </Row>
+        )  : null;
         return (
             <Modal show={this.props.showModal} onHide={this._close}>
               <Modal.Header closeButton>

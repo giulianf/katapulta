@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Form, Row, Col, PanelGroup, Panel, Button, Glyphicon , Tooltip, OverlayTrigger} from 'react-bootstrap';
+import { Grid, Modal, Form, Row, Col, PanelGroup, Panel, Button, Glyphicon , Tooltip, OverlayTrigger} from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import { getStatusDetail } from '../../../../common/Utility';
 import ProvideActions from '../../../actions/ProvideActions';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import {ConfirmStatusPopup} from '../ConfirmStatusPopup';
+import ConfirmStatusPopup from './ConfirmStatusPopup';
 
 class ContractsStatusAdmin extends Component {
   constructor (props){
@@ -14,14 +14,25 @@ class ContractsStatusAdmin extends Component {
     this._changeContractStatus = this._changeContractStatus.bind(this);
     this._blockContract = this._blockContract.bind(this);
     this._rappelContract = this._rappelContract.bind(this);
-    this._openPopup = this._openPopup.bind(this);
+    this._closeStatusPopup = this._closeStatusPopup.bind(this);
+    // this._openPopup = this._openPopup.bind(this);
 
     this.state = { openChangeStatus : false, openBlockStatus: false, openRappelStatus: false};
 
   }
 
-  _openPopup() {
-        this.setState({openChangeStatus: true});
+  _closeStatusPopup() {
+        this.setState({ openChangeStatus : false, openBlockStatus: false, openRappelStatus: false });
+  }
+
+  _openPopup(action) {
+      if (_.isEqual(action, 'CHANGE')) {
+          this.setState({openChangeStatus: true});
+      } else if (_.isEqual(action, 'BLOCK')) {
+          this.setState({openBlockStatus: true});
+      } else if (_.isEqual(action, 'RAPPEL')) {
+          this.setState({openRappelStatus: true});
+      }
   }
 
   _changeContractStatus() {
@@ -84,8 +95,8 @@ class ContractsStatusAdmin extends Component {
             const contractResult =  _.filter(this.props.contracts, {status : status.label} );
             const contracts = !_.isNil(this.props.contracts) && !_.isNil(contractResult) ? contractResult : [];
 
-            const onRowSelect = ({ id }, isSelected) => {
-                ProvideActions.checkBoxAdminContract({ id: id }, isSelected)
+            const onRowSelect = ({ id, nameCompany }, isSelected) => {
+                ProvideActions.checkBoxAdminContract({ id: id, nameCompany: nameCompany }, isSelected)
 
                 };
 
@@ -113,43 +124,70 @@ class ContractsStatusAdmin extends Component {
             ) : null;
 
             return (
-                <Panel header={headder} eventKey={index} className="panelFaq">
+                <Panel key={index} header={headder} eventKey={index} className="panelFaq">
                     { contractTable }
                 </Panel>
             );
         }, this);
+
+        const showModal = this.state.openChangeStatus || this.state.openBlockStatus || this.state.openRappelStatus ? true : false;
+        // set Title
+        // Set message
+        // set callback function
+        let title;
+        let message;
+        let callback;
+        let buttonConfirmMessage;
+        if ( this.state.openChangeStatus ) {
+            title = 'Changer de status' ;
+            message = "Vous êtes sur le point de modifier le status des contrats:" ;
+            callback = this._changeContractStatus;
+            buttonConfirmMessage = "Changer";
+        } else if ( this.state.openBlockStatus ) {
+            title = 'Blocker les contrats' ;
+            message = "Vous êtes sur le point de bloquer le status des contrats:" ;
+            callback = this._blockContract;
+            buttonConfirmMessage = "Bloquer";
+        } else if ( this.state.openRappelStatus ) {
+            title = 'Rappeler les contrats' ;
+            message = "Vous êtes sur le point de rappeler le status des contrats:";
+            callback = this._rappelContract;
+            buttonConfirmMessage = "Rappel";
+        }
 
         return (
             <Grid fluid>
                 <Row className='space-top-bottom'>
                     <Col lg={12}>
                         <OverlayTrigger placement="right" overlay={rightTooltip}>
-                           <Button onClick={this._openPopup.bind('CHANGE')} bsStyle='primary' className='floatRight'>
+                           <Button onClick={this._openPopup.bind(this, 'CHANGE')} bsStyle='primary' className='floatRight'>
                                <Glyphicon glyph='pencil'></Glyphicon>
                            </Button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={blockTooltip}>
-                            <Button onClick={this._blockContract} bsStyle='danger' className='floatRight marginRight5'>
+                            <Button onClick={this._openPopup.bind(this, 'BLOCK')} bsStyle='danger' className='floatRight marginRight5'>
                                 <Glyphicon glyph='ban-circle'></Glyphicon>
                             </Button>
                         </OverlayTrigger>
                         <OverlayTrigger placement="top" overlay={rappelTooltip}>
-                            <Button onClick={this._rappelContract} bsStyle='warning' className='floatRight marginRight5'>
+                            <Button onClick={this._openPopup.bind(this, 'RAPPEL')} bsStyle='warning' className='floatRight marginRight5'>
                                 <Glyphicon glyph='repeat'></Glyphicon>
                             </Button>
                         </OverlayTrigger>
                     </Col>
                 </Row>
+
                 <PanelGroup defaultActiveKey="1" accordion className="toggle-carret">
                     { panelContracts }
                 </PanelGroup>
 
-                    <ConfirmStatusPopup showModal={this.state.openChangeStatus} title="Changement statut"
-                        message="Vous êtes sur le point de modifier le status des contrats"
-                        contractStatus={this.props.contractStatus}
-                        contract={this.props.adminContractSelected}
-                        closeModal={ this._closePreteurPopup }
-                        buttonConfirmMessage="Soumettre" callback={this._changeContractStatus} />
+                <ConfirmStatusPopup showModal={ showModal } title={ title }
+                    message={message}
+                    contractStatus={this.props.contractStatus}
+                    contract={this.props.adminContractSelected}
+                    closeModal={ this._closeStatusPopup }
+                    buttonConfirmMessage={ buttonConfirmMessage } callback={ callback } />
+
             </Grid>
         );
     }

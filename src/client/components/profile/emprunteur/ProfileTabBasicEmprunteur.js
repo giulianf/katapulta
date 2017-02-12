@@ -233,7 +233,7 @@ class ProfileTabBasicEmprunteur extends Component {
                 restImage = indexImage % 3
                 if ( restImage == 0 ) {
                     return (
-                        <Row>
+                        <Row key={indexImage}>
                             {colImage[indexImage - 1]}
                         </Row>
                     )
@@ -262,7 +262,7 @@ class ProfileTabBasicEmprunteur extends Component {
 
         const actionnaires = !_.isNil(this.props.basicInfoEmprunteur.actionnariat) ? _.map(this.props.basicInfoEmprunteur.actionnariat, actionnaire => {
             return (
-                <tr>
+                <tr key={actionnaire.nomComplet}>
                   <td>{actionnaire.titre}</td>
                   <td>{actionnaire.nomComplet}</td>
                   <td>{actionnaire.nbPart}</td>
@@ -294,7 +294,7 @@ class ProfileTabBasicEmprunteur extends Component {
                 <Col md={9} sm={9} className='space-top-bottom'>
                     <Form horizontal>
                       <FormGroup controlId="formHorizontalLogo">
-                        <Col md={3} lg={4} sd={2}>
+                        <Col md={3} lg={4} sm={2}>
                           <RaisedButton
                               className='pull-right'
                             containerElement='label'
