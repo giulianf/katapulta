@@ -6,6 +6,7 @@ import { getStatusDetail } from '../../../../common/Utility';
 import ProvideActions from '../../../actions/ProvideActions';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import ConfirmStatusPopup from './ConfirmStatusPopup';
+import Toastr from 'toastr';
 
 class ContractsStatusAdmin extends Component {
   constructor (props){
@@ -26,29 +27,33 @@ class ContractsStatusAdmin extends Component {
   }
 
   _openPopup(action) {
-      if (_.isEqual(action, 'CHANGE')) {
-          this.setState({openChangeStatus: true});
-      } else if (_.isEqual(action, 'BLOCK')) {
-          this.setState({openBlockStatus: true});
-      } else if (_.isEqual(action, 'RAPPEL')) {
-          this.setState({openRappelStatus: true});
+      if (!_.isEmpty(this.props.adminContractSelected)) {
+          if (_.isEqual(action, 'CHANGE')) {
+              this.setState({openChangeStatus: true});
+          } else if (_.isEqual(action, 'BLOCK')) {
+              this.setState({openBlockStatus: true});
+          } else if (_.isEqual(action, 'RAPPEL')) {
+              this.setState({openRappelStatus: true});
+          }
+      } else {
+          Toastr.error("Selectionnez au moins un contrat.");
       }
   }
 
-  _changeContractStatus() {
-      this.props.changeContractStatus;
+  _changeContractStatus(status, notifyUser) {
+      this.props.changeContractStatus(status, notifyUser);
   }
 
   _blockContract() {
-      this.props.blockContract;
+      this.props.blockContract();
   }
 
   _rappelContract() {
-      this.props.rappelContract;
+      this.props.rappelContract();
   }
 
-  componentDidMount() {
-   }
+    componentDidMount() {
+    }
 
    componentWillUnmount() {
    }
@@ -97,13 +102,22 @@ class ContractsStatusAdmin extends Component {
 
             const onRowSelect = ({ id, nameCompany }, isSelected) => {
                 ProvideActions.checkBoxAdminContract({ id: id, nameCompany: nameCompany }, isSelected)
+            };
 
-                };
+            const onSelectAll = (isSelected, currentDisplayAndSelectedData) => {
+                ProvideActions.checkBoxAllAdminContract( isSelected, currentDisplayAndSelectedData );
+            };
+
+            const selectId = _.map(this.props.adminContractSelected, contract => {
+                return contract.contractId;
+            });
 
             const selectRowProp = {
               mode: 'checkbox',
               clickToSelect: true,  // enable click to select
-              onSelect: onRowSelect
+              onSelect: onRowSelect,
+              onSelectAll: onSelectAll,
+              selected: selectId  //give a default selected row.
             };
 
             const optionsTable = {
@@ -138,21 +152,25 @@ class ContractsStatusAdmin extends Component {
         let message;
         let callback;
         let buttonConfirmMessage;
+        let typePopup='NA';
         if ( this.state.openChangeStatus ) {
             title = 'Changer de status' ;
             message = "Vous êtes sur le point de modifier le status des contrats:" ;
             callback = this._changeContractStatus;
             buttonConfirmMessage = "Changer";
+            typePopup='CHANGE';
         } else if ( this.state.openBlockStatus ) {
             title = 'Blocker les contrats' ;
             message = "Vous êtes sur le point de bloquer le status des contrats:" ;
             callback = this._blockContract;
             buttonConfirmMessage = "Bloquer";
+            typePopup='BLOCK';
         } else if ( this.state.openRappelStatus ) {
             title = 'Rappeler les contrats' ;
             message = "Vous êtes sur le point de rappeler le status des contrats:";
             callback = this._rappelContract;
             buttonConfirmMessage = "Rappel";
+            typePopup='RAPPEL';
         }
 
         return (
@@ -182,6 +200,7 @@ class ContractsStatusAdmin extends Component {
                 </PanelGroup>
 
                 <ConfirmStatusPopup showModal={ showModal } title={ title }
+                    typePopup={typePopup}
                     message={message}
                     contractStatus={this.props.contractStatus}
                     contract={this.props.adminContractSelected}

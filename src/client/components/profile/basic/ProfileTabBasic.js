@@ -7,6 +7,7 @@ var DatePicker = require("react-bootstrap-date-picker");
 import { validateEmail } from '../../../../common/Utility';
 import belgium from '../../../../data/zipcode-belgium.json';
 import Validator from '../../../../validator/validatorBasicInfo';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class ProfileTabBasic extends Component {
     constructor (props){
@@ -15,6 +16,7 @@ class ProfileTabBasic extends Component {
     }
 
     componentDidMount() {
+        ProvideActions.getBasicInfo(this.props.profile);
     }
 
     componentWillUnmount() {
@@ -25,6 +27,27 @@ class ProfileTabBasic extends Component {
        this.props.updateBasicInfo(this.props.basicInfo);
     }
     render () {
+        const style = {
+          container: {
+            position: 'relative',
+          },
+          refresh: {
+            display: 'inline-block',
+            position: 'relative',
+          },
+        };
+        if (_.isNil(this.props.basicInfo) ) {
+            return (<Col mdOffset={5} lgOffset={5}>
+                <RefreshIndicator
+                  size={50}
+                  left={70}
+                  top={0}
+                  loadingColor="#8BC34A"
+                  status="loading"
+                  style={style.refresh}
+                />
+            </Col>);
+        }
         const listZip = _.sortedUniq(_.map(belgium, (city) => {
             return city.zip;
         }));
@@ -145,7 +168,8 @@ class ProfileTabBasic extends Component {
 }
 
 ProfileTabBasic.contextTypes = {
-    basicInfo: React.PropTypes.object.isRequired
+    basicInfo: React.PropTypes.object.isRequired,
+    profile: React.PropTypes.object.isRequired
 };
 
 

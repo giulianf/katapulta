@@ -9,11 +9,19 @@ import ApiService from './ApiService';
 var _ = require('lodash');
 
 class ProvideService {
-    changeStatus ( selectedContracts, isEmprunteur : boolean) {
+
+    /**
+     * changeStatus - Admin change contract status
+     *
+     * @param  {type} selectedContracts      description
+     * @param  {type} isEmprunteur : boolean description
+     * @return {type}                        description
+     */
+    changeStatus ( selectedContracts, status, notifyUser, isEmprunteur : boolean) {
         return new bluebird( (resolve, reject) => {
             ApiService.put(
                ADMIN_CHANGE_STATUS ,
-               {selectedContracts, isEmprunteur}
+               {selectedContracts, status, notifyUser, isEmprunteur}
             ).then(response => {
               if (!_.isNil(response)) {
                   return resolve(response.data);
@@ -23,6 +31,15 @@ class ProvideService {
             });
         });
     }
+
+
+    /**
+     * blockStatus - Admin block contract status
+     *
+     * @param  {type} selectedContracts description
+     * @param  {type} isEmprunteur      description
+     * @return {type}                   description
+     */
     blockStatus ( selectedContracts, isEmprunteur ) {
         return new bluebird( (resolve, reject) => {
             ApiService.put(
@@ -37,6 +54,15 @@ class ProvideService {
             });
         });
     }
+
+
+    /**
+     * rappelStatus - Admin rappel contract status
+     *
+     * @param  {type} selectedContracts description
+     * @param  {type} isEmprunteur      description
+     * @return {type}                   description
+     */
     rappelStatus ( selectedContracts, isEmprunteur ) {
         return new bluebird( (resolve, reject) => {
             ApiService.put(
@@ -71,74 +97,6 @@ class ProvideService {
           });
       });
     }
-
-    /**
-     * changeStatus - change contract status
-     *
-     * @param  {type} selectedContracts description
-     * @param  {type} isEmprunteur      description
-     * @return {type}                   description
-     */
-    changeStatus( selectedContracts, isEmprunteur ) {
-      return new bluebird( (resolve, reject) => {
-          ApiService.put(
-             SIMULATE_API,
-             { selectedContracts , isEmprunteur}
-          ).then(response => {
-            if (!_.isNil(response)) {
-                return resolve(response.data);
-            }
-          }).catch( err => {
-            return reject(err);
-          });
-      });
-    }
-
-
-    /**
-     * blockStatus - block contract status
-     *
-     * @param  {type} selectedContracts description
-     * @param  {type} isEmprunteur      description
-     * @return {type}                   description
-     */
-    blockStatus( selectedContracts, isEmprunteur ) {
-      return new bluebird( (resolve, reject) => {
-          ApiService.put(
-             SIMULATE_API,
-             { selectedContracts , isEmprunteur}
-          ).then(response => {
-            if (!_.isNil(response)) {
-                return resolve(response.data);
-            }
-          }).catch( err => {
-            return reject(err);
-          });
-      });
-    }
-
-    /**
-     * rappelStatus - description
-     *
-     * @param  {type} selectedContracts description
-     * @param  {type} isEmprunteur      description
-     * @return {type}                   description
-     */
-    rappelStatus( selectedContracts, isEmprunteur ) {
-      return new bluebird( (resolve, reject) => {
-          ApiService.put(
-             SIMULATE_API,
-             { selectedContracts , isEmprunteur}
-          ).then(response => {
-            if (!_.isNil(response)) {
-                return resolve(response.data);
-            }
-          }).catch( err => {
-            return reject(err);
-          });
-      });
-    }
-
 
     /**
      * getBasicInfo - Get Basic Info by user

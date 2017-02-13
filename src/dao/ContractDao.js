@@ -13,10 +13,26 @@ export class ContractDao {
         this._mongodb = _mongodb;
     }
 
-    updateChangeStatus(res, selectedContracts, isEmprunteur) {
-        info('Entering updateChangeStatus() isEmprunteur: ' + isEmprunteur);
+    updateChangeStatus(res, MongoDb, selectedContracts, status, notifyUser, isEmprunteur) {
+        info('Entering updateChangeStatus() isEmprunteur: ' + isEmprunteur + ', status: '+status + ' and notifyUser: '+notifyUser);
 
+        const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
+        async.eachSeries(selectedContracts, (contract, callback) => {
+            debug('contract id: '+ contract.contractId);
+            contractEmprunteurs.updateOne(
+            { _id : new MongoDb.ObjectId(contract.contractId) },
+            {
+                $set: { "status": status },
+                $currentDate: { "lastModified": true }
+            }, (err, results) => {
+                callback();
+            });
+
+        },
+        () => {
+            this.getAdminContracts(res);
+        });
     }
 
     updateBlockStatus(res, selectedContracts, isEmprunteur) {
@@ -371,9 +387,11 @@ export class ContractDao {
                        debug("*****  contract found: " + contractSize );
 
                        for(let i = 0 ; i < contractSize ; i++) {
-                           const contract = contracts[i];
+                           const contract = new ContractsEmprunteur( contracts[i] );
 
-                           contractsEmprunteur.push( new ContractsEmprunteur(contract) );
+                           debug("****  contracts Emprunteur: " + contract.toLog() );
+
+                           contractsEmprunteur.push( contract );
                        }
 
                        callback();
@@ -393,18 +411,17 @@ export class ContractDao {
                         debug("*****  contract found: " + contractSize);
 
                        for(let i = 0 ; i < contractSize ; i++) {
-                           const contract = contracts[i];
+                           const contract = new ContractsPreteur( contracts[i] ) ;
 
-                           contractsPreteur.push( new ContractsPreteur(contract) );
+                           debug("****  contracts Preteur: " + contract.toLog() );
+
+                           contractsPreteur.push( contract );
                        }
 
                        callback();
                    });
                },
                (callback) => {
-                   debug("****  contracts Emprunteur: " + JSON.stringify( contractsEmprunteur ) );
-                   debug("****  contracts Preteur: " + JSON.stringify( contractsPreteur ) );
-
                    const adminContract = { adminEmprunteur : {contracts: contractsEmprunteur}, adminPreteur: {contracts: contractsPreteur} };
 
                    res.end(  JSON.stringify( adminContract ) );

@@ -14,17 +14,25 @@ class ConfirmStatusPopup extends Component {
         this.state = {status : 'select', notifyUser : true};
     }
 
+    componentDidMount() {
+        this.state = {status : 'select', notifyUser : true};
+    }
+
     _close() {
         this.props.closeModal();
     }
 
     _callbackFunction() {
-        this.props.callback();
+        this.props.callback(this.state.status, this.state.notifyUser);
         this.props.closeModal();
     }
 
     render () {
         const { message } = this.props;
+
+        if (!_.isEqual(this.props.typePopup, 'CHANGE') && !_.isEqual(this.props.typePopup, 'BLOCK') && !_.isEqual(this.props.typePopup, 'RAPPEL') ) {
+            return null;
+        }
 
         const panelContracts = _.map(getStatusDetail(this.props.contractStatus), status => {
             return (<option key={status.value} value={status.value}>{status.label}</option>);
@@ -37,11 +45,8 @@ class ConfirmStatusPopup extends Component {
         )
         : null;
 
-        const contract = !_.isNil(this.props.contract) ? (
+        const contract = !_.isNil(this.props.contract) && _.isEqual(this.props.typePopup, 'CHANGE') ? (
             <Row>
-            <Col offsetmd={1} md={12}>
-                <ul>{ userList }</ul>
-            </Col>
             <FormGroup controlId="formHorizontalstatuspopup" >
               <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                 Statut
@@ -75,6 +80,13 @@ class ConfirmStatusPopup extends Component {
                           { message }
                       </Col>
                   </Row>
+                  <Row>
+                      <Col mdOffset={1} md={12}>
+                          <ul>{ userList }</ul>
+                      </Col>
+                  </Row>
+
+
                   { contract }
               </Modal.Body>
 
@@ -91,6 +103,7 @@ class ConfirmStatusPopup extends Component {
 ConfirmStatusPopup.propTypes = {
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
+  typePopup: PropTypes.string.isRequired,
   contract: PropTypes.array,
   contractStatus: PropTypes.array,
   buttonConfirmMessage: PropTypes.string.isRequired,

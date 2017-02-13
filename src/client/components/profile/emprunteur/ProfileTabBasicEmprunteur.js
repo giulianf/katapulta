@@ -144,7 +144,6 @@ class ProfileTabBasicEmprunteur extends Component {
  }
 
   componentDidMount() {
-
    }
 
    componentWillUnmount() {
@@ -184,6 +183,7 @@ class ProfileTabBasicEmprunteur extends Component {
    }
 
     render () {
+
         const validateSociete = Validator.validateString(this.props.basicInfoEmprunteur.denominationSocial) ? "success" : "error";
         const validateFJ = Validator.validateFormeJuridique(this.props.basicInfoEmprunteur.formeJuridique) ? "success" : "error";
         const validateNumEntreprise = Validator.validateTva(this.props.basicInfoEmprunteur.numEntreprise) ? "success" : "error";
@@ -662,7 +662,6 @@ class ProfileTabBasicEmprunteur extends Component {
 }
 
 ProfileTabBasicEmprunteur.contextTypes = {
-    client: React.PropTypes.object.isRequired,
     basicInfoEmprunteur: React.PropTypes.object.isRequired,
     handleSaveEmprunteurBasicInfo: React.PropTypes.func.isRequired
 };

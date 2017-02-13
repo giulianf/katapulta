@@ -14,7 +14,6 @@ import Emprunteur from './client/components/Emprunteur';
 import LayoutStore from './client/stores/LayoutStore';
 import LayoutActions from './client/actions/LayoutActions';
 
-import Toastr from 'toastr';
 import _ from 'lodash';
 // onEnter callback to validate authentication in private routes
 const requireBasicAuth = (nextState, replace, callback) => {

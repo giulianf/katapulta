@@ -35,4 +35,9 @@ export class ContractsEmprunteur {
 			this.stepWorkflow= stepWorkflow;
 		}
     }
+
+    toLog() {
+        return 'id ' + this.id +' user_id ' + this.user_id +' user_idEmprunteur ' + this.user_idEmprunteur +' nameCompany ' + this.nameCompany +
+        ' creationDate ' + this.creationDate +' status ' + this.status +' progress ' + this.progress +' stepWorkflow ' + this.stepWorkflow;
+    }
 }

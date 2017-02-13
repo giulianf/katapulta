@@ -135,7 +135,7 @@ app.post('/api/updateBasicInfo', (req, res) => {
  * get emprunteur Basic info by user id
  */
 app.get('/api/getEmprunteurBasicInfo/:user', (req, res) => {
-    debug("Entering /api/getBasicInfo ");
+    debug("Entering /api/getEmprunteurBasicInfo ");
 
     const user = req.params.user;
 
@@ -222,10 +222,12 @@ app.put('/api/updateChangeStatus', (req, res) => {
 
     const selectedContracts = req.body.selectedContracts;
     const isEmprunteur = req.body.isEmprunteur;
+    const status = req.body.status;
+    const notifyUser = req.body.notifyUser;
 
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.updateChangeStatus(res, selectedContracts, isEmprunteur);
+    contractDao.updateChangeStatus(res, MongoDb, selectedContracts, status, notifyUser, isEmprunteur);
 });
 
 app.put('/api/updateBlockStatus', (req, res) => {

@@ -3,6 +3,7 @@ import { Grid, Form, Row, Col, PageHeader, FormControl, FormGroup, ControlLabel,
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideStore from '../stores/ProvideStore';
+import LayoutStore from '../stores/LayoutStore';
 import ProvideActions from '../actions/ProvideActions';
 import ProfileTabContracts from './profile/contracts/ProfileTabContracts';
 import ProfileTabBasic from './profile/basic/ProfileTabBasic';
@@ -10,7 +11,7 @@ import ProfileTabBasicEmprunteur from './profile/emprunteur/ProfileTabBasicEmpru
 import ProfileTabFavoris from './profile/favoris/ProfileTabFavoris';
 import ProfileTabContractEmprunteur from './profile/emprunteur/ProfileTabContractEmprunteur';
 import ProfileTabAdmin from './profile/admin/ProfileTabAdmin';
-import async from 'async';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 function getProfileState() {
   return {
@@ -23,7 +24,7 @@ function getProfileState() {
       admin: ProvideStore.getAdmin,
       adminContractSelected: ProvideStore.getAdminContractSelected,
       isAdmin: ProvideStore.isAdmin,
-      profile: ProvideStore.getProfile
+      profile: LayoutStore.getProfile
   };
 }
 
@@ -49,8 +50,8 @@ export default class Profile extends Component {
       this.setState(getProfileState());
   }
 
-  _changeStatus(isEmprunteur) {
-      ProvideActions.changeStatus(this.state.adminContractSelected, isEmprunteur);
+  _changeStatus(status, notifyUser, isEmprunteur) {
+      ProvideActions.changeStatus(this.state.adminContractSelected, status, notifyUser, isEmprunteur);
   }
 
   _blockStatus(isEmprunteur) {
@@ -62,14 +63,16 @@ export default class Profile extends Component {
   }
 
   componentDidMount() {
-      ProvideActions.getBasicInfo(ProvideStore.getProfile);
-      ProvideActions.getEmprunteurBasicInfo(ProvideStore.getProfile);
+    //   ProvideActions.getBasicInfo(this.state.profile);
+    //   ProvideActions.getEmprunteurBasicInfo(ProvideStore.getProfile);
 
     ProvideStore.addChangeListener(this._onChange);
+    LayoutStore.addChangeListener(this._onChange);
    }
 
    componentWillUnmount() {
      ProvideStore.removeChangeListener(this._onChange);
+     LayoutStore.removeChangeListener(this._onChange);
    }
 
    _requestNewEmprunt() {
@@ -86,7 +89,9 @@ export default class Profile extends Component {
 
     _handleSelect(key) {
         // 3 : contract preteur
-        if ( _.isEqual(key, 3) && _.isEmpty(this.state.tabContracts.contracts) ) {
+        if ( _.isEqual(key, 2) && _.isEmpty(this.state.basicInfoEmprunteur) ) {
+            ProvideActions.getEmprunteurBasicInfo(this.state.profile);
+        } else if ( _.isEqual(key, 3) && _.isEmpty(this.state.tabContracts.contracts) ) {
             ProvideActions.getContractPreteur(this.state.profile);
         } else if ( _.isEqual(key, 4) && _.isEmpty(this.state.tabEmprunteurContracts.contracts) ) {
             ProvideActions.getContractEmprunteur(this.state.profile);
@@ -96,22 +101,34 @@ export default class Profile extends Component {
     }
 
   render () {
+      const style = {
+        container: {
+          position: 'relative',
+        },
+        refresh: {
+          display: 'inline-block',
+          position: 'relative',
+        },
+      };
+
       // BASIC TAB
-      const basicTab = !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo) ? (
-          <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} basicInfo={this.state.basicInfo} /></Tab>
+      const basicTab = !_.isNil(this.state.profile) ? (
+          <Tab eventKey={1} title="Basic"><ProfileTabBasic updateBasicInfo={this._updateBasicInfo} profile={this.state.profile} basicInfo={this.state.basicInfo} /></Tab>
       ) : null;
 
       // EMPRUNTEUR TAB
-      const basicEmprunteurTab =  !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={2} title="Basic Emprunteur"><ProfileTabBasicEmprunteur handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo}
-              {...this.state} /></Tab>
+      const basicEmprunteurTab =  !_.isNil(this.state.profile) && !_.isNil(this.state.basicInfo)
+      && this.state.basicInfo.isEmprunteur && !_.isNil(this.state.basicInfoEmprunteur) ? (
+          <Tab eventKey={2} title="Basic Emprunteur">
+              <ProfileTabBasicEmprunteur profile={this.state.profile} handleSaveEmprunteurBasicInfo={this._updateEmprunteurBasicInfo}
+              basicInfoEmprunteur={this.state.basicInfoEmprunteur} /></Tab>
       ) : null;
 
       const contractPreteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) ? (
           <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts requestPreteur={this._requestPreteur} tabContracts={this.state.tabContracts} keyTab='profileTabContract' /></Col></Tab>
       ) : null;
 
-      const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && this.state.basicInfo.isEmprunteur ? (
+      const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
           <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (
@@ -125,7 +142,7 @@ export default class Profile extends Component {
                </Tab>
       ) : null;
 
-    const largeTabVisible = (
+    const largeTabVisible = !_.isNil(this.state.profile) ? (
         <Tabs className="tabs-left" defaultActiveKey={1} id="uncontrolled-tab-lg-example" onSelect={this._handleSelect}>
             { basicTab }
             { basicEmprunteurTab }
@@ -134,7 +151,16 @@ export default class Profile extends Component {
             <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
             { isAdminTab }
         </Tabs>
-    );
+    ) : (<Col mdOffset={5} lgOffset={5}>
+        <RefreshIndicator
+          size={50}
+          left={70}
+          top={0}
+          loadingColor="#8BC34A"
+          status="loading"
+          style={style.refresh}
+        />
+    </Col>);
 
     return (
       <Grid fluid>

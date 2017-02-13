@@ -20,7 +20,7 @@ class LayoutStore extends BaseStore {
         this._error = null;
         this._isLoggin = false;
         this._isAdmin = false;
-        this._profile = {};
+        this._profile = null;
 
         // Configure Auth0
         this.auth0 = new Auth0({
@@ -30,7 +30,7 @@ class LayoutStore extends BaseStore {
         });
 
         const options = {
-            closable: true,
+            closable: false,
             language: 'fr',
             auth: {
                responseType: "token",
@@ -135,7 +135,7 @@ class LayoutStore extends BaseStore {
     }
 
     get getUserId() {
-        return this.getProfile.user_id;
+        return this.getProfile ? this.getProfile.user_id : null;
     }
 
     get getPassForget() {
@@ -213,27 +213,60 @@ class LayoutStore extends BaseStore {
 
     _doAuthentication(authResult) {
         if (!_.isNil(authResult)) {
+            // to set the profile
             this.setAccessToken(authResult.accessToken)
             this.setToken(authResult.idToken );
-            this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
-                if (error) {
-                    // callback(error);
-                } else {
-                    let isAdmin = false;
-                    _.map(userDetail.app_metadata.roles, role => {
-                            if (_.isEqual(role, 'admin')) {
-                                isAdmin = true;
-                            }
-                    });
-                    this.setUser(userDetail, isAdmin);
-                    // in order to emit the profile
+
+            this.getUserInfo(authResult, emit => {
+                if (emit) {
                     this.emitChange();
                 }
             });
+            // this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
+            //     if (error) {
+            //         // callback(error);
+            //     } else {
+            //         let isAdmin = false;
+            //         _.map(userDetail.app_metadata.roles, role => {
+            //                 if (_.isEqual(role, 'admin')) {
+            //                     isAdmin = true;
+            //                 }
+            //         });
+            //         const emit = _.isNil(this._profile)
+            //         || (!_.isNil(this._profile) && !_.isEqual(this._profile.user_id, userDetail.user_id) && !_.isEqual(this._isAdmin, isAdmin) )? true : false;
+            //
+            //         this.setUser(userDetail, isAdmin);
+            //         // in order to emit the profile
+            //         // emit if userDetail are different
+            //         if (emit) {
+            //             this.emitChange();
+            //         }
+            //     }
+            // });
         }
     }
 
+    getUserInfo(authResult, callback) {
+        this.lock.getUserInfo(authResult.accessToken, (error, userDetail) => {
+            if (error) {
+                // callback(error);
+            } else {
+                let isAdmin = false;
+                _.map(userDetail.app_metadata.roles, role => {
+                        if (_.isEqual(role, 'admin')) {
+                            isAdmin = true;
+                        }
+                });
+                const emit = _.isNil(this._profile)
+                || (!_.isNil(this._profile) && !_.isEqual(this._profile.user_id, userDetail.user_id) && !_.isEqual(this._isAdmin, isAdmin) )? true : false;
 
+                this.setUser(userDetail, isAdmin);
+                // in order to emit the profile
+                // emit if userDetail are different
+                callback(emit);
+            }
+        });
+    }
 
 }
 export default new LayoutStore();

@@ -44,8 +44,14 @@ export default keyMirror({
         ADMIN_CONTRACTS: null,
         ADMIN_CONTRACTS_SUCCCESS: null,
         CHECKBOX_CONTRACT_SELECTED: null,
-
-
+        CHECKBOX_ALL_CONTRACT_SELECTED: null,
+        CHANGE_STATUS_ADMIN: null,
+        CHANGE_STATUS_ADMIN_SUCCESS: null,
+        BLOCK_STATUS_ADMIN: null,
+        BLOCK_STATUS_ADMIN_SUCCESS: null,
+        RAPPEL_STATUS_ADMIN: null,
+        RAPPEL_STATUS_ADMIN_SUCCESS: null,
+        REFRESH_ADMIN:null,
 
     // Pop up Workflow Stepper
     OPEN_STEPPER_DETAIL : null,

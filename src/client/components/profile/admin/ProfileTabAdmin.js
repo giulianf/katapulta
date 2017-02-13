@@ -22,8 +22,8 @@ class ProfileTabAdmin extends Component {
         this._rappelStatusPreteur = this._rappelStatusPreteur.bind(this);
     }
 
-    _changeStatusEmprunteur() {
-        this.props.changeStatus(true);
+    _changeStatusEmprunteur(status, notifyUser) {
+        this.props.changeStatus(status, notifyUser, true);
     }
 
     _blockStatusEmprunteur() {
@@ -35,7 +35,7 @@ class ProfileTabAdmin extends Component {
     }
 
     _changeStatusPreteur() {
-        this.props.changeStatus(false);
+        this.props.changeStatus(status, notifyUser, false);
     }
 
     _blockStatusPreteur() {
@@ -54,14 +54,17 @@ class ProfileTabAdmin extends Component {
 
     _handleSelect(key) {
         // 2 : contract preteur
-        if ( _.isEqual(key, 1) && _.isEmpty(this.props.adminEmprunteur.contracts) ) {
-            // ProvideActions.getAdminContractEmprunteur(this.state.profile);
-        } else if ( _.isEqual(key, 2) && _.isEmpty(this.props.adminPreteur.contracts) ) {
-            // ProvideActions.getAdminContractPreteur(this.state.profile);
+        if ( _.isEqual(key, 1) ) {
+            ProvideActions.refreshAdmin();
+        } else if ( _.isEqual(key, 2) ) {
+            ProvideActions.refreshAdmin();
         }
     }
 
     render () {
+        if (_.isEmpty(this.props.adminEmprunteur.contracts )) {
+            return null;
+        }
 
         return (
             <Grid >

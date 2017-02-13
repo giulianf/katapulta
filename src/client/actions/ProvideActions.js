@@ -6,8 +6,14 @@ import ProvideService from '../services/ProvideService';
 
 export default {
 
-    changeStatus: ( selectedContracts, isEmprunteur ) => {
-        let promise = ProvideService.changeStatus(selectedContracts, isEmprunteur);
+    /**
+     * refresh admin for popup
+     */
+    refreshAdmin: () => {
+        dispatch(ProvideConstants.REFRESH_ADMIN, {});
+    },
+    changeStatus: ( selectedContracts, status, notifyUser, isEmprunteur ) => {
+        let promise = ProvideService.changeStatus(selectedContracts, status, notifyUser, isEmprunteur);
 
         dispatchAsync(promise, {
           request: ProvideConstants.CHANGE_STATUS_ADMIN,
@@ -30,14 +36,17 @@ export default {
         let promise = ProvideService.rappelStatus(selectedContracts, isEmprunteur);
 
         dispatchAsync(promise, {
-          request: ProvideConstants.CHANGE_STATUS_ADMIN,
-          success: ProvideConstants.CHANGE_STATUS_ADMIN_SUCCESS,
+          request: ProvideConstants.RAPPEL_STATUS_ADMIN,
+          success: ProvideConstants.RAPPEL_STATUS_ADMIN_SUCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
 
     },
     checkBoxAdminContract: ({id, nameCompany}, checked) => {
         dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { id, nameCompany , checked});
+    },
+    checkBoxAllAdminContract: ( isSelected, currentDisplayAndSelectedData ) => {
+        dispatch(ProvideConstants.CHECKBOX_ALL_CONTRACT_SELECTED, { isSelected, currentDisplayAndSelectedData });
     },
     changeFreeText: (searchCriteria) => {
         dispatch(ProvideConstants.FREE_TEXT_EXPLORERS, { searchCriteria });

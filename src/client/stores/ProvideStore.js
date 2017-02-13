@@ -27,7 +27,7 @@ class ProvideStore extends BaseStore {
       this.resetTabContract();
 
       // profile
-      this._tabBasic = {};
+      this._tabBasic = null;
 
       // profile emprunteur
       this._tabBasicEmprunteur = {};
@@ -180,6 +180,11 @@ class ProvideStore extends BaseStore {
     populateAdminContracts(adminContracts) {
         this._admin.adminEmprunteur.contracts = adminContracts.adminEmprunteur.contracts;
         this._admin.adminPreteur.contracts = adminContracts.adminPreteur.contracts;
+        this._adminContractSelected =[];
+    }
+
+    refreshAdmin() {
+        this._adminContractSelected =[];
     }
 
     populateAdminContractsSelected(contractId, nameCompany, checked) {
@@ -191,6 +196,23 @@ class ProvideStore extends BaseStore {
                   return item.contractId === contractId;
                 });
             }
+        }
+    }
+
+    populateAdminAllContractsSelected( isSelected, currentDisplayAndSelectedData ) {
+        if ( isSelected ) {
+            // this._adminContractSelected = [];
+
+            this._adminContractSelected.push(_.map(currentDisplayAndSelectedData, contract => {
+                return {contractId: contract.id, nameCompany: contract.nameCompany};
+            }) );
+            // this._adminContractSelected.push({contractId, nameCompany});
+        } else {
+            this._adminContractSelected = _.map(this._adminContractSelected, contract => {
+                return _.remove(currentDisplayAndSelectedData, item => {
+                  return item.id === contract.contractId;
+                })
+            });
         }
     }
 
@@ -433,6 +455,21 @@ class ProvideStore extends BaseStore {
         this.emitChange();
       case ProvideConstants.CHECKBOX_CONTRACT_SELECTED:
          this.populateAdminContractsSelected(action.id, action.nameCompany, action.checked);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.CHECKBOX_ALL_CONTRACT_SELECTED:
+         this.populateAdminAllContractsSelected(action.isSelected, action.currentDisplayAndSelectedData );
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.CHANGE_STATUS_ADMIN_SUCCESS:
+         this.populateAdminContracts(action.body);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.REFRESH_ADMIN:
+         this.refreshAdmin();
         // If action was responded to, emit change event
         this.emitChange();
         break;
