@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { error, debug, info } from './UtilityLog';
-import FormatMailing from './FormatMailing';
 
 export class Mailing {
     constructor(client) {
@@ -8,17 +7,17 @@ export class Mailing {
     }
 
 
-    sendMail() {
+    sendMail(subject, content, mailTo) {
         info('Entering sendMail()' );
 
         try {
-            const message = _.replace(FormatMailing.mail, '{societe}', 'Katapulta');
+            // const message = _.replace(FormatMailing.mail, '{societe}', 'Katapulta');
             // Give SES the details and let it construct the message for you.
             this._client.sendEmail({
-               to: 'julien.fumanti@gmail.com'
+               to: mailTo
              , from: 'info@katapulta.be'
-             , subject: 'Information de Katapulta'
-             , message: message
+             , subject: subject
+             , message: content
              , altText: 'plain text'
             }, function (err, data, res) {
                 if(err) {
@@ -29,6 +28,7 @@ export class Mailing {
             });
         } catch( e ) {
             error('Problem while sending email. ' + e);
+            throw new Error('Problem while sending email.');
         }
     }
 

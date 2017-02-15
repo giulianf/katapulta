@@ -208,7 +208,7 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, '', '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
                    0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
               }
 
@@ -239,10 +239,18 @@ export class ProfileDao {
             debug("VAT is: " + _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '') );
             const args = {countryCode: 'BE', vatNumber:  _.replace(basicEmprunteurProfil.numEntreprise, /\./g, '')};
 
+            // check validation if ok DESCRIPTION STATUS
+            // check validation if NOT ok still INSCRIPTION STATUS
+
             async.series([
                 (callback) => {
                     // Validate basic Info
-                    ValidatorEmprunteur.validateProfileEmprunteurTab(basicEmprunteurProfil);
+                    try {
+                        ValidatorEmprunteur.validateProfileEmprunteurTab(basicEmprunteurProfil);
+                        basicEmprunteurProfil.status = 'DESCRIPTION_PRÊT';
+                    } catch (e) {
+                        basicEmprunteurProfil.status = 'INSCRIPTION';
+                    }
 
                     soap.createClient(urlSoap, function(err, client) {
                         if (err) {
