@@ -3,6 +3,7 @@ import { error, debug, info } from '../common/UtilityLog';
 import { createDateMongo , getProgress, getStepWorkflow, getStatusDetail } from '../common/Utility';
 import { ContractsPreteur } from '../model/ContractsPreteur';
 import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+import { ContractGenerator } from '../model/ContractGenerator';
 import { ProfileDao } from '../dao/ProfileDao';
 import async from 'async';
 import statusEmprunteur from '../data/statusEmprunteur';
@@ -466,5 +467,11 @@ export class ContractDao {
            error('error: ' + e);
            callbackFunction(null, e);
        }
+    }
+
+    generateContract(res, user) {
+        const contractGenerated = new ContractGenerator();
+
+
     }
 }
