@@ -15,4 +15,5 @@
     {"index": 13,"label":"EXIT", "headerStatus": true, "description": ""},
     {"index": 14,"label":"DOSSIER_RECAP_EMPRUNTEUR", "headerStatus": false, "description": ""},
     {"index": 15,"label":"ACCOMPAGNEMENT_PROCESSUS", "headerStatus": false, "description": ""}
+    {"index": 16,"label":"BLOCK", "headerStatus": false, "description": ""}
 ]
