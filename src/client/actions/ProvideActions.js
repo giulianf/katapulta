@@ -42,8 +42,8 @@ export default {
         }, { });
 
     },
-    checkBoxAdminContract: ({id, nameCompany}, checked) => {
-        dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { id, nameCompany , checked});
+    checkBoxAdminContract: ({id, user_id, nameCompany}, checked) => {
+        dispatch(ProvideConstants.CHECKBOX_CONTRACT_SELECTED, { id, user_id, nameCompany , checked});
     },
     checkBoxAllAdminContract: ( isSelected, currentDisplayAndSelectedData ) => {
         dispatch(ProvideConstants.CHECKBOX_ALL_CONTRACT_SELECTED, { isSelected, currentDisplayAndSelectedData });

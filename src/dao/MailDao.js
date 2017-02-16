@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { error, debug, info } from '../common/UtilityLog';
+import { error, debug, info,warn } from '../common/UtilityLog';
 import { createDateMongo } from '../common/Utility';
 import async from 'async';
 import { Mailing } from '../common/Mailing';
@@ -14,14 +14,7 @@ export class MailDao {
     }
 
 
-    /**
-     * insertNewEvent - request a new contract for emprunt
-     *
-     * @param  {type} res  description
-     * @param  {type} user description
-     * @return {type}      description
-     */
-    insertNewEvent(res, user, eventStatusMail, notifyUser) {
+    insertNewEvent(user, eventStatusMail, notifyUser) {
         info('Entering insertNewEvent() data: ' + user  );
 
          try {
@@ -58,10 +51,18 @@ export class MailDao {
                     });
                 },
                 (callback) => {
+                    if (_.isNil(basicProfil) || (!_.isNil(basicProfil)  && _.isNil(basicProfil.email) )) {
+                        callback("Les informations de base ou l'adresse email n'existe pas.");
+                        return;
+                    }
+                    if (_.isNil(basicInfoEmprunteur) || (!_.isNil(basicInfoEmprunteur)  && _.isNil(basicInfoEmprunteur.id) )) {
+                        callback("Les informations de l'emprunteur n'existe pas.");
+                        return;
+                    }
                     this.eventRegister(user, basicProfil.email, 'OK', null, err => {
                         if (err) {
-                            callback(err);
-                            return;
+                            warn('Error during the OK event register' , err);
+                            // no return to continue process
                         }
                         callback();
                     });
@@ -83,23 +84,23 @@ export class MailDao {
                     } else {
                         callback();
                     }
-                },
-                (callback) => {
-                    res.end("GOOD");
                 }
             ], (err) => {
-                error("Unable to insertNewEvent " , err);
                 //   When it's done
                 if (err) {
-                    this.eventRegister(user, basicProfil.email, 'FAILURE', err, err => {
-                        res.status(500).send("Problème pendant l'envoi du mail. ");
-                        return;
+                    error("Unable to insertNewEvent see the log or event document: " , err);
+
+                    this.eventRegister(user, basicProfil.email, 'FAILURE', err, error => {
+                        if (error) {
+                            error(error.message);
+                        }
                     });
+                    throw new Error(err.message + ". Merci de prendre contact avec notre support support@katapulta.be. ");
                 }
             });
         } catch( e ) {
             error('error: ' + e);
-            res.status(500).send("Problème pendant l'envoi du mail. " + e.message);
+            throw new Error("Problème pendant l'envoi du mail. Merci de prendre contact avec notre support support@katapulta.be. ");
         }
     }
 
@@ -114,13 +115,15 @@ export class MailDao {
               , upsert: true
             }, (err, result) => {
                 if(err) {
-                    callback(err);
+                    error('Error during event register: ', err);
+                    callback('Error during event register: ' + err);
                 }
 
                 callback();
             });
         } catch (e) {
-            callback(e);
+            error('Unable to register event register: ', e);
+            callback('Unable to register event register: ' + e);
         }
     }
 

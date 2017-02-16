@@ -39,7 +39,8 @@ export class MailManager {
             mail.sendMail(subject, content, basicProfil.email);
             callback();
         } catch (e) {
-            callback(e.message);
+            error('Error while mailMiseEnLigne: ', e);
+            callback("Erreur pendant l'email mise en ligne");
         }
     }
 }

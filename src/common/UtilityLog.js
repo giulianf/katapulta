@@ -13,6 +13,10 @@ export function info(message) {
     winston.log('info', message);
 }
 
+export function warn(message) {
+    winston.log('warn', message);
+}
+
 export function debug(message) {
     winston.log('debug', message);
 }

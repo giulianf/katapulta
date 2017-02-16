@@ -187,10 +187,10 @@ class ProvideStore extends BaseStore {
         this._adminContractSelected =[];
     }
 
-    populateAdminContractsSelected(contractId, nameCompany, checked) {
+    populateAdminContractsSelected(contractId, user_id, nameCompany, checked) {
         if (!_.isNil(contractId) && !_.isNil(checked)) {
             if (checked) {
-                this._adminContractSelected.push({contractId, nameCompany});
+                this._adminContractSelected.push({contractId, user_id, nameCompany});
             } else {
                 this._adminContractSelected = _.remove(this._adminContractSelected, item => {
                   return item.contractId === contractId;

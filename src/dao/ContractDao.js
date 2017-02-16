@@ -17,21 +17,48 @@ export class ContractDao {
         info('Entering updateChangeStatus() isEmprunteur: ' + isEmprunteur + ', status: '+status + ' and notifyUser: '+notifyUser);
 
         const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
+        const userToMailList = [];
+        async.series([
+            (callback) => {
+                async.eachSeries(selectedContracts, (contract, callback) => {
+                    debug('contract id: '+ contract.contractId);
+                    contractEmprunteurs.updateOne(
+                    { _id : new MongoDb.ObjectId(contract.contractId) },
+                    {
+                        $set: { "status": status },
+                        $currentDate: { "lastModified": true }
+                    }, (err, results) => {
+                        callback();
 
-        async.eachSeries(selectedContracts, (contract, callback) => {
-            debug('contract id: '+ contract.contractId);
-            contractEmprunteurs.updateOne(
-            { _id : new MongoDb.ObjectId(contract.contractId) },
-            {
-                $set: { "status": status },
-                $currentDate: { "lastModified": true }
-            }, (err, results) => {
-                callback();
-            });
+                        userToMailList.push(contract.user_id);
+                    });
 
-        },
-        () => {
-            this.getAdminContracts(res);
+                }, callback );
+            },
+            (callback) => {
+                try {
+                    const mail = new MailDao(_mongodb, clientSES);
+
+                    _.forEach(userToMailList, user => {
+                        mail.insertNewEvent( user, status, notifyUser);
+                    });
+                    callback();
+                } catch (e) {
+                    callback(e);
+                    return;
+                }
+            },
+            (callback) => {
+                this.getAdminContracts(res);
+            }
+
+        ], (err) => {
+            error("Unable to updateChangeStatus " , err);
+            //   When it's done
+            if (err) {
+                res.status(500).json(err);
+                return;
+            }
         });
     }
 

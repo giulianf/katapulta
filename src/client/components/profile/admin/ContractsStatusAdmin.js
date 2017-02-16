@@ -100,8 +100,8 @@ class ContractsStatusAdmin extends Component {
             const contractResult =  _.filter(this.props.contracts, {status : status.label} );
             const contracts = !_.isNil(this.props.contracts) && !_.isNil(contractResult) ? contractResult : [];
 
-            const onRowSelect = ({ id, nameCompany }, isSelected) => {
-                ProvideActions.checkBoxAdminContract({ id: id, nameCompany: nameCompany }, isSelected)
+            const onRowSelect = ({ id, user_id, nameCompany }, isSelected) => {
+                ProvideActions.checkBoxAdminContract({ id: id, user_id:user_id, nameCompany: nameCompany }, isSelected)
             };
 
             const onSelectAll = (isSelected, currentDisplayAndSelectedData) => {
