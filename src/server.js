@@ -290,6 +290,13 @@ app.post('/api/mailtest', (req, res) => {
 
     mail.insertNewEvent(res, 'ME');
 
+});
+app.post('/api/generateContract', (req, res) => {
+    debug("Entering /api/generateContract ");
+    const contractDao = new ContractDao(_mongodb);
+
+    contractDao.generateContract(res, 'ME');
+
 })
 
 // start the server
