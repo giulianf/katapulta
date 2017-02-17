@@ -2,6 +2,7 @@
 node_modules
 dist
 babel_cache
+src/webapp
 
 # Other
 .DS_Store
