@@ -5,6 +5,7 @@ import fs from 'fs';
 
 export class ContractGenerator {
     constructor() {
+        //test
     }
 
     generateContract(res, user) {
