@@ -5,7 +5,26 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+    generateContractEmprunteur: ( ) => {
+        let promise = ProvideService.generateContract();
 
+        dispatchAsync(promise, {
+          request: ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT,
+          success: ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
+    generateContract: ( ) => {
+        let promise = ProvideService.generateContract();
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GENERATE_CONTRACT,
+          success: ProvideConstants.GENERATE_CONTRACT_SUCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+
+    },
     /**
      * refresh admin for popup
      */

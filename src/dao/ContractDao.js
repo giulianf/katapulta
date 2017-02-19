@@ -256,7 +256,7 @@ export class ContractDao {
                  }
 
                  contractsList = contracts;
-                 debug("****  contractEmprunteurs: " + JSON.stringify( contractsList ) );
+                //  debug("****  contractEmprunteurs: " + JSON.stringify( contractsList ) );
 
                  res.end( JSON.stringify( contractsList ) );
              });

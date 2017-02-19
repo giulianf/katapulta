@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { getFullBelgiumDate } from '../common/Utility';
+import { getFullBelgiumDate, getStatusDetail, getStepWorkflow, getProgress } from '../common/Utility';
+import statusPreteur from '../data/statusPreteur';
 
 export class ContractsPreteur {
 
@@ -26,8 +27,10 @@ export class ContractsPreteur {
             this.nameCompany= contractsPreteur.nameCompany;
 			this.creationDate= getFullBelgiumDate(contractsPreteur.creationDate);
 			this.status= contractsPreteur.status;
-			this.progress= contractsPreteur.progress;
-			this.stepWorkflow= contractsPreteur.stepWorkflow;
+            const statusList = getStatusDetail(statusPreteur);
+            this.progress= _.round(getProgress(statusList, this.status));
+
+			this.stepWorkflow= getStepWorkflow(statusList, this.status);
 		} else {
 			this.user_id= user_id;
 			this.contractId= contractId;

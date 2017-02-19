@@ -24,7 +24,10 @@ function getProfileState() {
       admin: ProvideStore.getAdmin,
       adminContractSelected: ProvideStore.getAdminContractSelected,
       isAdmin: ProvideStore.isAdmin,
-      profile: LayoutStore.getProfile
+      profile: LayoutStore.getProfile,
+      pdfPreteur: ProvideStore.getPdfPreteur,
+      pdfEmprunteur: ProvideStore.getPdfEmprunteur
+
   };
 }
 
@@ -125,11 +128,15 @@ export default class Profile extends Component {
       ) : null;
 
       const contractPreteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) ? (
-          <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts requestPreteur={this._requestPreteur} tabContracts={this.state.tabContracts} keyTab='profileTabContract' /></Col></Tab>
+          <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts requestPreteur={this._requestPreteur}
+              pdf={this.state.pdfPreteur}
+              tabContracts={this.state.tabContracts} keyTab='profileTabContract' /></Col></Tab>
       ) : null;
 
       const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
-          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt} tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
+          <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt}
+              pdf={this.state.pdfEmprunteur}
+              tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (
           <Tab eventKey={6} title="Admin">

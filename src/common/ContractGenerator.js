@@ -1,30 +1,22 @@
 import _ from 'lodash';
-import PDFDocument from 'pdfkit';
 const blobStream = require('blob-stream');
 import fs from 'fs';
 import pdfMake from 'pdfmake';
+const PdfPrinter = require('pdfmake/src/printer');
 
 export class ContractGenerator {
     constructor() {
     }
 
     generateContract(res, user) {
-        // create a document the same way as above
-        // columns: [
-        //                              {
-        //                                stack: [
-        //             			            {text: 'Title for column 1', bold: true},
-        //             				    {text: 'This should be the title in bold\n this a simple text\nblabla in bold, but this again normal.'},
-        //             				    {
-        //             				        text: [
-        //             				            'Normal text ',
-        //             				            {text: 'Bold text', bold: true}
-        //             				        ]
-        //
-        //             				    }
-        //             				]
-        //                              },
-        var dd = {
+        this.createPdfBinary(user, (binary) => {
+            res.contentType('application/pdf');
+            res.send(binary);
+        })
+    }
+
+    createPdfBinary( user, callback ) {
+        const docDefinition = {
             info: {
                 title: 'Prêt coup de pouce',
                 author: 'United-IT',
@@ -520,18 +512,40 @@ export class ContractGenerator {
             }
         }
          // open the PDF in a new window
-          pdfMake.createPdf(docDefinition).open();
+        //   pdfMake.createPdf(docDefinition).open();
 
           // print the PDF
-          pdfMake.createPdf(docDefinition).print();
+        //   pdfMake.createPdf(docDefinition).print();
+        // const pdfDocGenerator = pdfMake.createPdf(docDefinition);
 
           // download the PDF
-          pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+        //   pdfMake.createPdf(docDefinition).download('optionalName.pdf');
 
         // stream.on('finish', () => {
         //     // get a blob you can do whatever you like with
         //     blob = this.toBlob('application/pdf');
         // });
-        res.end("ok");
+         const fontDescriptors = {
+        	Roboto: {
+        		normal: 'fonts/Roboto-Regular.ttf',
+        		bold: 'fonts/Roboto-Medium.ttf',
+        		italics: 'fonts/Roboto-Italic.ttf',
+        		bolditalics: 'fonts/Roboto-MediumItalic.ttf'
+        	}
+         };
+        const printer = new PdfPrinter(fontDescriptors);
+
+        const pdfDoc = printer.createPdfKitDocument(docDefinition);
+        let chunks = [];
+        let result;
+        pdfDoc.on('data', function (chunk) {
+            chunks.push(chunk);
+        });
+        pdfDoc.on('end', function () {
+            result = Buffer.concat(chunks);
+            callback('data:application/pdf;base64,' + result.toString('base64'));
+        });
+        pdfDoc.end();
     }
+
 }

@@ -53,7 +53,6 @@
     "moment": "^2.17.0",
     "mongodb": "^2.2.16",
     "node-ses": "^2.0.2",
-    "pdfkit": "^0.8.0",
     "pdfmake": "^0.1.25",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.1",

@@ -8,7 +8,7 @@ export default class ProgressBarContract extends Component{
   }
 
   render() {
-      const progress = this.props.rowData.progress;
+      const progress = this.props.progress;
 
       let style='warning';
       if ( progress == 100 ) {

@@ -18,3 +18,4 @@ export const ADMIN_CONTRACTS_API = `${BASE_API_URL}getAdminContracts`;
 export const ADMIN_CHANGE_STATUS = `${BASE_API_URL}updateChangeStatus`;
 export const ADMIN_BLOCK_STATUS = `${BASE_API_URL}updateBlockStatus`;
 export const ADMIN_RAPPEL_STATUS = `${BASE_API_URL}updateRappelStatus`;
+export const GENERATE_CONTRACT = `${BASE_API_URL}generateContract`;

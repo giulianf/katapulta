@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ProvideActions from '../../../actions/ProvideActions';
 import { Button} from 'react-bootstrap';
 
-export default class DetailButton extends Component{
+export default class GenerateContract extends Component{
   constructor(props) {
     super(props);
 
@@ -11,12 +11,12 @@ export default class DetailButton extends Component{
 
   _handleDetails() {
       // Action to see stepper
-      ProvideActions.stepperDetail(this.props.id);
+      ProvideActions.generateContract();
   }
 
   render() {
     return (
-        <Button onClick={this._handleDetails} bsStyle='success'>Détails</Button>
+        <Button disabled={this.props.wait} onClick={this._handleDetails} bsStyle='warning'>{!this.props.wait ? "Détails": "..."}</Button>
     );
   }
 }

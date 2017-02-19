@@ -126,8 +126,10 @@ export function validateCodePostal(codePostal) {
 
 export function getProgress(list, status) {
     const nbStatus = _.size(list);
+    console.log('nb status ' + nbStatus);
+    console.log('status ' + status);
     const step = getStepWorkflow(list, status) + 1;
-    return nbStatus / step;
+    return (step / nbStatus) * 100 ;
 }
 
 export function getStepWorkflow(list , statusLabel) {

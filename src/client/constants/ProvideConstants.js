@@ -52,6 +52,10 @@ export default keyMirror({
         RAPPEL_STATUS_ADMIN: null,
         RAPPEL_STATUS_ADMIN_SUCCESS: null,
         REFRESH_ADMIN:null,
+    GENERATE_CONTRACT:null,
+    GENERATE_CONTRACT_SUCCESS:null,
+    GENERATE_EMPRUNTEUR_CONTRACT:null,
+    GENERATE_EMPRUNTEUR_CONTRACT_SUCCESS:null,
 
     // Pop up Workflow Stepper
     OPEN_STEPPER_DETAIL : null,

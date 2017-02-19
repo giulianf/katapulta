@@ -39,6 +39,9 @@ class ProvideStore extends BaseStore {
       this._admin = { adminEmprunteur: { contracts: null }, adminPreteur: { contracts: null } };
       this._adminContractSelected =[];
 
+      this._pdfPreteur={pdf: null, wait:false};
+      this._pdfEmprunteur={pdf: null, wait:false};
+
       // explorer
       this._explorer = { activePage: 1, selectedExplorers: null };
       // page key within explorer search
@@ -214,6 +217,21 @@ class ProvideStore extends BaseStore {
                 })
             });
         }
+    }
+
+    populatePdfPreteur(pdf) {
+        this._pdfPreteur.pdf= pdf;
+        this._pdfPreteur.wait= false;
+    }
+    waitingPdfPreteur() {
+        this._pdfPreteur.wait= true;
+    }
+    populatePdfEmprunteur(pdf) {
+        this._pdfEmprunteur.pdf= pdf;
+        this._pdfEmprunteur.wait= false;
+    }
+    waitingPdfemprunteur() {
+        this._pdfEmprunteur.wait= true;
     }
 
     /**************************/
@@ -473,6 +491,26 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
         break;
+      case ProvideConstants.GENERATE_CONTRACT:
+        // If action was responded to, emit change event
+        this.waitingPdfPreteur();
+        this.emitChange();
+        break;
+      case ProvideConstants.GENERATE_CONTRACT_SUCCESS:
+        // If action was responded to, emit change event
+        this.populatePdfPreteur(action.body);
+        this.emitChange();
+        break;
+      case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT:
+        // If action was responded to, emit change event
+        this.waitingPdfemprunteur();
+        this.emitChange();
+        break;
+      case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_SUCCESS:
+        // If action was responded to, emit change event
+        this.populatePdfEmprunteur(action.body);
+        this.emitChange();
+        break;
       default:
         break;
     }
@@ -624,6 +662,14 @@ class ProvideStore extends BaseStore {
 
   get getAdminContractSelected() {
       return this._adminContractSelected;
+  }
+
+  get getPdfPreteur() {
+      return this._pdfPreteur;
+  }
+
+  get getPdfEmprunteur() {
+      return this._pdfEmprunteur;
   }
 
 }
