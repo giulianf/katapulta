@@ -34,6 +34,7 @@ export default class ProfileTabContracts extends Component {
                 <Col md={10} sm={10} className='space-top-bottom'>
                     <ContractsList tabContracts={this.props.tabContracts} keyTab='ContractsListPreteur'
                         pdf={this.props.pdf}
+                        isPreteur={ this.props.isPreteur }
                         statusContract={getStatusDetail(statusPreteur)} stepWorkflow={this.props.tabContracts.stepWorkflow} />
                 </Col>
 

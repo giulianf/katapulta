@@ -230,8 +230,13 @@ class ProvideStore extends BaseStore {
         this._pdfEmprunteur.pdf= pdf;
         this._pdfEmprunteur.wait= false;
     }
+
     waitingPdfemprunteur() {
         this._pdfEmprunteur.wait= true;
+    }
+
+    errorResponse() {
+        this._pdfPreteur.wait= false;
     }
 
     /**************************/
@@ -509,6 +514,11 @@ class ProvideStore extends BaseStore {
       case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_SUCCESS:
         // If action was responded to, emit change event
         this.populatePdfEmprunteur(action.body);
+        this.emitChange();
+        break;
+      case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_ERROR:
+        // If action was responded to, emit change event
+        this.errorResponse();
         this.emitChange();
         break;
       default:

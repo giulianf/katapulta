@@ -42,11 +42,22 @@ class ContractsList extends Component {
                 <ProgressBarContract progress={row.progress}/>
             );
         };
-        const contratpdfFormat = (cell, row, enumObject, index) => {
-            return (
-                <GenerateContract id={row.id} wait={this.props.pdf.wait}/>
-            );
-        };
+
+
+        const contratpdfFormat = this.props.isPreteur ? (
+            (cell, row, enumObject, index) => {
+                return (
+                    <GenerateContract contractId={row.id} wait={this.props.pdf.wait}/>
+                );
+            }
+        ): null;
+
+        const preteurColumn = this.props.isPreteur ? (
+            <TableHeaderColumn dataField='id' dataFormat={ contratpdfFormat } >Contrat</TableHeaderColumn>
+        ) : (
+            <TableHeaderColumn dataField='id' hidden>Contrat</TableHeaderColumn>
+        );
+
         return (
             <div key={this.props.keyTab}>
                 <Col className='space-top-bottom'>
@@ -54,7 +65,7 @@ class ContractsList extends Component {
                        <TableHeaderColumn dataField='id' isKey={ true } dataFormat={ detailButtonFormat } >ID</TableHeaderColumn>
                        <TableHeaderColumn dataField='creationDate'>Date de création du contrat</TableHeaderColumn>
                        <TableHeaderColumn dataField='progress' dataFormat={ progressFormat } >Progression</TableHeaderColumn>
-                       <TableHeaderColumn dataField='id' dataFormat={ contratpdfFormat } >Contrat</TableHeaderColumn>
+                       { preteurColumn }
                      </BootstrapTable>
                 </Col>
                 {this.props.pdf && this.props.pdf.pdf ? <ResponsiveEmbed a16by9>
@@ -72,6 +83,7 @@ class ContractsList extends Component {
 
 ContractsList.contextTypes = {
     tabContracts: React.PropTypes.object.isRequired,
+    isPreteur: React.PropTypes.bool.isRequired,
 };
 
 export default ContractsList ;

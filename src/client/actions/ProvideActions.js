@@ -15,13 +15,12 @@ export default {
         }, { });
 
     },
-    generateContract: ( ) => {
-        let promise = ProvideService.generateContract();
-
+    generateContract: ( contractId ) => {
+        let promise = ProvideService.generateContract(contractId);
         dispatchAsync(promise, {
           request: ProvideConstants.GENERATE_CONTRACT,
           success: ProvideConstants.GENERATE_CONTRACT_SUCCESS,
-          failure: ActionTypes.DATA_ERROR
+          failure: ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_ERROR
         }, { });
 
     },
@@ -197,8 +196,8 @@ export default {
     /**
      * get contracts emprunteur within TAB contract emprunteur
      */
-    requestNewPreteur: (profile) => {
-        let promise = ProvideService.requestNewPreteur(profile);
+    requestNewPreteur: (profile, emprunteurId) => {
+        let promise = ProvideService.requestNewPreteur(profile, emprunteurId);
 
         dispatchAsync(promise, {
           request: ProvideConstants.NEW_CONTRACTS_PRETEUR,

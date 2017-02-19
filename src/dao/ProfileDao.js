@@ -7,6 +7,8 @@ import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 let soap = require('soap');
+const ObjectId = require('mongodb').ObjectId;
+
 
 export class ProfileDao {
     constructor(_mongodb) {
@@ -208,8 +210,41 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '', '', '', '','01/09/1989',
-                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, false, [], null);
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '','',
+                  '','','','','', '', '','01/09/1989',
+                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, null, null, false, false, [], null);
+              }
+
+              callback(basicInfoEmprunteur);
+            });
+        } catch(e) {
+            error('Error During getEmprunteurBasicInfo.', e);
+            callback(null, e)
+        }
+    }
+
+    /**
+     * getEmprunteurBasicInfoByUserId - return emprunteur by user Id
+     *
+     * @param  {type} emprunteurId   description
+     * @param  {type} callback description
+     * @return {type}          description
+     */
+    getEmprunteurBasicInfoById( emprunteurId, callback) {
+        try {
+            let basicInfoEmprunteur;
+            const emprunteurs = this._mongodb.collection('emprunteurs');
+
+            // Find some documents
+            emprunteurs.findOne({'_id': new ObjectId(emprunteurId)}, (err, emprunteur) => {
+              debug("*****  emprunteur found: " + _.isEmpty( emprunteur ));
+
+              if (!_.isNil(emprunteur)) {
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
+              } else {
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '','',
+                  '','','','','', '', '','01/09/1989',
+                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, null, null, false, false, [], null);
               }
 
               callback(basicInfoEmprunteur);

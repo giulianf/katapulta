@@ -130,12 +130,14 @@ export default class Profile extends Component {
       const contractPreteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabContracts) ? (
           <Tab eventKey={3} title="Contrats Preteur" ><Col md={8} sm={10}><ProfileTabContracts requestPreteur={this._requestPreteur}
               pdf={this.state.pdfPreteur}
+              isPreteur={true}
               tabContracts={this.state.tabContracts} keyTab='profileTabContract' /></Col></Tab>
       ) : null;
 
       const contractEmprunteurTab = !_.isNil(this.state.profile) && !_.isNil(this.state.tabEmprunteurContracts) && !_.isNil(this.state.basicInfo) && this.state.basicInfo.isEmprunteur ? (
           <Tab eventKey={4} title="Contrats Emprunteur"><ProfileTabContractEmprunteur requestNewEmprunt={this._requestNewEmprunt}
               pdf={this.state.pdfEmprunteur}
+              isPreteur={false}
               tabEmprunteurContracts={this.state.tabEmprunteurContracts}  /></Tab>
       ) : null;
       const isAdminTab = !_.isNil(this.state.isAdmin) && this.state.isAdmin && !_.isNil(this.state.admin) ? (

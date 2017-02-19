@@ -10,10 +10,11 @@ import ApiService from './ApiService';
 var _ = require('lodash');
 
 class ProvideService {
-    generateContract ( ) {
+    generateContract ( contractId ) {
         return new bluebird( (resolve, reject) => {
             ApiService.post(
-               GENERATE_CONTRACT
+               GENERATE_CONTRACT,
+               { contractId }
             ).then(response => {
               if (!_.isNil(response)) {
                   return resolve(response.data);
@@ -209,11 +210,11 @@ class ProvideService {
       });
     }
 
-    requestNewPreteur(profile) {
+    requestNewPreteur(profile, emprunteurId) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
               `${REQUEST_PRETEUR_API}`,
-              {user_id: profile.user_id }
+              {user_id: profile.user_id, emprunteurId: emprunteurId }
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

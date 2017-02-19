@@ -3,19 +3,52 @@ const blobStream = require('blob-stream');
 import fs from 'fs';
 import pdfMake from 'pdfmake';
 const PdfPrinter = require('pdfmake/src/printer');
+import { error, debug, info } from '../common/UtilityLog';
 
 export class ContractGenerator {
     constructor() {
     }
 
-    generateContract(res, user) {
-        this.createPdfBinary(user, (binary) => {
+    generateContract(res, basicProfil, basicInfoEmprunteur) {
+        debug("Entering generateContract");
+
+        this.createPdfBinary(basicProfil, basicInfoEmprunteur, (binary) => {
             res.contentType('application/pdf');
             res.send(binary);
         })
     }
 
-    createPdfBinary( user, callback ) {
+    createPdfBinary( basicProfil, basicInfoEmprunteur, callback ) {
+        debug("Entering createPdfBinary");
+        const preteurParaph = `${basicProfil.prenom} ${_.toUpper(basicProfil.nom)}\n${basicProfil.address}\n${basicProfil.codePostal} ${basicProfil.ville}\n${basicProfil.numNational}\n${basicProfil.email}`
+
+        const emprunteurText = basicInfoEmprunteur.isSociete ? [
+            {text: `${basicInfoEmprunteur.denominationSocial} ${basicInfoEmprunteur.formeJuridique}\n`, style: 'header'},
+            { text:"Siège d'exploitation :"},
+            { text:`${basicInfoEmprunteur.adresseSiegeExploitation}, ${basicInfoEmprunteur.codePostalSiegeExploitation} ${basicInfoEmprunteur.villeSiegeExploitation}\n`, style: 'header'},
+            { text:"Siège social :"},
+            { text:`${basicInfoEmprunteur.adresseSiegeSocial}, ${basicInfoEmprunteur.codePostalSiegeSocial} ${basicInfoEmprunteur.villeSiegeSocial}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.email}\n`, style: 'header'},
+            { text:"Numéro d'inscription à la Banque Carrefour des Entreprises :"},
+            { text:`${basicInfoEmprunteur.numEntreprise}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.representantLegalPrenom} ${_.toUpper(basicInfoEmprunteur.representantLegalNom)}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.representantLegalFonction}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.representantLegalAddress}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.representantLegalCP} ${basicInfoEmprunteur.representantLegalVille}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.representantLegalNN}\n`, style: 'header'}
+        ] :
+        [
+            {text: `${basicInfoEmprunteur.denominationSocial} ${basicInfoEmprunteur.formeJuridique}\n`, style: 'header'},
+            { text:"Siège d'exploitation :"},
+            { text:`${basicInfoEmprunteur.adresseSiegeExploitation}, ${basicInfoEmprunteur.codePostalSiegeExploitation} ${basicInfoEmprunteur.villeSiegeExploitation}\n`, style: 'header'},
+            { text:`${basicInfoEmprunteur.email}\n`, style: 'header'},
+            { text:"Numéro d'inscription à la Banque Carrefour des Entreprises :"},
+            { text:`${basicInfoEmprunteur.numEntreprise}\n`, style: 'header'},
+        ];
+
+        // price = new Intl.NumberFormat().format(price);
+
+        debug('emprunteurText: ' + JSON.stringify(emprunteurText));
         const docDefinition = {
             info: {
                 title: 'Prêt coup de pouce',
@@ -24,7 +57,7 @@ export class ContractGenerator {
             },
             pageSize: "A4",
             pageMargins: [25,20,25,50],
-            footer: function(currentPage, pageCount) {
+            footer: (currentPage, pageCount) => {
                 return [
                     {canvas: [{ type: 'line', x1: 10, y1: -10, x2: 595-10, y2: -10, lineWidth: 1.3 }] },
                     {text: "Page " + currentPage.toString() + ' sur ' + pageCount, alignment:"right", margin:[0, 0, 20, 10]},
@@ -71,7 +104,7 @@ export class ContractGenerator {
                 {
                     // fixed width
                     width: '*',
-                    text : 'Nicolas BUTACIDE\nRue du Tergnia 27\n5060 Tamines\n850324-101-15\nnicolas.butacide@gmail.com',
+                    text : preteurParaph,
                     "alignment":"justify",
                     style: 'header'
                 }
@@ -97,27 +130,12 @@ export class ContractGenerator {
                          { text:"2", fontSize:8},
                          " :"
                      ],
-                     "alignment":"left",
+                     alignment:"left",
                 },
                 {
                     // fixed width
                     width: '*',
-                    text :
-                    [
-                        {text: "BSD SPRL\n", style: 'header'},
-                        { text:"Siège d'exploitation :"},
-                        { text:"rue du tergnia 27, 5060 SAMBREVILLE\n", style: 'header'},
-                        { text:"Siège social :"},
-                        { text:"rue du tergnia 27, 5060 SAMBREVILLE\n", style: 'header'},
-                        { text:"butagazzz@hotmail.com\n", style: 'header'},
-                        { text:"Numéro d'inscription à la Banque Carrefour des Entreprises :"},
-                        { text:"BE810.173.494\n", style: 'header'},
-                        { text:"NICOLAS BUTACIDE\n", style: 'header'},
-                        { text:"GERANT\n", style: 'header'},
-                        { text:"RUEDU TERGNIA 27\n", style: 'header'},
-                        { text:"5060 SAMBREVILLE\n", style: 'header'},
-                        { text:"840112-114-70\n", style: 'header'},
-                    ],
+                    text : emprunteurText ,
                     alignment:"justify"
                 }
               ],
@@ -511,20 +529,7 @@ export class ContractGenerator {
         	    fontSize:12
             }
         }
-         // open the PDF in a new window
-        //   pdfMake.createPdf(docDefinition).open();
 
-          // print the PDF
-        //   pdfMake.createPdf(docDefinition).print();
-        // const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-
-          // download the PDF
-        //   pdfMake.createPdf(docDefinition).download('optionalName.pdf');
-
-        // stream.on('finish', () => {
-        //     // get a blob you can do whatever you like with
-        //     blob = this.toBlob('application/pdf');
-        // });
          const fontDescriptors = {
         	Roboto: {
         		normal: 'fonts/Roboto-Regular.ttf',

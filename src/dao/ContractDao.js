@@ -8,13 +8,14 @@ import { ProfileDao } from '../dao/ProfileDao';
 import async from 'async';
 import statusEmprunteur from '../data/statusEmprunteur';
 import statusPreteur from '../data/statusPreteur';
+const ObjectId = require('mongodb').ObjectId;
 
 export class ContractDao {
     constructor(_mongodb) {
         this._mongodb = _mongodb;
     }
 
-    updateChangeStatus(res, MongoDb, selectedContracts, status, notifyUser, isEmprunteur) {
+    updateChangeStatus(res, selectedContracts, status, notifyUser, isEmprunteur) {
         info('Entering updateChangeStatus() isEmprunteur: ' + isEmprunteur + ', status: '+status + ' and notifyUser: '+notifyUser);
 
         const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
@@ -24,7 +25,7 @@ export class ContractDao {
                 async.eachSeries(selectedContracts, (contract, callback) => {
                     debug('contract id: '+ contract.contractId);
                     contractEmprunteurs.updateOne(
-                    { _id : new MongoDb.ObjectId(contract.contractId) },
+                    { _id : new ObjectId(contract.contractId) },
                     {
                         $set: { "status": status },
                         $currentDate: { "lastModified": true }
@@ -153,8 +154,8 @@ export class ContractDao {
         }
     }
 
-    requestNewPreteur(res, user) {
-        info('Entering requestNewPreteur() data: ' + user  );
+    requestNewPreteur(res, user, emprunteurId) {
+        info('Entering requestNewPreteur() data: ' + user + ' and emprunteurId: ' + emprunteurId );
 
          try {
              const userId = user;
@@ -165,7 +166,7 @@ export class ContractDao {
                 (callback) => {
                     const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getEmprunteurBasicInfoByUserId(userId, (emprunteur, err) => {
+                    profileDao.getEmprunteurBasicInfoById(emprunteurId, (emprunteur, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -189,7 +190,7 @@ export class ContractDao {
                     debug('step: ' + step);
 
 
-                    const preteur = new ContractsPreteur(null, userId, null, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, step);
+                    const preteur = new ContractsPreteur(null, userId, null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, step);
 
                     contractPreteur.insertOne( preteur, {
                         returnOriginal: false
@@ -394,6 +395,34 @@ export class ContractDao {
        }
     }
 
+
+    /**
+     * getContractPreteurById - get contract preteur
+     *
+     * @param  {type} contractId       description
+     * @param  {type} callbackFunction description
+     * @return {type}                  description
+     */
+    getContractPreteurById(contractId, callbackFunction) {
+        try {
+            const preteurs = this._mongodb.collection('contractPreteur');
+
+            // Find some documents
+            preteurs.findOne({'_id': new ObjectId(contractId) }, function(err, contract) {
+                 if (err) {
+                     callback(err);
+                     return;
+                 }
+
+                 callbackFunction( new ContractsPreteur(contract) ) ;
+
+            });
+       } catch( e ) {
+           error('error: ' + e);
+           callbackFunction(null, 'Erreur pendant la recuperation du contrat');
+       }
+    }
+
     getAdminContracts(res) {
         try {
             let contractsEmprunteur = [];
@@ -469,9 +498,71 @@ export class ContractDao {
        }
     }
 
-    generateContract(res, user) {
-        const contractGenerated = new ContractGenerator();
-        contractGenerated.generateContract(res);
+    generateContract(res, contractId) {
+        try {
+            info('Entering generateContract contract id: ' + contractId);
+            let contractPreteur;
+            let basicProfil;
+            let basicInfoEmprunteur;
 
+            const profileDao = new ProfileDao(this._mongodb);
+
+            // Find contract preteur
+            // Find preteur info
+            // find emprunteur info
+            async.series([
+                (callback) => {
+                    this.getContractPreteurById(contractId, (contract, err) => {
+                        if(err) {
+                            callback(err);
+                            return;
+                        }
+
+                        contractPreteur = contract;
+                        callback();
+                    })
+                },
+                (callback) => {
+                    async.parallel([
+                        (callback) => {
+                            profileDao.getClientByUserId(contractPreteur.user_clientId, null,  (profile, err) => {
+                                if (err) {
+                                    callback(err);
+                                    return;
+                                }
+                                basicProfil = profile;
+                                callback();
+                            });
+                        },
+                        (callback) =>{
+                            profileDao.getEmprunteurBasicInfoById(contractPreteur.basicInfoEmprunteurId,  (emprunteur, err) => {
+                                if (err) {
+                                    callback(err);
+                                    return;
+                                }
+                                basicInfoEmprunteur = emprunteur;
+
+                                callback();
+                            });
+                        }
+                    ],callback);
+                },
+                (callback) => {
+                    const contractGenerated = new ContractGenerator();
+                    contractGenerated.generateContract(res, basicProfil, basicInfoEmprunteur);
+                }
+            ], (err) => {
+                error("Unable to generateContract " , err);
+                //   When it's done
+                if (err) {
+                    error('error: ' + err);
+                    res.status(500).send('Problème pendant la génération du contrat. ' + err.message);
+                    return;
+                }
+            });
+        } catch (e) {
+             error('error: ' + e);
+             res.status(500).send('Problème pendant la génération du contrat. ' + e.message);
+        }
     }
 }

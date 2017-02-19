@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox , Image} from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, Glyphicon, Table, HelpBlock, Checkbox , Image, Tooltip, OverlayTrigger} from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -194,7 +194,13 @@ class ProfileTabBasicEmprunteur extends Component {
         const validateCodePostalSE = Validator.validateCodePostal(this.props.basicInfoEmprunteur.codePostalSiegeExploitation) ? "success" : "error";
         const validateVilleSE = Validator.validateString(this.props.basicInfoEmprunteur.villeSiegeExploitation ) ? "success" : "error";
         const validateSector = Validator.validateString(this.props.basicInfoEmprunteur.sectorActivite ) ? "success" : "error";
-        const validateReprensentantL = Validator.validateString(this.props.basicInfoEmprunteur.representantLegal ) ? "success" : "error";
+        const validateReprensentantPrenom = Validator.validateString(this.props.basicInfoEmprunteur.representantLegalPrenom ) ? "success" : "error";
+        const validateReprensentantNom = Validator.validateString(this.props.basicInfoEmprunteur.representantLegalNom ) ? "success" : "error";
+        const validateReprensentantFonction = Validator.validateString(this.props.basicInfoEmprunteur.representantLegalFonction ) ? "success" : "error";
+        const validateReprensentantAddress = Validator.validateAddress(this.props.basicInfoEmprunteur.representantLegalAddress ) ? "success" : "error";
+        const validateReprensentantCP = Validator.validateString(this.props.basicInfoEmprunteur.representantLegalCP ) ? "success" : "error";
+        const validateReprensentantVille = Validator.validateString(this.props.basicInfoEmprunteur.representantLegalVille ) ? "success" : "error";
+        const validateReprensentantNN = Validator.validateNational(this.props.basicInfoEmprunteur.representantLegalNN ) ? "success" : "error";
         const validateEmail = Validator.validateEmailAddress(this.props.basicInfoEmprunteur.email ) ? "success" : "error";
         const validateNumTel = Validator.validateString(this.props.basicInfoEmprunteur.numTel ) ? "success" : "error";
         const validateDateConstitution = Validator.validateDateConstitution(this.props.basicInfoEmprunteur.dateConstitution ) ? "success" : "error";
@@ -260,17 +266,6 @@ class ProfileTabBasicEmprunteur extends Component {
           },
         };
 
-        const actionnaires = !_.isNil(this.props.basicInfoEmprunteur.actionnariat) ? _.map(this.props.basicInfoEmprunteur.actionnariat, actionnaire => {
-            return (
-                <tr key={actionnaire.nomComplet}>
-                  <td>{actionnaire.titre}</td>
-                  <td>{actionnaire.nomComplet}</td>
-                  <td>{actionnaire.nbPart}</td>
-                  <td><Button bsStyle="danger" onClick={this._removeActionnaire.bind(this, actionnaire.nomComplet )}><Glyphicon glyph="minus"></Glyphicon></Button></td>
-                </tr>
-            )
-        }) : null;
-
         const listZip = _.sortedUniq(_.map(belgium, (city) => {
             return city.zip;
         }));
@@ -288,6 +283,216 @@ class ProfileTabBasicEmprunteur extends Component {
         const logosrc = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.src : null;
         const logowidth = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.width : null;
         const logoheigth = this.props.basicInfoEmprunteur.logo ? this.props.basicInfoEmprunteur.logo.height : null;
+
+        // Tooltip for societe or independant
+        const tooltipSoc = (
+          <Tooltip id="tooltipSoc">Vous êtes en <strong>société</strong> ou <strong>indépendant(personne physique)</strong></Tooltip>
+        );
+
+        let formeJuridique;
+        let adresseSiegeSocial;
+        let codePostalSiegeSocial;
+        let villeSiegeSocial;
+        let representant;
+        let actionnariat;
+
+        // if it's an entreprse show forme juridique, adresse siege social + actionnariat
+        if (this.props.basicInfoEmprunteur.isSociete) {
+            formeJuridique = (
+                <FormGroup controlId="formHorizontalFJ" validationState={validateFJ}>
+                    <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                        Forme juridique
+                    </Col>
+                    <Col sm={4} md={4}>
+                       <FormControl type="text" placeholder=" Forme juridique" list="formeJuridique"
+                           onChange={e => ProvideActions.updateBasicInfoEmprunteur({formeJuridique: e.target.value})}
+                           value={this.props.basicInfoEmprunteur.formeJuridique}/>
+                       <datalist id="formeJuridique">
+                           <option key="SPRL" value="SPRL"></option>
+                           <option key="SPRL-S" value="SPRL-S"></option>
+                           <option key="SCRL" value="SCRL"></option>
+                           <option key="SCRI" value="SCRI"></option>
+                           <option key="SA" value="SA"></option>
+                           <option key="SNC" value="SNC"></option>
+                           <option key="SCS" value="SCS"></option>
+                           <option key="SCA" value="SCA"></option>
+                           <option key="ASBL" value="ASBL"></option>
+                           <option key="FONDATION" value="FONDATION"></option>
+                       </datalist>
+                    </Col>
+                </FormGroup>
+           );
+
+           adresseSiegeSocial = (
+               <FormGroup controlId="formHorizontalASS" validationState={validateAddressSS}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Adresse Siège social
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Adresse Siège social"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({adresseSiegeSocial: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.adresseSiegeSocial}/>
+                 </Col>
+               </FormGroup>
+           );
+
+           codePostalSiegeSocial = (
+               <FormGroup controlId="formHorizontalCSS" validationState={validateCodePostalSC}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Code postal Siège social
+                 </Col>
+                 <Col sm={4} md={4}>
+                     <FormControl type="text" placeholder="Code Postal Siège social" list="list"
+                         onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeSocial: parseInt(e.target.value)})}  value={this.props.basicInfoEmprunteur.codePostalSiegeSocial}/>
+                     <datalist id="list">
+                             {cityData}
+                         </datalist>
+                 </Col>
+               </FormGroup>
+           );
+
+           villeSiegeSocial = (
+               <FormGroup controlId="formHorizontalASS" validationState={validateVilleSS}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Ville Siège social
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Ville Siège social"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({villeSiegeSocial: e.target.value})}  value={this.props.basicInfoEmprunteur.villeSiegeSocial}/>
+                 </Col>
+               </FormGroup>
+           );
+
+           // REPRESENTANT
+           representant = (
+               <div>
+                   <FormGroup controlId="formHorizontalRLP" validationState={validateReprensentantPrenom}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Prénom
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Représentant Prénom"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalPrenom: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalPrenom}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLN" validationState={validateReprensentantNom}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Nom
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Représentant Nom"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalNom: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalNom}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLFonct" validationState={validateReprensentantFonction}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Fonction
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Gérant, directeur,.."
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalFonction: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalFonction}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLAdd" validationState={validateReprensentantAddress}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Adresse
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Représentant Adresse"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalAddress: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalAddress}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLCP" validationState={validateReprensentantCP}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal CP
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Représentant Code postal"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalCP: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalCP}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLVille" validationState={validateReprensentantVille}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Ville
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="text" placeholder="Représentant Ville"
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalVille: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalVille}/>
+                 </Col>
+               </FormGroup>
+               <FormGroup controlId="formHorizontalRLNN" validationState={validateReprensentantNN}>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Représentant Légal Num. Nat.
+                 </Col>
+                 <Col sm={12} md={8}>
+                   <FormControl type="number" placeholder="Représentant Num. nat."
+                       onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegalNN: e.target.value})}
+                       value={this.props.basicInfoEmprunteur.representantLegalNN}/>
+                 </Col>
+               </FormGroup>
+               </div>
+           );
+           // ACTIONNARIAT
+           const actionnaires = !_.isNil(this.props.basicInfoEmprunteur.actionnariat) ? _.map(this.props.basicInfoEmprunteur.actionnariat, actionnaire => {
+               return (
+                   <tr key={actionnaire.nomComplet}>
+                     <td>{actionnaire.titre}</td>
+                     <td>{actionnaire.nomComplet}</td>
+                     <td>{actionnaire.nbPart}</td>
+                     <td><Button bsStyle="danger" onClick={this._removeActionnaire.bind(this, actionnaire.nomComplet )}><Glyphicon glyph="minus"></Glyphicon></Button></td>
+                   </tr>
+               )
+           }) : null;
+
+           actionnariat = (
+               <FormGroup controlId="formHorizontalActionnariat" validationState={ validateActionnariat }>
+                 <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                   Actionnariat
+                 </Col>
+                 <Col xs={2} sm={2} md={2}>
+                     <FormControl componentClass="select" placeholder="select"
+                         value={ this.state.actionnaire.titre } onChange={e => this._changeActionnaire({titre: e.target.value}) } >
+                       <option value="select">select</option>
+                       <option value="Mr">Mr.</option>
+                       <option value="Mme">Mme.</option>
+                     </FormControl>
+                 </Col>
+                 <Col xs={6} sm={6} md={3}>
+                   <FormControl type="text" placeholder="Actionnariat" onChange={e => this._changeActionnaire({nomComplet: _.trimStart(e.target.value)}) }
+                       value={ this.state.actionnaire.nomComplet }/>
+                 </Col>
+                 <Col xs={2} sm={2} md={2}>
+                   <FormControl type="number" placeholder="nb parts" onChange={e => this._changeActionnaire({nbPart: parseFloat(e.target.value)}) }
+                       value={ this.state.actionnaire.nbPart }/>
+                 </Col>
+                 <Col xs={2} sm={2} md={1}>
+                     <Button bsStyle="info" onClick={this._addActionnaire}><Glyphicon glyph="plus"></Glyphicon></Button>
+                  </Col>
+                  { !_.isNil(this.props.basicInfoEmprunteur.actionnariat) && !_.isEmpty(this.props.basicInfoEmprunteur.actionnariat) ?  (
+                      <Col xs={10} sm={10} md={7} mdOffset={2} smOffset={2} xsOffset={2}>
+                      <Table>
+                          <thead>
+                            <tr>
+                              <th>Titre</th>
+                              <th>Nom complet</th>
+                              <th>Nb parts</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              { actionnaires }
+                          </tbody>
+                      </Table>
+                  </Col>
+              ) : null}
+               </FormGroup>
+           );
+        }
 
         return (
             <div key='ProfileTabBasicEmprunteur'>
@@ -308,6 +513,16 @@ class ProfileTabBasicEmprunteur extends Component {
                              <Image src={logosrc} width={logowidth} height={logoheigth} rounded />
                         </Col>
                       </FormGroup>
+                      <FormGroup controlId="formHorizontalisSoc" >
+                        <Col sm={12} md={8}>
+                            <OverlayTrigger placement="top" overlay={ tooltipSoc }>
+                                <Checkbox checked={ this.props.basicInfoEmprunteur.isSociete }
+                                    onChange={e => ProvideActions.updateBasicInfoEmprunteur({isSociete: !this.props.basicInfoEmprunteur.isSociete})} >
+                                Êtes-vous en société?
+                                </Checkbox>
+                            </OverlayTrigger>
+                        </Col>
+                      </FormGroup>
                       <FormGroup controlId="formHorizontalSoc" validationState={validateSociete}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Nom Société
@@ -317,27 +532,7 @@ class ProfileTabBasicEmprunteur extends Component {
                               onChange={e => ProvideActions.updateBasicInfoEmprunteur({denominationSocial: e.target.value})}  value={this.props.basicInfoEmprunteur.denominationSocial}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalFJ" validationState={validateFJ}>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Forme juridique
-                        </Col>
-                            <Col sm={4} md={4}>
-                                <FormControl type="text" placeholder=" Forme juridique" list="formeJuridique"
-                                    onChange={e => ProvideActions.updateBasicInfoEmprunteur({formeJuridique: e.target.value})}  value={this.props.basicInfoEmprunteur.formeJuridique}/>
-                                <datalist id="formeJuridique">
-                                        <option key="SPRL" value="SPRL"></option>
-                                        <option key="SPRL-S" value="SPRL-S"></option>
-                                        <option key="SCRL" value="SCRL"></option>
-                                        <option key="SCRI" value="SCRI"></option>
-                                        <option key="SA" value="SA"></option>
-                                        <option key="SNC" value="SNC"></option>
-                                        <option key="SCS" value="SCS"></option>
-                                        <option key="SCA" value="SCA"></option>
-                                        <option key="ASBL" value="ASBL"></option>
-                                        <option key="FONDATION" value="FONDATION"></option>
-                                    </datalist>
-                            </Col>
-                      </FormGroup>
+                     { formeJuridique }
                       <FormGroup controlId="formHorizontalNumE" validationState={ validateNumEntreprise }>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Numéro entreprise
@@ -357,36 +552,10 @@ class ProfileTabBasicEmprunteur extends Component {
                               }  value={this.props.basicInfoEmprunteur.numEntreprise}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalASS" validationState={validateAddressSS}>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Adresse Siège social
-                        </Col>
-                        <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Adresse Siège social"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({adresseSiegeSocial: e.target.value})}  value={this.props.basicInfoEmprunteur.adresseSiegeSocial}/>
-                        </Col>
-                      </FormGroup>
-                      <FormGroup controlId="formHorizontalCSS" validationState={validateCodePostalSC}>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Code postal Siège social
-                        </Col>
-                        <Col sm={4} md={4}>
-                            <FormControl type="text" placeholder="Code Postal Siège social" list="list"
-                                onChange={e => ProvideActions.updateBasicInfoEmprunteur({codePostalSiegeSocial: parseInt(e.target.value)})}  value={this.props.basicInfoEmprunteur.codePostalSiegeSocial}/>
-                            <datalist id="list">
-                                    {cityData}
-                                </datalist>
-                        </Col>
-                      </FormGroup>
-                      <FormGroup controlId="formHorizontalASS" validationState={validateVilleSS}>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Ville Siège social
-                        </Col>
-                        <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Ville Siège social"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({villeSiegeSocial: e.target.value})}  value={this.props.basicInfoEmprunteur.villeSiegeSocial}/>
-                        </Col>
-                      </FormGroup>
+                      { adresseSiegeSocial }
+                      { codePostalSiegeSocial }
+                      { villeSiegeSocial }
+
                       <FormGroup controlId="formHorizontalAddressSiegeExpl" validationState={validateAdresseSE}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Adresse Siège d'exploitation
@@ -426,15 +595,7 @@ class ProfileTabBasicEmprunteur extends Component {
                               </datalist>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalRL" validationState={validateReprensentantL}>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Représentant Légal
-                        </Col>
-                        <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Représentant Légal"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({representantLegal: e.target.value})}  value={this.props.basicInfoEmprunteur.representantLegal}/>
-                        </Col>
-                      </FormGroup>
+                      { representant }
                       <FormGroup controlId="formHorizontalEmail" validationState={validateEmail}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Email
@@ -491,46 +652,9 @@ class ProfileTabBasicEmprunteur extends Component {
                               onChange={e => ProvideActions.updateBasicInfoEmprunteur({capital: parseFloat(e.target.value) })}  value={this.props.basicInfoEmprunteur.capital}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalActionnariat" validationState={ validateActionnariat }>
-                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Actionnariat
-                        </Col>
-                        <Col xs={2} sm={2} md={2}>
-                            <FormControl componentClass="select" placeholder="select"
-                                value={ this.state.actionnaire.titre } onChange={e => this._changeActionnaire({titre: e.target.value}) } >
-                              <option value="select">select</option>
-                              <option value="Mr">Mr.</option>
-                              <option value="Mme">Mme.</option>
-                            </FormControl>
-                        </Col>
-                        <Col xs={6} sm={6} md={3}>
-                          <FormControl type="text" placeholder="Actionnariat" onChange={e => this._changeActionnaire({nomComplet: _.trimStart(e.target.value)}) }
-                              value={ this.state.actionnaire.nomComplet }/>
-                        </Col>
-                        <Col xs={2} sm={2} md={2}>
-                          <FormControl type="number" placeholder="nb parts" onChange={e => this._changeActionnaire({nbPart: parseFloat(e.target.value)}) }
-                              value={ this.state.actionnaire.nbPart }/>
-                        </Col>
-                        <Col xs={2} sm={2} md={1}>
-                            <Button bsStyle="info" onClick={this._addActionnaire}><Glyphicon glyph="plus"></Glyphicon></Button>
-                         </Col>
-                         { !_.isNil(this.props.basicInfoEmprunteur.actionnariat) && !_.isEmpty(this.props.basicInfoEmprunteur.actionnariat) ?  (
-                             <Col xs={10} sm={10} md={7} mdOffset={2} smOffset={2} xsOffset={2}>
-                             <Table>
-                                 <thead>
-                                   <tr>
-                                     <th>Titre</th>
-                                     <th>Nom complet</th>
-                                     <th>Nb parts</th>
-                                   </tr>
-                                 </thead>
-                                 <tbody>
-                                     { actionnaires }
-                                 </tbody>
-                             </Table>
-                         </Col>
-                     ) : null}
-                      </FormGroup>
+
+                      { actionnariat }
+
                       <FormGroup controlId="formHorizontaldestinationPret" validationState={validateDestinationPret}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                           Destination Pret

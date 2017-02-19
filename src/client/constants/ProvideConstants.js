@@ -56,6 +56,7 @@ export default keyMirror({
     GENERATE_CONTRACT_SUCCESS:null,
     GENERATE_EMPRUNTEUR_CONTRACT:null,
     GENERATE_EMPRUNTEUR_CONTRACT_SUCCESS:null,
+    GENERATE_EMPRUNTEUR_CONTRACT_ERROR:null,
 
     // Pop up Workflow Stepper
     OPEN_STEPPER_DETAIL : null,

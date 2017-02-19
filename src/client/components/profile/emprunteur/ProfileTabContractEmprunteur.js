@@ -72,7 +72,9 @@ export default class ProfileTabContractEmprunteur extends Component {
                  </Panel>
                 </Col>
                 <Col md={10} sm={10} className='space-top-bottom'>
-                    <ContractsList  keyTab='profileTabEmpContract' tabContracts={this.props.tabEmprunteurContracts}
+                    <ContractsList  keyTab='profileTabEmpContract'
+                        isPreteur={ this.props.isPreteur }
+                        tabContracts={this.props.tabEmprunteurContracts}
                         statusContract={getStatusDetail(statusEmprunteur)} stepWorkflow={this.props.tabEmprunteurContracts.stepWorkflow} />
                 </Col>
 

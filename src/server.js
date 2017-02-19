@@ -191,10 +191,11 @@ app.post('/api/requestNewPreteur', (req, res) => {
     debug("Entering /api/requestNewPreteur ");
 
     const user = req.body.user_id;
+    const emprunteurId = req.body.emprunteurId;
 
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.requestNewPreteur(res, user);
+    contractDao.requestNewPreteur(res, user, emprunteurId);
 });
 
 app.post('/api/updateFavoris', (req, res) => {
@@ -227,7 +228,7 @@ app.put('/api/updateChangeStatus', (req, res) => {
 
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.updateChangeStatus(res, MongoDb, selectedContracts, status, notifyUser, isEmprunteur);
+    contractDao.updateChangeStatus(res, selectedContracts, status, notifyUser, isEmprunteur);
 });
 
 app.put('/api/updateBlockStatus', (req, res) => {
@@ -276,7 +277,7 @@ app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
 
     const explorerDao = new ExplorerDao(_mongodb);
 
-    explorerDao.getExplorerByEmprunteurId(res, MongoDb, userId, emprunteurId);
+    explorerDao.getExplorerByEmprunteurId(res, userId, emprunteurId);
 });
 
 /******************************************/
@@ -295,7 +296,9 @@ app.post('/api/generateContract', (req, res) => {
     debug("Entering /api/generateContract ");
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.generateContract(res, 'ME');
+    const contractId = req.body.contractId;
+
+    contractDao.generateContract(res, contractId);
 
 })
 

@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
+import ProvideConstants from '../constants/ProvideConstants';
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
 import Auth0 from 'auth0-js';
@@ -77,6 +78,7 @@ class LayoutStore extends BaseStore {
 
         switch(action.type){
             // Respond to RECEIVE_DATA action
+            case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_ERROR:
             case ActionTypes.DATA_ERROR:
                 // If action was responded to, emit change event
                 if ( !_.isNil(action.error.response) ) {

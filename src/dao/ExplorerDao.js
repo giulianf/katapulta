@@ -7,6 +7,7 @@ import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+const ObjectId = require('mongodb').ObjectId;
 
 export class ExplorerDao {
     constructor(_mongodb) {
@@ -146,11 +147,10 @@ export class ExplorerDao {
      * getExplorerByEmprunteurId - description
      *
      * @param  {type} res      description
-     * @param  {type} MongoDb  description
      * @param  {type} user     description
      * @return {type}          description
      */
-    getExplorerByEmprunteurId(res, MongoDb, userId, emprunteurId) {
+    getExplorerByEmprunteurId(res, userId, emprunteurId) {
         info('Entering getExplorerByEmprunteurId() user id: ' + userId + ' and emprunteur Id: ' + emprunteurId);
 
          try {
@@ -175,7 +175,7 @@ export class ExplorerDao {
                     const emprunteurs = this._mongodb.collection('emprunteurs');
 
                     // Find some documents
-                    emprunteurs.findOne({'_id': new MongoDb.ObjectId(emprunteurId)}, (err, emprunteur) => {
+                    emprunteurs.findOne({'_id': new ObjectId(emprunteurId)}, (err, emprunteur) => {
                         contractEmprunteur = new BasicInfoEmprunteur( emprunteur );
 
                         debug("*****  emprunteur found: " + contractEmprunteur.toLog());

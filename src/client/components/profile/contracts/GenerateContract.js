@@ -11,12 +11,12 @@ export default class GenerateContract extends Component{
 
   _handleDetails() {
       // Action to see stepper
-      ProvideActions.generateContract();
+      ProvideActions.generateContract(this.props.contractId);
   }
 
   render() {
     return (
-        <Button disabled={this.props.wait} onClick={this._handleDetails} bsStyle='warning'>{!this.props.wait ? "Détails": "..."}</Button>
+        <Button disabled={this.props.wait} onClick={this._handleDetails} bsStyle='warning'>{!this.props.wait ? "Détails": "Attendez"}</Button>
     );
   }
 }

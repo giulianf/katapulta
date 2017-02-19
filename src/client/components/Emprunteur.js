@@ -28,7 +28,7 @@ class Emprunteur extends Component {
     }
 
     _requestPreteur() {
-        ProvideActions.requestNewPreteur(this.state.profile);
+        ProvideActions.requestNewPreteur(this.state.profile, this.state.emprunteur.id);
     }
 
     _onChange() {

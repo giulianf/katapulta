@@ -18,7 +18,13 @@ export class BasicInfoEmprunteur {
      * @param  {type} adresseSiegeExploitation    description
      * @param  {type} codePostalSiegeExploitation description
      * @param  {type} villeSiegeExploitation      description
-     * @param  {type} representantLegal           description
+     * @param  {string} representantLegalPrenom           description
+     * @param  {string} representantLegalNom           description
+     * @param  {string} representantLegalFonction           description
+     * @param  {string} representantLegalAddress           description
+     * @param  {string} representantLegalCP           description
+     * @param  {string} representantLegalVille           description
+     * @param  {string} representantLegalNN           description
      * @param  {string} sectorActivite           description
      * @param  {type} email                       description
      * @param  {type} numTel                      description
@@ -36,6 +42,7 @@ export class BasicInfoEmprunteur {
      * @param  {Date} createDate                       creation date
      * @param  {Date} endDate                       end date for the emprunt
      * @param  {Boolean} isOurSelection                      This entrepreneur is our selection
+     * @param  {Boolean} isSociete                is independant or societe
      * @param  {type} image                       description
      * @param  {type} logo                       description
      * @return {type}                             description
@@ -43,9 +50,10 @@ export class BasicInfoEmprunteur {
     constructor(emprunteur, user_id, status, denominationSocial, formeJuridique, numEntreprise,
         adresseSiegeSocial, codePostalSiegeSocial, villeSiegeSocial,
         adresseSiegeExploitation, codePostalSiegeExploitation, villeSiegeExploitation,
-        representantLegal, sectorActivite, email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
+        representantLegalPrenom, representantLegalNom, representantLegalFonction, representantLegalAddress, representantLegalCP, representantLegalVille, representantLegalNN,
+        sectorActivite, email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
         capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb,
-        isFavoris, createDate, endDate, isOurSelection, image, logo) {
+        isFavoris, createDate, endDate, isOurSelection, isSociete, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
                 this.status= emprunteur.status;
@@ -59,7 +67,13 @@ export class BasicInfoEmprunteur {
                 this.adresseSiegeExploitation= emprunteur.adresseSiegeExploitation ;
                 this.codePostalSiegeExploitation= emprunteur.codePostalSiegeExploitation ;
                 this.villeSiegeExploitation= emprunteur.villeSiegeExploitation ;
-                this.representantLegal= emprunteur.representantLegal;
+                this.representantLegalPrenom= emprunteur.representantLegalPrenom;
+                this.representantLegalNom= emprunteur.representantLegalNom;
+                this.representantLegalFonction= emprunteur.representantLegalFonction;
+                this.representantLegalAddress= emprunteur.representantLegalAddress;
+                this.representantLegalCP= emprunteur.representantLegalCP;
+                this.representantLegalVille= emprunteur.representantLegalVille;
+                this.representantLegalNN= emprunteur.representantLegalNN;
                 this.sectorActivite= emprunteur.sectorActivite ;
                 this.email= emprunteur.email ;
                 this.numTel= emprunteur.numTel;
@@ -76,6 +90,7 @@ export class BasicInfoEmprunteur {
                 this.isFavoris= emprunteur.isFavoris;
                 this.endDate= emprunteur.endDate;
                 this.isOurSelection= emprunteur.isOurSelection;
+                this.isSociete= emprunteur.isSociete;
                 this.image= emprunteur.image;
                 this.logo= emprunteur.logo;
                 this.createDate= emprunteur.createDate;
@@ -91,7 +106,13 @@ export class BasicInfoEmprunteur {
                 this.adresseSiegeExploitation= adresseSiegeExploitation ;
                 this.codePostalSiegeExploitation= codePostalSiegeExploitation ;
                 this.villeSiegeExploitation= villeSiegeExploitation ;
-                this.representantLegal= representantLegal;
+                this.representantLegalPrenom= representantLegalPrenom;
+                this.representantLegalNom= representantLegalNom;
+                this.representantLegalFonction= representantLegalFonction;
+                this.representantLegalAddress= representantLegalAddress;
+                this.representantLegalCP= representantLegalCP;
+                this.representantLegalVille= representantLegalVille;
+                this.representantLegalNN= representantLegalNN;
                 this.sectorActivite= sectorActivite ;
                 this.email= email ;
                 this.numTel= numTel;
@@ -108,6 +129,7 @@ export class BasicInfoEmprunteur {
                 this.isFavoris= isFavoris;
                 this.endDate= endDate;
                 this.isOurSelection= isOurSelection;
+                this.isSociete= isSociete;
                 this.image= image;
                 this.logo= logo;
                 this.createDate= createDate;
@@ -121,6 +143,7 @@ export class BasicInfoEmprunteur {
         ', villeSiegeExploitation '+this.villeSiegeExploitation + ', sectorActivite ' + this.sectorActivite +', representantLegal '+ this.representantLegal +', email '+ this.email +
         ', numTel '+this.numTel +', dateConstitution '+this.dateConstitution +', chiffreAffaire '+this.chiffreAffaire+', nbEmploye '+this.nbEmploye +
         ', capital '+this.capital+', actionnariat '+this.actionnariat +', destinationPret '+this.destinationPret +', montantSouhaite '+this.montantSouhaite+
-        ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+', end date '+this.endDate;
+        ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+
+        ', end date '+ this.endDate+', Our Selection '+this.isOurSelection+' and Is in societe '+this.isSociete;
     }
 }

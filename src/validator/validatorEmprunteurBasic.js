@@ -5,6 +5,7 @@ export default {
     TAUX_MINIMUM : 1.125,
     TAUX_MAXIMUM : 2.25,
     PRET_MAX : 100000,
+
   validateProfileEmprunteurTab(basicInfoEmprunteur) {
       if (_.isNil(basicInfoEmprunteur)) {
           throw new Error("Impossible de valider le profil de l'emprunteur.");
@@ -14,24 +15,8 @@ export default {
           throw new Error("La dénomination sociale n'est pas valide.");
       }
 
-      if (!this.validateFormeJuridique(basicInfoEmprunteur.formeJuridique)) {
-          throw new Error("La forme juridique n'est pas valide.");
-      }
-
       if (!this.validateTva(basicInfoEmprunteur.numEntreprise)) {
           throw new Error("Le numéro d'entreprise n'est pas valid.");
-      }
-
-      if (!this.validateAddress(basicInfoEmprunteur.adresseSiegeSocial)) {
-          throw new Error("L'adresse du siège social n'est pas valide.");
-      }
-
-      if (!this.validateCodePostal(basicInfoEmprunteur.codePostalSiegeSocial)) {
-          throw new Error("Le code postal du siège social n'est pas valid.");
-      }
-
-      if (!this.validateString(basicInfoEmprunteur.villeSiegeSocial)) {
-          throw new Error("La ville du siège social n'est pas valide.");
       }
 
       if (!this.validateAddress(basicInfoEmprunteur.adresseSiegeExploitation)) {
@@ -74,10 +59,6 @@ export default {
           throw new Error("Le capital n'est pas valid.");
       }
 
-      if (!this.validateActionnariat(basicInfoEmprunteur.actionnariat)) {
-          throw new Error("Les actionnaires ne sont pas valids.");
-      }
-
       if (!this.validateString(basicInfoEmprunteur.destinationPret)) {
           throw new Error("La destination du prêt n'est pas valid.");
       }
@@ -96,6 +77,29 @@ export default {
 
       if (!this.validateSiteWeb(basicInfoEmprunteur.siteWeb)) {
           throw new Error("Le site web n'est pas valid.");
+      }
+
+      if (basicInfoEmprunteur.isSociete) {
+          if (!this.validateFormeJuridique(basicInfoEmprunteur.formeJuridique)) {
+              throw new Error("La forme juridique n'est pas valide.");
+          }
+
+          if (!this.validateAddress(basicInfoEmprunteur.adresseSiegeSocial)) {
+              throw new Error("L'adresse du siège social n'est pas valide.");
+          }
+
+          if (!this.validateCodePostal(basicInfoEmprunteur.codePostalSiegeSocial)) {
+              throw new Error("Le code postal du siège social n'est pas valid.");
+          }
+
+          if (!this.validateString(basicInfoEmprunteur.villeSiegeSocial)) {
+              throw new Error("La ville du siège social n'est pas valide.");
+          }
+
+          if (!this.validateActionnariat(basicInfoEmprunteur.actionnariat)) {
+              throw new Error("Les actionnaires ne sont pas valids.");
+          }
+
       }
 
   },
@@ -219,6 +223,8 @@ export default {
   validateSiteWeb(siteWeb) {
       return !_.isNil(siteWeb) && validateWeb(siteWeb) ? true : false;
   },
-
+  validateNational(numNational) {
+      return !_.isNil(numNational) && !_.isEmpty(numNational) && _.size(numNational) == 11  ? true : false;
+  },
 
 };
