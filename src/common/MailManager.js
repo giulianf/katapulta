@@ -68,7 +68,7 @@ export class MailManager {
     mailExit(basicProfil, contractPreteur, basicInfoEmprunteur, callback) {
         try {
             info("Entering mailExit");
-            
+
             const mail = new Mailing(this._client);
 
             const subject = _.replace(FormatMailing.mail_exit_subject, '{reference}', basicInfoEmprunteur.id);
