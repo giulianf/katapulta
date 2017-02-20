@@ -114,7 +114,7 @@ export class ContractDao {
                     debug('Status contract: '+ status);
                     const progress =  getProgress(statusList, status);
                     debug('Progress: ' + progress);
-                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, getStepWorkflow(statusList, status));
+                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, getStepWorkflow(statusList, status));
 
                     contractEmprunteurs.insertOne( emprunteur, {
                         returnOriginal: false
@@ -155,14 +155,14 @@ export class ContractDao {
         }
     }
 
-    requestNewPreteur(res, user, emprunteurId, valuePret) {
-        info('Entering requestNewPreteur() data: ' + user + ' and emprunteurId: ' + emprunteurId );
+    requestNewPreteur(res, user, emprunteurContractId, valuePret) {
+        info('Entering requestNewPreteur() data: ' + user + ' and contract emprunteur Id: ' + emprunteurContractId );
 
          try {
              const userId = user;
              let contractsList = [];
              let basicInfo;
-             let basicInfoEmprunteur;
+             let emprunteurContract;
 
              // before check if basic informations are filled in
             async.series([
@@ -180,14 +180,12 @@ export class ContractDao {
                     });
                 },
                 (callback) => {
-                    const profileDao = new ProfileDao(this._mongodb);
-
-                    profileDao.getEmprunteurBasicInfoById(emprunteurId, (emprunteur, err) => {
+                    this.getContractEmprunteurById(emprunteurContractId, (contract, err) => {
                         if (err) {
                             callback(err);
                             return;
                         }
-                        basicInfoEmprunteur = emprunteur;
+                        emprunteurContract = contract;
 
                         callback();
                     });
@@ -206,7 +204,7 @@ export class ContractDao {
                     debug('step: ' + step);
 
 
-                    const preteur = new ContractsPreteur(null, userId, null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, valuePret, createDateMongo(), status, progress, step);
+                    const preteur = new ContractsPreteur(null, userId, null, userId, emprunteurContract, valuePret, createDateMongo(), status, progress, step);
 
                     contractPreteur.insertOne( preteur, {
                         returnOriginal: false
@@ -283,49 +281,19 @@ export class ContractDao {
         }
     }
 
-    getContractEmprunteurList(user, callbackFunction) {
+    getContractEmprunteurById(emprunteurContractId, callbackFunction) {
         try {
-            const userId = user;
-            let contractsList = [];
+            const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
+            // Find some documents
+            contractEmprunteurs.findOne({'_id': new ObjectId(emprunteurContractId)}, (err, contract) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
 
-           async.series([
-               (callback) => {
-                   const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
-
-                   // Find some documents
-                   contractEmprunteurs.find({'user_id': userId}).sort( { _id: -1 } ).toArray( function(err, contracts) {
-                       if (err) {
-                           callback(err);
-                           return;
-                       }
-
-                       const contractSize = _.size( contracts );
-                       debug("*****  contract found: " + contractSize );
-
-                       for(let i = 0 ; i < contractSize ; i++) {
-                           const contract = contracts[i];
-
-                               contractsList.push( new ContractsEmprunteur(contract) );
-                       }
-
-                       callback();
-                   });
-               },
-               (callback) => {
-                   debug("****  getContractEmprunteurList: " + JSON.stringify( contractsList ) );
-
-                   callbackFunction( contractsList );
-               }
-           ], (err) => {
-               error("Unable to getContractEmprunteurList " , err);
-               //   When it's done
-               if (err) {
-                   error('error: ' + err);
-                   callbackFunction(null, err);
-                   return;
-               }
-           });
+               callbackFunction( new ContractsEmprunteur(contract) );
+            });
        } catch( e ) {
            error('error: ' + e);
            callbackFunction(null, e);

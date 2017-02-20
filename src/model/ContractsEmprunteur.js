@@ -9,18 +9,18 @@ export class ContractsEmprunteur {
      *
      * @param  {Object} contractsEmprunteur      existing object
      * @param  {string} user_id  user_id du preteur afin de l'identifier
-     * @param  {string} user_idEmprunteur   id de l'emprunteur pour l'emprunt
+     * @param  {object} emprunteur   id de l'emprunteur pour l'emprunt
      * @param  {string} nameCompany   nom de la societe pour l'emprunt
      * @param  {Date} creationDate    date de creation ou date de validite du contrat
      * @param  {number} status        status du contrat
      * @param  {decimal} progress        l'avancement du contrat
      * @param  {number} stepWorkflow    step du workflow pour le Stepper
      */
-    constructor(contractsEmprunteur, user_id, user_idEmprunteur, nameCompany, creationDate, status, progress, stepWorkflow) {
+    constructor(contractsEmprunteur, user_id, emprunteur, nameCompany, creationDate, status, progress, stepWorkflow) {
 		if (!_.isNil(contractsEmprunteur)) {
 			this.id= contractsEmprunteur._id;
 			this.user_id= contractsEmprunteur.user_id;
-			this.user_idEmprunteur= contractsEmprunteur.user_idEmprunteur;
+			this.emprunteur= contractsEmprunteur.emprunteur;
 			this.nameCompany= contractsEmprunteur.nameCompany;
             this.creationDate = getFullBelgiumDate( contractsEmprunteur.creationDate);
 			this.status= contractsEmprunteur.status;
@@ -30,7 +30,7 @@ export class ContractsEmprunteur {
 			this.stepWorkflow= getStepWorkflow(statusList, this.status);
 		} else {
 			this.user_id= user_id;
-            this.user_idEmprunteur= user_idEmprunteur;
+            this.emprunteur= emprunteur;
             this.nameCompany= nameCompany;
 			this.creationDate= creationDate;
 			this.status= status;
@@ -40,7 +40,7 @@ export class ContractsEmprunteur {
     }
 
     toLog() {
-        return 'id ' + this.id +' user_id ' + this.user_id +' user_idEmprunteur ' + this.user_idEmprunteur +' nameCompany ' + this.nameCompany +
+        return 'id ' + this.id +' user_id ' + this.user_id +' emprunteur ' + this.emprunteur +' nameCompany ' + this.nameCompany +
         ' creationDate ' + this.creationDate +' status ' + this.status +' progress ' + this.progress +' stepWorkflow ' + this.stepWorkflow;
     }
 }
