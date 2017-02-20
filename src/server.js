@@ -20,9 +20,17 @@ require('dotenv').config({
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
+// load aws sdk
+let aws = require('aws-sdk');
 
-const ses = require('node-ses')
-  , clientSES = ses.createClient({ key: process.env.AWS_KEY, secret: process.env.AWS_SECRET });
+// load aws config
+aws.config.loadFromPath({ accessKeyId: process.env.AWS_KEY, secretAccessKey: process.env.AWS_SECRET });
+
+// load AWS SES
+const clientSES = new aws.SES({apiVersion: '2010-12-01'});
+
+// const ses = require('node-ses')
+//   , clientSES = ses.createClient({ key: process.env.AWS_KEY, secret: process.env.AWS_SECRET });
 
 const MongoDb =  require('mongodb');
 const MongoClient = MongoDb.MongoClient,

@@ -1,29 +1,43 @@
 import _ from 'lodash';
 import FormatMailing from './FormatMailing';
+import ContractGenerator from './ContractGenerator';
 
 export class MailManager {
-    constructor(client, basicProfil, basicInfoEmprunteur) {
+    constructor(client, basicProfil, basicInfoEmprunteur, contractPreteur) {
         this._client = client;
         this._basicProfil = basicProfil;
         this._basicInfoEmprunteur = basicInfoEmprunteur;
+        this._contractPreteur = contractPreteur;
     }
 
 
-    getMail(eventStatusMail) {
+    getMail(eventStatusMail, callback) {
         info('Entering getMail() ' + eventStatusMail );
 
         if(_.isNil(eventStatusMail)){
          return null;
         }
         // check with switch status
-        if(_.isEqual(eventStatusMail, "MISE_EN_LIGNE") ){
-            this.mailMiseEnLigne(this._basicProfil , this._basicInfoEmprunteur, err => {
+        switch ( eventStatusMail ) {
+            case "MISE_EN_LIGNE":
+                this.mailMiseEnLigne(this._basicProfil , this._basicInfoEmprunteur, err => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+                    callback();
+                });
+                break;
+            case "EXIT":
+            this.mailExit(this._basicProfil , this._contractPreteur, this._basicInfoEmprunteur, err => {
                 if (err) {
                     callback(err);
                     return;
                 }
                 callback();
             });
+                break;
+            default:
         }
     }
 
@@ -36,8 +50,39 @@ export class MailManager {
             content = _.replace(content, '{creationDate}', basicProfil.createDate );
             content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
 
-            mail.sendMail(subject, content, basicProfil.email);
+            const contractGenerator = new ContractGenerator();
+
+            const attachmentName = "contract.pdf";
+            const attachmentContent = contractGenerator.createPdfBinary(basicProfil, basicInfoEmprunteur, (binary) => {
+
+            });
+            mail.sendMail(subject, content, basicProfil.email, null, null);
+
             callback();
+        } catch (e) {
+            error('Error while mailMiseEnLigne: ', e);
+            callback("Erreur pendant l'email mise en ligne");
+        }
+    }
+
+    mailExit(basicProfil, contractPreteur, basicInfoEmprunteur, callback) {
+        try {
+            info("Entering mailExit");
+            
+            const mail = new Mailing(this._client);
+
+            const subject = _.replace(FormatMailing.mail_exit_subject, '{reference}', basicInfoEmprunteur.id);
+            let content = _.replace(FormatMailing.mail_exit_content, '{name}', basicProfil.nom);
+            content = _.replace(content, '{creationDate}', basicProfil.createDate );
+            content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
+
+            const contractGenerator = new ContractGenerator();
+
+            const attachmentName = "contract.pdf";
+            const attachmentContent = contractGenerator.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
+                mail.sendMail(subject, content, basicProfil.email, attachmentName, attachmentContent);
+                callback();
+            });
         } catch (e) {
             error('Error while mailMiseEnLigne: ', e);
             callback("Erreur pendant l'email mise en ligne");
