@@ -67,7 +67,7 @@ class ProfileTabBasic extends Component {
         const validateBankName = Validator.validateString(this.props.basicInfo.bankName ) ? "success" : "error";
 
         const tooltipBank = (
-          <Tooltip id="tooltipBank">Uniquement si vous désirez preter</Tooltip>
+          <Tooltip id="tooltipBank">Uniquement si vous désirez prêter</Tooltip>
         );
         return (
             <div key='profileTabBasic'>
@@ -150,31 +150,31 @@ class ProfileTabBasic extends Component {
                               onChange={e => ProvideActions.updateBasicInfo({ville: e.target.value})}  value={this.props.basicInfo.ville}/>
                         </Col>
                       </FormGroup>
-                      <Panel collapsible defaultExpanded header="Vous désirez preter">
-                          <FormGroup controlId="formHorizontalBA" validationState={validateBankAccount}>
+                      <Panel collapsible header="Remplissez si vous désirez prêter de l'argent">
                           <OverlayTrigger placement="top" overlay={ tooltipBank }>
-                            <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                              Compte bancaire
-                            </Col>
-                            <Col sm={12} md={8}>
-                              <FormControl type="text" placeholder="Compte bancaire"
-                                  onChange={e => ProvideActions.updateBasicInfo({bankAccount: e.target.value})}
-                                  value={this.props.basicInfo.bankAccount}/>
-                            </Col>
-                            </OverlayTrigger>
-                          </FormGroup>
+                              <FormGroup controlId="formHorizontalBA" validationState={validateBankAccount}>
+                                <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                                        Compte bancaire
+                                </Col>
+                                <Col sm={12} md={8}>
+                                      <FormControl type="text" placeholder="Compte bancaire"
+                                          onChange={e => ProvideActions.updateBasicInfo({bankAccount: e.target.value})}
+                                          value={this.props.basicInfo.bankAccount}/>
+                                </Col>
+                              </FormGroup>
+                         </OverlayTrigger>
+                         <OverlayTrigger placement="top" overlay={ tooltipBank }>
                           <FormGroup controlId="formHorizontalBN" validationState={validateBankName}>
-                          <OverlayTrigger placement="top" overlay={ tooltipBank }>
                             <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                              Nom de la banque
+                                    Nom de la banque
                             </Col>
                             <Col sm={12} md={8}>
                               <FormControl type="text" placeholder="Nom banque"
                                   onChange={e => ProvideActions.updateBasicInfo({bankName: e.target.value})}
                                    value={this.props.basicInfo.bankName}/>
                             </Col>
-                            </OverlayTrigger>
                           </FormGroup>
+                        </OverlayTrigger>
                       </Panel>
 
                       <FormGroup controlId="formHorizontalisEmp" >

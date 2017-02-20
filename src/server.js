@@ -24,7 +24,8 @@ require('dotenv').config({
 let aws = require('aws-sdk');
 
 // load aws config
-aws.config.loadFromPath({ accessKeyId: process.env.AWS_KEY, secretAccessKey: process.env.AWS_SECRET });
+// aws.config.extractCredentials({ "accessKeyId": process.env.AWS_KEY, "secretAccessKey": process.env.AWS_SECRET });
+// aws.config.loadFromPath(path.join(__dirname, '..' ,'config', `configAWS.json`));
 
 // load AWS SES
 const clientSES = new aws.SES({apiVersion: '2010-12-01'});
@@ -298,7 +299,7 @@ app.post('/api/mailtest', (req, res) => {
 
     const mail = new MailDao(_mongodb, clientSES);
 
-    mail.insertNewEvent(res, 'ME');
+    mail.insertNewEvent( 'auth0|58723b91bf8e63325065978a', "EXIT", true);
 
 });
 app.post('/api/generateContract', (req, res) => {

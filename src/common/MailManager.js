@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import FormatMailing from './FormatMailing';
 import ContractGenerator from './ContractGenerator';
+import { Mailing } from './Mailing';
 
 export class MailManager {
     constructor(client, basicProfil, basicInfoEmprunteur, contractPreteur) {

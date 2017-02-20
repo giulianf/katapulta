@@ -717,30 +717,30 @@ class ProfileTabBasicEmprunteur extends Component {
                               onChange={e => ProvideActions.updateBasicInfoEmprunteur({siteWeb: e.target.value})}  value={this.props.basicInfoEmprunteur.siteWeb}/>
                         </Col>
                       </FormGroup>
-                      <FormGroup controlId="formHorizontalBA" validationState={validateBankAccount}>
-                          <OverlayTrigger placement="top" overlay={ tooltipBank }>
-                              <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                                Compte bancaire
-                              </Col>
-                              <Col sm={12} md={8}>
-                                <FormControl type="text" placeholder="Compte bancaire"
-                                    onChange={e => ProvideActions.updateBasicInfoEmprunteur({bankAccount: e.target.value})}
-                                    value={this.props.basicInfoEmprunteur.bankAccount}/>
-                              </Col>
-                          </OverlayTrigger>
-                      </FormGroup>
-                      <FormGroup controlId="formHorizontalBN" validationState={validateBankName}>
-                         <OverlayTrigger placement="top" overlay={ tooltipBank }>
+                      <OverlayTrigger placement="top" overlay={ tooltipBank }>
+                          <FormGroup controlId="formHorizontalBA" validationState={validateBankAccount}>
                             <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                              Nom de la banque
+                                    Compte bancaire
                             </Col>
                             <Col sm={12} md={8}>
-                              <FormControl type="text" placeholder="Nom banque"
-                                  onChange={e => ProvideActions.updateBasicInfoEmprunteur({bankName: e.target.value})}
-                                   value={this.props.basicInfoEmprunteur.bankName}/>
+                                  <FormControl type="text" placeholder="Compte bancaire"
+                                      onChange={e => ProvideActions.updateBasicInfoEmprunteur({bankAccount: e.target.value})}
+                                      value={this.props.basicInfoEmprunteur.bankAccount}/>
                             </Col>
-                        </OverlayTrigger>
+                          </FormGroup>
+                     </OverlayTrigger>
+                     <OverlayTrigger placement="top" overlay={ tooltipBank }>
+                      <FormGroup controlId="formHorizontalBN" validationState={validateBankName}>
+                        <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                                Nom de la banque
+                        </Col>
+                        <Col sm={12} md={8}>
+                          <FormControl type="text" placeholder="Nom banque"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({bankName: e.target.value})}
+                               value={this.props.basicInfoEmprunteur.bankName}/>
+                        </Col>
                       </FormGroup>
+                    </OverlayTrigger>
                        <FormGroup>
                       <Col md={12} className='back-gallery'>
                           <Row className="margin-top-16 margin-bottom-16">

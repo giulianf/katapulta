@@ -35,7 +35,7 @@ export class Mailing {
             //     }
             //     info('MAIL sent')
             //  });
-            //
+            //nicolas.butacide@gmail.com
             let ses_mail = "From: 'Katapulta: Prêt coup de pouce' <" + mailTo + ">\n";
             ses_mail = ses_mail + "To: " + mailTo + "\n";
             ses_mail = ses_mail + "Subject: " + subject + "\n";

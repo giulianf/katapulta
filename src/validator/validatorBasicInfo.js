@@ -56,4 +56,11 @@ export default {
   validateVille(ville) {
       return !_.isNil(ville) && !_.isEmpty(ville) ? true : false;
   },
+  validateBankAccount(bankAccount) {
+      return !_.isNil(bankAccount) && !_.isEmpty(bankAccount) && _.size(bankAccount) == 16  ? true : false;
+  },
+  validateString(text) {
+      return !_.isNil(text) && !_.isEmpty(text) ? true : false;
+  },
+
 };

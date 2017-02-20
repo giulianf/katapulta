@@ -5,6 +5,7 @@ import async from 'async';
 import { Mailing } from '../common/Mailing';
 import { Event } from '../model/Event';
 import { ProfileDao } from './ProfileDao';
+import { ContractDao } from './ContractDao';
 import {MailManager} from '../common/MailManager';
 
 export class MailDao {
@@ -20,6 +21,7 @@ export class MailDao {
          try {
              let basicProfil = null;
              let basicInfoEmprunteur = null;
+             let contractPreteur = null;
 
              // insert a new event
              // send an email
@@ -51,11 +53,28 @@ export class MailDao {
                     });
                 },
                 (callback) => {
+                    const contractDao = new ContractDao(this._mongodb);
+
+                    contractDao.getContractPreteurById(contractId, (contract, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        contractPreteur = contract;
+
+                        callback();
+                    });
+                },
+                (callback) => {
                     if (_.isNil(basicProfil) || (!_.isNil(basicProfil)  && _.isNil(basicProfil.email) )) {
                         callback("Les informations de base ou l'adresse email n'existe pas.");
                         return;
                     }
-                    if (_.isNil(basicInfoEmprunteur) || (!_.isNil(basicInfoEmprunteur)  && _.isNil(basicInfoEmprunteur.id) )) {
+                    if (_.isNil(contractPreteur) || (!_.isNil(contractPreteur)  && _.isNil(contractPreteur.id) )) {
+                        callback("Les informations du contrat n'existe pas.");
+                        return;
+                    }
+                    if (_.isNil(contractPreteur.contractEmprunteur) || (!_.isNil(contractPreteur.contractEmprunteur)  && _.isNil(contractPreteur.contractEmprunteur.id) )) {
                         callback("Les informations de l'emprunteur n'existe pas.");
                         return;
                     }
@@ -72,7 +91,7 @@ export class MailDao {
                         debug('sending mail');
 
                         // check within factory which mail to sending
-                        const mailManager = new MailManager(this._client, basicProfil, basicInfoEmprunteur);
+                        const mailManager = new MailManager(this._client, basicProfil, contractPreteur.contractEmprunteur, contractPreteur);
 
                         mailManager.getMail(eventStatusMail, err =>{
                             if (err) {
