@@ -4,12 +4,13 @@ import fs from 'fs';
 import pdfMake from 'pdfmake';
 const PdfPrinter = require('pdfmake/src/printer');
 import { error, debug, info } from '../common/UtilityLog';
+import ConvertNumber from './ConvertNumber';
 
 export class ContractGenerator {
     constructor() {
     }
 
-    generateContract(res, basicProfil, basicInfoEmprunteur) {
+    generateContract(res, contractPreteur, basicProfil, basicInfoEmprunteur) {
         debug("Entering generateContract");
 
         this.createPdfBinary(basicProfil, basicInfoEmprunteur, (binary) => {
@@ -18,7 +19,7 @@ export class ContractGenerator {
         })
     }
 
-    createPdfBinary( basicProfil, basicInfoEmprunteur, callback ) {
+    createPdfBinary( basicProfil, contractPreteur, basicInfoEmprunteur, callback ) {
         debug("Entering createPdfBinary");
         const preteurParaph = `${basicProfil.prenom} ${_.toUpper(basicProfil.nom)}\n${basicProfil.address}\n${basicProfil.codePostal} ${basicProfil.ville}\n${basicProfil.numNational}\n${basicProfil.email}`
 
@@ -45,6 +46,22 @@ export class ContractGenerator {
             { text:"Numéro d'inscription à la Banque Carrefour des Entreprises :"},
             { text:`${basicInfoEmprunteur.numEntreprise}\n`, style: 'header'},
         ];
+        // pret value
+        const convertNumber = new ConvertNumber();
+        const pretValueNumber= contractPreteur.valuePret;
+        const pretValueString= convertNumber.calculeToString(pretValueNumber);
+
+        // emprunteur value
+        const emprunteurDureeNumber= basicInfoEmprunteur.dureeSouhaite;
+        const emprunteurDureeString= convertNumber.calculeToString(emprunteurDureeNumber);
+        const emprunteurPrctNumber= basicInfoEmprunteur.tauxInteretOffert;
+        const emprunteurPrctString= convertNumber.calculeToString(emprunteurPrctNumber);
+
+        // Bank value
+        const bankAccountPreteur = basicProfil.bankAccount;
+        const bankNamePreteur = basicProfil.bankName;
+        const bankAccountEmprunteur = basicInfoEmprunteur.bankAccount;
+        const bankNameEmprunteur = basicInfoEmprunteur.bankName;
 
         // price = new Intl.NumberFormat().format(price);
 
@@ -53,7 +70,7 @@ export class ContractGenerator {
             info: {
                 title: 'Prêt coup de pouce',
                 author: 'United-IT',
-                subject: 'Contrat prêt de coup de pouce'
+                subject: 'Contrat prêt coup de pouce'
             },
             pageSize: "A4",
             pageMargins: [25,20,25,50],
@@ -163,9 +180,9 @@ export class ContractGenerator {
                     text :
                     [
                         { text: "Le Prêteur accorde à l'Emprunteur, qui accepte, un prêt, d’un montant en principal de"},
-                        { text:" vingt mille euros", style: 'header'},
+                        { text:`${pretValueNumber}`, style: 'header'},
                         { text:"4", style: 'header', fontSize:8},
-                        { text:" (20.000,00 €)", style: 'header'},
+                        { text:` (${pretValueString}€)`, style: 'header'},
                         { text:"5", style: 'header', fontSize:8},
                         { text:" et ce conformément aux modalités définies au présent contrat, sans préjudice des conditions posées par le Décret du 28/04/2016 et par l’Arrêté du Gouvernement wallon du 22/09/2016.\n\n"},
                     ],
@@ -254,7 +271,7 @@ export class ContractGenerator {
                         { text: "La date de conclusion du présent prêt est celle du versement par le Prêteur à l’Emprunteur du montant prêté en " +
                         "principal, telle qu’elle ressort de l’extrait de compte bancaire.\n\n" +
                         "La durée du prêt est fixée à "},
-                        { text:" 6 (six)", style: 'header'},
+                        { text:`${emprunteurDureeNumber} (${emprunteurDureeString})`, style: 'header'},
                         { text:" ans "},
                         { text:"7", style: 'header', fontSize:8},
                         { text:" à compter de la date de sa conclusion.\n\n"},
@@ -271,9 +288,9 @@ export class ContractGenerator {
                     text :
                     [
                         { text: "Le présent prêt est productif d’un intérêt fixe annuel de "},
-                        { text:"deux virgule deux cent cinquante", style: 'header'},
+                        { text:`${emprunteurPrctString}`, style: 'header'},
                         { text:" pour cent ("},
-                        { text:"2.250 ", style: 'header'},
+                        { text:`${emprunteurPrctNumber}`, style: 'header'},
                         { text:"%)\n\n"},
                     ],
                     alignment:"left"
@@ -330,14 +347,14 @@ export class ContractGenerator {
                     [
                         { text: "Tout versement devant être effectué au profit du Prêteur en vertu du présent " +
                         "contrat sera réalisé sur le compte bancaire ouvert par celui-ci sous le numéro IBAN "},
-                        { text:"BE43 0682 5132 4401", style: 'header'},
+                        { text:`${bankAccountPreteur}`, style: 'header'},
                         { text:", auprès de la banque "},
-                        { text:"BELFIUS.\n\n", style: 'header'},
+                        { text:`${bankNamePreteur}\n\n`, style: 'header'},
                         { text: "Tout versement devant être effectué au profit de l’Emprunteur en vertu du présent " +
                         "contrat sera réalisé sur le compte bancaire ouvert par celui-ci sous le numéro IBAN "},
-                        { text:"BE19 3631 0410 7312", style: 'header'},
+                        { text: `${bankAccountEmprunteur}`, style: 'header'},
                         { text:", auprès de la banque "},
-                        { text:"ING.\n\n\n", style: 'header'},
+                        { text:`${bankNameEmprunteur}\n\n`, style: 'header'},
                     ],
                     alignment:"left"
             },

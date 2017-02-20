@@ -9,6 +9,7 @@ import async from 'async';
 import statusEmprunteur from '../data/statusEmprunteur';
 import statusPreteur from '../data/statusPreteur';
 const ObjectId = require('mongodb').ObjectId;
+import ValidatorBasic from '../validator/validatorBasicInfo';
 
 export class ContractDao {
     constructor(_mongodb) {
@@ -154,15 +155,30 @@ export class ContractDao {
         }
     }
 
-    requestNewPreteur(res, user, emprunteurId) {
+    requestNewPreteur(res, user, emprunteurId, valuePret) {
         info('Entering requestNewPreteur() data: ' + user + ' and emprunteurId: ' + emprunteurId );
 
          try {
              const userId = user;
              let contractsList = [];
+             let basicInfo;
              let basicInfoEmprunteur;
 
+             // before check if basic informations are filled in
             async.series([
+                (callback) => {
+                    const profileDao = new ProfileDao(this._mongodb);
+
+                    profileDao.getClientByUserId(userId, (basicInfo, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        ValidatorBasic.validateProfileTabBasic(basicInfo);
+
+                        callback();
+                    });
+                },
                 (callback) => {
                     const profileDao = new ProfileDao(this._mongodb);
 
@@ -190,7 +206,7 @@ export class ContractDao {
                     debug('step: ' + step);
 
 
-                    const preteur = new ContractsPreteur(null, userId, null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, step);
+                    const preteur = new ContractsPreteur(null, userId, null, userId, basicInfoEmprunteur.id , basicInfoEmprunteur.denominationSocial, valuePret, createDateMongo(), status, progress, step);
 
                     contractPreteur.insertOne( preteur, {
                         returnOriginal: false
@@ -549,7 +565,7 @@ export class ContractDao {
                 },
                 (callback) => {
                     const contractGenerated = new ContractGenerator();
-                    contractGenerated.generateContract(res, basicProfil, basicInfoEmprunteur);
+                    contractGenerated.generateContract(res, contractPreteur, basicProfil, basicInfoEmprunteur);
                 }
             ], (err) => {
                 error("Unable to generateContract " , err);

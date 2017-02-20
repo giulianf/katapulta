@@ -210,11 +210,11 @@ class ProvideService {
       });
     }
 
-    requestNewPreteur(profile, emprunteurId) {
+    requestNewPreteur(profile, emprunteurId, valuePret) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
               `${REQUEST_PRETEUR_API}`,
-              {user_id: profile.user_id, emprunteurId: emprunteurId }
+              {user_id: profile.user_id, emprunteurId: emprunteurId, valuePret: valuePret }
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

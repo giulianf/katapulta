@@ -43,6 +43,8 @@ export class BasicInfoEmprunteur {
      * @param  {Date} endDate                       end date for the emprunt
      * @param  {Boolean} isOurSelection                      This entrepreneur is our selection
      * @param  {Boolean} isSociete                is independant or societe
+     * @param  {Boolean} bankAccount                compte bancaire
+     * @param  {Boolean} bankName                nom de la banque
      * @param  {type} image                       description
      * @param  {type} logo                       description
      * @return {type}                             description
@@ -53,7 +55,7 @@ export class BasicInfoEmprunteur {
         representantLegalPrenom, representantLegalNom, representantLegalFonction, representantLegalAddress, representantLegalCP, representantLegalVille, representantLegalNN,
         sectorActivite, email, numTel, dateConstitution, chiffreAffaire, nbEmploye,
         capital, actionnariat,destinationPret, montantSouhaite,dureeSouhaite, tauxInteretOffert, siteWeb,
-        isFavoris, createDate, endDate, isOurSelection, isSociete, image, logo) {
+        isFavoris, createDate, endDate, isOurSelection, isSociete, bankAccount, bankName, image, logo) {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
                 this.status= emprunteur.status;
@@ -91,48 +93,52 @@ export class BasicInfoEmprunteur {
                 this.endDate= emprunteur.endDate;
                 this.isOurSelection= emprunteur.isOurSelection;
                 this.isSociete= emprunteur.isSociete;
+                this.bankAccount= emprunteur.bankAccount;
+                this.bankName= emprunteur.bankName;
                 this.image= emprunteur.image;
                 this.logo= emprunteur.logo;
                 this.createDate= emprunteur.createDate;
             } else {
                 this.user_id= user_id;
-                this.status= status;
-                this.denominationSocial= denominationSocial;
-                this.formeJuridique= formeJuridique ;
-                this.numEntreprise= numEntreprise ;
-                this.codePostalSiegeSocial= codePostalSiegeSocial ;
-                this.adresseSiegeSocial= adresseSiegeSocial ;
-                this.villeSiegeSocial= villeSiegeSocial ;
-                this.adresseSiegeExploitation= adresseSiegeExploitation ;
-                this.codePostalSiegeExploitation= codePostalSiegeExploitation ;
-                this.villeSiegeExploitation= villeSiegeExploitation ;
-                this.representantLegalPrenom= representantLegalPrenom;
-                this.representantLegalNom= representantLegalNom;
-                this.representantLegalFonction= representantLegalFonction;
-                this.representantLegalAddress= representantLegalAddress;
-                this.representantLegalCP= representantLegalCP;
-                this.representantLegalVille= representantLegalVille;
-                this.representantLegalNN= representantLegalNN;
-                this.sectorActivite= sectorActivite ;
-                this.email= email ;
-                this.numTel= numTel;
-                this.dateConstitution= getDateISO(dateConstitution);
-                this.chiffreAffaire= chiffreAffaire;
-                this.nbEmploye= nbEmploye;
-                this.capital= capital;
-                this.actionnariat= actionnariat;
-                this.destinationPret= destinationPret;
-                this.montantSouhaite= montantSouhaite;
-                this.dureeSouhaite= dureeSouhaite;
-                this.tauxInteretOffert= tauxInteretOffert;
-                this.siteWeb= siteWeb;
-                this.isFavoris= isFavoris;
-                this.endDate= endDate;
-                this.isOurSelection= isOurSelection;
-                this.isSociete= isSociete;
-                this.image= image;
-                this.logo= logo;
-                this.createDate= createDate;
+                this.status= 'INSCRIPTION';
+                this.denominationSocial= '';
+                this.formeJuridique= '' ;
+                this.numEntreprise= '' ;
+                this.codePostalSiegeSocial= '' ;
+                this.adresseSiegeSocial= '' ;
+                this.villeSiegeSocial= '' ;
+                this.adresseSiegeExploitation= '' ;
+                this.codePostalSiegeExploitation= '' ;
+                this.villeSiegeExploitation= '' ;
+                this.representantLegalPrenom= '';
+                this.representantLegalNom= '';
+                this.representantLegalFonction= '';
+                this.representantLegalAddress= '';
+                this.representantLegalCP= '';
+                this.representantLegalVille= '';
+                this.representantLegalNN= '';
+                this.sectorActivite= '' ;
+                this.email= '' ;
+                this.numTel= '';
+                this.dateConstitution= getDateISO('01/09/1989');
+                this.chiffreAffaire= 0;
+                this.nbEmploye= 0;
+                this.capital= 0;
+                this.actionnariat= [];
+                this.destinationPret= '';
+                this.montantSouhaite= 0;
+                this.dureeSouhaite= 4;
+                this.tauxInteretOffert= 2.25;
+                this.siteWeb= 'http://www.';
+                this.isFavoris= false;
+                this.endDate= '';
+                this.isOurSelection= false;
+                this.isSociete= false;
+                this.bankAccount= 'BE';
+                this.bankName= '';
+                this.image= [];
+                this.logo= '';
+                this.createDate= '';
             }
     }
 
@@ -144,6 +150,7 @@ export class BasicInfoEmprunteur {
         ', numTel '+this.numTel +', dateConstitution '+this.dateConstitution +', chiffreAffaire '+this.chiffreAffaire+', nbEmploye '+this.nbEmploye +
         ', capital '+this.capital+', actionnariat '+this.actionnariat +', destinationPret '+this.destinationPret +', montantSouhaite '+this.montantSouhaite+
         ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+
+        ', bankAccount '+this.bankAccount+', bankName '+this.bankName+
         ', end date '+ this.endDate+', Our Selection '+this.isOurSelection+' and Is in societe '+this.isSociete;
     }
 }

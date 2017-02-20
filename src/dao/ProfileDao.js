@@ -4,7 +4,6 @@ import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDay
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import async from 'async';
-import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 let soap = require('soap');
 const ObjectId = require('mongodb').ObjectId;
@@ -83,8 +82,7 @@ export class ProfileDao {
               if (!_.isNil(client)) {
                   basicProfil = new BasicInfo(client);
               } else {
-                  basicProfil = new BasicInfo(null, userId, '' , '', '01/09/1939',
-                    null, email, '', '', '', false, null, createDateMongo());
+                  basicProfil = new BasicInfo(null, userId, email);
               }
               callback(basicProfil);
           });
@@ -107,8 +105,6 @@ export class ProfileDao {
          try {
              async.series([
                 (callback) => {
-                    // Validate basic Info
-                    ValidatorBasic.validateProfileTabBasic(basicInfo);
 
                     // Find some documents
                     clients = this._mongodb.collection('clients');
@@ -210,9 +206,7 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '','',
-                  '','','','','', '', '','01/09/1989',
-                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, null, null, false, false, [], null);
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId);
               }
 
               callback(basicInfoEmprunteur);
@@ -242,9 +236,7 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId, 'INSCRIPTION', '', '', '', '', '', '', '', '','', '','',
-                  '','','','','', '', '','01/09/1989',
-                   0, 0, 0, [], '', 0, 4, 2.25, 'http://www.', false, null, null, false, false, [], null);
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId);
               }
 
               callback(basicInfoEmprunteur);

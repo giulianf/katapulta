@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock, Checkbox } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock, Checkbox, OverlayTrigger, Tooltip, Panel } from 'react-bootstrap';
 // import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideActions from '../../../actions/ProvideActions';
@@ -63,7 +63,12 @@ class ProfileTabBasic extends Component {
         const validateAddress = Validator.validateAddress(this.props.basicInfo.address) ? "success" : "error";
         const validateCodePostal = Validator.validateCodePostal(this.props.basicInfo.codePostal) ? "success" : "error";
         const validateVille = Validator.validateVille(this.props.basicInfo.ville) ? "success" : "error";
+        const validateBankAccount = Validator.validateBankAccount(this.props.basicInfo.bankAccount ) ? "success" : "error";
+        const validateBankName = Validator.validateString(this.props.basicInfo.bankName ) ? "success" : "error";
 
+        const tooltipBank = (
+          <Tooltip id="tooltipBank">Uniquement si vous désirez preter</Tooltip>
+        );
         return (
             <div key='profileTabBasic'>
                 <Col md={9} sm={9} className='space-top-bottom'>
@@ -145,6 +150,33 @@ class ProfileTabBasic extends Component {
                               onChange={e => ProvideActions.updateBasicInfo({ville: e.target.value})}  value={this.props.basicInfo.ville}/>
                         </Col>
                       </FormGroup>
+                      <Panel collapsible defaultExpanded header="Vous désirez preter">
+                          <FormGroup controlId="formHorizontalBA" validationState={validateBankAccount}>
+                          <OverlayTrigger placement="top" overlay={ tooltipBank }>
+                            <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                              Compte bancaire
+                            </Col>
+                            <Col sm={12} md={8}>
+                              <FormControl type="text" placeholder="Compte bancaire"
+                                  onChange={e => ProvideActions.updateBasicInfo({bankAccount: e.target.value})}
+                                  value={this.props.basicInfo.bankAccount}/>
+                            </Col>
+                            </OverlayTrigger>
+                          </FormGroup>
+                          <FormGroup controlId="formHorizontalBN" validationState={validateBankName}>
+                          <OverlayTrigger placement="top" overlay={ tooltipBank }>
+                            <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
+                              Nom de la banque
+                            </Col>
+                            <Col sm={12} md={8}>
+                              <FormControl type="text" placeholder="Nom banque"
+                                  onChange={e => ProvideActions.updateBasicInfo({bankName: e.target.value})}
+                                   value={this.props.basicInfo.bankName}/>
+                            </Col>
+                            </OverlayTrigger>
+                          </FormGroup>
+                      </Panel>
+
                       <FormGroup controlId="formHorizontalisEmp" >
                         <Col sm={12} md={8}>
                             <Checkbox checked={ this.props.basicInfo.isEmprunteur } onChange={e => ProvideActions.updateBasicInfo({isEmprunteur: !this.props.basicInfo.isEmprunteur})} >

@@ -192,10 +192,11 @@ app.post('/api/requestNewPreteur', (req, res) => {
 
     const user = req.body.user_id;
     const emprunteurId = req.body.emprunteurId;
+    const valuePret = req.body.valuePret;
 
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.requestNewPreteur(res, user, emprunteurId);
+    contractDao.requestNewPreteur(res, user, emprunteurId, valuePret);
 });
 
 app.post('/api/updateFavoris', (req, res) => {

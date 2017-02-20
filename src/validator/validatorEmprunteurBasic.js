@@ -226,5 +226,8 @@ export default {
   validateNational(numNational) {
       return !_.isNil(numNational) && !_.isEmpty(numNational) && _.size(numNational) == 11  ? true : false;
   },
+  validateBankAccount(bankAccount) {
+      return !_.isNil(bankAccount) && !_.isEmpty(bankAccount) && _.size(bankAccount) == 16  ? true : false;
+  },
 
 };

@@ -196,8 +196,8 @@ export default {
     /**
      * get contracts emprunteur within TAB contract emprunteur
      */
-    requestNewPreteur: (profile, emprunteurId) => {
-        let promise = ProvideService.requestNewPreteur(profile, emprunteurId);
+    requestNewPreteur: (profile, emprunteurId, valuePret) => {
+        let promise = ProvideService.requestNewPreteur(profile, emprunteurId, valuePret);
 
         dispatchAsync(promise, {
           request: ProvideConstants.NEW_CONTRACTS_PRETEUR,
