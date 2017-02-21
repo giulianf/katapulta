@@ -17,8 +17,10 @@ class EmprunteurComponent extends Component {
             return null;
         }
 
-        const startColor = dataSociete.isFavoris ? 'fa-2x startGold' : 'fa-2x';
-        const endDate = getFullBelgiumDate( getDateISO(dataSociete.endDate));
+        const emprunteur = dataSociete.emprunteur;
+
+        const startColor = emprunteur.isFavoris ? 'fa-2x startGold' : 'fa-2x';
+        const endDate = getFullBelgiumDate( getDateISO(emprunteur.endDate));
 
         const tooltipEndDate = (
           <Tooltip id="tooltipEndDate"><strong>Date de fin pour l'emprunt</strong></Tooltip>
@@ -35,23 +37,23 @@ class EmprunteurComponent extends Component {
         const favoriButton = this.props.loggedIn ? (
             <OverlayTrigger placement="top" overlay={favoriTooltip}>
                 <Button className="favoris-info" >
-                    <Glyphicon glyph='star' className={startColor}  onClick={ e => this.props.onClickFavori( profile , dataSociete ) } />
+                    <Glyphicon glyph='star' className={startColor}  onClick={ e => this.props.onClickFavori( profile , emprunteur ) } />
                 </Button>
             </OverlayTrigger>
         ) : null;
 
-        const logosrc = dataSociete.logo ? dataSociete.logo.src : null;
-        const logoheigth = dataSociete.logo ? dataSociete.logo.height : null;
+        const logosrc = emprunteur.logo ? emprunteur.logo.src : null;
+        const logoheigth = emprunteur.logo ? emprunteur.logo.height : null;
 
         return (
-            <Col key={dataSociete.emprunteurId} xs={12} sm={6} md={this.props.colmd} lg={this.props.col}>
+            <Col key={emprunteur.id} xs={12} sm={6} md={this.props.colmd} lg={this.props.col}>
                 <div className="widget user-view-style-1">
                     <div className="thumbnail">
                             <Image src={logosrc}/>
                                 { favoriButton }
                         <div className="user-info">
-                            <p className="user-name">{dataSociete.denominationSocial}</p>
-                            <p className="user-type administrator"><span className="badge">{dataSociete.niveau}</span></p>
+                            <p className="user-name">{emprunteur.denominationSocial}</p>
+                            <p className="user-type administrator"><span className="badge">{emprunteur.niveau}</span></p>
                         </div>
 
                         <div className="caption">
@@ -59,7 +61,7 @@ class EmprunteurComponent extends Component {
                                 <OverlayTrigger placement="top" overlay={tooltip}>
                                     <div>
                                         <Glyphicon glyph='stats' className='fa-2x bgm-green' />
-                                        <span className="user-number-tickets">{dataSociete.chiffreAffaire}€</span>
+                                        <span className="user-number-tickets">{emprunteur.chiffreAffaire}€</span>
                                         <span className="lbl-user-number-tickets">Chiffre d'affaire</span>
                                     </div>
                                </OverlayTrigger>
@@ -70,13 +72,13 @@ class EmprunteurComponent extends Component {
                                     <li>
                                         <Glyphicon glyph='globe'/>
                                         <span>
-                                            <a href="#">{dataSociete.villeSiegeExploitation}</a>
+                                            <a href="#">{emprunteur.villeSiegeExploitation}</a>
                                         </span>
                                     </li>
                                     <li>
                                         <span className="fa fa-cubes"></span>
                                         <span>
-                                            <a href="#">{dataSociete.sectorActivite}</a>
+                                            <a href="#">{emprunteur.sectorActivite}</a>
                                         </span>
                                     </li>
                                     <li>
@@ -90,7 +92,7 @@ class EmprunteurComponent extends Component {
                                         </span>
                                     </li>
                                     <li>
-                                        <Glyphicon glyph='align-center'/> <span><a target="_blank" href={`http://${dataSociete.siteWeb}`}>{dataSociete.siteWeb}</a></span>
+                                        <Glyphicon glyph='align-center'/> <span><a target="_blank" href={`http://${emprunteur.siteWeb}`}>{emprunteur.siteWeb}</a></span>
                                     </li>
                                 </ul>
                             </div>

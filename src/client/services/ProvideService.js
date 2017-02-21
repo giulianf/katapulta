@@ -253,10 +253,10 @@ class ProvideService {
       });
     }
 
-    getExplorerByEmprunteurId(userId, emprunteurId) {
+    getExplorerBycontractEmprunteurId(userId, contractEmprunteurId) {
       return new bluebird( (resolve, reject) => {
           ApiService.get(
-              `${GET_EXPLORERS_BY_EMPR_ID_API}${userId}/${ emprunteurId }`
+              `${GET_EXPLORERS_BY_EMPR_ID_API}${userId}/${ contractEmprunteurId }`
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);
@@ -267,11 +267,11 @@ class ProvideService {
       });
     }
 
-    favorisEmprunteur(user_id, emprunteurId, removed) {
+    favorisEmprunteur(user_id, contractEmprunteurId, removed) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
              UPDATE_FAVORI_API ,
-             {user_id: user_id, emprunteurId:emprunteurId, removed: removed}
+             {user_id: user_id, contractEmprunteurId:contractEmprunteurId, removed: removed}
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

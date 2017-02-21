@@ -50,7 +50,7 @@ const routes = (
         <Route path='/' component={Layout} onEnter={ requireBasicAuth }>
             <IndexRoute component={IndexPage} onEnter={ requireBasicAuth } />
             <Route path="explorer" component={Explorer} onEnter={ requireBasicAuth } />
-            <Route path="/emprunteur/:emprunteurId" component={ Emprunteur } onEnter={ requireBasicAuth } />
+            <Route path="/emprunteur/:contractEmprunteurId" component={ Emprunteur } onEnter={ requireBasicAuth } />
             <Route path='simulateur' component={Simulateur} onEnter={ requireBasicAuth }/>
             <Route path='/faq' component={Faq} onEnter={ requireBasicAuth }/>
             <Route path='/profile' component={Profile} onEnter={ requireAuth } />

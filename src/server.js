@@ -212,12 +212,12 @@ app.post('/api/updateFavoris', (req, res) => {
     debug("Entering /api/updateFavoris ");
 
     const user_id = req.body.user_id;
-    const emprunteurId = req.body.emprunteurId;
+    const contractEmprunteurId = req.body.contractEmprunteurId;
     const removed = req.body.removed;
 
     const profileDao = new ProfileDao(_mongodb);
 
-    profileDao.updateFavoris(res, user_id, emprunteurId, removed);
+    profileDao.updateFavoris(res, user_id, contractEmprunteurId, removed);
 });
 
 app.get('/api/getAdminContracts', (req, res) => {
@@ -279,15 +279,15 @@ app.get('/api/getExplorers/:user/:pageKey', (req, res) => {
     explorerDao.getExplorers(res, user, pageKey);
 });
 
-app.get('/api/getExplorerByEmprunteurId/:userId/:emprunteurId', (req, res) => {
-    debug("Entering /api/getExplorerByEmprunteurId ");
+app.get('/api/getExplorerBycontractEmprunteurId/:userId/:contractEmprunteurId', (req, res) => {
+    debug("Entering /api/getExplorerBycontractEmprunteurId ");
 
     const userId = req.params.userId;
-    const emprunteurId = req.params.emprunteurId;
+    const contractEmprunteurId = req.params.contractEmprunteurId;
 
     const explorerDao = new ExplorerDao(_mongodb);
 
-    explorerDao.getExplorerByEmprunteurId(res, userId, emprunteurId);
+    explorerDao.getExplorerBycontractEmprunteurId(res, userId, contractEmprunteurId);
 });
 
 /******************************************/

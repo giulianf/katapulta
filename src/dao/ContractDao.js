@@ -81,7 +81,7 @@ export class ContractDao {
      * requestNewEmprunt - request a new contract for emprunt
      *
      * @param  {type} res  description
-     * @param  {type} user description
+     * @param  {type} user desciption
      * @return {type}      description
      */
     requestNewEmprunt(res, user) {
@@ -114,7 +114,7 @@ export class ContractDao {
                     debug('Status contract: '+ status);
                     const progress =  getProgress(statusList, status);
                     debug('Progress: ' + progress);
-                    const emprunteur = new ContractsEmprunteur(null, userId, basicInfoEmprunteur , basicInfoEmprunteur.denominationSocial, createDateMongo(), status, progress, getStepWorkflow(statusList, status));
+                    const emprunteur = new ContractsEmprunteur( null, userId, basicInfoEmprunteur );
 
                     contractEmprunteurs.insertOne( emprunteur, {
                         returnOriginal: false
@@ -128,6 +128,7 @@ export class ContractDao {
                     });
                 },
                 (callback) => {
+                    debug("get contract emprunt list")
                     this.getContractEmprunteurList(user, (contracts, err) => {
                         if (err) {
                             throw new Error(err);
@@ -135,8 +136,6 @@ export class ContractDao {
                         }
 
                         contractsList = contracts;
-
-                        debug("****  askNewEmprunt: " + JSON.stringify( contractsList ) );
 
                         res.end( JSON.stringify( contractsList ) );
                     });
@@ -193,18 +192,7 @@ export class ContractDao {
                 (callback) => {
                     const contractPreteur = this._mongodb.collection('contractPreteur');
 
-                    const statusList = getStatusDetail(statusPreteur);
-                    const status = this.getStatus(statusList, 1);
-                    debug('Status contract: '+ status);
-                    debug('Status contracts size: '+  _.size(statusList));
-                    debug('Status contract findIndex: '+  _.findIndex(statusList ,{"label": status}) );
-                    const progress =  getProgress(statusList, status);
-                    debug('Progress: ' + progress);
-                    const step =  getStepWorkflow(statusList, status);
-                    debug('step: ' + step);
-
-
-                    const preteur = new ContractsPreteur(null, userId, null, userId, emprunteurContract, valuePret, createDateMongo(), status, progress, step);
+                    const preteur = new ContractsPreteur(null, userId, emprunteurContract.id, valuePret);
 
                     contractPreteur.insertOne( preteur, {
                         returnOriginal: false
@@ -279,6 +267,55 @@ export class ContractDao {
             error('error: ' + e);
             res.status(500).send('Problème pendant la récupération des contrats emprunteur. ' + e.message);
         }
+    }
+
+    getContractEmprunteurList(user, callbackFunction) {
+        try {
+            const userId = user;
+            let contractsList = [];
+
+
+           async.series([
+               (callback) => {
+                   const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
+
+                   // Find some documents
+                   contractEmprunteurs.find({'user_id': userId}).sort( { _id: -1 } ).toArray( function(err, contracts) {
+                       if (err) {
+                           callback(err);
+                           return;
+                       }
+
+                       const contractSize = _.size( contracts );
+                       debug("*****  contract found: " + contractSize );
+
+                       for(let i = 0 ; i < contractSize ; i++) {
+                           const contract = contracts[i];
+
+                               contractsList.push( new ContractsEmprunteur(contract) );
+                       }
+
+                       callback();
+                   });
+               },
+               (callback) => {
+                   debug("****  getContractEmprunteurList: " + JSON.stringify( contractsList ) );
+
+                   callbackFunction( contractsList );
+               }
+           ], (err) => {
+               error("Unable to getContractEmprunteurList " , err);
+               //   When it's done
+               if (err) {
+                   error('error: ' + err);
+                   callbackFunction(null, err);
+                   return;
+               }
+           });
+       } catch( e ) {
+           error('error: ' + e);
+           callbackFunction(null, e);
+       }
     }
 
     getContractEmprunteurById(emprunteurContractId, callbackFunction) {

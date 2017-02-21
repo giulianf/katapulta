@@ -36,9 +36,9 @@ class Emprunteur extends Component {
     }
 
     componentDidMount() {
-        const emprunteurId = this.props.params.emprunteurId;
+        const contractEmprunteurId = this.props.params.contractEmprunteurId;
 
-        ProvideActions.getExplorerByEmprunteurId( this.state.profile, emprunteurId );
+        ProvideActions.getExplorerBycontractEmprunteurId( this.state.profile, contractEmprunteurId );
 
         ProvideStore.addChangeListener(this._onChange);
     }
@@ -78,7 +78,8 @@ class Emprunteur extends Component {
         const favoriButton = this.state.loggedIn ? (
             <OverlayTrigger placement="top" overlay={favoriTooltip}>
                 <Button className="favoris-info" bsStyle="link" >
-                    <Glyphicon glyph='star' className={startColor} onClick={e => ProvideActions.favorisEmprunteur(this.state.profile , this.state.emprunteur)} />
+                    <Glyphicon glyph='star' className={startColor}
+                        onClick={e => ProvideActions.favorisEmprunteur(this.state.profile , this.props.params.contractEmprunteurId, this.state.emprunteur.isFavoris)} />
                 </Button>
             </OverlayTrigger>
         ) : null;

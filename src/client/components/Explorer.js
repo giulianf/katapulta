@@ -78,7 +78,7 @@ export default class Explorer extends Component {
     render () {
       const explorer = _.map(this.state.explorer.selectedExplorers , expl => {
           return (
-                  <EmprunteurComponent key={expl.emprunteurId} dataSociete={expl} profile={this.state.profile}
+                  <EmprunteurComponent key={expl.id} dataSociete={expl} profile={this.state.profile}
                       loggedIn={this.state.loggedIn} colmd={4} col={3} onClickFavori={ProvideActions.favorisEmprunteur}/>
           )
       });

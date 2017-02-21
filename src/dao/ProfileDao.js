@@ -351,7 +351,7 @@ export class ProfileDao {
         }
     }
 
-    updateFavoris(res, user_id, emprunteurId, removed) {
+    updateFavoris(res, user_id, contractEmprunteurId, removed) {
         info('Entering updateFavoris() user: ' + user_id);
 
         let clients;
@@ -385,14 +385,14 @@ export class ProfileDao {
                     clients = this._mongodb.collection('clients');
 
                     if (removed) {
-                        debug('Favoris to remove: '+ emprunteurId );
+                        debug('Favoris to remove: '+ contractEmprunteurId );
                         _.remove(basicProfil.favoris, f => {
-                            return _.isEqual(f.emprunteurId, emprunteurId);
+                            return _.isEqual(f.contractEmprunteurId, contractEmprunteurId);
                         });
                     } else {
-                        debug('Favoris to add: '+ emprunteurId );
+                        debug('Favoris to add: '+ contractEmprunteurId );
 
-                        basicProfil.favoris.push({emprunteurId: emprunteurId});
+                        basicProfil.favoris.push({contractEmprunteurId: contractEmprunteurId});
                         basicProfil.favoris = _.sortedUniq(basicProfil.favoris);
                     }
                     // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {

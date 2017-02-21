@@ -3,6 +3,7 @@ import { error, debug, info } from '../common/UtilityLog';
 import { getCurrentDate, getBelgiumDate, getYear, addYear} from '../common/Utility';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import { ProfileDao } from './ProfileDao';
+import { ContractDao } from './ContractDao';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
@@ -27,7 +28,7 @@ export class ExplorerDao {
 
          try {
              const EXPLORERS_PAGE = 8;
-             let contractsPreteur = [];
+             let contractEmprunteurList = [];
              const userId = user;
              let basicProfil = null;
              let contractsList = [];
@@ -50,19 +51,20 @@ export class ExplorerDao {
                     const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
 
                     // Find some documents
-                    contractEmprunteurs.find( { status: { $eq: 'MISE_EN_LIGNE' } } ).toArray( function(err, contracts) {
+                    contractEmprunteurs.find( { status: { $eq: 'MISE_EN_LIGNE' } } ,  { emprunteur: 1, creationDate:1 } ).toArray( (err, contracts) => {
                         if (err) {
                             callback(err);
                             return;
                         }
 
                         const contractSize = _.size( contracts );
-                        debug("*****  contract found: " + contractSize );
+                        debug("*****  contract Size: " + contractSize );
 
                         for(let i = 0 ; i < contractSize ; i++) {
-                            const contract = contracts[i];
+                            const contract = new ContractsEmprunteur(contracts[i]) ;
+                            debug("*****  contract found: " + contract.toLog() );
 
-                            contractsList.push( new ContractsEmprunteur(contract) );
+                            contractEmprunteurList.push( contract );
                         }
 
                         callback();
@@ -75,41 +77,21 @@ export class ExplorerDao {
                     const limit = (pageKey) * EXPLORERS_PAGE;
                     debug('limit: ' + limit);
 
-                    async.eachSeries(contractsList, (contractDB, callback) => {
-                       info('contract user id: ' + contractDB.user_id);
+                    _.forEach(contractEmprunteurList, contractEmprunteur => {
+                        const emprunteur = contractEmprunteur.emprunteur;
+                        info('contract user id: ' + contractEmprunteur.user_id);
 
                        // Find some documents
-                       // emprunteurs.find().skip(skip).limit(limit).toArray(function(err, contracts) {
-                       emprunteurs.findOne({ user_id: contractDB.user_id }, function(err, emprunteur) {
-                           if (err) {
-                               error('No emprunteur found: ', err);
-                               callback();
-                           }
-                           info('emprunteur ' + emprunteur);
-                        //    callback();
-                           const contractSize = _.size( emprunteur );
-                           debug("*****  contract found: " + contractSize);
-                           // const favorisEmprunteur = [new ThumbEmprunteur(1, 'kata entreprise', 1600000, 'Boulanger', 'Meilleur artisan de la région', null, moment(), 'BON', true, 'Bruxelles'),
-                           // new ThumbEmprunteur(2, 'BEST entreprise', 110000, 'Numerisation informative', "Les Kaddors de l'IT", null, moment(), 'EXCELLENT', true, 'Charleroi')];
-
-                        //    for(let i = 0 ; i < contractSize ; i++) {
-                               const contract = new BasicInfoEmprunteur(emprunteur);
-                               debug("****  contract wihout images: " + contract.toLog() );
-
-                               // remove images and logo from JSON (performane)
-                               delete contract.image;
-
-                               contractsPreteur.push( contract );
-                        //    }
+                           delete emprunteur.image;
 
                            for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
                                const favori = basicProfil.favoris[j];
-                               const emprunteurId = (favori.emprunteurId).toString();
-                               debug("favori id: " + emprunteurId);
+                               const contractEmprunteurId = (favori.contractEmprunteurId).toString();
+                               debug("favori id: " + contractEmprunteurId);
 
-                               const contrats = _.find(contractsPreteur, c => {
+                               const contrats = _.find(contractsList, c => {
                                    const id = (c.id).toString();
-                                   return _.isEqual( id, emprunteurId);
+                                   return _.isEqual( id, contractEmprunteurId);
                                });
                                debug("contract size with favoris: " + contrats);
 
@@ -122,12 +104,15 @@ export class ExplorerDao {
                                }
                            }
 
-                           callback();
-                       });
-                   }, callback);
+                    //    });
+                //    }, callback);
+                    });
+
+                    callback();
+
                 },
                 (callback) => {
-                    res.end( JSON.stringify( contractsPreteur ) );
+                    res.end( JSON.stringify( contractEmprunteurList ) );
                 }
             ], (err) => {
                 error("Unable to getEmprunteurBasicInfo " , err);
@@ -144,14 +129,14 @@ export class ExplorerDao {
     }
 
     /**
-     * getExplorerByEmprunteurId - description
+     * getExplorerBycontractEmprunteurId - description
      *
      * @param  {type} res      description
      * @param  {type} user     description
      * @return {type}          description
      */
-    getExplorerByEmprunteurId(res, userId, emprunteurId) {
-        info('Entering getExplorerByEmprunteurId() user id: ' + userId + ' and emprunteur Id: ' + emprunteurId);
+    getExplorerBycontractEmprunteurId(res, userId, contractEmprunteurId) {
+        info('Entering getExplorerBycontractEmprunteurId() user id: ' + userId + ' and contract emprunteur Id: ' + contractEmprunteurId);
 
          try {
              let contractEmprunteur = null;
@@ -172,24 +157,27 @@ export class ExplorerDao {
                     });
                 },
                 (callback) => {
-                    const emprunteurs = this._mongodb.collection('emprunteurs');
+                    const contractDao = new ContractDao(this._mongodb);
 
-                    // Find some documents
-                    emprunteurs.findOne({'_id': new ObjectId(emprunteurId)}, (err, emprunteur) => {
-                        contractEmprunteur = new BasicInfoEmprunteur( emprunteur );
+                    contractDao.getContractEmprunteurById(contractEmprunteurId, (contract, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
 
-                        debug("*****  emprunteur found: " + contractEmprunteur.toLog());
+                        contractEmprunteur = contract;
+
+                        debug("***** contract emprunteur found: " + contractEmprunteur.toLog());
 
                         for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
                             const favori = basicProfil.favoris[j];
-                            const emprunteurId = (favori.emprunteurId).toString();
-                            debug("favori id: " + emprunteurId);
+                            const contractEmprunteurId = (favori.contractEmprunteurId).toString();
+                            debug("favori id: " + contractEmprunteurId);
 
-                            if (_.isEqual(emprunteurId, contractEmprunteur.id.toString())) {
+                            if (_.isEqual(contractEmprunteurId, contractEmprunteur.id.toString())) {
                                 emprunteur.isFavoris = true;
                             }
                         }
-
                         callback();
                     });
                 },
@@ -197,7 +185,7 @@ export class ExplorerDao {
                     res.end( JSON.stringify( contractEmprunteur ) );
                 }
             ], (err) => {
-                error("Unable to getExplorerByEmprunteurId " , err);
+                error("Unable to getExplorerBycontractEmprunteurId " , err);
                 //   When it's done
                 if (err) {
                     res.status(500).json(err);

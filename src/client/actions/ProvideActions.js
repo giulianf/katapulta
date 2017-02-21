@@ -82,9 +82,9 @@ export default {
         }, { });
 
     },
-    getExplorerByEmprunteurId: ( profile, emprunteurId ) => {
+    getExplorerBycontractEmprunteurId: ( profile, contractEmprunteurId ) => {
         const userId = profile ? profile.user_id : null;
-        let promise = ProvideService.getExplorerByEmprunteurId(userId, emprunteurId);
+        let promise = ProvideService.getExplorerBycontractEmprunteurId(userId, contractEmprunteurId);
 
         dispatchAsync(promise, {
           request: ProvideConstants.GET_EXPLORERS_BY_EMPR_ID,
@@ -119,9 +119,9 @@ export default {
     updateBasicInfoEmprunteur: newValue => {
         dispatch(ProvideConstants.UPDATE_BASIC_INFO_EMPRUNTEUR, {newValue});
     },
-    favorisEmprunteur: (profile, basicInfoEmprunteur) => {
+    favorisEmprunteur: (profile, contractEmprunteurId, isFavoris) => {
         // dataSociete.isFavoris if it is true , user click to remove .
-        let promise = ProvideService.favorisEmprunteur(profile.user_id, basicInfoEmprunteur.id , basicInfoEmprunteur.isFavoris);
+        let promise = ProvideService.favorisEmprunteur(profile.user_id, contractEmprunteurId, isFavoris);
 
         dispatchAsync(promise, {
           request: ProvideConstants.FAVORIS_EMPRUNTEUR,

@@ -59,7 +59,7 @@ export class BasicInfoEmprunteur {
             if (!_.isNil(emprunteur)) {
                 this.user_id= emprunteur.user_id;
                 this.status= emprunteur.status;
-                this.id= emprunteur._id;
+                this.id= emprunteur._id ? emprunteur._id : emprunteur.id;
                 this.denominationSocial= emprunteur.denominationSocial;
                 this.formeJuridique= emprunteur.formeJuridique ;
                 this.numEntreprise= emprunteur.numEntreprise ;
@@ -146,7 +146,11 @@ export class BasicInfoEmprunteur {
         return 'id: ' + this.id + ', user_id: ' + this.user_id + ', denominationSocial: ' +this.denominationSocial + ', formeJuridique: ' + this.formeJuridique +
         ', numEntreprise: ' + this.numEntreprise + ', codePostalSiegeSocial ' + this.codePostalSiegeSocial +', adresseSiegeSocial '+this.adresseSiegeSocial+
         ', villeSiegeSocial '+this.villeSiegeSocial +', adresseSiegeExploitation '+this.adresseSiegeExploitation +', codePostalSiegeExploitation '+ this.codePostalSiegeExploitation +
-        ', villeSiegeExploitation '+this.villeSiegeExploitation + ', sectorActivite ' + this.sectorActivite +', representantLegal '+ this.representantLegal +', email '+ this.email +
+        ', villeSiegeExploitation '+this.villeSiegeExploitation + ', sectorActivite ' + this.sectorActivite +
+        ', representantLegalPrenom '+ this.representantLegalPrenom +', representantLegalNom '+ this.representantLegalNom +', representantLegalFonction '+ this.representantLegalFonction +
+        ', representantLegalAddress '+ this.representantLegalAddress +', representantLegalCP '+ this.representantLegalCP +
+        ', representantLegalVille '+ this.representantLegalAddress +', representantLegalNN '+ this.representantLegalNN +
+        ', email '+ this.email +
         ', numTel '+this.numTel +', dateConstitution '+this.dateConstitution +', chiffreAffaire '+this.chiffreAffaire+', nbEmploye '+this.nbEmploye +
         ', capital '+this.capital+', actionnariat '+this.actionnariat +', destinationPret '+this.destinationPret +', montantSouhaite '+this.montantSouhaite+
         ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+

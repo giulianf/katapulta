@@ -4,7 +4,7 @@ import BaseStore from './BaseStore';
 import LayoutStore from './LayoutStore';
 import { ContractsPreteur } from '../../model/ContractsPreteur';
 import { SimulateurInfo } from '../../model/SimulateurInfo';
-import { getDate, getBelgiumDate, addDays } from '../../common/Utility';
+import { getDate, getBelgiumDate, addDays, getDateISO } from '../../common/Utility';
 import Validator from '../../validator/validatorEmprunteurBasic';
 import Toastr from 'toastr';
 
@@ -46,7 +46,7 @@ class ProvideStore extends BaseStore {
       this._explorer = { activePage: 1, selectedExplorers: null };
       // page key within explorer search
       this._allExplorer = {};
-      this._emprunteur = {};
+      this._contractEmprunteur = {};
       this._searchCriteria = {freeText: null, codePostal: '', category: '', tabSelected: 'all'};
       this._nbAll = 0;
       this._nbOurSelection = 0;
@@ -170,7 +170,7 @@ class ProvideStore extends BaseStore {
         // explorers is an Array
         const favoris = _.find(this._explorer.selectedExplorers, {"id" : dataSociete.id});
         // emprunteur is an Object
-        const favorisEmprunteur = _.isEqual(this._emprunteur.id, dataSociete.id) ? this._emprunteur : null;
+        const favorisEmprunteur = _.isEqual(this._contractEmprunteur.id, dataSociete.id) ? this._contractEmprunteur : null;
 
         if (!_.isNil(favoris)) {
             favoris.isFavoris = !favoris.isFavoris;
@@ -259,11 +259,11 @@ class ProvideStore extends BaseStore {
     countTab(explorers) {
         this._nbAll = _.size(this._allExplorer);
         this._nbOurSelection = _.size(_.filter(this._allExplorer, (c) => {
-            return c.isOurSelection;
+            return c.emprunteur.isOurSelection;
         }));
         this._nbLatest = _.size(_.filter(this._allExplorer, (c) => {
             const current = addDays(moment(), -7);
-            const createDate = getDate( c.createDate );
+            const createDate = getDate( c.emprunteur.createDate );
             return current.isBefore( createDate );
         }));
     }
@@ -286,14 +286,14 @@ class ProvideStore extends BaseStore {
 
         } else if (_.isEqual(this._searchCriteria.tabSelected , 'ourSelection')) {
             searchResults = _.filter(searchResults, (c) => {
-                return c.isOurSelection
+                return c.emprunteur.isOurSelection
             });
         } else if (_.isEqual(this._searchCriteria.tabSelected , 'latest')) {
             // Represent last week
             // Current date - 7 days < Creation date
             searchResults = _.filter(searchResults, (c) => {
                 const current = addDays(moment(), -7);
-                const createDate = getDate( c.createDate );
+                const createDate = getDate( c.creationDate );
                 return current.isBefore( createDate );
             });
         }
@@ -319,8 +319,8 @@ class ProvideStore extends BaseStore {
 
     }
 
-    populateEmprunteur(emprunteur) {
-        this._emprunteur = emprunteur;
+    populateContractEmprunteur(contractEmprunteur) {
+        this._contractEmprunteur = contractEmprunteur;
     }
 
     /**************************/
@@ -443,7 +443,7 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.GET_EXPLORERS_BY_EMPR_ID_SUCCESS:
-         this.populateEmprunteur(action.body);
+         this.populateContractEmprunteur(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -608,8 +608,12 @@ class ProvideStore extends BaseStore {
       return this._allExplorer;
   }
 
+  get getContractEmprunteur() {
+      return this._contractEmprunteur;
+  }
+
   get getEmprunteur() {
-      return this._emprunteur;
+      return this._contractEmprunteur ? this._contractEmprunteur.emprunteur : null;
   }
 
   get explorerState() {
@@ -627,6 +631,7 @@ class ProvideStore extends BaseStore {
 
   get emprunteurState() {
       return {
+          contractEmprunteur: this.getContractEmprunteur,
           emprunteur: this.getEmprunteur,
           profile: this.getProfile,
           loggedIn: LayoutStore.loggedIn,

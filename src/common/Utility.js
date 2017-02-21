@@ -144,3 +144,8 @@ export function getStatusDetail(statusList) {
 export function getStatusHeader(statusList) {
     return _.filter(statusList ,{"headerStatus": true});
 }
+
+export function getStatus(statusList ,index) {
+    const status =  _.find(statusList, {"index": index});
+    return status.label;
+}
