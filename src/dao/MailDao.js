@@ -15,7 +15,7 @@ export class MailDao {
     }
 
 
-    insertNewEvent(user, eventStatusMail, notifyUser) {
+    insertNewEvent(contractId, eventStatusMail, notifyUser) {
         info('Entering insertNewEvent() data: ' + user  );
 
          try {
@@ -23,13 +23,27 @@ export class MailDao {
              let basicInfoEmprunteur = null;
              let contractPreteur = null;
 
+             const contractDao = new ContractDao(this._mongodb);
+
              // insert a new event
              // send an email
             async.series([
                 (callback) => {
+
+                    contractDao.getContractPreteurById(contractId, (contract, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        contractPreteur = contract;
+
+                        callback();
+                    });
+                },
+                (callback) => {
                     const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getClientByUserId( user, null, (profile, err) => {
+                    profileDao.getClientByUserId( contractPreteur.user_id, null, (profile, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -40,27 +54,12 @@ export class MailDao {
                     });
                 },
                 (callback) => {
-                    const profileDao = new ProfileDao(this._mongodb);
-
-                    profileDao.getEmprunteurBasicInfoByUserId(user, (emprunteur, err) => {
+                    contractDao.getContractEmprunteurById( contractPreteur.contractEmprunteurId, (contract, err) => {
                         if (err) {
                             callback(err);
                             return;
                         }
-                        basicInfoEmprunteur = emprunteur;
-
-                        callback();
-                    });
-                },
-                (callback) => {
-                    const contractDao = new ContractDao(this._mongodb);
-
-                    contractDao.getContractPreteurById(contractId, (contract, err) => {
-                        if (err) {
-                            callback(err);
-                            return;
-                        }
-                        contractPreteur = contract;
+                        basicInfoEmprunteur = contract.emprunteur;
 
                         callback();
                     });
@@ -74,7 +73,7 @@ export class MailDao {
                         callback("Les informations du contrat n'existe pas.");
                         return;
                     }
-                    if (_.isNil(contractPreteur.contractEmprunteur) || (!_.isNil(contractPreteur.contractEmprunteur)  && _.isNil(contractPreteur.contractEmprunteur.id) )) {
+                    if (_.isNil(basicInfoEmprunteur) || (!_.isNil(basicInfoEmprunteur)  && _.isNil(basicInfoEmprunteur.id) )) {
                         callback("Les informations de l'emprunteur n'existe pas.");
                         return;
                     }
@@ -91,7 +90,7 @@ export class MailDao {
                         debug('sending mail');
 
                         // check within factory which mail to sending
-                        const mailManager = new MailManager(this._client, basicProfil, contractPreteur.contractEmprunteur, contractPreteur);
+                        const mailManager = new MailManager(this._client, basicProfil, basicInfoEmprunteur, contractPreteur);
 
                         mailManager.getMail(eventStatusMail, err =>{
                             if (err) {

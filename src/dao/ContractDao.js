@@ -3,6 +3,7 @@ import { error, debug, info } from '../common/UtilityLog';
 import { createDateMongo , getProgress, getStepWorkflow, getStatusDetail } from '../common/Utility';
 import { ContractsPreteur } from '../model/ContractsPreteur';
 import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
 import { ContractGenerator } from '../common/ContractGenerator';
 import { ProfileDao } from '../dao/ProfileDao';
 import async from 'async';
@@ -42,8 +43,8 @@ export class ContractDao {
                 try {
                     const mail = new MailDao(_mongodb, clientSES);
 
-                    _.forEach(userToMailList, user => {
-                        mail.insertNewEvent( user, status, notifyUser);
+                    _.forEach(selectedContracts, contract => {
+                        mail.insertNewEvent( contract.contractId, status, notifyUser);
                     });
                     callback();
                 } catch (e) {
@@ -168,7 +169,7 @@ export class ContractDao {
                 (callback) => {
                     const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getClientByUserId(userId, (basicInfo, err) => {
+                    profileDao.getClientByUserId(userId, null, (basicInfo, err) => {
                         if (err) {
                             callback(err);
                             return;
@@ -426,6 +427,8 @@ export class ContractDao {
      */
     getContractPreteurById(contractId, callbackFunction) {
         try {
+            info('Entering getContractPreteurById() contract Id: ' + contractId  );
+
             const preteurs = this._mongodb.collection('contractPreteur');
 
             // Find some documents
@@ -434,8 +437,10 @@ export class ContractDao {
                      callback(err);
                      return;
                  }
+                 const co = new ContractsPreteur(contract);
+                 debug("Contract preteur found: "+ co.toLog());
 
-                 callbackFunction( new ContractsPreteur(contract) ) ;
+                 callbackFunction( co ) ;
 
             });
        } catch( e ) {
@@ -546,7 +551,7 @@ export class ContractDao {
                 (callback) => {
                     async.parallel([
                         (callback) => {
-                            profileDao.getClientByUserId(contractPreteur.user_clientId, null,  (profile, err) => {
+                            profileDao.getClientByUserId(contractPreteur.user_id, null,  (profile, err) => {
                                 if (err) {
                                     callback(err);
                                     return;
@@ -556,12 +561,14 @@ export class ContractDao {
                             });
                         },
                         (callback) =>{
-                            profileDao.getEmprunteurBasicInfoById(contractPreteur.basicInfoEmprunteurId,  (emprunteur, err) => {
+                            this.getContractEmprunteurById(contractPreteur.contractEmprunteurId, (contract, err) => {
                                 if (err) {
                                     callback(err);
                                     return;
                                 }
-                                basicInfoEmprunteur = emprunteur;
+                                basicInfoEmprunteur = new BasicInfoEmprunteur(contract.emprunteur);
+
+                                debug("emprunteur from contract emprunteur is: " + basicInfoEmprunteur.toLog());
 
                                 callback();
                             });

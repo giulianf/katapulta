@@ -19,7 +19,7 @@ export default class Explorer extends Component {
         this._handleCategory = this._handleCategory.bind(this);
         this._onUpdateCategory = this._onUpdateCategory.bind(this);
         this.state = ProvideStore.explorerState;
-        ProvideActions.getExplorer(ProvideStore.getProfile, this.state.explorer.activePage);
+        ProvideActions.getExplorer(ProvideStore.getProfile , this.state.explorer.activePage);
     }
 
     _onChange() {

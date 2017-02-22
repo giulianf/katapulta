@@ -210,11 +210,11 @@ class ProvideService {
       });
     }
 
-    requestNewPreteur(profile, emprunteurId, valuePret) {
+    requestNewPreteur(profile, contractEmprunteurId, valuePret) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
               `${REQUEST_PRETEUR_API}`,
-              {user_id: profile.user_id, emprunteurId: emprunteurId, valuePret: valuePret }
+              {user_id: profile.user_id, emprunteurContractId: contractEmprunteurId, valuePret: valuePret }
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);
@@ -240,9 +240,10 @@ class ProvideService {
     }
 
     getExplorer(profile, pageKey) {
+        const userId = profile ? profile.user_id : null;
       return new bluebird( (resolve, reject) => {
           ApiService.get(
-              `${GET_EXPLORERS_API}${ profile.user_id }/${pageKey}`
+              `${GET_EXPLORERS_API}${ userId }/${pageKey}`
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

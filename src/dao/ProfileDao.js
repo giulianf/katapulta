@@ -236,7 +236,7 @@ export class ProfileDao {
               if (!_.isNil(emprunteur)) {
                   basicInfoEmprunteur = new BasicInfoEmprunteur(emprunteur);
               } else {
-                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, userId);
+                  basicInfoEmprunteur = new BasicInfoEmprunteur(null, emprunteurId);
               }
 
               callback(basicInfoEmprunteur);

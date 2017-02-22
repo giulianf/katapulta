@@ -200,12 +200,12 @@ app.post('/api/requestNewPreteur', (req, res) => {
     debug("Entering /api/requestNewPreteur ");
 
     const user = req.body.user_id;
-    const emprunteurId = req.body.emprunteurId;
+    const emprunteurContractId = req.body.emprunteurContractId;
     const valuePret = req.body.valuePret;
 
     const contractDao = new ContractDao(_mongodb);
 
-    contractDao.requestNewPreteur(res, user, emprunteurId, valuePret);
+    contractDao.requestNewPreteur(res, user, emprunteurContractId, valuePret);
 });
 
 app.post('/api/updateFavoris', (req, res) => {
@@ -269,10 +269,8 @@ app.put('/api/updateRappelStatus', (req, res) => {
 app.get('/api/getExplorers/:user/:pageKey', (req, res) => {
     debug("Entering /api/getExplorers ");
 
-    const user = req.params.user;
     const pageKey = req.params.pageKey;
 
-    debug('User: ' + user);
     debug('Page to search: ' + pageKey);
     const explorerDao = new ExplorerDao(_mongodb);
 
@@ -293,13 +291,14 @@ app.get('/api/getExplorerBycontractEmprunteurId/:userId/:contractEmprunteurId', 
 /******************************************/
 /************ END EXPLORER API *************/
 /******************************************/
+const ObjectId = require('mongodb').ObjectId;
 
 app.post('/api/mailtest', (req, res) => {
     debug("Entering /api/mailtest ");
 
     const mail = new MailDao(_mongodb, clientSES);
 
-    mail.insertNewEvent( 'auth0|58723b91bf8e63325065978a', "EXIT", true);
+    mail.insertNewEvent( new ObjectId("58ae10d10bdd1f0ea61a6516"), "EXIT", true);
 
 });
 app.post('/api/generateContract', (req, res) => {

@@ -13,6 +13,7 @@ export class ConvertNumber {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // conversion du nombre
     calculeToString(nbr){
+        nbr = nbr ? nbr.toString() : '';
         debug('Entering calculeToString with number: ' + nbr);
 
         // vérification de la valeur saisie
@@ -23,22 +24,27 @@ export class ConvertNumber {
         // séparation entier + décimales
         nbr=nbr.replace(/(^0+)|(\.0+$)/g,"");
         nbr=nbr.replace(/([.,]\d{2})\d+/,"$1");
-        n1=nbr.replace(/[,.]\d*/,"");
-        n2= n1!=nbr ? nbr.replace(/\d*[,.]/,"") : false;
+        let n1=nbr.replace(/[,.]\d*/,"");
+        let n2= n1!=nbr ? nbr.replace(/\d*[,.]/,"") : false;
 
         // variables de mise en forme
-        ent= !n1 ? "" : decint(n1);
-        deci= !n2 ? "" : decint(n2);
+        ent= !n1 ? "" : this.decint(n1);
+        deci= !n2 ? "" : this.decint(n2);
         if(!n1 && !n2){
            return  "Entrez une valeur non nulle!"
         }
-        conj= !n2 || !n1 ? "" : "  et ";
-        euro= !n1 ? "" : !/[23456789]00$/.test(n1) ? " Euro" : "s Euro";
-        centi= !n2 ? "" : " centime";
-        pl=  n1>1 ? "s" : "";
-        pl2= n2>1 ? "s" : "";
+        conj= !n2 || !n1 ? "" : "  virgule ";
+        // let euro= !n1 ? "" : !/[23456789]00$/.test(n1) ? " Euro" : "s Euro";
+        let euro= !n1 ? "" : !/[23456789]00$/.test(n1) ? "" : "";
+        // if null put centime
+        // this.centi= !n2 ? "" : "centime";
+        this.centi= !n2 ? "" : "";
+        pl=  n1>1 ? "" : "";
+        pl2= n2>1 ? "" : "";
+        // pl=  n1>1 ? "s" : "";
+        // pl2= n2>1 ? "s" : "";
 
-        const numberLetter = (" " + ent + euro + pl + conj + deci + centi + pl2).replace(/\s+/g," ").replace("cent s E","cents E");
+        const numberLetter = (" " + ent + euro + pl + conj + deci + this.centi + pl2).replace(/\s+/g," ").replace("cent s E","cents E");
 
         debug('number Letter: ' + numberLetter);
 
@@ -53,17 +59,17 @@ export class ConvertNumber {
     */
     decint(n){
        switch(n.length){
-           case 1 : return dix(n);
-           case 2 : return dix(n);
-           case 3 : return cent(n.charAt(0)) + " " + decint(n.substring(1));
+           case 1 : return this.dix(n);
+           case 2 : return this.dix(n);
+           case 3 : return this.cent(n.charAt(0)) + " " + this.decint(n.substring(1));
            default: mil=n.substring(0,n.length-3);
                if(mil.length<4){
-                   un= (mil==1) ? "" : decint(mil);
-                   return un + mille(mil)+ " " + decint(n.substring(mil.length));
+                   un= (mil==1) ? "" : this.decint(mil);
+                   return un + this.mille(mil)+ " " + this.decint(n.substring(mil.length));
                }
                else{
                    mil2=mil.substring(0,mil.length-3);
-                   return decint(mil2) + million(mil2) + " " + decint(n.substring(mil2.length));
+                   return this.decint(mil2) + this.million(mil2) + " " + this.decint(n.substring(mil2.length));
                }
        }
     }
@@ -87,7 +93,7 @@ export class ConvertNumber {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // traitement des mots "cent", "mille" et "million"
+    // traitement des mots "this.cent", "this.mille" et "this.million"
     cent(n){
         return n>1 ? t[n]+ " Cent" : (n==1) ? " Cent" : "";
     }

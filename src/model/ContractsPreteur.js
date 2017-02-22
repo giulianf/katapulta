@@ -42,7 +42,7 @@ export class ContractsPreteur {
     }
 
     toLog() {
-        return 'id ' + this.id +' user_id ' + this.user_id +' contractId ' + this.contractId +' contractEmprunteurId ' + this.contractEmprunteurId +
+        return 'id ' + this.id +' user_id ' + this.user_id +' contractEmprunteurId ' + this.contractEmprunteurId +
         ' valuePret ' + this.valuePret +
         ' creationDate ' + this.creationDate +' status ' + this.status +' progress ' + this.progress +' stepWorkflow ' + this.stepWorkflow;
     }

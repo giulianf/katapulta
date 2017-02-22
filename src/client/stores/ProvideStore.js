@@ -477,7 +477,7 @@ class ProvideStore extends BaseStore {
         // If action was responded to, emit change event
         this.emitChange();
       case ProvideConstants.CHECKBOX_CONTRACT_SELECTED:
-         this.populateAdminContractsSelected(action.id, action.nameCompany, action.checked);
+         this.populateAdminContractsSelected(action.id, action.user_id, action.nameCompany, action.checked);
         // If action was responded to, emit change event
         this.emitChange();
         break;

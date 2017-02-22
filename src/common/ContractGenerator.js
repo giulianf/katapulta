@@ -4,7 +4,7 @@ import fs from 'fs';
 import pdfMake from 'pdfmake';
 const PdfPrinter = require('pdfmake/src/printer');
 import { error, debug, info } from '../common/UtilityLog';
-import ConvertNumber from './ConvertNumber';
+import {ConvertNumber} from './ConvertNumber';
 
 export class ContractGenerator {
     constructor() {
@@ -13,7 +13,7 @@ export class ContractGenerator {
     generateContract(res, contractPreteur, basicProfil, basicInfoEmprunteur) {
         debug("Entering generateContract");
 
-        this.createPdfBinary(basicProfil, basicInfoEmprunteur, (binary) => {
+        this.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
             res.contentType('application/pdf');
             res.send(binary);
         })

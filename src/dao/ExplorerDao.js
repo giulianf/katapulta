@@ -35,17 +35,22 @@ export class ExplorerDao {
 
             async.series([
                 (callback) => {
-                    const profileDao = new ProfileDao(this._mongodb);
+                    if (userId) {
+                        const profileDao = new ProfileDao(this._mongodb);
 
-                    profileDao.getClientByUserId( userId, null, (profile, err) => {
-                        if (err) {
-                            callback(err);
-                            return;
-                        }
-                        basicProfil = profile;
+                        profileDao.getClientByUserId( userId, null, (profile, err) => {
+                            if (err) {
+                                callback(err);
+                                return;
+                            }
+                            basicProfil = profile;
 
+                            callback();
+                        });
+                    } else {
                         callback();
-                    });
+                    }
+
                 },
                 (callback) => {
                     const contractEmprunteurs = this._mongodb.collection('contractEmprunteurs');
@@ -84,26 +89,28 @@ export class ExplorerDao {
                        // Find some documents
                            delete emprunteur.image;
 
-                           for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
-                               const favori = basicProfil.favoris[j];
-                               const contractEmprunteurId = (favori.contractEmprunteurId).toString();
-                               debug("favori id: " + contractEmprunteurId);
+                           if (userId) {
 
-                               const contrats = _.find(contractsList, c => {
-                                   const id = (c.id).toString();
-                                   return _.isEqual( id, contractEmprunteurId);
-                               });
-                               debug("contract size with favoris: " + contrats);
+                               for(let j = 0 ; j < _.size(basicProfil.favoris) ; j++) {
+                                   const favori = basicProfil.favoris[j];
+                                   const contractEmprunteurId = (favori.contractEmprunteurId).toString();
+                                   debug("favori id: " + contractEmprunteurId);
 
-                               if (!_.isNil(contrats) && _.isArray(contrats)) {
-                                   _.forEach(contrats, con => {
-                                       con.isFavoris = true;
-                                   })
-                               } else if (!_.isNil(contrats)) {
-                                   contrats.isFavoris = true;
+                                   const contrats = _.find(contractsList, c => {
+                                       const id = (c.id).toString();
+                                       return _.isEqual( id, contractEmprunteurId);
+                                   });
+                                   debug("contract size with favoris: " + contrats);
+
+                                   if (!_.isNil(contrats) && _.isArray(contrats)) {
+                                       _.forEach(contrats, con => {
+                                           con.isFavoris = true;
+                                       })
+                                   } else if (!_.isNil(contrats)) {
+                                       contrats.isFavoris = true;
+                                   }
                                }
                            }
-
                     //    });
                 //    }, callback);
                     });
