@@ -47,7 +47,7 @@ class ProvideStore extends BaseStore {
       // page key within explorer search
       this._allExplorer = {};
       this._contractEmprunteur = {};
-      this._searchCriteria = {freeText: null, codePostal: '', category: '', tabSelected: 'all'};
+      this._searchCriteria = {freeText: '', codePostal: '', category: '', tabSelected: 'all'};
       this._nbAll = 0;
       this._nbOurSelection = 0;
       this._nbLatest = 0;
@@ -261,11 +261,11 @@ class ProvideStore extends BaseStore {
     }
 
     countTab(explorers) {
-        this._nbAll = _.size(this._allExplorer);
-        this._nbOurSelection = _.size(_.filter(this._allExplorer, (c) => {
+        this._nbAll = _.size(explorers);
+        this._nbOurSelection = _.size(_.filter(explorers, (c) => {
             return c.emprunteur.isOurSelection;
         }));
-        this._nbLatest = _.size(_.filter(this._allExplorer, (c) => {
+        this._nbLatest = _.size(_.filter(explorers, (c) => {
             const current = addDays(moment(), -7);
             const createDate = getDate( c.emprunteur.createDate );
             return current.isBefore( createDate );
@@ -274,6 +274,8 @@ class ProvideStore extends BaseStore {
 
     changeFreeText(criteria) {
         _.assign(this._searchCriteria, criteria);
+
+        this.searchExplorer();
     }
 
     searchExplorer(criteria, activePage) {
@@ -281,7 +283,9 @@ class ProvideStore extends BaseStore {
             _.assign(this._searchCriteria, criteria);
         }
 
-        this._explorer.activePage = activePage;
+        if (!_.isNil(activePage)) {
+            this._explorer.activePage = activePage;
+        }
 
         let searchResults = _.cloneDeep(this._allExplorer);
         // First select in the tab
@@ -302,24 +306,35 @@ class ProvideStore extends BaseStore {
             });
         }
 
-        if (!_.isEmpty(this._searchCriteria.freeText )) {
+        if (!_.isEmpty(this._searchCriteria.freeText ) && !_.isEqual(this._searchCriteria.freeText, '' )) {
             searchResults = _.filter(searchResults, (c) => {
-                 return _.includes(_.toUpper(c.denominationSocial), _.toUpper( this._searchCriteria.freeText )) || _.includes( _.toUpper(c.sectorActivite ), _.toUpper( this._searchCriteria.freeText ) ) });
+                 return _.includes(_.toUpper(c.emprunteur.denominationSocial), _.toUpper( this._searchCriteria.freeText )) || _.includes( _.toUpper(c.emprunteur.sectorActivite ), _.toUpper( this._searchCriteria.freeText ) ) });
         }
 
         if (!_.isEmpty(this._searchCriteria.codePostal )) {
             searchResults = _.filter(searchResults, (c) => {
-                return _.isEqual(c.codePostalSiegeExploitation, this._searchCriteria.codePostal) });
+                return _.includes(this._searchCriteria.codePostal, c.emprunteur.codePostalSiegeExploitation) });
         }
 
         if (!_.isEmpty(this._searchCriteria.category )) {
             searchResults = _.filter(searchResults, (c) => {
-                return _.includes(c.sectorActivite, this._searchCriteria.category) });
+                return _.includes(c.emprunteur.sectorActivite, this._searchCriteria.category) });
         }
 
         this.countTab(searchResults);
 
-        this.populateSelectedExplorer(searchResults, activePage);
+        this.populateSelectedExplorer(searchResults, this._explorer.activePage);
+
+    }
+
+    resetExplorer() {
+        this._explorer.activePage=1;
+        this._searchCriteria = {freeText: '', codePostal: '', category: '', tabSelected: 'all'};
+        const searchResults = _.cloneDeep(this._allExplorer);
+
+        this.countTab(searchResults);
+
+        this.populateSelectedExplorer(searchResults, this._explorer.activePage);
 
     }
 
@@ -453,6 +468,11 @@ class ProvideStore extends BaseStore {
         break;
       case ProvideConstants.SEARCH_EXPLORERS:
          this.searchExplorer(action.searchCriteria, action.activePage);
+        // If action was responded to, emit change event
+        this.emitChange();
+        break;
+      case ProvideConstants.RESET_EXPLORERS:
+         this.resetExplorer();
         // If action was responded to, emit change event
         this.emitChange();
         break;

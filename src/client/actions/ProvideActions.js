@@ -72,6 +72,9 @@ export default {
     searchExplorer: (searchCriteria, activePage) => {
         dispatch(ProvideConstants.SEARCH_EXPLORERS, { searchCriteria, activePage });
     },
+    resetExplorer: () => {
+        dispatch(ProvideConstants.RESET_EXPLORERS, {  });
+    },
     getExplorer: (profile, pageKey) => {
         let promise = ProvideService.getExplorer(profile, pageKey);
 

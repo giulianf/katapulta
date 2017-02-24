@@ -43,7 +43,7 @@ export default class Explorer extends Component {
     }
 
     _handleCode(chosenRequest, index) {
-        ProvideActions.searchExplorer({codePostal: chosenRequest}, this.state.explorer.activePage);
+        ProvideActions.searchExplorer({codePostal: chosenRequest.text}, this.state.explorer.activePage);
     }
 
     _handleSelectExplorer(tabKey) {
@@ -138,7 +138,7 @@ export default class Explorer extends Component {
                                               <Col sm={12} md={4}>
                                                   <AutoComplete
                                                       floatingLabelText="Code postale, commune"
-                                                      filter={AutoComplete.fuzzyFilter}
+                                                      filter={AutoComplete.caseInsensitiveFilter}
                                                       maxSearchResults={10}
                                                       dataSource={dataSource1}
                                                       onNewRequest={this._handleCode}
@@ -151,7 +151,7 @@ export default class Explorer extends Component {
                                               <Col sm={12} md={4}>
                                                   <AutoComplete
                                                       floatingLabelText="Catégories"
-                                                      filter={AutoComplete.fuzzyFilter}
+                                                      filter={AutoComplete.caseInsensitiveFilter}
                                                       maxSearchResults={25}
                                                       openOnFocus={true}
                                                       dataSource={dataSource3}
@@ -164,7 +164,7 @@ export default class Explorer extends Component {
                                             </FormGroup>
                                             <FormGroup controlId="formHorizontalRecherche">
                                               <Col sm={12} md={4}>
-                                                 <Button bsStyle="success" onClick={e => ProvideActions.searchExplorer() }>Recherche</Button>
+                                                 <Button bsStyle="success" onClick={e => ProvideActions.resetExplorer() }>Reset</Button>
                                               </Col>
                                             </FormGroup>
                                        </Panel>
