@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import { error, debug, info } from './UtilityLog';
+const mailcomposer = require('mailcomposer');
+const MailComposer = mailcomposer.MailComposer;
 
 export class Mailing {
     constructor(client) {
@@ -11,7 +13,9 @@ export class Mailing {
         info('Entering sendMail() to ' + mailTo );
         debug('attachmentName ' + attachmentName);
         debug('attachmentName2 ' + attachmentName2);
+
         try {
+            const mailFrom = 'info@katapulta.be';
             // const message = _.replace(FormatMailing.mail, '{societe}', 'Katapulta');
             // Give SES the details and let it construct the message for you.
             // this sends the email
@@ -53,7 +57,7 @@ export class Mailing {
             //     ses_mail = ses_mail + attachmentContent + "\n\n;";
             //     ses_mail = ses_mail + "--NextPart";
             // }
-            let ses_mail = "From: 'Katapulta Prêt coup de pouce' <info@katapulta.be>\n";
+            let ses_mail = "From: 'Katapulta Prêt coup de pouce' <"+mailFrom+ ">\n";
             ses_mail = ses_mail + "To: " + mailTo + "\n";
             ses_mail = ses_mail + "Subject: " + subject + "\n";
             ses_mail = ses_mail + "MIME-Version: 1.0\n";
@@ -80,21 +84,62 @@ export class Mailing {
                 ses_mail = ses_mail + attachmentContent2 + "\n\n";
                 ses_mail = ses_mail + "--NextPart";
             }
+            //
+            // const params = {
+            // RawMessage: { Data: new Buffer(ses_mail) },
+            // Destinations: [ mailTo ],
+            // Source: "'AWS Tutorial Series' <info@katapulta.be>'"
+            // };
+            //
+            // this._client.sendRawEmail(params, function(err, data) {
+            //        if(err) {
+            //           error('Error while sending mail ', err)
+            //        }
+            //        else {
+            //            info("CONGRAT to " + mailTo + " from " + mailFrom );
+            //        }
+            // });
 
-            const params = {
-            RawMessage: { Data: new Buffer(ses_mail) },
-            Destinations: [ mailTo ],
-            Source: "'AWS Tutorial Series' <info@katapulta.be>'"
+
+
+            const to      = mailTo;
+            const from    = mailFrom;
+            const subject = subject;
+            const htmlBody = content;
+            const attachments = [{
+                filename: attachmentName,
+                contents: attachmentContent
+            }, {
+                filename: attachmentName2,
+                contents: attachmentContent2
+            }  ];
+
+            const mailOptions = {
+                from: from,
+                subject: subject,
+                // text: textBody,
+                html: htmlBody,
+                attachments: attachments ? attachments : []
             };
 
-            this._client.sendRawEmail(params, function(err, data) {
-                   if(err) {
-                      error('Error while sending mail ', err)
-                   }
-                   else {
-                       info("CONGRAT to " + mailTo + " from info@katapulta.be" );
-                   }
+            const mail = mailcomposer(mailOptions);
+
+            mail.build(function (err, message){
+                const req = this._client.sendRawEmail({RawMessage: {Data: message}});
+
+                req.on('build', function() {
+                    req.httpRequest.headers['Force-headers'] = '1';
+                });
+
+                req.send(function (err, data) {
+                    if (err) {
+                           error('Error while sending mail ', err)
+                    } else {
+                        info("CONGRAT to " + mailTo + " from " + mailFrom );
+                    }
+                });
             });
+            };
         } catch( e ) {
             error('Problem while sending email. ' + e);
             throw new Error('Problem while sending email.');
