@@ -20,10 +20,10 @@ export class AttestationHonneurGenerator {
     }
 
     createPdfBinary( callback ) {
-        debug("Entering createPdfBinary");
+        debug("Entering createPdfBinary AttestationHonneurGenerator");
 
         // const docDefinition = {
-        var dd = {
+        var docDefinition = {
             info: {
                 title: "Attestation sur l'honneur du preteur",
                 author: 'United-IT',

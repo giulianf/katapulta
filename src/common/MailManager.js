@@ -2,8 +2,10 @@ import _ from 'lodash';
 import FormatMailing from './FormatMailing';
 import {ContractGenerator} from './ContractGenerator';
 import {DemandeEnregistrementGenerator} from './DemandeEnregistrementGenerator';
+import { AttestationHonneurGenerator } from './AttestationHonneurGenerator';
 import { Mailing } from './Mailing';
 import { error, debug, info } from './UtilityLog';
+import async from 'async';
 
 export class MailManager {
     constructor(client, basicProfil, basicInfoEmprunteur, contractPreteur) {
@@ -74,22 +76,50 @@ export class MailManager {
 
             const mail = new Mailing(this._client);
 
-            const subject = _.replace(FormatMailing.mail_exit_subject, '{reference}', basicInfoEmprunteur.id);
+            const subject = FormatMailing.mail_exit_subject;
+            debug("Subject: "+ subject);
             let content = _.replace(FormatMailing.mail_exit_content, '{name}', basicProfil.nom);
             content = _.replace(content, '{creationDate}', basicProfil.createDate );
             content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
 
             const contractGenerator = new ContractGenerator();
             const demandeEnregistrementGenerator = new DemandeEnregistrementGenerator();
+            const attestationHonneurGenerator = new AttestationHonneurGenerator();
 
-            const attachmentName = "contract.pdf";
-            const attachmentName2 = "DemandeEnregistrement.pdf";
-            const attachmentContent = contractGenerator.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
-                const attachmentContent2 = demandeEnregistrementGenerator.createPdfBinary( (binary2) => {
-                    mail.sendMail(subject, content, basicProfil.email, attachmentName, binary, attachmentName2, binary2);
-                    callback();
-                });
+            async.waterfall([
+                (callback) => {
+                    const attachmentContent = contractGenerator.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
+                        let attachments = [];
 
+                        const attachmentName = "contract.pdf";
+                        attachments.push({name: attachmentName, content: binary });
+                        callback(null, attachments);
+                    });
+                },
+                (attachments, callback) => {
+                    const attachmentContent = demandeEnregistrementGenerator.createPdfBinary( (binary) => {
+                        const attachmentName = "Demande_enregistrement.pdf";
+                        attachments.push({name: attachmentName, content: binary });
+                        callback(null, attachments);
+                    });
+                },
+                (attachments, callback) => {
+                    const attachmentContent = attestationHonneurGenerator.createPdfBinary( (binary) => {
+                        const attachmentName = "attestation_honneur.pdf";
+                        attachments.push({name: attachmentName, content: binary });
+                        callback(null, attachments);
+                    });
+                }
+            ], (err, result) => {
+                if (err) {
+                    error('Error during pdf generation', err);
+                    callback(err);
+                    return;
+                }
+
+                info("Result: " + result);
+                mail.sendMail(subject, content, basicProfil.email, result );
+                callback();
             });
         } catch (e) {
             error('Error while mailMiseEnLigne: ', e);

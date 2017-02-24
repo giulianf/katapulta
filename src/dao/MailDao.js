@@ -12,6 +12,7 @@ export class MailDao {
     constructor(_mongodb, client) {
         this._mongodb = _mongodb;
         this._client= client;
+        debug('constructor MailDao')
     }
 
 

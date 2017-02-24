@@ -20,7 +20,7 @@ export class DemandeEnregistrementGenerator {
     }
 
     createPdfBinary( callback ) {
-        debug("Entering createPdfBinary");
+        debug("Entering createPdfBinary DemandeEnregistrementGenerator");
 
         // const docDefinition = {
         const docDefinition = {

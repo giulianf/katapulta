@@ -322,10 +322,10 @@ app.post('/api/generateContract', (req, res) => {
 /********   START NEWSLETTER    ********/
 /***********************************/
 app.post('/api/registerNewsLetter', (req, res) => {
-    debug("Entering /api/generateContract ");
+    debug("Entering /api/registerNewsLetter ");
     const referenceDao = new ReferenceDao(_mongodb);
 
-    const emailNews = req.body.emailNews;
+    const emailNews = req.body.email;
 
     referenceDao.registerNewsLetter(res, emailNews);
 

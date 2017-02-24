@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Button, FormGroup, ControlLabel } from 'react-bootstrap';
+import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import Validator from '../../validator/validatorEmprunteurBasic';
 import ProvideActions from '../actions/ProvideActions';
+import Toastr from 'toastr';
 
 export default class Newsletter extends Component {
   constructor (){
     super();
+
+    this._onClickNewsLetter = this._onClickNewsLetter.bind(this);
     this.state = { emailNews :''};
   }
 
   _onClickNewsLetter() {
       if ( Validator.validateEmailAddress(this.state.emailNews ) ) {
           ProvideActions.registerNewsLetter(this.state.emailNews);
+      } else {
+          Toastr.error("l'adresse email n'est pas valide.");
       }
   }
 
@@ -32,11 +37,11 @@ export default class Newsletter extends Component {
                                         <FormGroup controlId="formHorizontalNewsEmail" validationState={validateEmail}>
                                           <Col sm={12} md={8}>
                                             <FormControl type="email" placeholder="email"
-                                                onChange={e=>{ this,setState({emailNews: e.target.value})}}
+                                                onChange={e=>{ this.setState({emailNews: e.target.value})}}
                                                  value={this.state.emailNews}/>
                                           </Col>
                                         </FormGroup>
-    									<span><Button onClick={this._onClickNewsLetter.bind()}>Subscribe</Button></span>
+    									<span><Button onClick={this._onClickNewsLetter}>Subscribe</Button></span>
     								</form>
     							</div>
     						</Col>

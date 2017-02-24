@@ -110,11 +110,15 @@ export class ProfileDao {
                     clients = this._mongodb.collection('clients');
 
                     if (_.isNil(basicInfo.id)) {
-                        basicInfo.createDate = createDateMongo();
+                        // basicInfo.createDate = createDateMongo();
                     }
 
                     // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
-                    clients.findOneAndUpdate({'user_id': basicInfo.user_id}, basicInfo, {
+                    clients.findOneAndUpdate({'user_id': basicInfo.user_id},
+                    {
+                         $set: { basicInfo },
+                        $setOnInsert: { createDate: createDateMongo() }
+                    }, {
                         returnOriginal: false
                       , upsert: true
                     }, (err, clientResult) => {
@@ -313,7 +317,7 @@ export class ProfileDao {
                     debug('test emprunteurs')
 
                     if ( _.isNil(basicEmprunteurProfil.id) ) {
-                        basicEmprunteurProfil.createDate = createDateMongo();
+                        // basicEmprunteurProfil.createDate = createDateMongo();
                         debug('creation date ' + basicEmprunteurProfil.createDate);
 
                         let endDate = getBelgiumDate( getCurrentMomentDate() );
@@ -324,7 +328,11 @@ export class ProfileDao {
                         basicEmprunteurProfil.endDate = endDate;
                     }
 
-                    emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id}, basicEmprunteurProfil, {
+                    emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id},
+                    {
+                         $set: { basicEmprunteurProfil },
+                        $setOnInsert: { createDate: createDateMongo() }
+                    } , {
                         returnOriginal: false
                       , upsert: true
                     }, (err, emprunteurResult) => {
@@ -396,7 +404,11 @@ export class ProfileDao {
                         basicProfil.favoris = _.sortedUniq(basicProfil.favoris);
                     }
                     // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
-                    clients.findOneAndUpdate({'user_id': basicProfil.user_id}, basicProfil, {
+                    clients.findOneAndUpdate({'user_id': basicProfil.user_id},
+                    {
+                         $set: { basicProfil },
+                        $setOnInsert: { createDate: createDateMongo() }
+                    }, {
                         returnOriginal: false
                       , upsert: true
                     }, (err, clientResult) => {

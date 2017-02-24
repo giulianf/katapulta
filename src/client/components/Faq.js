@@ -7,6 +7,7 @@ export default class Faq extends React.Component {
   }
 
   render () {
+      const ulStyle = {margin: '0px 0 0 40px'};
     return (
             <Grid fluid>
               <Row className='section section-padding section-emprunteur'>
@@ -17,14 +18,15 @@ export default class Faq extends React.Component {
                     <Grid>
                         <Row className="tab-content">
                               <Col md={12} >
-                                  <div className="panel-group toggle-carret" id="accordion2">
+                                  <div className="panel-group toggle-carret" id="accordion1">
                                     <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" aria-expanded="false" className="collapsed">Comment ça marche</a>
+                                            <a data-toggle="collapse" data-parent="#accordion1" href="#collapseFour"
+                                                 aria-expanded="true" className="collapsed">Comment ça marche</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseFour" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseFour" className="panel-collapse collapse" aria-expanded="true">
                                             <div className="panel-body">
                                                 <p>Le « Prêt Coup de Pouce » proposé sur KATAPULTA permet aux jeunes entreprises wallonnes
                                                     d'obtenir un accès facile au crédit et ce à un taux d'intérêt raisonnable, tout en incitant le prêteur, au moyen d'un crédit d'impôt, à soutenir
@@ -51,10 +53,10 @@ export default class Faq extends React.Component {
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion2" href="#collapseFive"
-                                            className="" aria-expanded="true">Combien ça coûte</a>
+                                            className="" aria-expanded="false" className="collapsed">Combien ça coûte</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseFive" className="panel-collapse collapse in" aria-expanded="true">
+                                        <div id="collapseFive" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p><u>Vous êtes prêteur :</u></p>
                     							<p>Les services offerts sur KATAPULTA sont totalement gratuits (de l'inscription jusqu'à la clôture d'un prêt).</p>
@@ -71,7 +73,7 @@ export default class Faq extends React.Component {
                                     <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseSix"
+                                            <a data-toggle="collapse" data-parent="#accordion3" href="#collapseSix"
                                             className="collapsed" aria-expanded="false">Qui peut emprunter</a>
                                         </h4>
                                         </div>
@@ -79,24 +81,28 @@ export default class Faq extends React.Component {
                                             <div className="panel-body">
                                             <p>Les jeunes sociétés considérées comme PME*, c'est-à-dire les personnes morales à forme commerciale actives depuis moins de 5 ans et
                                             dont le siège d'exploitation est en Wallonie. Les sociétés ne peuvent se trouver dans les conditions d'une procédure collective d'insolvabilité.</p>
-                                            <p>*moins de 250 ETP et CA < 50.000.000 € et total bilan < 43.000.000 €.</p>
+                                            <p>*moins de 250 ETP et CA {'<'} 50.000.000 € et total bilan {'<'} 43.000.000 €.</p>
                                             <p>Certaines activités ne sont pas éligibles :</p>
                                             <ul>
-                                                <li> La prestation de services financiers au profit de tiers ;</li>
-                                                <li> Les placements de trésorerie ;</li>
-                                                <li> Le placement collectif de capitaux ;</li>
-                                                <li> La construction, acquisition, gestion, aménagement, vente, ou location de biens immobiliers pour compte propre,
-                                                ou la détention de participations dans des sociétés ayant un objet similaire ;</li>
-                                                <li> Une société dans laquelle des biens immobiliers ou autres droits réels sur de tels biens sont placés,
-                                                dont des personnes physiques qui exercent un mandat ou des fonctions visés à l'article 32, alinéa 1er, 1°, du Code des impôts sur les revenus,
-                                                 leur conjoint ou leurs enfants lorsque ces personnes ou leur conjoint ont la jouissance légale des revenus de ceux-ci, ont l'usage.</li>
+                                                <ul style={ulStyle}>
+                                                    <li> La prestation de services financiers au profit de tiers ;</li>
+                                                    <li> Les placements de trésorerie ;</li>
+                                                    <li> Le placement collectif de capitaux ;</li>
+                                                    <li> La construction, acquisition, gestion, aménagement, vente, ou location de biens immobiliers pour compte propre,
+                                                    ou la détention de participations dans des sociétés ayant un objet similaire ;</li>
+                                                    <li> Une société dans laquelle des biens immobiliers ou autres droits réels sur de tels biens sont placés,
+                                                    dont des personnes physiques qui exercent un mandat ou des fonctions visés à l'article 32, alinéa 1er, 1°, du Code des impôts sur les revenus,
+                                                     leur conjoint ou leurs enfants lorsque ces personnes ou leur conjoint ont la jouissance légale des revenus de ceux-ci, ont l'usage.</li>
+                                                </ul>
                                             </ul>
                                             <p>Autres exclusions :</p>
                                             <ul>
-                                                <li> Ne pas être une société constituée pour conclure des contrats de gestion/d'administration ou qui en obtient la plupart de ses bénéfices ;</li>
-                                                <li> Ne pas être cotée en bourse ;</li>
-                                                <li> Ne pas être constituée à l’occasion d’une fusion ou d’une scission de sociétés ;</li>
-                                                <li> Ne pas avoir encore opéré de diminution de capital ou de distribution de dividendes.</li>
+                                                <ul style={ulStyle}>
+                                                    <li> Ne pas être une société constituée pour conclure des contrats de gestion/d'administration ou qui en obtient la plupart de ses bénéfices ;</li>
+                                                    <li> Ne pas être cotée en bourse ;</li>
+                                                    <li> Ne pas être constituée à l’occasion d’une fusion ou d’une scission de sociétés ;</li>
+                                                    <li> Ne pas avoir encore opéré de diminution de capital ou de distribution de dividendes.</li>
+                                                </ul>
                                             </ul>
                                             </div>
                                         </div>
@@ -104,7 +110,7 @@ export default class Faq extends React.Component {
                                     <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven"
+                                            <a data-toggle="collapse" data-parent="#accordion4" href="#collapseSeven"
                                             className="collapsed" aria-expanded="false">Qui peut prêter</a>
                                         </h4>
                                         </div>
@@ -114,11 +120,13 @@ export default class Faq extends React.Component {
                                              localisée en Région Wallonne (assujetti à l’I.P.P. en R.W.).</p>
                                             <p>Exclusions :</p>
                                             <ul>
-                                                <li> Les salariés de l’emprunteur;</li>
-                                                <li> Toute personne étant directement ou indirectement, associé ou actionnaire de l’emprunteur,
-                                                nommé ou agissant en tant qu'administrateur, gérant, délégué à la gestion journalière, ou en tant que détenteur d'un mandat similaire au sein de la société,
-                                                ou qui exerce, en tant que représentant permanent d’une autre société, un mandat d’administrateur, de gérant, de liquidateur ou une fonction analogue;</li>
-                                                <li> Le § précédent s’étant au conjoint ou au cohabitant légal.</li>
+                                                <ul style={ulStyle}>
+                                                    <li> Les salariés de l’emprunteur;</li>
+                                                    <li> Toute personne étant directement ou indirectement, associé ou actionnaire de l’emprunteur,
+                                                    nommé ou agissant en tant qu'administrateur, gérant, délégué à la gestion journalière, ou en tant que détenteur d'un mandat similaire au sein de la société,
+                                                    ou qui exerce, en tant que représentant permanent d’une autre société, un mandat d’administrateur, de gérant, de liquidateur ou une fonction analogue;</li>
+                                                    <li> Le § précédent s’étant au conjoint ou au cohabitant légal.</li>
+                                                </ul>
                                             </ul>
                                             <p>Les conditions doivent être respectées durant toute la durée du prêt.</p>
                                             </div>
@@ -127,7 +135,7 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseEight"
+                                            <a data-toggle="collapse" data-parent="#accordion5" href="#collapseEight"
                                             className="collapsed" aria-expanded="false">Est-ce risqué </a>
                                         </h4>
                                         </div>
@@ -146,19 +154,21 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapseEight"
+                                            <a data-toggle="collapse" data-parent="#accordion6" href="#collapseNine"
                                             className="collapsed" aria-expanded="false">A quoi peut servir les fonds récoltés </a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseNine" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Le prêt coup de pouce est, en principe, exclusivement destiné à l’usage prévu dans la description de l’annonce de l’emprunteur.</p>
                                                 <p>Toute affectation privée est formellement proscrite.</p>
                                                 <p>Dans tous les cas, les fonds empruntés ne pourront servir à :</p>
-                                                <ul style={{list-style-type:circle}}>
-                                                    <li> Octroyer des prêts</li>
-                                                    <li> Acquérir des actions ou parts sociales d’autres sociétés</li>
-                                                    <li> Distribuer un dividende</li>
+                                                <ul type='circle'>
+                                                    <ul style={ulStyle}>
+                                                        <li> Octroyer des prêts</li>
+                                                        <li> Acquérir des actions ou parts sociales d’autres sociétés</li>
+                                                        <li> Distribuer un dividende</li>
+                                                    </ul>
                                                 </ul>
                                                 <p>En choisissant le « prêt coup de pouce », vous financez l’économie réelle et locale. C’est également le moyen de diversifier
                                                 votre portefeuille de placement en le détachant des marchés financiers.</p>
@@ -168,11 +178,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">A qui les fonds sont-ils versés </a>
+                                            <a data-toggle="collapse" data-parent="#accordion7"
+                                            href="#collapseTen" className="collapsed" aria-expanded="false">A qui les fonds sont-ils versés </a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseTen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Directement à l’entreprise emprunteuse, sur le numéro de compte bancaire IBAN mentionné dans la convention.</p>
                                             </div>
@@ -181,11 +191,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">Quelle est ma responsabilité en tant que prêteur?</a>
+                                            <a data-toggle="collapse" data-parent="#accordion8"
+                                            href="#collapseEleven" className="collapsed" aria-expanded="false">Quelle est ma responsabilité en tant que prêteur?</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseEleven" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Le prêteur n’encourt aucune responsabilité, ni envers l’entreprise emprunteuse, ni envers les tiers.</p>
                                             </div>
@@ -194,11 +204,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">Quels sont critères de sélection?</a>
+                                            <a data-toggle="collapse" data-parent="#accordion9"
+                                            href="#collapseTwelve" className="collapsed" aria-expanded="false">Quels sont critères de sélection?</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseTwelve" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>KATAPULTA sélectionne les dossiers en tenant compte des critères légaux. En principe,
                                                 toutes les sociétés éligibles dans le cadre du Décret peuvent s’inscrire et effectuer une demande de financement.
@@ -210,11 +220,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">Combien de temps cela prend t-il ?</a>
+                                            <a data-toggle="collapse" data-parent="#accordion10"
+                                            href="#collapseThirteen" className="collapsed" aria-expanded="false">Combien de temps cela prend t-il ?</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseThirteen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>La période de levé des fonds est de 30 jours à partir de la mise en ligne de la demande. Passé ce délai,
                                                 la demande de financement peut être prolongée pour une période identique, modifiée ou supprimée. Il n’est, actuellement,
@@ -225,11 +235,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">Et dans la comptabilité de l’emprunteur</a>
+                                            <a data-toggle="collapse" data-parent="#accordion11"
+                                            href="#collapseFourteen" className="collapsed" aria-expanded="false">Et dans la comptabilité de l’emprunteur</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseFourteen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Les fonds récoltés par le biais du prêt coup de pouce apparaitront parmi les dettes au passif du bilan.</p>
                                                 <p>Les intérêts payés annuellement sont intégralement déductibles au titre de charges professionnelles.</p>
@@ -243,11 +253,11 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">Comment remplir ma déclaration fiscale</a>
+                                            <a data-toggle="collapse" data-parent="#accordion12"
+                                            href="#collapseFifteen" className="collapsed" aria-expanded="false">Comment remplir ma déclaration fiscale</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseFifteen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Les montants prêtés, au cours de la période imposable concernée, doivent être indiqués dans le cadre <b>xxx</b> de la partie I de la déclaration à l’impôt des personnes physiques.</p>
                                                 <p>Le bénéfice du crédit d’impôt devra être revendiqué chaque année pendant la durée du prêt.</p>
@@ -259,17 +269,19 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">
+                                            <a data-toggle="collapse" data-parent="#accordion13"
+                                            href="#collapseSixteen" className="collapsed" aria-expanded="false">
                                             Quels sont les documents à conserver pour la déclaration fiscale</a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseSixteen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
-                                                <ul style={{list-style-type:circle}}>
-                                                    <li> La demande et la notification de l’enregistrement ;</li>
-                                                    <li> L’extrait de compte bancaire mentionnant le paiement annuel des intérêts ;</li>
-                                                    <li> L’attestation sur l’honneur que vous aurez signée.</li>
+                                                <ul type='circle'>
+                                                    <ul style={ulStyle}>
+                                                        <li> La demande et la notification de l’enregistrement ;</li>
+                                                        <li> L’extrait de compte bancaire mentionnant le paiement annuel des intérêts ;</li>
+                                                        <li> L’attestation sur l’honneur que vous aurez signée.</li>
+                                                    </ul>
                                                 </ul>
                                             </div>
                                         </div>
@@ -277,13 +289,13 @@ export default class Faq extends React.Component {
                                      <div className="panel panel-default panelFaq">
                                         <div className="panel-heading">
                                             <h4 className="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion2"
-                                            href="#collapseEight" className="collapsed" aria-expanded="false">
+                                            <a data-toggle="collapse" data-parent="#accordion14"
+                                            href="#collapseSevenTeen" className="collapsed" aria-expanded="false">
                                             Et la confidentialité ?
                                             </a>
                                         </h4>
                                         </div>
-                                        <div id="collapseEight" className="panel-collapse collapse" aria-expanded="false">
+                                        <div id="collapseSevenTeen" className="panel-collapse collapse" aria-expanded="false">
                                             <div className="panel-body">
                                                 <p>Aucune information n’est rendue publique par KATAPULTA sans l’accord explicite de l’entreprise.</p>
                                             </div>

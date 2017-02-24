@@ -20,7 +20,7 @@ export class ContractGenerator {
     }
 
     createPdfBinary( basicProfil, contractPreteur, basicInfoEmprunteur, callback ) {
-        debug("Entering createPdfBinary");
+        debug("Entering createPdfBinary ContractGenerator");
         const preteurParaph = `${basicProfil.prenom} ${_.toUpper(basicProfil.nom)}\n${basicProfil.address}\n${basicProfil.codePostal} ${basicProfil.ville}\n${basicProfil.numNational}\n${basicProfil.email}`
 
         const emprunteurText = basicInfoEmprunteur.isSociete ? [
