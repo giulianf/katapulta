@@ -15,7 +15,7 @@ export class AttestationHonneurGenerator {
 
         this.createPdfBinary( (binary) => {
             res.contentType('application/pdf');
-            res.send(binary);
+            res.send('data:application/pdf;base64,' + binary);
         })
     }
 
@@ -124,7 +124,7 @@ export class AttestationHonneurGenerator {
         });
         pdfDoc.on('end', function () {
             result = Buffer.concat(chunks);
-            callback('data:application/pdf;base64,' + result.toString('base64'));
+            callback(result.toString('base64'));
         });
         pdfDoc.end();
     }

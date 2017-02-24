@@ -1,4 +1,4 @@
-import path from 'path';
+// 1tsae"region": "us-west-2"  ,mimport path from 'path';
 import { Server } from 'http';
 import Express from 'express';
 import cors from 'cors';
@@ -11,6 +11,7 @@ import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
 import { ContractDao } from './dao/ContractDao';
 import { MailDao } from './dao/MailDao';
+import path from 'path';
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
@@ -24,7 +25,7 @@ require('dotenv').config({
 let aws = require('aws-sdk');
 
 // load aws config
-// aws.config.extractCredentials({ "accessKeyId": process.env.AWS_KEY, "secretAccessKey": process.env.AWS_SECRET });
+aws.config.constructor({ "accessKeyId": process.env.AWS_KEY, "secretAccessKey": process.env.AWS_SECRET, "region": "us-east-1"  });
 // aws.config.loadFromPath(path.join(__dirname, '..' ,'config', `configAWS.json`));
 
 // load AWS SES
@@ -296,9 +297,14 @@ const ObjectId = require('mongodb').ObjectId;
 app.post('/api/mailtest', (req, res) => {
     debug("Entering /api/mailtest ");
 
-    const mail = new MailDao(_mongodb, clientSES);
+    try {
+        const mail = new MailDao(_mongodb, clientSES);
 
-    mail.insertNewEvent( new ObjectId("58ae10d10bdd1f0ea61a6516"), "EXIT", true);
+        mail.insertNewEvent( new ObjectId("58ae10d10bdd1f0ea61a6516"), "EXIT", true);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+
 
 });
 app.post('/api/generateContract', (req, res) => {

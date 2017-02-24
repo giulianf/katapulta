@@ -16,7 +16,7 @@ export class MailDao {
 
 
     insertNewEvent(contractId, eventStatusMail, notifyUser) {
-        info('Entering insertNewEvent() data: ' + user  );
+        info('Entering insertNewEvent() data: ' + contractId  );
 
          try {
              let basicProfil = null;
@@ -77,7 +77,7 @@ export class MailDao {
                         callback("Les informations de l'emprunteur n'existe pas.");
                         return;
                     }
-                    this.eventRegister(user, basicProfil.email, 'OK', null, err => {
+                    this.eventRegister(contractPreteur.user_id, basicProfil.email, 'OK', null, err => {
                         if (err) {
                             warn('Error during the OK event register' , err);
                             // no return to continue process
@@ -108,7 +108,7 @@ export class MailDao {
                 if (err) {
                     error("Unable to insertNewEvent see the log or event document: " , err);
 
-                    this.eventRegister(user, basicProfil.email, 'FAILURE', err, error => {
+                    this.eventRegister(contractId, basicProfil.email, 'FAILURE', err, error => {
                         if (error) {
                             error(error.message);
                         }

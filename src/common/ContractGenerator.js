@@ -15,7 +15,7 @@ export class ContractGenerator {
 
         this.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
             res.contentType('application/pdf');
-            res.send(binary);
+            res.send('data:application/pdf;base64,' + binary);
         })
     }
 
@@ -565,7 +565,9 @@ export class ContractGenerator {
         });
         pdfDoc.on('end', function () {
             result = Buffer.concat(chunks);
-            callback('data:application/pdf;base64,' + result.toString('base64'));
+            callback( result.toString('base64'));
+            // callback('data:application/pdf;base64,' + result.toString('base64'));
+            // callback('data:application/pdf,' + result.toString());
         });
         pdfDoc.end();
     }

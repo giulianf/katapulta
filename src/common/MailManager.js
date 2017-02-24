@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import FormatMailing from './FormatMailing';
-import ContractGenerator from './ContractGenerator';
+import {ContractGenerator} from './ContractGenerator';
+import {DemandeEnregistrementGenerator} from './DemandeEnregistrementGenerator';
 import { Mailing } from './Mailing';
+import { error, debug, info } from './UtilityLog';
 
 export class MailManager {
     constructor(client, basicProfil, basicInfoEmprunteur, contractPreteur) {
@@ -78,11 +80,16 @@ export class MailManager {
             content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
 
             const contractGenerator = new ContractGenerator();
+            const demandeEnregistrementGenerator = new DemandeEnregistrementGenerator();
 
             const attachmentName = "contract.pdf";
+            const attachmentName2 = "DemandeEnregistrement.pdf";
             const attachmentContent = contractGenerator.createPdfBinary(basicProfil, contractPreteur, basicInfoEmprunteur, (binary) => {
-                mail.sendMail(subject, content, basicProfil.email, attachmentName, attachmentContent);
-                callback();
+                const attachmentContent2 = demandeEnregistrementGenerator.createPdfBinary( (binary2) => {
+                    mail.sendMail(subject, content, basicProfil.email, attachmentName, binary, attachmentName2, binary2);
+                    callback();
+                });
+
             });
         } catch (e) {
             error('Error while mailMiseEnLigne: ', e);

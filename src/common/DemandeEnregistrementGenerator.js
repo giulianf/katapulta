@@ -15,7 +15,7 @@ export class DemandeEnregistrementGenerator {
 
         this.createPdfBinary( (binary) => {
             res.contentType('application/pdf');
-            res.send(binary);
+            res.send('data:application/pdf;base64,' + binary);
         })
     }
 
@@ -23,7 +23,7 @@ export class DemandeEnregistrementGenerator {
         debug("Entering createPdfBinary");
 
         // const docDefinition = {
-        var dd = {
+        const docDefinition = {
             info: {
                 title: "Contrat prêt coup de pouce",
                 author: 'United-IT',
@@ -200,7 +200,7 @@ export class DemandeEnregistrementGenerator {
         });
         pdfDoc.on('end', function () {
             result = Buffer.concat(chunks);
-            callback('data:application/pdf;base64,' + result.toString('base64'));
+            callback(result.toString('base64'));
         });
         pdfDoc.end();
     }
