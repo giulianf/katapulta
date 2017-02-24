@@ -239,6 +239,10 @@ class ProvideStore extends BaseStore {
         this._pdfPreteur.wait= false;
     }
 
+    successMessage(message) {
+        Toastr.info(message);
+    }
+
     /**************************/
     /***** START EXPLORER ****/
     /*************************/
@@ -388,14 +392,14 @@ class ProvideStore extends BaseStore {
         break;
       case ProvideConstants.SAVE_BASIC_INFO_SUCCCESS:
         this.populateBasicInfo(action.body);
-        Toastr.info( "Les informations utilisateur ont été enregistrées.");
+        this.successMessage("Les informations utilisateur ont été enregistrées.");
 
         // If action was responded to, emit change event
         // this.emitChange();
         break;
       case ProvideConstants.SAVE_BASIC_INFO_EMPRUNTEUR_SUCCCESS:
         this.populateEmprunteurBasicInfo(action.body);
-        Toastr.info( "Les informations emprunteur ont été enregistrées.");
+        this.successMessage("Les informations emprunteur ont été enregistrées.");
 
         // If action was responded to, emit change event
         // this.emitChange();
@@ -519,6 +523,11 @@ class ProvideStore extends BaseStore {
       case ProvideConstants.GENERATE_EMPRUNTEUR_CONTRACT_ERROR:
         // If action was responded to, emit change event
         this.errorResponse();
+        this.emitChange();
+        break;
+      case ProvideConstants.NEWSLETTER_SUCCCESS:
+        // If action was responded to, emit change event
+        this.successMessage("Votre email enregistré.")
         this.emitChange();
         break;
       default:

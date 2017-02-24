@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
+import { Grid, Row, Col, Button, FormGroup, ControlLabel } from 'react-bootstrap';
+import Validator from '../../validator/validatorEmprunteurBasic';
+import ProvideActions from '../actions/ProvideActions';
 
 export default class Newsletter extends Component {
   constructor (){
     super();
+    this.state = { emailNews :''};
+  }
+
+  _onClickNewsLetter() {
+      if ( Validator.validateEmailAddress(this.state.emailNews ) ) {
+          ProvideActions.registerNewsLetter(this.state.emailNews);
+      }
   }
 
   render () {
+      const validateEmail = Validator.validateEmailAddress( this.state.emailNews ) ? "success" : "error";
 
     return (
         <Grid fluid>
@@ -18,9 +28,15 @@ export default class Newsletter extends Component {
                 <Col md={7} sm={12} xs={12} mdOffset={2} className='text-center' >
     							<div className="signup_form">
     								<h3>Vous souhaitez rester informez</h3>
-    								<form action="http://site90.us11.list-manage.com/subscribe/post?u=599a2153f4b86cb2f92d4af3a&amp;id=26d7c26287" method="post" name="mc-embedded-subscribe-form" className="validate" target="_blank" novalidate>
-    									<input type="email" name="EMAIL" className="form-control" id="mce-email" placeholder="Enter Email"/>
-    									<span><Button>Subscribe</Button></span>
+    								<form method="post" name="mc-news-subscribe-form" className="validate" target="_blank" novalidate>
+                                        <FormGroup controlId="formHorizontalNewsEmail" validationState={validateEmail}>
+                                          <Col sm={12} md={8}>
+                                            <FormControl type="email" placeholder="email"
+                                                onChange={e=>{ this,setState({emailNews: e.target.value})}}
+                                                 value={this.state.emailNews}/>
+                                          </Col>
+                                        </FormGroup>
+    									<span><Button onClick={this._onClickNewsLetter.bind()}>Subscribe</Button></span>
     								</form>
     							</div>
     						</Col>

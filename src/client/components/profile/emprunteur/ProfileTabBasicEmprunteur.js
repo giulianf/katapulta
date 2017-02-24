@@ -637,7 +637,8 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                         <Col sm={12} md={8}>
                           <FormControl type="number" placeholder="chiffreAffaire" step="0.01"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({chiffreAffaire: parseFloat(e.target.value)})}  value={this.props.basicInfoEmprunteur.chiffreAffaire}/>
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({chiffreAffaire: parseFloat(e.target.value)})}
+                               value={this.props.basicInfoEmprunteur.chiffreAffaire}/>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalnbEmpl" validationState={validateNbEmploye}>
@@ -646,7 +647,8 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                         <Col sm={12} md={8}>
                           <FormControl type="number" placeholder="Nombre Employe"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({nbEmploye: parseInt(e.target.value)})}  value={this.props.basicInfoEmprunteur.nbEmploye}/>
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({nbEmploye: parseInt(e.target.value)})}
+                               value={this.props.basicInfoEmprunteur.nbEmploye}/>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalCaital" validationState={validateCapital}>
@@ -655,7 +657,8 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                         <Col sm={12} md={8}>
                           <FormControl type="number" placeholder="Capital"  step="0.01"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({capital: parseFloat(e.target.value) })}  value={this.props.basicInfoEmprunteur.capital}/>
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({capital: parseFloat(e.target.value) })}
+                              value={this.props.basicInfoEmprunteur.capital}/>
                         </Col>
                       </FormGroup>
 
@@ -663,11 +666,12 @@ class ProfileTabBasicEmprunteur extends Component {
 
                       <FormGroup controlId="formHorizontaldestinationPret" validationState={validateDestinationPret}>
                         <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
-                          Destination Pret
+                          Information entreprise
                         </Col>
                         <Col sm={12} md={8}>
-                          <FormControl type="text" placeholder="Destination Pret"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({destinationPret: e.target.value})}  value={this.props.basicInfoEmprunteur.destinationPret}/>
+                          <FormControl type="textarea" placeholder="Desription de votre entreprise"
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({destinationPret: e.target.value})}
+                               value={this.props.basicInfoEmprunteur.destinationPret}/>
                         </Col>
                       </FormGroup>
                       <FormGroup controlId="formHorizontalMontantSouhaite" validationState={validateMontantSouhaite}>
@@ -714,7 +718,8 @@ class ProfileTabBasicEmprunteur extends Component {
                         </Col>
                         <Col sm={12} md={8}>
                           <FormControl type="text" placeholder="Site Web"
-                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({siteWeb: e.target.value})}  value={this.props.basicInfoEmprunteur.siteWeb}/>
+                              onChange={e => ProvideActions.updateBasicInfoEmprunteur({siteWeb: e.target.value})}
+                              value={this.props.basicInfoEmprunteur.siteWeb}/>
                         </Col>
                       </FormGroup>
                       <OverlayTrigger placement="top" overlay={ tooltipBank }>

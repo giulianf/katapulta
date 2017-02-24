@@ -241,5 +241,20 @@ export default {
           success: ProvideConstants.ADMIN_CONTRACTS_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
+    },
+
+    /**
+     * Newsletter
+     */
+    registerNewsLetter: (email) => {
+        let promise = ProvideService.registerNewsLetter(email);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.NEWSLETTER,
+          success: ProvideConstants.NEWSLETTER_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
     }
+
+
 }

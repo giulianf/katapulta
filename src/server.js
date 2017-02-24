@@ -11,6 +11,7 @@ import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
 import { ContractDao } from './dao/ContractDao';
 import { MailDao } from './dao/MailDao';
+import { ReferenceDao } from './dao/ReferenceDao';
 import path from 'path';
 
 // initialize the server and configure support for ejs templates
@@ -304,9 +305,9 @@ app.post('/api/mailtest', (req, res) => {
     } catch (e) {
         res.status(500).send(e.message);
     }
-
-
 });
+
+
 app.post('/api/generateContract', (req, res) => {
     debug("Entering /api/generateContract ");
     const contractDao = new ContractDao(_mongodb);
@@ -315,7 +316,23 @@ app.post('/api/generateContract', (req, res) => {
 
     contractDao.generateContract(res, contractId);
 
-})
+});
+
+/***********************************/
+/********   START NEWSLETTER    ********/
+/***********************************/
+app.post('/api/registerNewsLetter', (req, res) => {
+    debug("Entering /api/generateContract ");
+    const referenceDao = new ReferenceDao(_mongodb);
+
+    const emailNews = req.body.emailNews;
+
+    referenceDao.registerNewsLetter(res, emailNews);
+
+});
+/***********************************/
+/********   END NEWSLETTER    ********/
+/***********************************/
 
 // start the server
 const port = process.env.SERVER_PORT ;

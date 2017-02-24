@@ -69,6 +69,10 @@ export default keyMirror({
     LOGIN_DATA_SUCCESS : null,
     FORGET_USER: null,
     FORGET_USER_SUCCCESS: null,
-    LOGIN_USER_AUTH: null
+    LOGIN_USER_AUTH: null,
+
+    // NEWSLETTER
+    NEWSLETTER:null,
+    NEWSLETTER_SUCCCESS:null
 
 });
