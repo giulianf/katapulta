@@ -53,6 +53,7 @@ const routes = (
             <Route path="/emprunteur/:contractEmprunteurId" component={ Emprunteur } onEnter={ requireBasicAuth } />
             <Route path='simulateur' component={Simulateur} onEnter={ requireBasicAuth }/>
             <Route path='/faq' component={Faq} onEnter={ requireBasicAuth }/>
+            <Route path='/contact' component={Contact} onEnter={ requireBasicAuth }/>
             <Route path='/profile' component={Profile} onEnter={ requireAuth } />
             <Route path='/login' component={Login} onEnter={ parseAuthLoginHash } />
             <Route path="*" component={NoMatch} />

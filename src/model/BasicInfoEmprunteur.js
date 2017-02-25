@@ -97,7 +97,7 @@ export class BasicInfoEmprunteur {
                 this.bankName= emprunteur.bankName;
                 this.image= emprunteur.image;
                 this.logo= emprunteur.logo;
-                this.createDate= emprunteur.createDate;
+                this.creationDate= emprunteur.creationDate;
             } else {
                 this.user_id= user_id;
                 this.status= 'INSCRIPTION';
@@ -138,7 +138,6 @@ export class BasicInfoEmprunteur {
                 this.bankName= '';
                 this.image= [];
                 this.logo= '';
-                this.createDate= '';
             }
     }
 
@@ -153,7 +152,7 @@ export class BasicInfoEmprunteur {
         ', email '+ this.email +
         ', numTel '+this.numTel +', dateConstitution '+this.dateConstitution +', chiffreAffaire '+this.chiffreAffaire+', nbEmploye '+this.nbEmploye +
         ', capital '+this.capital+', actionnariat '+this.actionnariat +', destinationPret '+this.destinationPret +', montantSouhaite '+this.montantSouhaite+
-        ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.createDate+
+        ', dureeSouhaite '+this.dureeSouhaite+', tauxInteretOffert '+this.tauxInteretOffert+', siteWeb '+this.siteWeb+', creation date '+this.creationDate +
         ', bankAccount '+this.bankAccount+', bankName '+this.bankName+
         ', end date '+ this.endDate+', Our Selection '+this.isOurSelection+' and Is in societe '+this.isSociete;
     }

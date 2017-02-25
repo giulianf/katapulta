@@ -116,7 +116,7 @@ export class ContractDao {
                     const progress =  getProgress(statusList, status);
                     debug('Progress: ' + progress);
                     const emprunteur = new ContractsEmprunteur( null, userId, basicInfoEmprunteur );
-
+                    
                     contractEmprunteurs.insertOne( emprunteur, {
                         returnOriginal: false
                       , upsert: true

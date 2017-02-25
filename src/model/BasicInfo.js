@@ -38,7 +38,7 @@ export class BasicInfo {
             this.bankAccount = client.bankAccount;
             this.bankName = client.bankName;
             this.favoris = client.favoris;
-            this.createDate= client.createDate;
+            this.creationDate= client.creationDate;
         } else {
             // if null init all
             this.user_id= user_id;
@@ -55,7 +55,6 @@ export class BasicInfo {
             this.bankAccount= 'BE';
             this.bankName= '';
             this.favoris = [];
-            this.createDate = createDateMongo();
         }
     }
 
@@ -64,6 +63,6 @@ export class BasicInfo {
         ' dateNaissance: ' + this.dateNaissance + ' numNational ' + this.numNational +' email '+this.email +
         ' address '+this.address +' codePostal '+this.codePostal +' ville '+ this.ville +
         ' bankAccount '+this.bankAccount +' codePostal '+this.bankName +
-        ' isEmprunteur '+this.isEmprunteur + ' createDate ' + this.createDate ;
+        ' isEmprunteur '+this.isEmprunteur + ' creationDate ' + this.creationDate ;
     }
 }

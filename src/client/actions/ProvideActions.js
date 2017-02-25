@@ -130,7 +130,7 @@ export default {
           request: ProvideConstants.FAVORIS_EMPRUNTEUR,
           success: ProvideConstants.FAVORIS_EMPRUNTEUR_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
-        }, { basicInfoEmprunteur });
+        }, {  });
     },
 
     /**
@@ -217,6 +217,18 @@ export default {
         dispatchAsync(promise, {
           request: ProvideConstants.CONTRACTS_EMPRUNTEUR,
           success: ProvideConstants.CONTRACTS_EMPRUNTEUR_SUCCCESS,
+          failure: ActionTypes.DATA_ERROR
+        }, { });
+    },
+    /**
+     * get favoris within TAB favoris emprunteur
+     */
+    getAdminFavoris: (favoris) => {
+        let promise = ProvideService.getAdminFavoris(favoris);
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.ADMIN_FAVORIS,
+          success: ProvideConstants.ADMIN_FAVORIS_SUCCCESS,
           failure: ActionTypes.DATA_ERROR
         }, { });
     },

@@ -73,8 +73,6 @@ class ProvideStore extends BaseStore {
         this._tabContracts = _.cloneDeep(contract);
 
         this._tabContractsEmprunteur = _.cloneDeep(contract);
-
-
     }
 
     closeStepperDetail() {
@@ -169,14 +167,13 @@ class ProvideStore extends BaseStore {
     favorisEmprunteur(dataSociete) {
         // explorers is an Array
         const favoris = _.find(this._explorer.selectedExplorers, {"id" : dataSociete.id});
-        // emprunteur is an Object
-        const favorisEmprunteur = _.isEqual(this._contractEmprunteur.id, dataSociete.id) ? this._contractEmprunteur : null;
+        // profile favoris
+        const profileFavoris = _.remove(this._favorisEmprunteur, (favori) => {
+            return _.isEqual(favori.id,  dataSociete.id);
+        });
 
         if (!_.isNil(favoris)) {
-            favoris.isFavoris = !favoris.isFavoris;
-        }
-        if (!_.isNil(favorisEmprunteur)) {
-            favorisEmprunteur.isFavoris = !favorisEmprunteur.isFavoris;
+            favoris.emprunteur.isFavoris = !favoris.emprunteur.isFavoris;
         }
     }
 
@@ -267,7 +264,7 @@ class ProvideStore extends BaseStore {
         }));
         this._nbLatest = _.size(_.filter(explorers, (c) => {
             const current = addDays(moment(), -7);
-            const createDate = getDate( c.emprunteur.createDate );
+            const createDate = getDate( c.emprunteur.creationDate );
             return current.isBefore( createDate );
         }));
     }
@@ -301,7 +298,7 @@ class ProvideStore extends BaseStore {
             // Current date - 7 days < Creation date
             searchResults = _.filter(searchResults, (c) => {
                 const current = addDays(moment(), -7);
-                const createDate = getDate( c.creationDate );
+                const createDate = getDate( c.emprunteur.creationDate );
                 return current.isBefore( createDate );
             });
         }
@@ -452,7 +449,8 @@ class ProvideStore extends BaseStore {
         this.emitChange();
         break;
       case ProvideConstants.FAVORIS_EMPRUNTEUR_SUCCCESS:
-         this.favorisEmprunteur(action.basicInfoEmprunteur);
+      // body= basicInfoEmprunteur
+         this.favorisEmprunteur(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;
@@ -548,6 +546,11 @@ class ProvideStore extends BaseStore {
       case ProvideConstants.NEWSLETTER_SUCCCESS:
         // If action was responded to, emit change event
         this.successMessage("Votre email enregistré.")
+        this.emitChange();
+        break;
+      case ProvideConstants.ADMIN_FAVORIS_SUCCCESS:
+        // If action was responded to, emit change event
+        this.populateEmprunteurFavoris(action.body);
         this.emitChange();
         break;
       default:

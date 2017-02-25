@@ -20,3 +20,4 @@ export const ADMIN_BLOCK_STATUS = `${BASE_API_URL}updateBlockStatus`;
 export const ADMIN_RAPPEL_STATUS = `${BASE_API_URL}updateRappelStatus`;
 export const GENERATE_CONTRACT = `${BASE_API_URL}generateContract`;
 export const NEWSLETTER_API = `${BASE_API_URL}registerNewsLetter`;
+export const PROFILE_FAVORIS_API = `${BASE_API_URL}getProfileFavoris/`;

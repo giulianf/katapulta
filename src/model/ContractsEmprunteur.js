@@ -34,10 +34,10 @@ export class ContractsEmprunteur {
 
 			this.user_id= user_id;
             this.emprunteur= emprunteur;
-			this.creationDate= createDateMongo();
 			this.status= status;
 			this.progress= progress;
 			this.stepWorkflow= stepWorkflow;
+            this.creationDate = createDateMongo();
 		}
     }
 

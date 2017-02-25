@@ -3,6 +3,8 @@ import { error, debug, info } from '../common/UtilityLog';
 import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDays, getCurrentMomentDate, getDateISO } from '../common/Utility';
 import { BasicInfo } from '../model/BasicInfo';
 import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
+import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
+import { ContractDao } from '../dao/ContractDao';
 import async from 'async';
 import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
 let soap = require('soap');
@@ -77,13 +79,15 @@ export class ProfileDao {
             let basicProfil = null;
             // Find some documents
             clients.findOne({'user_id': userId}, function(err, client) {
-              debug("*****  Client found: " + JSON.stringify( client ));
 
               if (!_.isNil(client)) {
                   basicProfil = new BasicInfo(client);
               } else {
                   basicProfil = new BasicInfo(null, userId, email);
               }
+
+              debug("*****  Client found: " + basicProfil.toLog());
+
               callback(basicProfil);
           });
         } catch (e) {
@@ -110,14 +114,16 @@ export class ProfileDao {
                     clients = this._mongodb.collection('clients');
 
                     if (_.isNil(basicInfo.id)) {
-                        // basicInfo.createDate = createDateMongo();
+                        // basicInfo.creationDate = createDateMongo();
                     }
+
+                    info('basicInfo: ' +JSON.stringify(basicInfo));
 
                     // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
                     clients.findOneAndUpdate({'user_id': basicInfo.user_id},
                     {
-                         $set: { basicInfo },
-                        $setOnInsert: { createDate: createDateMongo() }
+                         $set:  basicInfo,
+                        $setOnInsert: { creationDate: createDateMongo() }
                     }, {
                         returnOriginal: false
                       , upsert: true
@@ -318,7 +324,7 @@ export class ProfileDao {
 
                     if ( _.isNil(basicEmprunteurProfil.id) ) {
                         // basicEmprunteurProfil.createDate = createDateMongo();
-                        debug('creation date ' + basicEmprunteurProfil.createDate);
+                        debug('creation date ' + basicEmprunteurProfil.creationDate);
 
                         let endDate = getBelgiumDate( getCurrentMomentDate() );
                         endDate = addDays( getDateISO(endDate), 10);
@@ -330,8 +336,8 @@ export class ProfileDao {
 
                     emprunteurs.findOneAndUpdate({'user_id': basicEmprunteurProfil.user_id},
                     {
-                         $set: { basicEmprunteurProfil },
-                        $setOnInsert: { createDate: createDateMongo() }
+                         $set: basicEmprunteurProfil ,
+                        $setOnInsert: { creationDate: createDateMongo() }
                     } , {
                         returnOriginal: false
                       , upsert: true
@@ -360,7 +366,7 @@ export class ProfileDao {
     }
 
     updateFavoris(res, user_id, contractEmprunteurId, removed) {
-        info('Entering updateFavoris() user: ' + user_id);
+        info('Entering updateFavoris() user: ' + user_id + ', and contract emprunteur id: ' + contractEmprunteurId + ' and removed: ' + removed);
 
         let clients;
          try {
@@ -406,8 +412,8 @@ export class ProfileDao {
                     // this._mongodb.collection('clients').insert( basicInfo, function(err, r) {
                     clients.findOneAndUpdate({'user_id': basicProfil.user_id},
                     {
-                         $set: { basicProfil },
-                        $setOnInsert: { createDate: createDateMongo() }
+                         $set: basicProfil ,
+                        $setOnInsert: { creationDate: createDateMongo() }
                     }, {
                         returnOriginal: false
                       , upsert: true
@@ -416,13 +422,28 @@ export class ProfileDao {
                             callback(err);
                         }
                         const basicProfil = new BasicInfo(clientResult.value);
-                        debug('Result findOneAndUpdate client: ' + JSON.stringify( basicProfil.toLog() ) );
+                        debug('Result findOneAndUpdate client: ' +  basicProfil.toLog()  );
 
-                        res.end( JSON.stringify(basicProfil) );
+                        callback();
+                        // res.end( JSON.stringify(basicProfil) );
+                    });
+                },
+                (callback) => {
+                    const contractDao = new ContractDao(this._mongodb);
+
+                    contractDao.getContractEmprunteurById(contractEmprunteurId, (contract, err) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+
+                        debug("Contract emprunteur is: " + contract.toLog());
+
+                        res.end( JSON.stringify(contract) );
                     });
                 }
             ], (err) => {
-                error("Unable to updateBasicInfo " , err);
+                error("Unable to updateFavoris " , err);
                 //   When it's done
                 if (err) {
                     res.status(500).json(err);
@@ -432,6 +453,49 @@ export class ProfileDao {
         } catch( e ) {
             error('error: ' + e);
             res.status(500).send("Problème pendant l'enregistrement du profil. " + e.message);
+        }
+    }
+
+
+    /**
+     * getProfileFavoris - description
+     *
+     * @param  {type} res     description
+     * @param  {array} favoris list of contract emprunteur id
+     * @return {type}         description
+     */
+    getProfileFavoris(res, favoris) {
+        try {
+            info('Entering getProfileFavoris: ' + JSON.stringify(favoris));
+
+            const contractDao = new ContractDao(this._mongodb);
+
+            async.mapSeries(favoris, (favori, callback) => {
+                debug('favoris contract id: '+ favori.contractEmprunteurId );
+                contractDao.getContractEmprunteurById(favori.contractEmprunteurId, (contract, err) => {
+                    if (err) {
+                        callback(err);
+                        return;
+                    }
+                    // because it's always true in the profile favoris
+                    contract.emprunteur.isFavoris = true;
+
+                    debug("Favoris Contract emprunteur is: " + contract.toLog());
+
+                    callback(null, contract);
+                });
+
+            }, (err, result) => {
+                if (err) {
+                    error("ERROR Favoris Contract emprunteur is: " + err);
+                }
+                debug("RESULT Favoris Contract emprunteur is: " + result);
+
+                res.end( JSON.stringify(result) );
+            } );
+        } catch (e) {
+            error("unable to getProfileFavoris", e);
+            res.status(500).send("Problème pendant la récupération des favoris. " + e.message);
         }
     }
 }

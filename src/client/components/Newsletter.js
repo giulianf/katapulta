@@ -32,7 +32,7 @@ export default class Newsletter extends Component {
     					<Row>
                 <Col md={7} sm={12} xs={12} mdOffset={2} className='text-center' >
     							<div className="signup_form">
-    								<h3>Vous souhaitez rester informez</h3>
+    								<h3>Vous souhaitez rester informé</h3>
     								<form method="post" name="mc-news-subscribe-form" className="validate" target="_blank" novalidate>
                                         <FormGroup controlId="formHorizontalNewsEmail" validationState={validateEmail}>
                                           <Col sm={12} md={8}>

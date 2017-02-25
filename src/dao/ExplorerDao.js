@@ -24,7 +24,7 @@ export class ExplorerDao {
      * @return {type}          description
      */
     getExplorers(res, user, pageKey) {
-        info('Entering getExplorers() data: ' );
+        info('Entering getExplorers() data: user:' + user);
 
          try {
              const EXPLORERS_PAGE = 8;
@@ -96,7 +96,7 @@ export class ExplorerDao {
                                    const contractEmprunteurId = (favori.contractEmprunteurId).toString();
                                    debug("favori id: " + contractEmprunteurId);
 
-                                   const contrats = _.find(contractsList, c => {
+                                   const contrats = _.find(contractEmprunteurList, c => {
                                        const id = (c.id).toString();
                                        return _.isEqual( id, contractEmprunteurId);
                                    });
@@ -104,10 +104,10 @@ export class ExplorerDao {
 
                                    if (!_.isNil(contrats) && _.isArray(contrats)) {
                                        _.forEach(contrats, con => {
-                                           con.isFavoris = true;
+                                           con.emprunteur.isFavoris = true;
                                        })
                                    } else if (!_.isNil(contrats)) {
-                                       contrats.isFavoris = true;
+                                       contrats.emprunteur.isFavoris = true;
                                    }
                                }
                            }

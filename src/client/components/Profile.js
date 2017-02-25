@@ -98,6 +98,8 @@ export default class Profile extends Component {
             ProvideActions.getContractPreteur(this.state.profile);
         } else if ( _.isEqual(key, 4) && _.isEmpty(this.state.tabEmprunteurContracts.contracts) ) {
             ProvideActions.getContractEmprunteur(this.state.profile);
+        } else if ( _.isEqual(key, 5) && !_.isNil(this.state.basicInfo) && !_.isEmpty(this.state.basicInfo.favoris) ) {
+            ProvideActions.getAdminFavoris(this.state.basicInfo.favoris);
         } else if ( _.isEqual(key, 6) && (_.isEmpty(this.state.admin.adminEmprunteur.contracts) || _.isEmpty(this.state.admin.adminPreteur.contracts)) ) {
             ProvideActions.getAdminContracts();
         }
@@ -157,7 +159,7 @@ export default class Profile extends Component {
             { basicEmprunteurTab }
             { contractPreteurTab }
             { contractEmprunteurTab }
-            <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris favoris={this.state.favoris} /></Tab>
+            <Tab eventKey={5} title="Emprunteur Favoris"><ProfileTabFavoris profile={this.state.profile} favoris={this.state.favoris} /></Tab>
             { isAdminTab }
         </Tabs>
     ) : (<Col mdOffset={5} lgOffset={5}>

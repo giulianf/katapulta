@@ -24,11 +24,12 @@ export default class ProfileTabFavoris extends Component {
        // Save action for Server
    }
     render () {
-        const favoris = _.map(this.props.favoris , favori => {
+        const favoris = !_.isEmpty(this.props.favoris) ? _.map(this.props.favoris , favori => {
             return (
-                <EmprunteurComponent key={favori.emprunteurId} dataSociete={favori} col={4} onClickFavori={ProvideActions.favorisEmprunteur}/>
+                <EmprunteurComponent key={favori.id} profile={this.props.profile}
+                    loggedIn={true} dataSociete={favori} col={4} onClickFavori={ProvideActions.favorisEmprunteur}/>
             )
-        })
+        }) : 'Pas de favoris enregistré';
 
         return (
             <div key='profileTabFavoris'>

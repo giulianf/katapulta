@@ -52,7 +52,7 @@ export class MailManager {
 
             const subject = _.replace(FormatMailing.mail_mise_en_ligne_subject, '{reference}', basicInfoEmprunteur.id);
             let content = _.replace(FormatMailing.mail_mise_en_ligne_content, '{name}', basicProfil.nom);
-            content = _.replace(content, '{creationDate}', basicProfil.createDate );
+            content = _.replace(content, '{creationDate}', basicProfil.creationDate );
             content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
 
             const contractGenerator = new ContractGenerator();

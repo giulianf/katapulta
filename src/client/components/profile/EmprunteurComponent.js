@@ -37,7 +37,8 @@ class EmprunteurComponent extends Component {
         const favoriButton = this.props.loggedIn ? (
             <OverlayTrigger placement="top" overlay={favoriTooltip}>
                 <Button className="favoris-info" >
-                    <Glyphicon glyph='star' className={startColor}  onClick={ e => this.props.onClickFavori( profile , emprunteur ) } />
+                    <Glyphicon glyph='star' className={startColor}
+                        onClick={e => this.props.onClickFavori( profile , dataSociete.id, emprunteur.isFavoris)} />
                 </Button>
             </OverlayTrigger>
         ) : null;

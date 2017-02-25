@@ -10,7 +10,7 @@ export default class Contact extends Component {
   }
 
   _sendMessage() {
-      
+      ProvideActions.priseContact(this.state.emailNews);
   }
 
   render () {

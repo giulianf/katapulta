@@ -2,7 +2,7 @@ import { SIMULATE_API, GET_BASIC_INFO_API , UPDATE_BASIC_INFO_API , GET_EMPRUNTE
      UPDATE_EMPRUNTEUR_BASIC_INFO_API, FORGET_USER, GET_CONTRACTS_PRETEUR_API, GET_EXPLORERS_API,
      GET_EXPLORERS_BY_EMPR_ID_API , UPDATE_FAVORI_API, GET_CONTRACTS_EMPRUNTEUR_API, REQUEST_EMPRUNT_API,
      REQUEST_PRETEUR_API, ADMIN_CONTRACTS_API, ADMIN_CHANGE_STATUS, ADMIN_BLOCK_STATUS, ADMIN_RAPPEL_STATUS ,
-    GENERATE_CONTRACT, NEWSLETTER_API } from '../constants/WebServiceConstants';
+    GENERATE_CONTRACT, NEWSLETTER_API, PROFILE_FAVORIS_API } from '../constants/WebServiceConstants';
 import bluebird from 'bluebird';
 import axios from 'axios';
 import ApiService from './ApiService';
@@ -302,6 +302,22 @@ class ProvideService {
           ApiService.post(
              NEWSLETTER_API,
              { email }
+          ).then(response => {
+            if (!_.isNil(response)) {
+                return resolve(response.data);
+            }
+          }).catch( err => {
+            return reject(err);
+          });
+      });
+    }
+
+    getAdminFavoris(favoris) {
+        const fav = JSON.stringify(favoris);
+
+      return new bluebird( (resolve, reject) => {
+          ApiService.get(
+             `${PROFILE_FAVORIS_API}${ fav }`,
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

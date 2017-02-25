@@ -259,6 +259,16 @@ app.put('/api/updateRappelStatus', (req, res) => {
     contractDao.updateRappelStatus(res, selectedContracts, isEmprunteur);
 });
 
+app.get('/api/getProfileFavoris/:favoris', (req, res) => {
+    debug("Entering /api/getProfileFavoris ");
+
+    const favoris = JSON.parse(req.params.favoris);
+
+    const profileDao = new ProfileDao(_mongodb);
+
+    profileDao.getProfileFavoris(res, favoris);
+});
+
 /******************************************/
 /************ END PROFILE API *************/
 /******************************************/
@@ -272,6 +282,7 @@ app.get('/api/getExplorers/:user/:pageKey', (req, res) => {
     debug("Entering /api/getExplorers ");
 
     const pageKey = req.params.pageKey;
+    const user = req.params.user;
 
     debug('Page to search: ' + pageKey);
     const explorerDao = new ExplorerDao(_mongodb);
