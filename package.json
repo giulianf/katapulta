@@ -1,6 +1,6 @@
 {
   "name": "Katapulta",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pour emprunter ou preter son argent",
   "main": "dist/server.js",
   "scripts": {
