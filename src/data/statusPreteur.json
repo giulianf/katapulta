@@ -1,0 +1,18 @@
+[
+    {"index": 0,"label":"PREPARATION", "headerStatus": true, "description": "Inscription de la demande"},
+    {"index": 1,"label":"INSCRIPTION", "headerStatus": false, "description": ""},
+    {"index": 2,"label":"SCREANING", "headerStatus": false, "description": ""},
+    {"index": 3,"label":"VALIDATION", "headerStatus": false, "description": ""},
+    {"index": 4,"label":"SELECTION", "headerStatus": true, "description": ""},
+    {"index": 5,"label":"LEVEE_DE_FONDS", "headerStatus": false, "description": ""},
+    {"index": 6,"label":"INFORMATIONS", "headerStatus": false, "description": ""},
+    {"index": 7,"label":"FORMALISATION", "headerStatus": true, "description": ""},
+    {"index": 8,"label":"REDACTION_PROJET_CONVENTION", "headerStatus": false, "description": ""},
+    {"index": 9,"label":"SIGNATURE_CONVENTIONS", "headerStatus": false, "description": ""},
+    {"index": 10,"label":"VERSEMENT_FONDS", "headerStatus": false, "description": ""},
+    {"index": 11,"label":"ATTESTION_SUR_HONNEUR", "headerStatus": false, "description": ""},
+    {"index": 12,"label":"EXIT", "headerStatus": true, "description": ""},
+    {"index": 13,"label":"FORMALITES_SOWALFIN", "headerStatus": false, "description": ""},
+    {"index": 14,"label":"DOSSIER_RECAPITULATIF_PRETEUR", "headerStatus": false, "description": ""},
+    {"index": 15,"label":"BLOCK", "headerStatus": false, "description": ""}
+]

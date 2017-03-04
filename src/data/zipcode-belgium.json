@@ -1,0 +1,6310 @@
+[
+  {
+    "zip": 1300,
+    "commune": "Limal"
+  },
+  {
+    "zip": 1300,
+    "commune": "WAVRE"
+  },
+  {
+    "zip": 1301,
+    "commune": "Bierges"
+  },
+  {
+    "zip": 1310,
+    "commune": "LA HULPE"
+  },
+  {
+    "zip": 1315,
+    "commune": "Glimes"
+  },
+  {
+    "zip": 1315,
+    "commune": "INCOURT"
+  },
+  {
+    "zip": 1315,
+    "commune": "Opprebais"
+  },
+  {
+    "zip": 1315,
+    "commune": "Piètrebais"
+  },
+  {
+    "zip": 1315,
+    "commune": "Roux-Miroir"
+  },
+  {
+    "zip": 1320,
+    "commune": "BEAUVECHAIN"
+  },
+  {
+    "zip": 1320,
+    "commune": "Hamme-Mille"
+  },
+  {
+    "zip": 1320,
+    "commune": "L'Ecluse"
+  },
+  {
+    "zip": 1320,
+    "commune": "Nodebais"
+  },
+  {
+    "zip": 1320,
+    "commune": "Tourinnes-La-Grosse"
+  },
+  {
+    "zip": 1325,
+    "commune": "Bonlez"
+  },
+  {
+    "zip": 1325,
+    "commune": "CHAUMONT-GISTOUX"
+  },
+  {
+    "zip": 1325,
+    "commune": "Corroy-Le-Grand"
+  },
+  {
+    "zip": 1325,
+    "commune": "Dion-Valmont"
+  },
+  {
+    "zip": 1325,
+    "commune": "Longueville"
+  },
+  {
+    "zip": 1330,
+    "commune": "RIXENSART"
+  },
+  {
+    "zip": 1331,
+    "commune": "Rosières"
+  },
+  {
+    "zip": 1332,
+    "commune": "Genval"
+  },
+  {
+    "zip": 1340,
+    "commune": "Ottignies"
+  },
+  {
+    "zip": 1340,
+    "commune": "OTTIGNIES-LOUVAIN-LA-NEUVE"
+  },
+  {
+    "zip": 1341,
+    "commune": "Céroux-Mousty"
+  },
+  {
+    "zip": 1342,
+    "commune": "Limelette"
+  },
+  {
+    "zip": 1348,
+    "commune": "Louvain-La-Neuve"
+  },
+  {
+    "zip": 1350,
+    "commune": "Enines"
+  },
+  {
+    "zip": 1350,
+    "commune": "Folx-Les-Caves"
+  },
+  {
+    "zip": 1350,
+    "commune": "Jandrain-Jandrenouille"
+  },
+  {
+    "zip": 1350,
+    "commune": "Jauche"
+  },
+  {
+    "zip": 1350,
+    "commune": "Marilles"
+  },
+  {
+    "zip": 1350,
+    "commune": "Noduwez"
+  },
+  {
+    "zip": 1350,
+    "commune": "ORP-JAUCHE"
+  },
+  {
+    "zip": 1350,
+    "commune": "Orp-Le-Grand"
+  },
+  {
+    "zip": 1357,
+    "commune": "HÉLÉCINE"
+  },
+  {
+    "zip": 1357,
+    "commune": "Linsmeau"
+  },
+  {
+    "zip": 1357,
+    "commune": "Neerheylissem"
+  },
+  {
+    "zip": 1357,
+    "commune": "Opheylissem"
+  },
+  {
+    "zip": 1360,
+    "commune": "Malèves-Sainte-Marie-Wastines"
+  },
+  {
+    "zip": 1360,
+    "commune": "Orbais"
+  },
+  {
+    "zip": 1360,
+    "commune": "PERWEZ"
+  },
+  {
+    "zip": 1360,
+    "commune": "Thorembais-Les-Béguines"
+  },
+  {
+    "zip": 1360,
+    "commune": "Thorembais-Saint-Trond"
+  },
+  {
+    "zip": 1367,
+    "commune": "Autre-Eglise"
+  },
+  {
+    "zip": 1367,
+    "commune": "Bomal"
+  },
+  {
+    "zip": 1367,
+    "commune": "Geest-Gérompont-Petit-Rosière"
+  },
+  {
+    "zip": 1367,
+    "commune": "Gérompont"
+  },
+  {
+    "zip": 1367,
+    "commune": "Grand-Rosière-Hottomont"
+  },
+  {
+    "zip": 1367,
+    "commune": "Huppaye"
+  },
+  {
+    "zip": 1367,
+    "commune": "Mont-Saint-André"
+  },
+  {
+    "zip": 1367,
+    "commune": "RAMILLIES"
+  },
+  {
+    "zip": 1370,
+    "commune": "Dongelberg"
+  },
+  {
+    "zip": 1370,
+    "commune": "Jauchelette"
+  },
+  {
+    "zip": 1370,
+    "commune": "JODOIGNE"
+  },
+  {
+    "zip": 1370,
+    "commune": "Jodoigne-Souveraine"
+  },
+  {
+    "zip": 1370,
+    "commune": "Lathuy"
+  },
+  {
+    "zip": 1370,
+    "commune": "Mélin"
+  },
+  {
+    "zip": 1370,
+    "commune": "Piétrain"
+  },
+  {
+    "zip": 1370,
+    "commune": "Saint-Jean-Geest"
+  },
+  {
+    "zip": 1370,
+    "commune": "Saint-Remy-Geest"
+  },
+  {
+    "zip": 1370,
+    "commune": "Zétrud-Lumay"
+  },
+  {
+    "zip": 1380,
+    "commune": "Couture-Saint-Germain"
+  },
+  {
+    "zip": 1380,
+    "commune": "LASNE"
+  },
+  {
+    "zip": 1380,
+    "commune": "Lasne-Chapelle-Saint-Lambert"
+  },
+  {
+    "zip": 1380,
+    "commune": "Maransart"
+  },
+  {
+    "zip": 1380,
+    "commune": "Ohain"
+  },
+  {
+    "zip": 1380,
+    "commune": "Plancenoit"
+  },
+  {
+    "zip": 1390,
+    "commune": "Archennes"
+  },
+  {
+    "zip": 1390,
+    "commune": "Biez"
+  },
+  {
+    "zip": 1390,
+    "commune": "Bossut-Gottechain"
+  },
+  {
+    "zip": 1390,
+    "commune": "GREZ-DOICEAU"
+  },
+  {
+    "zip": 1390,
+    "commune": "Nethen"
+  },
+  {
+    "zip": 1400,
+    "commune": "Monstreux"
+  },
+  {
+    "zip": 1400,
+    "commune": "NIVELLES"
+  },
+  {
+    "zip": 1401,
+    "commune": "Baulers"
+  },
+  {
+    "zip": 1402,
+    "commune": "Thines"
+  },
+  {
+    "zip": 1404,
+    "commune": "Bornival"
+  },
+  {
+    "zip": 1410,
+    "commune": "WATERLOO"
+  },
+  {
+    "zip": 1420,
+    "commune": "BRAINE-L'ALLEUD"
+  },
+  {
+    "zip": 1421,
+    "commune": "Ophain-Bois-Seigneur-Isaac"
+  },
+  {
+    "zip": 1428,
+    "commune": "Lillois-Witterzée"
+  },
+  {
+    "zip": 1430,
+    "commune": "Bierghes"
+  },
+  {
+    "zip": 1430,
+    "commune": "Quenast"
+  },
+  {
+    "zip": 1430,
+    "commune": "REBECQ"
+  },
+  {
+    "zip": 1430,
+    "commune": "Rebecq-Rognon"
+  },
+  {
+    "zip": 1435,
+    "commune": "Corbais"
+  },
+  {
+    "zip": 1435,
+    "commune": "Hévillers"
+  },
+  {
+    "zip": 1435,
+    "commune": "MONT-SAINT-GUIBERT"
+  },
+  {
+    "zip": 1440,
+    "commune": "BRAINE-LE-CHÂTEAU"
+  },
+  {
+    "zip": 1440,
+    "commune": "Wauthier-Braine"
+  },
+  {
+    "zip": 1450,
+    "commune": "CHASTRE"
+  },
+  {
+    "zip": 1450,
+    "commune": "Chastre-Villeroux-Blanmont"
+  },
+  {
+    "zip": 1450,
+    "commune": "Cortil-Noirmont"
+  },
+  {
+    "zip": 1450,
+    "commune": "Gentinnes"
+  },
+  {
+    "zip": 1450,
+    "commune": "Saint-Géry"
+  },
+  {
+    "zip": 1457,
+    "commune": "Nil-Saint-Vincent-Saint-Martin"
+  },
+  {
+    "zip": 1457,
+    "commune": "Tourinnes-Saint-Lambert"
+  },
+  {
+    "zip": 1457,
+    "commune": "WALHAIN"
+  },
+  {
+    "zip": 1457,
+    "commune": "Walhain-Saint-Paul"
+  },
+  {
+    "zip": 1460,
+    "commune": "ITTRE"
+  },
+  {
+    "zip": 1460,
+    "commune": "Virginal-Samme"
+  },
+  {
+    "zip": 1461,
+    "commune": "Haut-Ittre"
+  },
+  {
+    "zip": 1470,
+    "commune": "Baisy-Thy"
+  },
+  {
+    "zip": 1470,
+    "commune": "Bousval"
+  },
+  {
+    "zip": 1470,
+    "commune": "GENAPPE"
+  },
+  {
+    "zip": 1471,
+    "commune": "Loupoigne"
+  },
+  {
+    "zip": 1472,
+    "commune": "Vieux-Genappe"
+  },
+  {
+    "zip": 1473,
+    "commune": "Glabais"
+  },
+  {
+    "zip": 1474,
+    "commune": "Ways"
+  },
+  {
+    "zip": 1476,
+    "commune": "Houtain-Le-Val"
+  },
+  {
+    "zip": 1480,
+    "commune": "Clabecq"
+  },
+  {
+    "zip": 1480,
+    "commune": "Oisquercq"
+  },
+  {
+    "zip": 1480,
+    "commune": "Saintes"
+  },
+  {
+    "zip": 1480,
+    "commune": "TUBIZE"
+  },
+  {
+    "zip": 1490,
+    "commune": "COURT-SAINT-ETIENNE"
+  },
+  {
+    "zip": 1495,
+    "commune": "Marbais"
+  },
+  {
+    "zip": 1495,
+    "commune": "Mellery"
+  },
+  {
+    "zip": 1495,
+    "commune": "Sart-Dames-Avelines"
+  },
+  {
+    "zip": 1495,
+    "commune": "Tilly"
+  },
+  {
+    "zip": 1495,
+    "commune": "VILLERS-LA-VILLE"
+  },
+  {
+    "zip": 6000,
+    "commune": "CHARLEROI"
+  },
+  {
+    "zip": 6001,
+    "commune": "Marcinelle"
+  },
+  {
+    "zip": 6010,
+    "commune": "Couillet"
+  },
+  {
+    "zip": 6020,
+    "commune": "Dampremy"
+  },
+  {
+    "zip": 6030,
+    "commune": "Goutroux"
+  },
+  {
+    "zip": 6030,
+    "commune": "Marchienne-Au-Pont"
+  },
+  {
+    "zip": 6031,
+    "commune": "Monceau-Sur-Sambre"
+  },
+  {
+    "zip": 6032,
+    "commune": "Mont-Sur-Marchienne"
+  },
+  {
+    "zip": 6040,
+    "commune": "Jumet"
+  },
+  {
+    "zip": 6041,
+    "commune": "Gosselies"
+  },
+  {
+    "zip": 6042,
+    "commune": "Lodelinsart"
+  },
+  {
+    "zip": 6043,
+    "commune": "Ransart"
+  },
+  {
+    "zip": 6044,
+    "commune": "Roux"
+  },
+  {
+    "zip": 6060,
+    "commune": "Gilly"
+  },
+  {
+    "zip": 6061,
+    "commune": "Montignies-Sur-Sambre"
+  },
+  {
+    "zip": 6110,
+    "commune": "MONTIGNY-LE-TILLEUL"
+  },
+  {
+    "zip": 6111,
+    "commune": "Landelies"
+  },
+  {
+    "zip": 6120,
+    "commune": "Cour-Sur-Heure"
+  },
+  {
+    "zip": 6120,
+    "commune": "HAM-SUR-HEURE"
+  },
+  {
+    "zip": 6120,
+    "commune": "Jamioulx"
+  },
+  {
+    "zip": 6120,
+    "commune": "Marbaix"
+  },
+  {
+    "zip": 6120,
+    "commune": "Nalinnes"
+  },
+  {
+    "zip": 6140,
+    "commune": "FONTAINE-L'EVÊQUE"
+  },
+  {
+    "zip": 6141,
+    "commune": "Forchies-La-Marche"
+  },
+  {
+    "zip": 6142,
+    "commune": "Leernes"
+  },
+  {
+    "zip": 6150,
+    "commune": "ANDERLUES"
+  },
+  {
+    "zip": 6180,
+    "commune": "COURCELLES"
+  },
+  {
+    "zip": 6181,
+    "commune": "Gouy-Lez-Piéton"
+  },
+  {
+    "zip": 6182,
+    "commune": "Souvret"
+  },
+  {
+    "zip": 6183,
+    "commune": "Trazegnies"
+  },
+  {
+    "zip": 6200,
+    "commune": "Bouffioulx"
+  },
+  {
+    "zip": 6200,
+    "commune": "CHÂTELET"
+  },
+  {
+    "zip": 6200,
+    "commune": "Châtelineau"
+  },
+  {
+    "zip": 6210,
+    "commune": "Frasnes-Lez-Gosselies"
+  },
+  {
+    "zip": 6210,
+    "commune": "LES BONS VILLERS"
+  },
+  {
+    "zip": 6210,
+    "commune": "Rèves"
+  },
+  {
+    "zip": 6210,
+    "commune": "Villers-Perwin"
+  },
+  {
+    "zip": 6210,
+    "commune": "Wayaux"
+  },
+  {
+    "zip": 6211,
+    "commune": "Mellet"
+  },
+  {
+    "zip": 6220,
+    "commune": "FLEURUS"
+  },
+  {
+    "zip": 6220,
+    "commune": "Heppignies"
+  },
+  {
+    "zip": 6220,
+    "commune": "Lambusart"
+  },
+  {
+    "zip": 6220,
+    "commune": "Wangenies"
+  },
+  {
+    "zip": 6221,
+    "commune": "Saint-Amand"
+  },
+  {
+    "zip": 6222,
+    "commune": "Brye"
+  },
+  {
+    "zip": 6223,
+    "commune": "Wagnelée"
+  },
+  {
+    "zip": 6224,
+    "commune": "Wanfercée-Baulet"
+  },
+  {
+    "zip": 6230,
+    "commune": "Buzet"
+  },
+  {
+    "zip": 6230,
+    "commune": "Obaix"
+  },
+  {
+    "zip": 6230,
+    "commune": "PONT-À-CELLES"
+  },
+  {
+    "zip": 6230,
+    "commune": "Thiméon"
+  },
+  {
+    "zip": 6230,
+    "commune": "Viesville"
+  },
+  {
+    "zip": 6238,
+    "commune": "Liberchies"
+  },
+  {
+    "zip": 6238,
+    "commune": "Luttre"
+  },
+  {
+    "zip": 6240,
+    "commune": "FARCIENNES"
+  },
+  {
+    "zip": 6240,
+    "commune": "Pironchamps"
+  },
+  {
+    "zip": 6250,
+    "commune": "Aiseau"
+  },
+  {
+    "zip": 6250,
+    "commune": "AISEAU-PRESLES"
+  },
+  {
+    "zip": 6250,
+    "commune": "Pont-De-Loup"
+  },
+  {
+    "zip": 6250,
+    "commune": "Presles"
+  },
+  {
+    "zip": 6250,
+    "commune": "Roselies"
+  },
+  {
+    "zip": 6280,
+    "commune": "Acoz"
+  },
+  {
+    "zip": 6280,
+    "commune": "GERPINNES"
+  },
+  {
+    "zip": 6280,
+    "commune": "Gougnies"
+  },
+  {
+    "zip": 6280,
+    "commune": "Joncret"
+  },
+  {
+    "zip": 6280,
+    "commune": "Loverval"
+  },
+  {
+    "zip": 6280,
+    "commune": "Villers-Poterie"
+  },
+  {
+    "zip": 6440,
+    "commune": "Boussu-Lez-Walcourt"
+  },
+  {
+    "zip": 6440,
+    "commune": "Fourbechies"
+  },
+  {
+    "zip": 6440,
+    "commune": "FROIDCHAPELLE"
+  },
+  {
+    "zip": 6440,
+    "commune": "Vergnies"
+  },
+  {
+    "zip": 6441,
+    "commune": "Erpion"
+  },
+  {
+    "zip": 6460,
+    "commune": "Bailièvre"
+  },
+  {
+    "zip": 6460,
+    "commune": "CHIMAY"
+  },
+  {
+    "zip": 6460,
+    "commune": "Robechies"
+  },
+  {
+    "zip": 6460,
+    "commune": "Saint-Remy"
+  },
+  {
+    "zip": 6460,
+    "commune": "Salles"
+  },
+  {
+    "zip": 6460,
+    "commune": "Villers-La-Tour"
+  },
+  {
+    "zip": 6461,
+    "commune": "Virelles"
+  },
+  {
+    "zip": 6462,
+    "commune": "Vaulx-Lez-Chimay"
+  },
+  {
+    "zip": 6463,
+    "commune": "Lompret"
+  },
+  {
+    "zip": 6464,
+    "commune": "Baileux"
+  },
+  {
+    "zip": 6464,
+    "commune": "Bourlers"
+  },
+  {
+    "zip": 6464,
+    "commune": "Forges"
+  },
+  {
+    "zip": 6464,
+    "commune": "L'Escaillère"
+  },
+  {
+    "zip": 6464,
+    "commune": "Rièzes"
+  },
+  {
+    "zip": 6470,
+    "commune": "Grandrieu"
+  },
+  {
+    "zip": 6470,
+    "commune": "Montbliart"
+  },
+  {
+    "zip": 6470,
+    "commune": "Rance"
+  },
+  {
+    "zip": 6470,
+    "commune": "Sautin"
+  },
+  {
+    "zip": 6470,
+    "commune": "Sivry"
+  },
+  {
+    "zip": 6470,
+    "commune": "SIVRY-RANCE"
+  },
+  {
+    "zip": 6500,
+    "commune": "Barbençon"
+  },
+  {
+    "zip": 6500,
+    "commune": "BEAUMONT"
+  },
+  {
+    "zip": 6500,
+    "commune": "Leugnies"
+  },
+  {
+    "zip": 6500,
+    "commune": "Leval-Chaudeville"
+  },
+  {
+    "zip": 6500,
+    "commune": "Renlies"
+  },
+  {
+    "zip": 6500,
+    "commune": "Solre-Saint-Géry"
+  },
+  {
+    "zip": 6500,
+    "commune": "Thirimont"
+  },
+  {
+    "zip": 6511,
+    "commune": "Strée"
+  },
+  {
+    "zip": 6530,
+    "commune": "Leers-Et-Fosteau"
+  },
+  {
+    "zip": 6530,
+    "commune": "THUIN"
+  },
+  {
+    "zip": 6531,
+    "commune": "Biesme-Sous-Thuin"
+  },
+  {
+    "zip": 6532,
+    "commune": "Ragnies"
+  },
+  {
+    "zip": 6533,
+    "commune": "Biercée"
+  },
+  {
+    "zip": 6534,
+    "commune": "Gozée"
+  },
+  {
+    "zip": 6536,
+    "commune": "Donstiennes"
+  },
+  {
+    "zip": 6536,
+    "commune": "Thuillies"
+  },
+  {
+    "zip": 6540,
+    "commune": "LOBBES"
+  },
+  {
+    "zip": 6540,
+    "commune": "Mont-Sainte-Geneviève"
+  },
+  {
+    "zip": 6542,
+    "commune": "Sars-La-Buissière"
+  },
+  {
+    "zip": 6543,
+    "commune": "Bienne-Lez-Happart"
+  },
+  {
+    "zip": 6560,
+    "commune": "Bersillies-L'Abbaye"
+  },
+  {
+    "zip": 6560,
+    "commune": "ERQUELINNES"
+  },
+  {
+    "zip": 6560,
+    "commune": "Grand-Reng"
+  },
+  {
+    "zip": 6560,
+    "commune": "Hantes-Wihéries"
+  },
+  {
+    "zip": 6560,
+    "commune": "Montignies-Saint-Christophe"
+  },
+  {
+    "zip": 6560,
+    "commune": "Solre-Sur-Sambre"
+  },
+  {
+    "zip": 6567,
+    "commune": "Fontaine-Valmont"
+  },
+  {
+    "zip": 6567,
+    "commune": "Labuissière"
+  },
+  {
+    "zip": 6567,
+    "commune": "MERBES-LE-CHÂTEAU"
+  },
+  {
+    "zip": 6567,
+    "commune": "Merbes-Sainte-Marie"
+  },
+  {
+    "zip": 6590,
+    "commune": "MOMIGNIES"
+  },
+  {
+    "zip": 6591,
+    "commune": "Macon"
+  },
+  {
+    "zip": 6592,
+    "commune": "Monceau-Imbrechies"
+  },
+  {
+    "zip": 6593,
+    "commune": "Macquenoise"
+  },
+  {
+    "zip": 6594,
+    "commune": "Beauwelz"
+  },
+  {
+    "zip": 6596,
+    "commune": "Forge-Philippe"
+  },
+  {
+    "zip": 6596,
+    "commune": "Seloignes"
+  },
+  {
+    "zip": 7000,
+    "commune": "MONS"
+  },
+  {
+    "zip": 7011,
+    "commune": "Ghlin"
+  },
+  {
+    "zip": 7012,
+    "commune": "Flénu"
+  },
+  {
+    "zip": 7012,
+    "commune": "Jemappes"
+  },
+  {
+    "zip": 7020,
+    "commune": "Maisières"
+  },
+  {
+    "zip": 7020,
+    "commune": "Nimy"
+  },
+  {
+    "zip": 7021,
+    "commune": "Havre"
+  },
+  {
+    "zip": 7022,
+    "commune": "Harmignies"
+  },
+  {
+    "zip": 7022,
+    "commune": "Harveng"
+  },
+  {
+    "zip": 7022,
+    "commune": "Hyon"
+  },
+  {
+    "zip": 7022,
+    "commune": "Mesvin"
+  },
+  {
+    "zip": 7022,
+    "commune": "Nouvelles"
+  },
+  {
+    "zip": 7024,
+    "commune": "Ciply"
+  },
+  {
+    "zip": 7030,
+    "commune": "Saint-Symphorien"
+  },
+  {
+    "zip": 7031,
+    "commune": "Villers-Saint-Ghislain"
+  },
+  {
+    "zip": 7032,
+    "commune": "Spiennes"
+  },
+  {
+    "zip": 7033,
+    "commune": "Cuesmes"
+  },
+  {
+    "zip": 7034,
+    "commune": "Obourg"
+  },
+  {
+    "zip": 7034,
+    "commune": "Saint-Denis"
+  },
+  {
+    "zip": 7040,
+    "commune": "Asquillies"
+  },
+  {
+    "zip": 7040,
+    "commune": "Aulnois"
+  },
+  {
+    "zip": 7040,
+    "commune": "Blaregnies"
+  },
+  {
+    "zip": 7040,
+    "commune": "Bougnies"
+  },
+  {
+    "zip": 7040,
+    "commune": "Genly"
+  },
+  {
+    "zip": 7040,
+    "commune": "Goegnies-Chaussée"
+  },
+  {
+    "zip": 7040,
+    "commune": "QUÉVY"
+  },
+  {
+    "zip": 7040,
+    "commune": "Quévy-Le-Grand"
+  },
+  {
+    "zip": 7040,
+    "commune": "Quévy-Le-Petit"
+  },
+  {
+    "zip": 7041,
+    "commune": "Givry"
+  },
+  {
+    "zip": 7041,
+    "commune": "Havay"
+  },
+  {
+    "zip": 7050,
+    "commune": "Erbaut"
+  },
+  {
+    "zip": 7050,
+    "commune": "Erbisoeul"
+  },
+  {
+    "zip": 7050,
+    "commune": "Herchies"
+  },
+  {
+    "zip": 7050,
+    "commune": "JURBISE"
+  },
+  {
+    "zip": 7050,
+    "commune": "Masnuy-Saint-Jean"
+  },
+  {
+    "zip": 7050,
+    "commune": "Masnuy-Saint-Pierre"
+  },
+  {
+    "zip": 7060,
+    "commune": "Horrues"
+  },
+  {
+    "zip": 7060,
+    "commune": "SOIGNIES"
+  },
+  {
+    "zip": 7061,
+    "commune": "Casteau"
+  },
+  {
+    "zip": 7061,
+    "commune": "Thieusies"
+  },
+  {
+    "zip": 7062,
+    "commune": "Naast"
+  },
+  {
+    "zip": 7063,
+    "commune": "Chaussée-Notre-Dame-Louvignies"
+  },
+  {
+    "zip": 7063,
+    "commune": "Neufvilles"
+  },
+  {
+    "zip": 7070,
+    "commune": "Gottignies"
+  },
+  {
+    "zip": 7070,
+    "commune": "LE ROEULX"
+  },
+  {
+    "zip": 7070,
+    "commune": "Mignault"
+  },
+  {
+    "zip": 7070,
+    "commune": "Thieu"
+  },
+  {
+    "zip": 7070,
+    "commune": "Ville-Sur-Haine"
+  },
+  {
+    "zip": 7080,
+    "commune": "Eugies"
+  },
+  {
+    "zip": 7080,
+    "commune": "FRAMERIES"
+  },
+  {
+    "zip": 7080,
+    "commune": "La Bouverie"
+  },
+  {
+    "zip": 7080,
+    "commune": "Noirchain"
+  },
+  {
+    "zip": 7080,
+    "commune": "Sars-La-Bruyère"
+  },
+  {
+    "zip": 7090,
+    "commune": "BRAINE-LE-COMTE"
+  },
+  {
+    "zip": 7090,
+    "commune": "Hennuyères"
+  },
+  {
+    "zip": 7090,
+    "commune": "Henripont"
+  },
+  {
+    "zip": 7090,
+    "commune": "Petit-Roeulx-Lez-Braine"
+  },
+  {
+    "zip": 7090,
+    "commune": "Ronquières"
+  },
+  {
+    "zip": 7090,
+    "commune": "Steenkerque"
+  },
+  {
+    "zip": 7100,
+    "commune": "Haine-Saint-Paul"
+  },
+  {
+    "zip": 7100,
+    "commune": "Haine-Saint-Pierre"
+  },
+  {
+    "zip": 7100,
+    "commune": "LA LOUVIÈRE"
+  },
+  {
+    "zip": 7100,
+    "commune": "Saint-Vaast"
+  },
+  {
+    "zip": 7100,
+    "commune": "Trivières"
+  },
+  {
+    "zip": 7110,
+    "commune": "Boussoit"
+  },
+  {
+    "zip": 7110,
+    "commune": "Houdeng-Aimeries"
+  },
+  {
+    "zip": 7110,
+    "commune": "Houdeng-Goegnies"
+  },
+  {
+    "zip": 7110,
+    "commune": "Maurage"
+  },
+  {
+    "zip": 7110,
+    "commune": "Strépy-Bracquegnies"
+  },
+  {
+    "zip": 7120,
+    "commune": "Croix-Lez-Rouveroy"
+  },
+  {
+    "zip": 7120,
+    "commune": "ESTINNES"
+  },
+  {
+    "zip": 7120,
+    "commune": "Estinnes-Au-Mont"
+  },
+  {
+    "zip": 7120,
+    "commune": "Estinnes-Au-Val"
+  },
+  {
+    "zip": 7120,
+    "commune": "Fauroeulx"
+  },
+  {
+    "zip": 7120,
+    "commune": "Haulchin"
+  },
+  {
+    "zip": 7120,
+    "commune": "Peissant"
+  },
+  {
+    "zip": 7120,
+    "commune": "Rouveroy"
+  },
+  {
+    "zip": 7120,
+    "commune": "Vellereille-Le-Sec"
+  },
+  {
+    "zip": 7120,
+    "commune": "Vellereille-Les-Brayeux"
+  },
+  {
+    "zip": 7130,
+    "commune": "Battignies"
+  },
+  {
+    "zip": 7130,
+    "commune": "BINCHE"
+  },
+  {
+    "zip": 7130,
+    "commune": "Bray"
+  },
+  {
+    "zip": 7131,
+    "commune": "Waudrez"
+  },
+  {
+    "zip": 7133,
+    "commune": "Buvrinnes"
+  },
+  {
+    "zip": 7134,
+    "commune": "Epinois"
+  },
+  {
+    "zip": 7134,
+    "commune": "Leval-Trahegnies"
+  },
+  {
+    "zip": 7134,
+    "commune": "Péronnes-Lez-Binche"
+  },
+  {
+    "zip": 7134,
+    "commune": "Ressaix"
+  },
+  {
+    "zip": 7140,
+    "commune": "MORLANWELZ"
+  },
+  {
+    "zip": 7140,
+    "commune": "Morlanwelz-Mariemont"
+  },
+  {
+    "zip": 7141,
+    "commune": "Carnières"
+  },
+  {
+    "zip": 7141,
+    "commune": "Mont-Sainte-Aldegonde"
+  },
+  {
+    "zip": 7160,
+    "commune": "CHAPELLE-LEZ-HERLAIMONT"
+  },
+  {
+    "zip": 7160,
+    "commune": "Godarville"
+  },
+  {
+    "zip": 7160,
+    "commune": "Piéton"
+  },
+  {
+    "zip": 7170,
+    "commune": "Bellecourt"
+  },
+  {
+    "zip": 7170,
+    "commune": "Bois-D'Haine"
+  },
+  {
+    "zip": 7170,
+    "commune": "Fayt-Lez-Manage"
+  },
+  {
+    "zip": 7170,
+    "commune": "La Hestre"
+  },
+  {
+    "zip": 7170,
+    "commune": "MANAGE"
+  },
+  {
+    "zip": 7180,
+    "commune": "SENEFFE"
+  },
+  {
+    "zip": 7181,
+    "commune": "Arquennes"
+  },
+  {
+    "zip": 7181,
+    "commune": "Familleureux"
+  },
+  {
+    "zip": 7181,
+    "commune": "Feluy"
+  },
+  {
+    "zip": 7181,
+    "commune": "Petit-Roeulx-Lez-Nivelles"
+  },
+  {
+    "zip": 7190,
+    "commune": "ECAUSSINNES"
+  },
+  {
+    "zip": 7190,
+    "commune": "Ecaussinnes-D'Enghien"
+  },
+  {
+    "zip": 7190,
+    "commune": "Marche-Lez-Ecaussinnes"
+  },
+  {
+    "zip": 7191,
+    "commune": "Ecaussinnes-Lalaing"
+  },
+  {
+    "zip": 7300,
+    "commune": "BOUSSU"
+  },
+  {
+    "zip": 7301,
+    "commune": "Hornu"
+  },
+  {
+    "zip": 7320,
+    "commune": "BERNISSART"
+  },
+  {
+    "zip": 7321,
+    "commune": "Blaton"
+  },
+  {
+    "zip": 7321,
+    "commune": "Harchies"
+  },
+  {
+    "zip": 7322,
+    "commune": "Pommeroeul"
+  },
+  {
+    "zip": 7322,
+    "commune": "Ville-Pommeroeul"
+  },
+  {
+    "zip": 7330,
+    "commune": "SAINT-GHISLAIN"
+  },
+  {
+    "zip": 7331,
+    "commune": "Baudour"
+  },
+  {
+    "zip": 7332,
+    "commune": "Neufmaison"
+  },
+  {
+    "zip": 7332,
+    "commune": "Sirault"
+  },
+  {
+    "zip": 7333,
+    "commune": "Tertre"
+  },
+  {
+    "zip": 7334,
+    "commune": "Hautrage"
+  },
+  {
+    "zip": 7334,
+    "commune": "Villerot"
+  },
+  {
+    "zip": 7340,
+    "commune": "COLFONTAINE"
+  },
+  {
+    "zip": 7340,
+    "commune": "Paturages"
+  },
+  {
+    "zip": 7340,
+    "commune": "Warquignies"
+  },
+  {
+    "zip": 7340,
+    "commune": "Wasmes"
+  },
+  {
+    "zip": 7350,
+    "commune": "Hainin"
+  },
+  {
+    "zip": 7350,
+    "commune": "HENSIES"
+  },
+  {
+    "zip": 7350,
+    "commune": "Montroeul-Sur-Haine"
+  },
+  {
+    "zip": 7350,
+    "commune": "Thulin"
+  },
+  {
+    "zip": 7370,
+    "commune": "Blaugies"
+  },
+  {
+    "zip": 7370,
+    "commune": "DOUR"
+  },
+  {
+    "zip": 7370,
+    "commune": "Elouges"
+  },
+  {
+    "zip": 7370,
+    "commune": "Wihéries"
+  },
+  {
+    "zip": 7380,
+    "commune": "Baisieux"
+  },
+  {
+    "zip": 7380,
+    "commune": "QUIÉVRAIN"
+  },
+  {
+    "zip": 7382,
+    "commune": "Audregnies"
+  },
+  {
+    "zip": 7387,
+    "commune": "Angre"
+  },
+  {
+    "zip": 7387,
+    "commune": "Angreau"
+  },
+  {
+    "zip": 7387,
+    "commune": "Athis"
+  },
+  {
+    "zip": 7387,
+    "commune": "Autreppe"
+  },
+  {
+    "zip": 7387,
+    "commune": "Erquennes"
+  },
+  {
+    "zip": 7387,
+    "commune": "Fayt-Le-Franc"
+  },
+  {
+    "zip": 7387,
+    "commune": "HONNELLES"
+  },
+  {
+    "zip": 7387,
+    "commune": "Marchipont"
+  },
+  {
+    "zip": 7387,
+    "commune": "Montignies-Sur-Roc"
+  },
+  {
+    "zip": 7387,
+    "commune": "Onnezies"
+  },
+  {
+    "zip": 7387,
+    "commune": "Roisin"
+  },
+  {
+    "zip": 7390,
+    "commune": "QUAREGNON"
+  },
+  {
+    "zip": 7390,
+    "commune": "Wasmuel"
+  },
+  {
+    "zip": 7500,
+    "commune": "Ere"
+  },
+  {
+    "zip": 7500,
+    "commune": "Saint-Maur"
+  },
+  {
+    "zip": 7500,
+    "commune": "TOURNAI"
+  },
+  {
+    "zip": 7501,
+    "commune": "Orcq"
+  },
+  {
+    "zip": 7502,
+    "commune": "Esplechin"
+  },
+  {
+    "zip": 7503,
+    "commune": "Froyennes"
+  },
+  {
+    "zip": 7504,
+    "commune": "Froidmont"
+  },
+  {
+    "zip": 7506,
+    "commune": "Willemeau"
+  },
+  {
+    "zip": 7520,
+    "commune": "Ramegnies-Chin"
+  },
+  {
+    "zip": 7520,
+    "commune": "Templeuve"
+  },
+  {
+    "zip": 7521,
+    "commune": "Chercq"
+  },
+  {
+    "zip": 7522,
+    "commune": "Blandain"
+  },
+  {
+    "zip": 7522,
+    "commune": "Hertain"
+  },
+  {
+    "zip": 7522,
+    "commune": "Lamain"
+  },
+  {
+    "zip": 7522,
+    "commune": "Marquain"
+  },
+  {
+    "zip": 7530,
+    "commune": "Gaurain-Ramecroix"
+  },
+  {
+    "zip": 7531,
+    "commune": "Havinnes"
+  },
+  {
+    "zip": 7532,
+    "commune": "Beclers"
+  },
+  {
+    "zip": 7533,
+    "commune": "Thimougies"
+  },
+  {
+    "zip": 7534,
+    "commune": "Barry"
+  },
+  {
+    "zip": 7534,
+    "commune": "Maulde"
+  },
+  {
+    "zip": 7536,
+    "commune": "Vaulx"
+  },
+  {
+    "zip": 7538,
+    "commune": "Vezon"
+  },
+  {
+    "zip": 7540,
+    "commune": "Kain"
+  },
+  {
+    "zip": 7540,
+    "commune": "Melles"
+  },
+  {
+    "zip": 7540,
+    "commune": "Quartes"
+  },
+  {
+    "zip": 7540,
+    "commune": "Rumillies"
+  },
+  {
+    "zip": 7542,
+    "commune": "Mont-Saint-Aubert"
+  },
+  {
+    "zip": 7543,
+    "commune": "Mourcourt"
+  },
+  {
+    "zip": 7548,
+    "commune": "Warchin"
+  },
+  {
+    "zip": 7600,
+    "commune": "PÉRUWELZ"
+  },
+  {
+    "zip": 7601,
+    "commune": "Roucourt"
+  },
+  {
+    "zip": 7602,
+    "commune": "Bury"
+  },
+  {
+    "zip": 7603,
+    "commune": "Bon-Secours"
+  },
+  {
+    "zip": 7604,
+    "commune": "Baugnies"
+  },
+  {
+    "zip": 7604,
+    "commune": "Braffe"
+  },
+  {
+    "zip": 7604,
+    "commune": "Brasmenil"
+  },
+  {
+    "zip": 7604,
+    "commune": "Callenelle"
+  },
+  {
+    "zip": 7604,
+    "commune": "Wasmes-Audemez-Briffoeil"
+  },
+  {
+    "zip": 7608,
+    "commune": "Wiers"
+  },
+  {
+    "zip": 7610,
+    "commune": "RUMES"
+  },
+  {
+    "zip": 7611,
+    "commune": "La Glanerie"
+  },
+  {
+    "zip": 7618,
+    "commune": "Taintignies"
+  },
+  {
+    "zip": 7620,
+    "commune": "Bléharies"
+  },
+  {
+    "zip": 7620,
+    "commune": "BRUNEHAUT"
+  },
+  {
+    "zip": 7620,
+    "commune": "Guignies"
+  },
+  {
+    "zip": 7620,
+    "commune": "Hollain"
+  },
+  {
+    "zip": 7620,
+    "commune": "Jollain-Merlin"
+  },
+  {
+    "zip": 7620,
+    "commune": "Wez-Velvain"
+  },
+  {
+    "zip": 7621,
+    "commune": "Lesdain"
+  },
+  {
+    "zip": 7622,
+    "commune": "Laplaigne"
+  },
+  {
+    "zip": 7623,
+    "commune": "Rongy"
+  },
+  {
+    "zip": 7624,
+    "commune": "Howardries"
+  },
+  {
+    "zip": 7640,
+    "commune": "ANTOING"
+  },
+  {
+    "zip": 7640,
+    "commune": "Maubray"
+  },
+  {
+    "zip": 7640,
+    "commune": "Péronnes-Lez-Antoing"
+  },
+  {
+    "zip": 7641,
+    "commune": "Bruyelle"
+  },
+  {
+    "zip": 7642,
+    "commune": "Calonne"
+  },
+  {
+    "zip": 7643,
+    "commune": "Fontenoy"
+  },
+  {
+    "zip": 7700,
+    "commune": "Luingne"
+  },
+  {
+    "zip": 7700,
+    "commune": "MOUSCRON"
+  },
+  {
+    "zip": 7711,
+    "commune": "Dottignies"
+  },
+  {
+    "zip": 7712,
+    "commune": "Herseaux"
+  },
+  {
+    "zip": 7730,
+    "commune": "Bailleul"
+  },
+  {
+    "zip": 7730,
+    "commune": "Estaimbourg"
+  },
+  {
+    "zip": 7730,
+    "commune": "ESTAIMPUIS"
+  },
+  {
+    "zip": 7730,
+    "commune": "Evregnies"
+  },
+  {
+    "zip": 7730,
+    "commune": "Leers-Nord"
+  },
+  {
+    "zip": 7730,
+    "commune": "Néchin"
+  },
+  {
+    "zip": 7730,
+    "commune": "Saint-Léger"
+  },
+  {
+    "zip": 7740,
+    "commune": "PECQ"
+  },
+  {
+    "zip": 7740,
+    "commune": "Warcoing"
+  },
+  {
+    "zip": 7742,
+    "commune": "Hérinnes-Lez-Pecq"
+  },
+  {
+    "zip": 7743,
+    "commune": "Esquelmes"
+  },
+  {
+    "zip": 7743,
+    "commune": "Obigies"
+  },
+  {
+    "zip": 7750,
+    "commune": "Amougies"
+  },
+  {
+    "zip": 7750,
+    "commune": "Anseroeul"
+  },
+  {
+    "zip": 7750,
+    "commune": "MONT-DE-L'ENCLUS"
+  },
+  {
+    "zip": 7750,
+    "commune": "Orroir"
+  },
+  {
+    "zip": 7750,
+    "commune": "Russeignies"
+  },
+  {
+    "zip": 7760,
+    "commune": "CELLES"
+  },
+  {
+    "zip": 7760,
+    "commune": "Escanaffles"
+  },
+  {
+    "zip": 7760,
+    "commune": "Molenbaix"
+  },
+  {
+    "zip": 7760,
+    "commune": "Popuelles"
+  },
+  {
+    "zip": 7760,
+    "commune": "Pottes"
+  },
+  {
+    "zip": 7760,
+    "commune": "Velaines"
+  },
+  {
+    "zip": 7780,
+    "commune": "Comines"
+  },
+  {
+    "zip": 7780,
+    "commune": "COMINES-WARNETON"
+  },
+  {
+    "zip": 7781,
+    "commune": "Houthem"
+  },
+  {
+    "zip": 7782,
+    "commune": "Ploegsteert"
+  },
+  {
+    "zip": 7783,
+    "commune": "Bizet"
+  },
+  {
+    "zip": 7784,
+    "commune": "Bas-Warneton"
+  },
+  {
+    "zip": 7784,
+    "commune": "Warneton"
+  },
+  {
+    "zip": 7800,
+    "commune": "ATH"
+  },
+  {
+    "zip": 7800,
+    "commune": "Lanquesaint"
+  },
+  {
+    "zip": 7801,
+    "commune": "Irchonwelz"
+  },
+  {
+    "zip": 7802,
+    "commune": "Ormeignies"
+  },
+  {
+    "zip": 7803,
+    "commune": "Bouvignies"
+  },
+  {
+    "zip": 7804,
+    "commune": "Ostiches"
+  },
+  {
+    "zip": 7804,
+    "commune": "Rebaix"
+  },
+  {
+    "zip": 7810,
+    "commune": "Maffle"
+  },
+  {
+    "zip": 7811,
+    "commune": "Arbre"
+  },
+  {
+    "zip": 7812,
+    "commune": "Houtaing"
+  },
+  {
+    "zip": 7812,
+    "commune": "Ligne"
+  },
+  {
+    "zip": 7812,
+    "commune": "Mainvault"
+  },
+  {
+    "zip": 7812,
+    "commune": "Moulbaix"
+  },
+  {
+    "zip": 7812,
+    "commune": "Villers-Notre-Dame"
+  },
+  {
+    "zip": 7812,
+    "commune": "Villers-Saint-Amand"
+  },
+  {
+    "zip": 7822,
+    "commune": "Ghislenghien"
+  },
+  {
+    "zip": 7822,
+    "commune": "Isières"
+  },
+  {
+    "zip": 7822,
+    "commune": "Meslin-L'Evêque"
+  },
+  {
+    "zip": 7823,
+    "commune": "Gibecq"
+  },
+  {
+    "zip": 7830,
+    "commune": "Bassilly"
+  },
+  {
+    "zip": 7830,
+    "commune": "Fouleng"
+  },
+  {
+    "zip": 7830,
+    "commune": "Gondregnies"
+  },
+  {
+    "zip": 7830,
+    "commune": "Graty"
+  },
+  {
+    "zip": 7830,
+    "commune": "Hellebecq"
+  },
+  {
+    "zip": 7830,
+    "commune": "Hoves"
+  },
+  {
+    "zip": 7830,
+    "commune": "SILLY"
+  },
+  {
+    "zip": 7830,
+    "commune": "Thoricourt"
+  },
+  {
+    "zip": 7850,
+    "commune": "ENGHIEN"
+  },
+  {
+    "zip": 7850,
+    "commune": "Marcq"
+  },
+  {
+    "zip": 7850,
+    "commune": "Petit-Enghien"
+  },
+  {
+    "zip": 7860,
+    "commune": "LESSINES"
+  },
+  {
+    "zip": 7861,
+    "commune": "Papignies"
+  },
+  {
+    "zip": 7861,
+    "commune": "Wannebecq"
+  },
+  {
+    "zip": 7862,
+    "commune": "Ogy"
+  },
+  {
+    "zip": 7863,
+    "commune": "Ghoy"
+  },
+  {
+    "zip": 7864,
+    "commune": "Deux-Acren"
+  },
+  {
+    "zip": 7866,
+    "commune": "Bois-De-Lessines"
+  },
+  {
+    "zip": 7866,
+    "commune": "Ollignies"
+  },
+  {
+    "zip": 7870,
+    "commune": "Bauffe"
+  },
+  {
+    "zip": 7870,
+    "commune": "Cambron-Saint-Vincent"
+  },
+  {
+    "zip": 7870,
+    "commune": "LENS"
+  },
+  {
+    "zip": 7870,
+    "commune": "Lombise"
+  },
+  {
+    "zip": 7870,
+    "commune": "Montignies-Lez-Lens"
+  },
+  {
+    "zip": 7880,
+    "commune": "FLOBECQ"
+  },
+  {
+    "zip": 7890,
+    "commune": "ELLEZELLES"
+  },
+  {
+    "zip": 7890,
+    "commune": "Lahamaide"
+  },
+  {
+    "zip": 7890,
+    "commune": "Wodecq"
+  },
+  {
+    "zip": 7900,
+    "commune": "Grandmetz"
+  },
+  {
+    "zip": 7900,
+    "commune": "LEUZE-EN-HAINAUT"
+  },
+  {
+    "zip": 7901,
+    "commune": "Thieulain"
+  },
+  {
+    "zip": 7903,
+    "commune": "Blicquy"
+  },
+  {
+    "zip": 7903,
+    "commune": "Chapelle-À-Oie"
+  },
+  {
+    "zip": 7903,
+    "commune": "Chapelle-À-Wattines"
+  },
+  {
+    "zip": 7904,
+    "commune": "Pipaix"
+  },
+  {
+    "zip": 7904,
+    "commune": "Tourpes"
+  },
+  {
+    "zip": 7904,
+    "commune": "Willaupuis"
+  },
+  {
+    "zip": 7906,
+    "commune": "Gallaix"
+  },
+  {
+    "zip": 7910,
+    "commune": "Anvaing"
+  },
+  {
+    "zip": 7910,
+    "commune": "Arc-Ainières"
+  },
+  {
+    "zip": 7910,
+    "commune": "Arc-Wattripont"
+  },
+  {
+    "zip": 7910,
+    "commune": "Cordes"
+  },
+  {
+    "zip": 7910,
+    "commune": "Ellignies-Lez-Frasnes"
+  },
+  {
+    "zip": 7910,
+    "commune": "Forest"
+  },
+  {
+    "zip": 7910,
+    "commune": "FRASNES-LEZ-ANVAING"
+  },
+  {
+    "zip": 7910,
+    "commune": "Wattripont"
+  },
+  {
+    "zip": 7911,
+    "commune": "Buissenal"
+  },
+  {
+    "zip": 7911,
+    "commune": "Frasnes-Lez-Buissenal"
+  },
+  {
+    "zip": 7911,
+    "commune": "Hacquegnies"
+  },
+  {
+    "zip": 7911,
+    "commune": "Herquegies"
+  },
+  {
+    "zip": 7911,
+    "commune": "Montroeul-Au-Bois"
+  },
+  {
+    "zip": 7911,
+    "commune": "Moustier"
+  },
+  {
+    "zip": 7911,
+    "commune": "Oeudeghien"
+  },
+  {
+    "zip": 7912,
+    "commune": "Dergneau"
+  },
+  {
+    "zip": 7912,
+    "commune": "Saint-Sauveur"
+  },
+  {
+    "zip": 7940,
+    "commune": "BRUGELETTE"
+  },
+  {
+    "zip": 7940,
+    "commune": "Cambron-Casteau"
+  },
+  {
+    "zip": 7941,
+    "commune": "Attre"
+  },
+  {
+    "zip": 7942,
+    "commune": "Mévergnies-Lez-Lens"
+  },
+  {
+    "zip": 7943,
+    "commune": "Gages"
+  },
+  {
+    "zip": 7950,
+    "commune": "CHIÈVRES"
+  },
+  {
+    "zip": 7950,
+    "commune": "Grosage"
+  },
+  {
+    "zip": 7950,
+    "commune": "Huissignies"
+  },
+  {
+    "zip": 7950,
+    "commune": "Ladeuze"
+  },
+  {
+    "zip": 7950,
+    "commune": "Tongre-Saint-Martin"
+  },
+  {
+    "zip": 7951,
+    "commune": "Tongre-Notre-Dame"
+  },
+  {
+    "zip": 7970,
+    "commune": "BELOEIL"
+  },
+  {
+    "zip": 7971,
+    "commune": "Basècles"
+  },
+  {
+    "zip": 7971,
+    "commune": "Ramegnies"
+  },
+  {
+    "zip": 7971,
+    "commune": "Thumaide"
+  },
+  {
+    "zip": 7971,
+    "commune": "Wadelincourt"
+  },
+  {
+    "zip": 7972,
+    "commune": "Aubechies"
+  },
+  {
+    "zip": 7972,
+    "commune": "Ellignies-Saint-Anne"
+  },
+  {
+    "zip": 7972,
+    "commune": "Quevaucamps"
+  },
+  {
+    "zip": 7973,
+    "commune": "Grandglise"
+  },
+  {
+    "zip": 7973,
+    "commune": "Stambruges"
+  },
+  {
+    "zip": 4000,
+    "commune": "Glain"
+  },
+  {
+    "zip": 4000,
+    "commune": "LIÈGE"
+  },
+  {
+    "zip": 4000,
+    "commune": "Rocourt"
+  },
+  {
+    "zip": 4020,
+    "commune": "Bressoux"
+  },
+  {
+    "zip": 4020,
+    "commune": "Jupille-Sur-Meuse"
+  },
+  {
+    "zip": 4020,
+    "commune": "LIÈGE"
+  },
+  {
+    "zip": 4020,
+    "commune": "Wandre"
+  },
+  {
+    "zip": 4030,
+    "commune": "Grivegnee"
+  },
+  {
+    "zip": 4031,
+    "commune": "Angleur"
+  },
+  {
+    "zip": 4032,
+    "commune": "Chênee"
+  },
+  {
+    "zip": 4040,
+    "commune": "HERSTAL"
+  },
+  {
+    "zip": 4041,
+    "commune": "Milmort"
+  },
+  {
+    "zip": 4041,
+    "commune": "Vottem"
+  },
+  {
+    "zip": 4042,
+    "commune": "Liers"
+  },
+  {
+    "zip": 4050,
+    "commune": "CHAUDFONTAINE"
+  },
+  {
+    "zip": 4051,
+    "commune": "Vaux-Sous-Chèvremont"
+  },
+  {
+    "zip": 4052,
+    "commune": "Beaufays"
+  },
+  {
+    "zip": 4053,
+    "commune": "Embourg"
+  },
+  {
+    "zip": 4100,
+    "commune": "Boncelles"
+  },
+  {
+    "zip": 4100,
+    "commune": "SERAING"
+  },
+  {
+    "zip": 4101,
+    "commune": "Jemeppe-Sur-Meuse"
+  },
+  {
+    "zip": 4102,
+    "commune": "Ougrée"
+  },
+  {
+    "zip": 4120,
+    "commune": "Ehein"
+  },
+  {
+    "zip": 4120,
+    "commune": "NEUPRÉ"
+  },
+  {
+    "zip": 4120,
+    "commune": "Rotheux-Rimière"
+  },
+  {
+    "zip": 4121,
+    "commune": "Neuville-En-Condroz"
+  },
+  {
+    "zip": 4122,
+    "commune": "Plainevaux"
+  },
+  {
+    "zip": 4130,
+    "commune": "ESNEUX"
+  },
+  {
+    "zip": 4130,
+    "commune": "Tilff"
+  },
+  {
+    "zip": 4140,
+    "commune": "Dolembreux"
+  },
+  {
+    "zip": 4140,
+    "commune": "Gomzé-Andoumont"
+  },
+  {
+    "zip": 4140,
+    "commune": "Rouvreux"
+  },
+  {
+    "zip": 4140,
+    "commune": "SPRIMONT"
+  },
+  {
+    "zip": 4141,
+    "commune": "Louveigné"
+  },
+  {
+    "zip": 4160,
+    "commune": "ANTHISNES"
+  },
+  {
+    "zip": 4161,
+    "commune": "Villers-Aux-Tours"
+  },
+  {
+    "zip": 4162,
+    "commune": "Hody"
+  },
+  {
+    "zip": 4163,
+    "commune": "Tavier"
+  },
+  {
+    "zip": 4170,
+    "commune": "COMBLAIN-AU-PONT"
+  },
+  {
+    "zip": 4171,
+    "commune": "Poulseur"
+  },
+  {
+    "zip": 4180,
+    "commune": "Comblain-Fairon"
+  },
+  {
+    "zip": 4180,
+    "commune": "Comblain-La-Tour"
+  },
+  {
+    "zip": 4180,
+    "commune": "HAMOIR"
+  },
+  {
+    "zip": 4181,
+    "commune": "Filot"
+  },
+  {
+    "zip": 4190,
+    "commune": "FERRIÈRES"
+  },
+  {
+    "zip": 4190,
+    "commune": "My"
+  },
+  {
+    "zip": 4190,
+    "commune": "Vieuxville"
+  },
+  {
+    "zip": 4190,
+    "commune": "Werbomont"
+  },
+  {
+    "zip": 4190,
+    "commune": "Xhoris"
+  },
+  {
+    "zip": 4210,
+    "commune": "BURDINNE"
+  },
+  {
+    "zip": 4210,
+    "commune": "Hannêche"
+  },
+  {
+    "zip": 4210,
+    "commune": "Lamontzée"
+  },
+  {
+    "zip": 4210,
+    "commune": "Marneffe"
+  },
+  {
+    "zip": 4210,
+    "commune": "Oteppe"
+  },
+  {
+    "zip": 4217,
+    "commune": "HÉRON"
+  },
+  {
+    "zip": 4217,
+    "commune": "Lavoir"
+  },
+  {
+    "zip": 4217,
+    "commune": "Waret-L'Evêque"
+  },
+  {
+    "zip": 4218,
+    "commune": "Couthuin"
+  },
+  {
+    "zip": 4219,
+    "commune": "Acosse"
+  },
+  {
+    "zip": 4219,
+    "commune": "Ambresin"
+  },
+  {
+    "zip": 4219,
+    "commune": "Meeffe"
+  },
+  {
+    "zip": 4219,
+    "commune": "WASSEIGES"
+  },
+  {
+    "zip": 4250,
+    "commune": "Boëlhe"
+  },
+  {
+    "zip": 4250,
+    "commune": "GEER"
+  },
+  {
+    "zip": 4250,
+    "commune": "Hollogne-Sur-Geer"
+  },
+  {
+    "zip": 4250,
+    "commune": "Lens-Saint-Servais"
+  },
+  {
+    "zip": 4252,
+    "commune": "Omal"
+  },
+  {
+    "zip": 4253,
+    "commune": "Darion"
+  },
+  {
+    "zip": 4254,
+    "commune": "Ligney"
+  },
+  {
+    "zip": 4257,
+    "commune": "BERLOZ"
+  },
+  {
+    "zip": 4257,
+    "commune": "Corswarem"
+  },
+  {
+    "zip": 4257,
+    "commune": "Rosoux-Crenwick"
+  },
+  {
+    "zip": 4260,
+    "commune": "Avennes"
+  },
+  {
+    "zip": 4260,
+    "commune": "BRAIVES"
+  },
+  {
+    "zip": 4260,
+    "commune": "Ciplet"
+  },
+  {
+    "zip": 4260,
+    "commune": "Fallais"
+  },
+  {
+    "zip": 4260,
+    "commune": "Fumal"
+  },
+  {
+    "zip": 4260,
+    "commune": "Ville-En-Hesbaye"
+  },
+  {
+    "zip": 4261,
+    "commune": "Latinne"
+  },
+  {
+    "zip": 4263,
+    "commune": "Tourinne"
+  },
+  {
+    "zip": 4280,
+    "commune": "Abolens"
+  },
+  {
+    "zip": 4280,
+    "commune": "Avernas-Le-Bauduin"
+  },
+  {
+    "zip": 4280,
+    "commune": "Avin"
+  },
+  {
+    "zip": 4280,
+    "commune": "Bertrée"
+  },
+  {
+    "zip": 4280,
+    "commune": "Blehen"
+  },
+  {
+    "zip": 4280,
+    "commune": "Cras-Avernas"
+  },
+  {
+    "zip": 4280,
+    "commune": "Crehen"
+  },
+  {
+    "zip": 4280,
+    "commune": "Grand-Hallet"
+  },
+  {
+    "zip": 4280,
+    "commune": "HANNUT"
+  },
+  {
+    "zip": 4280,
+    "commune": "Lens-Saint-Remy"
+  },
+  {
+    "zip": 4280,
+    "commune": "Merdorp"
+  },
+  {
+    "zip": 4280,
+    "commune": "Moxhe"
+  },
+  {
+    "zip": 4280,
+    "commune": "Petit-Hallet"
+  },
+  {
+    "zip": 4280,
+    "commune": "Poucet"
+  },
+  {
+    "zip": 4280,
+    "commune": "Thisnes"
+  },
+  {
+    "zip": 4280,
+    "commune": "Trognée"
+  },
+  {
+    "zip": 4280,
+    "commune": "Villers-Le-Peuplier"
+  },
+  {
+    "zip": 4280,
+    "commune": "Wansin"
+  },
+  {
+    "zip": 4287,
+    "commune": "LINCENT"
+  },
+  {
+    "zip": 4287,
+    "commune": "Pellaines"
+  },
+  {
+    "zip": 4287,
+    "commune": "Racour"
+  },
+  {
+    "zip": 4300,
+    "commune": "Bettincourt"
+  },
+  {
+    "zip": 4300,
+    "commune": "Bleret"
+  },
+  {
+    "zip": 4300,
+    "commune": "Bovenistier"
+  },
+  {
+    "zip": 4300,
+    "commune": "Grand-Axhe"
+  },
+  {
+    "zip": 4300,
+    "commune": "Lantremange"
+  },
+  {
+    "zip": 4300,
+    "commune": "Oleye"
+  },
+  {
+    "zip": 4300,
+    "commune": "WAREMME"
+  },
+  {
+    "zip": 4317,
+    "commune": "Aineffe"
+  },
+  {
+    "zip": 4317,
+    "commune": "Borlez"
+  },
+  {
+    "zip": 4317,
+    "commune": "Celles"
+  },
+  {
+    "zip": 4317,
+    "commune": "FAIMES"
+  },
+  {
+    "zip": 4317,
+    "commune": "Les Waleffes"
+  },
+  {
+    "zip": 4317,
+    "commune": "Viemme"
+  },
+  {
+    "zip": 4340,
+    "commune": "AWANS"
+  },
+  {
+    "zip": 4340,
+    "commune": "Fooz"
+  },
+  {
+    "zip": 4340,
+    "commune": "Othée"
+  },
+  {
+    "zip": 4340,
+    "commune": "Villers-L'Evêque"
+  },
+  {
+    "zip": 4342,
+    "commune": "Hognoul"
+  },
+  {
+    "zip": 4347,
+    "commune": "FEXHE-LE-HAUT-CLOCHER"
+  },
+  {
+    "zip": 4347,
+    "commune": "Freloux"
+  },
+  {
+    "zip": 4347,
+    "commune": "Noville"
+  },
+  {
+    "zip": 4347,
+    "commune": "Roloux"
+  },
+  {
+    "zip": 4347,
+    "commune": "Voroux-Goreux"
+  },
+  {
+    "zip": 4350,
+    "commune": "Lamine"
+  },
+  {
+    "zip": 4350,
+    "commune": "Momalle"
+  },
+  {
+    "zip": 4350,
+    "commune": "Pousset"
+  },
+  {
+    "zip": 4350,
+    "commune": "REMICOURT"
+  },
+  {
+    "zip": 4351,
+    "commune": "Hodeige"
+  },
+  {
+    "zip": 4357,
+    "commune": "DONCEEL"
+  },
+  {
+    "zip": 4357,
+    "commune": "Haneffe"
+  },
+  {
+    "zip": 4357,
+    "commune": "Jeneffe"
+  },
+  {
+    "zip": 4357,
+    "commune": "Limont"
+  },
+  {
+    "zip": 4360,
+    "commune": "Bergilers"
+  },
+  {
+    "zip": 4360,
+    "commune": "Grandville"
+  },
+  {
+    "zip": 4360,
+    "commune": "Lens-Sur-Geer"
+  },
+  {
+    "zip": 4360,
+    "commune": "OREYE"
+  },
+  {
+    "zip": 4360,
+    "commune": "Otrange"
+  },
+  {
+    "zip": 4367,
+    "commune": "CRISNÉE"
+  },
+  {
+    "zip": 4367,
+    "commune": "Fize-Le-Marsal"
+  },
+  {
+    "zip": 4367,
+    "commune": "Kemexhe"
+  },
+  {
+    "zip": 4367,
+    "commune": "Odeur"
+  },
+  {
+    "zip": 4367,
+    "commune": "Thys"
+  },
+  {
+    "zip": 4400,
+    "commune": "Awirs"
+  },
+  {
+    "zip": 4400,
+    "commune": "Chokier"
+  },
+  {
+    "zip": 4400,
+    "commune": "FLÉMALLE"
+  },
+  {
+    "zip": 4400,
+    "commune": "Flémalle-Grande"
+  },
+  {
+    "zip": 4400,
+    "commune": "Flémalle-Haute"
+  },
+  {
+    "zip": 4400,
+    "commune": "Gleixhe"
+  },
+  {
+    "zip": 4400,
+    "commune": "Ivoz-Ramet"
+  },
+  {
+    "zip": 4400,
+    "commune": "Mons-Lez-Liège"
+  },
+  {
+    "zip": 4420,
+    "commune": "Montegnée"
+  },
+  {
+    "zip": 4420,
+    "commune": "SAINT-NICOLAS"
+  },
+  {
+    "zip": 4420,
+    "commune": "Tilleur"
+  },
+  {
+    "zip": 4430,
+    "commune": "ANS"
+  },
+  {
+    "zip": 4431,
+    "commune": "Loncin"
+  },
+  {
+    "zip": 4432,
+    "commune": "Alleur"
+  },
+  {
+    "zip": 4432,
+    "commune": "Xhendremael"
+  },
+  {
+    "zip": 4450,
+    "commune": "JUPRELLE"
+  },
+  {
+    "zip": 4450,
+    "commune": "Lantin"
+  },
+  {
+    "zip": 4450,
+    "commune": "Slins"
+  },
+  {
+    "zip": 4451,
+    "commune": "Voroux-Lez-Liers"
+  },
+  {
+    "zip": 4452,
+    "commune": "Paifve"
+  },
+  {
+    "zip": 4452,
+    "commune": "Wihogne"
+  },
+  {
+    "zip": 4453,
+    "commune": "Villers-Saint-Siméon"
+  },
+  {
+    "zip": 4458,
+    "commune": "Fexhe-Slins"
+  },
+  {
+    "zip": 4460,
+    "commune": "Bierset"
+  },
+  {
+    "zip": 4460,
+    "commune": "Grâce-Berleur"
+  },
+  {
+    "zip": 4460,
+    "commune": "GRÂCE-HOLLOGNE"
+  },
+  {
+    "zip": 4460,
+    "commune": "Hollogne-Aux-Pierres"
+  },
+  {
+    "zip": 4460,
+    "commune": "Horion-Hozémont"
+  },
+  {
+    "zip": 4460,
+    "commune": "Velroux"
+  },
+  {
+    "zip": 4470,
+    "commune": "SAINT-GEORGES-SUR-MEUSE"
+  },
+  {
+    "zip": 4480,
+    "commune": "Clermont-Sous-Huy"
+  },
+  {
+    "zip": 4480,
+    "commune": "Ehein"
+  },
+  {
+    "zip": 4480,
+    "commune": "ENGIS"
+  },
+  {
+    "zip": 4480,
+    "commune": "Hermalle-Sous-Huy"
+  },
+  {
+    "zip": 4500,
+    "commune": "Ben-Ahin"
+  },
+  {
+    "zip": 4500,
+    "commune": "HUY"
+  },
+  {
+    "zip": 4500,
+    "commune": "Tihange"
+  },
+  {
+    "zip": 4520,
+    "commune": "Antheit"
+  },
+  {
+    "zip": 4520,
+    "commune": "Bas-Oha"
+  },
+  {
+    "zip": 4520,
+    "commune": "Huccorgne"
+  },
+  {
+    "zip": 4520,
+    "commune": "Moha"
+  },
+  {
+    "zip": 4520,
+    "commune": "Vinalmont"
+  },
+  {
+    "zip": 4520,
+    "commune": "WANZE"
+  },
+  {
+    "zip": 4530,
+    "commune": "Fize-Fontaine"
+  },
+  {
+    "zip": 4530,
+    "commune": "Vaux-Et-Borset"
+  },
+  {
+    "zip": 4530,
+    "commune": "Vieux-Waleffe"
+  },
+  {
+    "zip": 4530,
+    "commune": "VILLERS-LE-BOUILLET"
+  },
+  {
+    "zip": 4530,
+    "commune": "Warnant-Dreye"
+  },
+  {
+    "zip": 4537,
+    "commune": "Bodegnée"
+  },
+  {
+    "zip": 4537,
+    "commune": "Chapon-Seraing"
+  },
+  {
+    "zip": 4537,
+    "commune": "Seraing-Le-Château"
+  },
+  {
+    "zip": 4537,
+    "commune": "VERLAINE"
+  },
+  {
+    "zip": 4540,
+    "commune": "AMAY"
+  },
+  {
+    "zip": 4540,
+    "commune": "Ampsin"
+  },
+  {
+    "zip": 4540,
+    "commune": "Flône"
+  },
+  {
+    "zip": 4540,
+    "commune": "Jehay"
+  },
+  {
+    "zip": 4540,
+    "commune": "Ombret"
+  },
+  {
+    "zip": 4550,
+    "commune": "NANDRIN"
+  },
+  {
+    "zip": 4550,
+    "commune": "Saint-Séverin"
+  },
+  {
+    "zip": 4550,
+    "commune": "Villers-Le-Temple"
+  },
+  {
+    "zip": 4550,
+    "commune": "Yernée-Fraineux"
+  },
+  {
+    "zip": 4557,
+    "commune": "Abée"
+  },
+  {
+    "zip": 4557,
+    "commune": "Fraiture"
+  },
+  {
+    "zip": 4557,
+    "commune": "Ramelot"
+  },
+  {
+    "zip": 4557,
+    "commune": "Seny"
+  },
+  {
+    "zip": 4557,
+    "commune": "Soheit-Tinlot"
+  },
+  {
+    "zip": 4557,
+    "commune": "TINLOT"
+  },
+  {
+    "zip": 4560,
+    "commune": "Bois-Et-Borsu"
+  },
+  {
+    "zip": 4560,
+    "commune": "CLAVIER"
+  },
+  {
+    "zip": 4560,
+    "commune": "Les Avins"
+  },
+  {
+    "zip": 4560,
+    "commune": "Ocquier"
+  },
+  {
+    "zip": 4560,
+    "commune": "Pailhe"
+  },
+  {
+    "zip": 4560,
+    "commune": "Terwagne"
+  },
+  {
+    "zip": 4570,
+    "commune": "MARCHIN"
+  },
+  {
+    "zip": 4570,
+    "commune": "Vyle-Et-Tharoul"
+  },
+  {
+    "zip": 4577,
+    "commune": "MODAVE"
+  },
+  {
+    "zip": 4577,
+    "commune": "Outrelouxhe"
+  },
+  {
+    "zip": 4577,
+    "commune": "Strée-Lez-Huy"
+  },
+  {
+    "zip": 4577,
+    "commune": "Vierset-Barse"
+  },
+  {
+    "zip": 4590,
+    "commune": "Ellemelle"
+  },
+  {
+    "zip": 4590,
+    "commune": "OUFFET"
+  },
+  {
+    "zip": 4590,
+    "commune": "Warzée"
+  },
+  {
+    "zip": 4600,
+    "commune": "Lanaye"
+  },
+  {
+    "zip": 4600,
+    "commune": "Lixhe"
+  },
+  {
+    "zip": 4600,
+    "commune": "Richelle"
+  },
+  {
+    "zip": 4600,
+    "commune": "VISÉ"
+  },
+  {
+    "zip": 4601,
+    "commune": "Argenteau"
+  },
+  {
+    "zip": 4602,
+    "commune": "Cheratte"
+  },
+  {
+    "zip": 4606,
+    "commune": "Saint-André"
+  },
+  {
+    "zip": 4607,
+    "commune": "Berneau"
+  },
+  {
+    "zip": 4607,
+    "commune": "Bombaye"
+  },
+  {
+    "zip": 4607,
+    "commune": "DALHEM"
+  },
+  {
+    "zip": 4607,
+    "commune": "Feneur"
+  },
+  {
+    "zip": 4607,
+    "commune": "Mortroux"
+  },
+  {
+    "zip": 4608,
+    "commune": "Neufchâteau"
+  },
+  {
+    "zip": 4608,
+    "commune": "Warsage"
+  },
+  {
+    "zip": 4610,
+    "commune": "Bellaire"
+  },
+  {
+    "zip": 4610,
+    "commune": "BEYNE-HEUSAY"
+  },
+  {
+    "zip": 4610,
+    "commune": "Queue-Du-Bois"
+  },
+  {
+    "zip": 4620,
+    "commune": "FLÉRON"
+  },
+  {
+    "zip": 4621,
+    "commune": "Retinne"
+  },
+  {
+    "zip": 4623,
+    "commune": "Magnée"
+  },
+  {
+    "zip": 4624,
+    "commune": "Romsée"
+  },
+  {
+    "zip": 4630,
+    "commune": "Ayeneux"
+  },
+  {
+    "zip": 4630,
+    "commune": "Micheroux"
+  },
+  {
+    "zip": 4630,
+    "commune": "SOUMAGNE"
+  },
+  {
+    "zip": 4630,
+    "commune": "Tignée"
+  },
+  {
+    "zip": 4631,
+    "commune": "Evegnée"
+  },
+  {
+    "zip": 4632,
+    "commune": "Cérexhe-Heuseux"
+  },
+  {
+    "zip": 4633,
+    "commune": "Melen"
+  },
+  {
+    "zip": 4650,
+    "commune": "Chaineux"
+  },
+  {
+    "zip": 4650,
+    "commune": "Grand-Rechain"
+  },
+  {
+    "zip": 4650,
+    "commune": "HERVE"
+  },
+  {
+    "zip": 4650,
+    "commune": "Julémont"
+  },
+  {
+    "zip": 4651,
+    "commune": "Battice"
+  },
+  {
+    "zip": 4652,
+    "commune": "Xhendelesse"
+  },
+  {
+    "zip": 4653,
+    "commune": "Bolland"
+  },
+  {
+    "zip": 4654,
+    "commune": "Charneux"
+  },
+  {
+    "zip": 4670,
+    "commune": "BLÉGNY"
+  },
+  {
+    "zip": 4670,
+    "commune": "Mortier"
+  },
+  {
+    "zip": 4670,
+    "commune": "Trembleur"
+  },
+  {
+    "zip": 4671,
+    "commune": "Barchon"
+  },
+  {
+    "zip": 4671,
+    "commune": "Housse"
+  },
+  {
+    "zip": 4671,
+    "commune": "Saive"
+  },
+  {
+    "zip": 4672,
+    "commune": "Saint-Remy"
+  },
+  {
+    "zip": 4680,
+    "commune": "Hermée"
+  },
+  {
+    "zip": 4680,
+    "commune": "OUPEYE"
+  },
+  {
+    "zip": 4681,
+    "commune": "Hermalle-Sous-Argenteau"
+  },
+  {
+    "zip": 4682,
+    "commune": "Heure-Le-Romain"
+  },
+  {
+    "zip": 4682,
+    "commune": "Houtain-Saint-Siméon"
+  },
+  {
+    "zip": 4683,
+    "commune": "Vivegnis"
+  },
+  {
+    "zip": 4684,
+    "commune": "Haccourt"
+  },
+  {
+    "zip": 4690,
+    "commune": "BASSENGE"
+  },
+  {
+    "zip": 4690,
+    "commune": "Boirs"
+  },
+  {
+    "zip": 4690,
+    "commune": "Eben-Emael"
+  },
+  {
+    "zip": 4690,
+    "commune": "Glons"
+  },
+  {
+    "zip": 4690,
+    "commune": "Roclenge-Sur-Geer"
+  },
+  {
+    "zip": 4690,
+    "commune": "Wonck"
+  },
+  {
+    "zip": 4700,
+    "commune": "EUPEN"
+  },
+  {
+    "zip": 4701,
+    "commune": "Kettenis"
+  },
+  {
+    "zip": 4710,
+    "commune": "LONTZEN"
+  },
+  {
+    "zip": 4711,
+    "commune": "Walhorn"
+  },
+  {
+    "zip": 4720,
+    "commune": "LA CALAMINE"
+  },
+  {
+    "zip": 4721,
+    "commune": "Neu-Moresnet"
+  },
+  {
+    "zip": 4728,
+    "commune": "Hergenrath"
+  },
+  {
+    "zip": 4730,
+    "commune": "Hauset"
+  },
+  {
+    "zip": 4730,
+    "commune": "RAEREN"
+  },
+  {
+    "zip": 4731,
+    "commune": "Eynatten"
+  },
+  {
+    "zip": 4750,
+    "commune": "BUTGENBACH"
+  },
+  {
+    "zip": 4750,
+    "commune": "Elsenborn"
+  },
+  {
+    "zip": 4760,
+    "commune": "BULLANGE"
+  },
+  {
+    "zip": 4760,
+    "commune": "Manderfeld"
+  },
+  {
+    "zip": 4761,
+    "commune": "Rocherath"
+  },
+  {
+    "zip": 4770,
+    "commune": "AMBLÈVE"
+  },
+  {
+    "zip": 4770,
+    "commune": "Meyerode"
+  },
+  {
+    "zip": 4771,
+    "commune": "Heppenbach"
+  },
+  {
+    "zip": 4780,
+    "commune": "Recht"
+  },
+  {
+    "zip": 4780,
+    "commune": "SAINT-VITH"
+  },
+  {
+    "zip": 4782,
+    "commune": "Schoenberg"
+  },
+  {
+    "zip": 4783,
+    "commune": "Lommersweiler"
+  },
+  {
+    "zip": 4784,
+    "commune": "Crombach"
+  },
+  {
+    "zip": 4790,
+    "commune": "BURG-REULAND"
+  },
+  {
+    "zip": 4790,
+    "commune": "Reuland"
+  },
+  {
+    "zip": 4791,
+    "commune": "Thommen"
+  },
+  {
+    "zip": 4800,
+    "commune": "Ensival"
+  },
+  {
+    "zip": 4800,
+    "commune": "Lambermont"
+  },
+  {
+    "zip": 4800,
+    "commune": "Petit-Rechain"
+  },
+  {
+    "zip": 4800,
+    "commune": "Polleur"
+  },
+  {
+    "zip": 4800,
+    "commune": "VERVIERS"
+  },
+  {
+    "zip": 4801,
+    "commune": "Stembert"
+  },
+  {
+    "zip": 4802,
+    "commune": "Heusy"
+  },
+  {
+    "zip": 4820,
+    "commune": "DISON"
+  },
+  {
+    "zip": 4821,
+    "commune": "Andrimont"
+  },
+  {
+    "zip": 4830,
+    "commune": "LIMBOURG"
+  },
+  {
+    "zip": 4831,
+    "commune": "Bilstain"
+  },
+  {
+    "zip": 4834,
+    "commune": "Goé"
+  },
+  {
+    "zip": 4837,
+    "commune": "BAELEN"
+  },
+  {
+    "zip": 4837,
+    "commune": "Membach"
+  },
+  {
+    "zip": 4840,
+    "commune": "WELKENRAEDT"
+  },
+  {
+    "zip": 4841,
+    "commune": "Henri-Chapelle"
+  },
+  {
+    "zip": 4845,
+    "commune": "JALHAY"
+  },
+  {
+    "zip": 4845,
+    "commune": "Sart-Lez-Spa"
+  },
+  {
+    "zip": 4850,
+    "commune": "Montzen"
+  },
+  {
+    "zip": 4850,
+    "commune": "Moresnet"
+  },
+  {
+    "zip": 4850,
+    "commune": "PLOMBIÈRES"
+  },
+  {
+    "zip": 4851,
+    "commune": "Gemmenich"
+  },
+  {
+    "zip": 4851,
+    "commune": "Sippenaeken"
+  },
+  {
+    "zip": 4852,
+    "commune": "Hombourg"
+  },
+  {
+    "zip": 4860,
+    "commune": "Cornesse"
+  },
+  {
+    "zip": 4860,
+    "commune": "PEPINSTER"
+  },
+  {
+    "zip": 4860,
+    "commune": "Wegnez"
+  },
+  {
+    "zip": 4861,
+    "commune": "Soiron"
+  },
+  {
+    "zip": 4870,
+    "commune": "Forêt"
+  },
+  {
+    "zip": 4870,
+    "commune": "Fraipont"
+  },
+  {
+    "zip": 4870,
+    "commune": "Nessonvaux"
+  },
+  {
+    "zip": 4870,
+    "commune": "TROOZ"
+  },
+  {
+    "zip": 4877,
+    "commune": "OLNE"
+  },
+  {
+    "zip": 4880,
+    "commune": "AUBEL"
+  },
+  {
+    "zip": 4890,
+    "commune": "Clermont"
+  },
+  {
+    "zip": 4890,
+    "commune": "Thimister"
+  },
+  {
+    "zip": 4890,
+    "commune": "THIMISTER-CLERMONT"
+  },
+  {
+    "zip": 4900,
+    "commune": "SPA"
+  },
+  {
+    "zip": 4910,
+    "commune": "La Reid"
+  },
+  {
+    "zip": 4910,
+    "commune": "Polleur"
+  },
+  {
+    "zip": 4910,
+    "commune": "THEUX"
+  },
+  {
+    "zip": 4920,
+    "commune": "AYWAILLE"
+  },
+  {
+    "zip": 4920,
+    "commune": "Ernonheid"
+  },
+  {
+    "zip": 4920,
+    "commune": "Harzé"
+  },
+  {
+    "zip": 4920,
+    "commune": "Louveigné"
+  },
+  {
+    "zip": 4920,
+    "commune": "Sougné-Remouchamps"
+  },
+  {
+    "zip": 4950,
+    "commune": "Faymonville"
+  },
+  {
+    "zip": 4950,
+    "commune": "Robertville"
+  },
+  {
+    "zip": 4950,
+    "commune": "Sourbrodt"
+  },
+  {
+    "zip": 4950,
+    "commune": "WAIMES"
+  },
+  {
+    "zip": 4960,
+    "commune": "Bellevaux-Ligneuville"
+  },
+  {
+    "zip": 4960,
+    "commune": "Bevercé"
+  },
+  {
+    "zip": 4960,
+    "commune": "MALMEDY"
+  },
+  {
+    "zip": 4970,
+    "commune": "Francorchamps"
+  },
+  {
+    "zip": 4970,
+    "commune": "STAVELOT"
+  },
+  {
+    "zip": 4980,
+    "commune": "Fosse"
+  },
+  {
+    "zip": 4980,
+    "commune": "TROIS-PONTS"
+  },
+  {
+    "zip": 4980,
+    "commune": "Wanne"
+  },
+  {
+    "zip": 4983,
+    "commune": "Basse-Bodeux"
+  },
+  {
+    "zip": 4987,
+    "commune": "Chevron"
+  },
+  {
+    "zip": 4987,
+    "commune": "La Gleize"
+  },
+  {
+    "zip": 4987,
+    "commune": "Lorcé"
+  },
+  {
+    "zip": 4987,
+    "commune": "Rahier"
+  },
+  {
+    "zip": 4987,
+    "commune": "STOUMONT"
+  },
+  {
+    "zip": 4990,
+    "commune": "Arbrefontaine"
+  },
+  {
+    "zip": 4990,
+    "commune": "Bra"
+  },
+  {
+    "zip": 4990,
+    "commune": "LIERNEUX"
+  },
+  {
+    "zip": 6600,
+    "commune": "BASTOGNE"
+  },
+  {
+    "zip": 6600,
+    "commune": "Longvilly"
+  },
+  {
+    "zip": 6600,
+    "commune": "Noville"
+  },
+  {
+    "zip": 6600,
+    "commune": "Villers-La-Bonne-Eau"
+  },
+  {
+    "zip": 6600,
+    "commune": "Wardin"
+  },
+  {
+    "zip": 6630,
+    "commune": "MARTELANGE"
+  },
+  {
+    "zip": 6637,
+    "commune": "FAUVILLERS"
+  },
+  {
+    "zip": 6637,
+    "commune": "Hollange"
+  },
+  {
+    "zip": 6637,
+    "commune": "Tintange"
+  },
+  {
+    "zip": 6640,
+    "commune": "Hompré"
+  },
+  {
+    "zip": 6640,
+    "commune": "Morhet"
+  },
+  {
+    "zip": 6640,
+    "commune": "Nives"
+  },
+  {
+    "zip": 6640,
+    "commune": "Sibret"
+  },
+  {
+    "zip": 6640,
+    "commune": "Vaux-Lez-Rosières"
+  },
+  {
+    "zip": 6640,
+    "commune": "VAUX-SUR-SÛRE"
+  },
+  {
+    "zip": 6642,
+    "commune": "Juseret"
+  },
+  {
+    "zip": 6660,
+    "commune": "HOUFFALIZE"
+  },
+  {
+    "zip": 6660,
+    "commune": "Nadrin"
+  },
+  {
+    "zip": 6661,
+    "commune": "Mont"
+  },
+  {
+    "zip": 6661,
+    "commune": "Tailles"
+  },
+  {
+    "zip": 6662,
+    "commune": "Tavigny"
+  },
+  {
+    "zip": 6663,
+    "commune": "Mabompré"
+  },
+  {
+    "zip": 6666,
+    "commune": "Wibrin"
+  },
+  {
+    "zip": 6670,
+    "commune": "GOUVY"
+  },
+  {
+    "zip": 6670,
+    "commune": "Limerlé"
+  },
+  {
+    "zip": 6671,
+    "commune": "Bovigny"
+  },
+  {
+    "zip": 6672,
+    "commune": "Beho"
+  },
+  {
+    "zip": 6673,
+    "commune": "Cherain"
+  },
+  {
+    "zip": 6674,
+    "commune": "Montleban"
+  },
+  {
+    "zip": 6680,
+    "commune": "Amberloup"
+  },
+  {
+    "zip": 6680,
+    "commune": "SAINTE-ODE"
+  },
+  {
+    "zip": 6680,
+    "commune": "Tillet"
+  },
+  {
+    "zip": 6681,
+    "commune": "Lavacherie"
+  },
+  {
+    "zip": 6686,
+    "commune": "Flamierge"
+  },
+  {
+    "zip": 6687,
+    "commune": "BERTOGNE"
+  },
+  {
+    "zip": 6688,
+    "commune": "Longchamps"
+  },
+  {
+    "zip": 6690,
+    "commune": "Bihain"
+  },
+  {
+    "zip": 6690,
+    "commune": "VIELSALM"
+  },
+  {
+    "zip": 6692,
+    "commune": "Petit-Thier"
+  },
+  {
+    "zip": 6698,
+    "commune": "Grand-Halleux"
+  },
+  {
+    "zip": 6700,
+    "commune": "ARLON"
+  },
+  {
+    "zip": 6700,
+    "commune": "Bonnert"
+  },
+  {
+    "zip": 6700,
+    "commune": "Heinsch"
+  },
+  {
+    "zip": 6700,
+    "commune": "Toernich"
+  },
+  {
+    "zip": 6704,
+    "commune": "Guirsch"
+  },
+  {
+    "zip": 6706,
+    "commune": "Autelbas"
+  },
+  {
+    "zip": 6717,
+    "commune": "ATTERT"
+  },
+  {
+    "zip": 6717,
+    "commune": "Nobressart"
+  },
+  {
+    "zip": 6717,
+    "commune": "Nothomb"
+  },
+  {
+    "zip": 6717,
+    "commune": "Thiaumont"
+  },
+  {
+    "zip": 6717,
+    "commune": "Tontelange"
+  },
+  {
+    "zip": 6720,
+    "commune": "HABAY"
+  },
+  {
+    "zip": 6720,
+    "commune": "Habay-La-Neuve"
+  },
+  {
+    "zip": 6720,
+    "commune": "Hachy"
+  },
+  {
+    "zip": 6721,
+    "commune": "Anlier"
+  },
+  {
+    "zip": 6723,
+    "commune": "Habay-La-Vieille"
+  },
+  {
+    "zip": 6724,
+    "commune": "Houdemont"
+  },
+  {
+    "zip": 6724,
+    "commune": "Rulles"
+  },
+  {
+    "zip": 6730,
+    "commune": "Bellefontaine"
+  },
+  {
+    "zip": 6730,
+    "commune": "Rossignol"
+  },
+  {
+    "zip": 6730,
+    "commune": "Saint-Vincent"
+  },
+  {
+    "zip": 6730,
+    "commune": "TINTIGNY"
+  },
+  {
+    "zip": 6740,
+    "commune": "ETALLE"
+  },
+  {
+    "zip": 6740,
+    "commune": "Sainte-Marie-Sur-Semois"
+  },
+  {
+    "zip": 6740,
+    "commune": "Villers-Sur-Semois"
+  },
+  {
+    "zip": 6741,
+    "commune": "Vance"
+  },
+  {
+    "zip": 6742,
+    "commune": "Chantemelle"
+  },
+  {
+    "zip": 6743,
+    "commune": "Buzenol"
+  },
+  {
+    "zip": 6747,
+    "commune": "Châtillon"
+  },
+  {
+    "zip": 6747,
+    "commune": "Meix-Le-Tige"
+  },
+  {
+    "zip": 6747,
+    "commune": "SAINT-LÉGER"
+  },
+  {
+    "zip": 6750,
+    "commune": "MUSSON"
+  },
+  {
+    "zip": 6750,
+    "commune": "Mussy-La-Ville"
+  },
+  {
+    "zip": 6750,
+    "commune": "Signeulx"
+  },
+  {
+    "zip": 6760,
+    "commune": "Bleid"
+  },
+  {
+    "zip": 6760,
+    "commune": "Ethe"
+  },
+  {
+    "zip": 6760,
+    "commune": "Ruette"
+  },
+  {
+    "zip": 6760,
+    "commune": "VIRTON"
+  },
+  {
+    "zip": 6761,
+    "commune": "Latour"
+  },
+  {
+    "zip": 6762,
+    "commune": "Saint-Mard"
+  },
+  {
+    "zip": 6767,
+    "commune": "Dampicourt"
+  },
+  {
+    "zip": 6767,
+    "commune": "Harnoncourt"
+  },
+  {
+    "zip": 6767,
+    "commune": "Lamorteau"
+  },
+  {
+    "zip": 6767,
+    "commune": "ROUVROY"
+  },
+  {
+    "zip": 6767,
+    "commune": "Torgny"
+  },
+  {
+    "zip": 6769,
+    "commune": "Gérouville"
+  },
+  {
+    "zip": 6769,
+    "commune": "MEIX-DEVANT-VIRTON"
+  },
+  {
+    "zip": 6769,
+    "commune": "Robelmont"
+  },
+  {
+    "zip": 6769,
+    "commune": "Sommethonne"
+  },
+  {
+    "zip": 6769,
+    "commune": "Villers-La-Loue"
+  },
+  {
+    "zip": 6780,
+    "commune": "Hondelange"
+  },
+  {
+    "zip": 6780,
+    "commune": "MESSANCY"
+  },
+  {
+    "zip": 6780,
+    "commune": "Wolkrange"
+  },
+  {
+    "zip": 6781,
+    "commune": "Sélange"
+  },
+  {
+    "zip": 6782,
+    "commune": "Habergy"
+  },
+  {
+    "zip": 6790,
+    "commune": "AUBANGE"
+  },
+  {
+    "zip": 6791,
+    "commune": "Athus"
+  },
+  {
+    "zip": 6792,
+    "commune": "Halanzy"
+  },
+  {
+    "zip": 6792,
+    "commune": "Rachecourt"
+  },
+  {
+    "zip": 6800,
+    "commune": "Bras"
+  },
+  {
+    "zip": 6800,
+    "commune": "Freux"
+  },
+  {
+    "zip": 6800,
+    "commune": "LIBRAMONT-CHEVIGNY"
+  },
+  {
+    "zip": 6800,
+    "commune": "Moircy"
+  },
+  {
+    "zip": 6800,
+    "commune": "Recogne"
+  },
+  {
+    "zip": 6800,
+    "commune": "Remagne"
+  },
+  {
+    "zip": 6800,
+    "commune": "Saint-Pierre"
+  },
+  {
+    "zip": 6800,
+    "commune": "Sainte-Marie-Chevigny"
+  },
+  {
+    "zip": 6810,
+    "commune": "CHINY"
+  },
+  {
+    "zip": 6810,
+    "commune": "Izel"
+  },
+  {
+    "zip": 6810,
+    "commune": "Jamoigne"
+  },
+  {
+    "zip": 6811,
+    "commune": "Les Bulles"
+  },
+  {
+    "zip": 6812,
+    "commune": "Suxy"
+  },
+  {
+    "zip": 6813,
+    "commune": "Termes"
+  },
+  {
+    "zip": 6820,
+    "commune": "FLORENVILLE"
+  },
+  {
+    "zip": 6820,
+    "commune": "Fontenoille"
+  },
+  {
+    "zip": 6820,
+    "commune": "Muno"
+  },
+  {
+    "zip": 6820,
+    "commune": "Sainte-Cécile"
+  },
+  {
+    "zip": 6821,
+    "commune": "Lacuisine"
+  },
+  {
+    "zip": 6823,
+    "commune": "Villers-Devant-Orval"
+  },
+  {
+    "zip": 6824,
+    "commune": "Chassepierre"
+  },
+  {
+    "zip": 6830,
+    "commune": "BOUILLON"
+  },
+  {
+    "zip": 6830,
+    "commune": "Les Hayons"
+  },
+  {
+    "zip": 6830,
+    "commune": "Poupehan"
+  },
+  {
+    "zip": 6830,
+    "commune": "Rochehaut"
+  },
+  {
+    "zip": 6831,
+    "commune": "Noirfontaine"
+  },
+  {
+    "zip": 6832,
+    "commune": "Sensenruth"
+  },
+  {
+    "zip": 6833,
+    "commune": "Ucimont"
+  },
+  {
+    "zip": 6833,
+    "commune": "Vivy"
+  },
+  {
+    "zip": 6834,
+    "commune": "Bellevaux"
+  },
+  {
+    "zip": 6836,
+    "commune": "Dohan"
+  },
+  {
+    "zip": 6838,
+    "commune": "Corbion"
+  },
+  {
+    "zip": 6840,
+    "commune": "Grandvoir"
+  },
+  {
+    "zip": 6840,
+    "commune": "Grapfontaine"
+  },
+  {
+    "zip": 6840,
+    "commune": "Hamipré"
+  },
+  {
+    "zip": 6840,
+    "commune": "Longlier"
+  },
+  {
+    "zip": 6840,
+    "commune": "NEUFCHÂTEAU"
+  },
+  {
+    "zip": 6840,
+    "commune": "Tournay"
+  },
+  {
+    "zip": 6850,
+    "commune": "Carlsbourg"
+  },
+  {
+    "zip": 6850,
+    "commune": "Offagne"
+  },
+  {
+    "zip": 6850,
+    "commune": "PALISEUL"
+  },
+  {
+    "zip": 6851,
+    "commune": "Nollevaux"
+  },
+  {
+    "zip": 6852,
+    "commune": "Maissin"
+  },
+  {
+    "zip": 6852,
+    "commune": "Opont"
+  },
+  {
+    "zip": 6853,
+    "commune": "Framont"
+  },
+  {
+    "zip": 6856,
+    "commune": "Fays-Les-Veneurs"
+  },
+  {
+    "zip": 6860,
+    "commune": "Assenois"
+  },
+  {
+    "zip": 6860,
+    "commune": "Ebly"
+  },
+  {
+    "zip": 6860,
+    "commune": "LÉGLISE"
+  },
+  {
+    "zip": 6860,
+    "commune": "Mellier"
+  },
+  {
+    "zip": 6860,
+    "commune": "Witry"
+  },
+  {
+    "zip": 6870,
+    "commune": "Arville"
+  },
+  {
+    "zip": 6870,
+    "commune": "Awenne"
+  },
+  {
+    "zip": 6870,
+    "commune": "Hatrival"
+  },
+  {
+    "zip": 6870,
+    "commune": "Mirwart"
+  },
+  {
+    "zip": 6870,
+    "commune": "SAINT-HUBERT"
+  },
+  {
+    "zip": 6870,
+    "commune": "Vesqueville"
+  },
+  {
+    "zip": 6880,
+    "commune": "Auby-Sur-Semois"
+  },
+  {
+    "zip": 6880,
+    "commune": "BERTRIX"
+  },
+  {
+    "zip": 6880,
+    "commune": "Cugnon"
+  },
+  {
+    "zip": 6880,
+    "commune": "Jehonville"
+  },
+  {
+    "zip": 6880,
+    "commune": "Orgeo"
+  },
+  {
+    "zip": 6887,
+    "commune": "HERBEUMONT"
+  },
+  {
+    "zip": 6887,
+    "commune": "Saint-Médard"
+  },
+  {
+    "zip": 6887,
+    "commune": "Straimont"
+  },
+  {
+    "zip": 6890,
+    "commune": "Anloy"
+  },
+  {
+    "zip": 6890,
+    "commune": "LIBIN"
+  },
+  {
+    "zip": 6890,
+    "commune": "Ochamps"
+  },
+  {
+    "zip": 6890,
+    "commune": "Redu"
+  },
+  {
+    "zip": 6890,
+    "commune": "Smuid"
+  },
+  {
+    "zip": 6890,
+    "commune": "Transinne"
+  },
+  {
+    "zip": 6890,
+    "commune": "Villance"
+  },
+  {
+    "zip": 6900,
+    "commune": "Aye"
+  },
+  {
+    "zip": 6900,
+    "commune": "Hargimont"
+  },
+  {
+    "zip": 6900,
+    "commune": "Humain"
+  },
+  {
+    "zip": 6900,
+    "commune": "MARCHE-EN-FAMENNE"
+  },
+  {
+    "zip": 6900,
+    "commune": "On"
+  },
+  {
+    "zip": 6900,
+    "commune": "Roy"
+  },
+  {
+    "zip": 6900,
+    "commune": "Waha"
+  },
+  {
+    "zip": 6920,
+    "commune": "Sohier"
+  },
+  {
+    "zip": 6920,
+    "commune": "WELLIN"
+  },
+  {
+    "zip": 6921,
+    "commune": "Chanly"
+  },
+  {
+    "zip": 6922,
+    "commune": "Halma"
+  },
+  {
+    "zip": 6924,
+    "commune": "Lomprez"
+  },
+  {
+    "zip": 6927,
+    "commune": "Bure"
+  },
+  {
+    "zip": 6927,
+    "commune": "Grupont"
+  },
+  {
+    "zip": 6927,
+    "commune": "Resteigne"
+  },
+  {
+    "zip": 6927,
+    "commune": "TELLIN"
+  },
+  {
+    "zip": 6929,
+    "commune": "DAVERDISSE"
+  },
+  {
+    "zip": 6929,
+    "commune": "Gembes"
+  },
+  {
+    "zip": 6929,
+    "commune": "Haut-Fays"
+  },
+  {
+    "zip": 6929,
+    "commune": "Porcheresse"
+  },
+  {
+    "zip": 6940,
+    "commune": "Barvaux-Sur-Ourthe"
+  },
+  {
+    "zip": 6940,
+    "commune": "DURBUY"
+  },
+  {
+    "zip": 6940,
+    "commune": "Grandhan"
+  },
+  {
+    "zip": 6940,
+    "commune": "Septon"
+  },
+  {
+    "zip": 6940,
+    "commune": "Wéris"
+  },
+  {
+    "zip": 6941,
+    "commune": "Bende"
+  },
+  {
+    "zip": 6941,
+    "commune": "Bomal-Sur-Ourthe"
+  },
+  {
+    "zip": 6941,
+    "commune": "Borlon"
+  },
+  {
+    "zip": 6941,
+    "commune": "Heyd"
+  },
+  {
+    "zip": 6941,
+    "commune": "Izier"
+  },
+  {
+    "zip": 6941,
+    "commune": "Tohogne"
+  },
+  {
+    "zip": 6941,
+    "commune": "Villers-Sainte-Gertrude"
+  },
+  {
+    "zip": 6950,
+    "commune": "Harsin"
+  },
+  {
+    "zip": 6950,
+    "commune": "NASSOGNE"
+  },
+  {
+    "zip": 6951,
+    "commune": "Bande"
+  },
+  {
+    "zip": 6952,
+    "commune": "Grune"
+  },
+  {
+    "zip": 6953,
+    "commune": "Ambly"
+  },
+  {
+    "zip": 6953,
+    "commune": "Forrières"
+  },
+  {
+    "zip": 6953,
+    "commune": "Lesterny"
+  },
+  {
+    "zip": 6953,
+    "commune": "Masbourg"
+  },
+  {
+    "zip": 6960,
+    "commune": "Dochamps"
+  },
+  {
+    "zip": 6960,
+    "commune": "Grandmenil"
+  },
+  {
+    "zip": 6960,
+    "commune": "Harre"
+  },
+  {
+    "zip": 6960,
+    "commune": "Malempré"
+  },
+  {
+    "zip": 6960,
+    "commune": "MANHAY"
+  },
+  {
+    "zip": 6960,
+    "commune": "Odeigne"
+  },
+  {
+    "zip": 6960,
+    "commune": "Vaux-Chavanne"
+  },
+  {
+    "zip": 6970,
+    "commune": "TENNEVILLE"
+  },
+  {
+    "zip": 6971,
+    "commune": "Champlon"
+  },
+  {
+    "zip": 6972,
+    "commune": "Erneuville"
+  },
+  {
+    "zip": 6980,
+    "commune": "Beausaint"
+  },
+  {
+    "zip": 6980,
+    "commune": "LA ROCHE-EN-ARDENNE"
+  },
+  {
+    "zip": 6982,
+    "commune": "Samrée"
+  },
+  {
+    "zip": 6983,
+    "commune": "Ortho"
+  },
+  {
+    "zip": 6984,
+    "commune": "Hives"
+  },
+  {
+    "zip": 6986,
+    "commune": "Halleux"
+  },
+  {
+    "zip": 6987,
+    "commune": "Beffe"
+  },
+  {
+    "zip": 6987,
+    "commune": "Hodister"
+  },
+  {
+    "zip": 6987,
+    "commune": "Marcourt"
+  },
+  {
+    "zip": 6987,
+    "commune": "RENDEUX"
+  },
+  {
+    "zip": 6990,
+    "commune": "Fronville"
+  },
+  {
+    "zip": 6990,
+    "commune": "Hampteau"
+  },
+  {
+    "zip": 6990,
+    "commune": "HOTTON"
+  },
+  {
+    "zip": 6990,
+    "commune": "Marenne"
+  },
+  {
+    "zip": 6997,
+    "commune": "Amonines"
+  },
+  {
+    "zip": 6997,
+    "commune": "EREZÉE"
+  },
+  {
+    "zip": 6997,
+    "commune": "Mormont"
+  },
+  {
+    "zip": 6997,
+    "commune": "Soy"
+  },
+  {
+    "zip": 5000,
+    "commune": "Beez"
+  },
+  {
+    "zip": 5000,
+    "commune": "NAMUR"
+  },
+  {
+    "zip": 5001,
+    "commune": "Belgrade"
+  },
+  {
+    "zip": 5002,
+    "commune": "Saint-Servais"
+  },
+  {
+    "zip": 5003,
+    "commune": "Saint-Marc"
+  },
+  {
+    "zip": 5004,
+    "commune": "Bouge"
+  },
+  {
+    "zip": 5020,
+    "commune": "Champion"
+  },
+  {
+    "zip": 5020,
+    "commune": "Daussoulx"
+  },
+  {
+    "zip": 5020,
+    "commune": "Flawinne"
+  },
+  {
+    "zip": 5020,
+    "commune": "Malonne"
+  },
+  {
+    "zip": 5020,
+    "commune": "Suarlée"
+  },
+  {
+    "zip": 5020,
+    "commune": "Temploux"
+  },
+  {
+    "zip": 5020,
+    "commune": "Vedrin"
+  },
+  {
+    "zip": 5021,
+    "commune": "Boninne"
+  },
+  {
+    "zip": 5022,
+    "commune": "Cognelée"
+  },
+  {
+    "zip": 5024,
+    "commune": "Gelbressée"
+  },
+  {
+    "zip": 5024,
+    "commune": "Marche-Les-Dames"
+  },
+  {
+    "zip": 5030,
+    "commune": "Beuzet"
+  },
+  {
+    "zip": 5030,
+    "commune": "Ernage"
+  },
+  {
+    "zip": 5030,
+    "commune": "GEMBLOUX"
+  },
+  {
+    "zip": 5030,
+    "commune": "Grand-Manil"
+  },
+  {
+    "zip": 5030,
+    "commune": "Lonzée"
+  },
+  {
+    "zip": 5030,
+    "commune": "Sauvenière"
+  },
+  {
+    "zip": 5031,
+    "commune": "Grand-Leez"
+  },
+  {
+    "zip": 5032,
+    "commune": "Bossière"
+  },
+  {
+    "zip": 5032,
+    "commune": "Bothey"
+  },
+  {
+    "zip": 5032,
+    "commune": "Corroy-Le-Château"
+  },
+  {
+    "zip": 5032,
+    "commune": "Isnes"
+  },
+  {
+    "zip": 5032,
+    "commune": "Mazy"
+  },
+  {
+    "zip": 5060,
+    "commune": "Arsimont"
+  },
+  {
+    "zip": 5060,
+    "commune": "Auvelais"
+  },
+  {
+    "zip": 5060,
+    "commune": "Falisolle"
+  },
+  {
+    "zip": 5060,
+    "commune": "Keumiée"
+  },
+  {
+    "zip": 5060,
+    "commune": "Moignelée"
+  },
+  {
+    "zip": 5060,
+    "commune": "SAMBREVILLE"
+  },
+  {
+    "zip": 5060,
+    "commune": "Tamines"
+  },
+  {
+    "zip": 5060,
+    "commune": "Velaine-Sur-Sambre"
+  },
+  {
+    "zip": 5070,
+    "commune": "Aisemont"
+  },
+  {
+    "zip": 5070,
+    "commune": "FOSSES-LA-VILLE"
+  },
+  {
+    "zip": 5070,
+    "commune": "Le Roux"
+  },
+  {
+    "zip": 5070,
+    "commune": "Sart-Eustache"
+  },
+  {
+    "zip": 5070,
+    "commune": "Sart-Saint-Laurent"
+  },
+  {
+    "zip": 5070,
+    "commune": "Vitrival"
+  },
+  {
+    "zip": 5080,
+    "commune": "Emines"
+  },
+  {
+    "zip": 5080,
+    "commune": "LA BRUYÈRE"
+  },
+  {
+    "zip": 5080,
+    "commune": "Rhisnes"
+  },
+  {
+    "zip": 5080,
+    "commune": "Villers-Lez-Heest"
+  },
+  {
+    "zip": 5080,
+    "commune": "Warisoulx"
+  },
+  {
+    "zip": 5081,
+    "commune": "Bovesse"
+  },
+  {
+    "zip": 5081,
+    "commune": "Meux"
+  },
+  {
+    "zip": 5081,
+    "commune": "Saint-Denis-Bovesse"
+  },
+  {
+    "zip": 5100,
+    "commune": "Dave"
+  },
+  {
+    "zip": 5100,
+    "commune": "Jambes"
+  },
+  {
+    "zip": 5100,
+    "commune": "Naninne"
+  },
+  {
+    "zip": 5100,
+    "commune": "Wépion"
+  },
+  {
+    "zip": 5100,
+    "commune": "Wierde"
+  },
+  {
+    "zip": 5101,
+    "commune": "Erpent"
+  },
+  {
+    "zip": 5101,
+    "commune": "Lives-Sur-Meuse"
+  },
+  {
+    "zip": 5101,
+    "commune": "Loyers"
+  },
+  {
+    "zip": 5140,
+    "commune": "Boignée"
+  },
+  {
+    "zip": 5140,
+    "commune": "Ligny"
+  },
+  {
+    "zip": 5140,
+    "commune": "SOMBREFFE"
+  },
+  {
+    "zip": 5140,
+    "commune": "Tongrinne"
+  },
+  {
+    "zip": 5150,
+    "commune": "FLOREFFE"
+  },
+  {
+    "zip": 5150,
+    "commune": "Floriffoux"
+  },
+  {
+    "zip": 5150,
+    "commune": "Franière"
+  },
+  {
+    "zip": 5150,
+    "commune": "Soye"
+  },
+  {
+    "zip": 5170,
+    "commune": "Arbre"
+  },
+  {
+    "zip": 5170,
+    "commune": "Bois-De-Villers"
+  },
+  {
+    "zip": 5170,
+    "commune": "Lesve"
+  },
+  {
+    "zip": 5170,
+    "commune": "Lustin"
+  },
+  {
+    "zip": 5170,
+    "commune": "PROFONDEVILLE"
+  },
+  {
+    "zip": 5170,
+    "commune": "Rivière"
+  },
+  {
+    "zip": 5190,
+    "commune": "Balâtre"
+  },
+  {
+    "zip": 5190,
+    "commune": "Ham-Sur-Sambre"
+  },
+  {
+    "zip": 5190,
+    "commune": "JEMEPPE-SUR-SAMBRE"
+  },
+  {
+    "zip": 5190,
+    "commune": "Mornimont"
+  },
+  {
+    "zip": 5190,
+    "commune": "Moustier-Sur-Sambre"
+  },
+  {
+    "zip": 5190,
+    "commune": "Onoz"
+  },
+  {
+    "zip": 5190,
+    "commune": "Saint-Martin"
+  },
+  {
+    "zip": 5190,
+    "commune": "Spy"
+  },
+  {
+    "zip": 5300,
+    "commune": "ANDENNE"
+  },
+  {
+    "zip": 5300,
+    "commune": "Bonneville"
+  },
+  {
+    "zip": 5300,
+    "commune": "Coutisse"
+  },
+  {
+    "zip": 5300,
+    "commune": "Landenne"
+  },
+  {
+    "zip": 5300,
+    "commune": "Maizeret"
+  },
+  {
+    "zip": 5300,
+    "commune": "Namêche"
+  },
+  {
+    "zip": 5300,
+    "commune": "Sclayn"
+  },
+  {
+    "zip": 5300,
+    "commune": "Seilles"
+  },
+  {
+    "zip": 5300,
+    "commune": "Thon"
+  },
+  {
+    "zip": 5300,
+    "commune": "Vezin"
+  },
+  {
+    "zip": 5310,
+    "commune": "Aische-En-Refail"
+  },
+  {
+    "zip": 5310,
+    "commune": "Bolinne"
+  },
+  {
+    "zip": 5310,
+    "commune": "Boneffe"
+  },
+  {
+    "zip": 5310,
+    "commune": "Branchon"
+  },
+  {
+    "zip": 5310,
+    "commune": "Dhuy"
+  },
+  {
+    "zip": 5310,
+    "commune": "EGHEZÉE"
+  },
+  {
+    "zip": 5310,
+    "commune": "Hanret"
+  },
+  {
+    "zip": 5310,
+    "commune": "Leuze"
+  },
+  {
+    "zip": 5310,
+    "commune": "Liernu"
+  },
+  {
+    "zip": 5310,
+    "commune": "Longchamps"
+  },
+  {
+    "zip": 5310,
+    "commune": "Mehaigne"
+  },
+  {
+    "zip": 5310,
+    "commune": "Noville-Sur-Méhaigne"
+  },
+  {
+    "zip": 5310,
+    "commune": "Saint-Germain"
+  },
+  {
+    "zip": 5310,
+    "commune": "Taviers"
+  },
+  {
+    "zip": 5310,
+    "commune": "Upigny"
+  },
+  {
+    "zip": 5310,
+    "commune": "Waret-La-Chaussée"
+  },
+  {
+    "zip": 5330,
+    "commune": "ASSESSE"
+  },
+  {
+    "zip": 5330,
+    "commune": "Maillen"
+  },
+  {
+    "zip": 5330,
+    "commune": "Sart-Bernard"
+  },
+  {
+    "zip": 5332,
+    "commune": "Crupet"
+  },
+  {
+    "zip": 5333,
+    "commune": "Sorinne-La-Longue"
+  },
+  {
+    "zip": 5334,
+    "commune": "Florée"
+  },
+  {
+    "zip": 5336,
+    "commune": "Courrière"
+  },
+  {
+    "zip": 5340,
+    "commune": "Faulx-Les-Tombes"
+  },
+  {
+    "zip": 5340,
+    "commune": "GESVES"
+  },
+  {
+    "zip": 5340,
+    "commune": "Haltinne"
+  },
+  {
+    "zip": 5340,
+    "commune": "Mozet"
+  },
+  {
+    "zip": 5340,
+    "commune": "Sorée"
+  },
+  {
+    "zip": 5350,
+    "commune": "Evelette"
+  },
+  {
+    "zip": 5350,
+    "commune": "OHEY"
+  },
+  {
+    "zip": 5351,
+    "commune": "Haillot"
+  },
+  {
+    "zip": 5352,
+    "commune": "Perwez-Haillot"
+  },
+  {
+    "zip": 5353,
+    "commune": "Goesnes"
+  },
+  {
+    "zip": 5354,
+    "commune": "Jallet"
+  },
+  {
+    "zip": 5360,
+    "commune": "HAMOIS"
+  },
+  {
+    "zip": 5360,
+    "commune": "Natoye"
+  },
+  {
+    "zip": 5361,
+    "commune": "Mohiville"
+  },
+  {
+    "zip": 5361,
+    "commune": "Scy"
+  },
+  {
+    "zip": 5362,
+    "commune": "Achet"
+  },
+  {
+    "zip": 5363,
+    "commune": "Emptinne"
+  },
+  {
+    "zip": 5364,
+    "commune": "Schaltin"
+  },
+  {
+    "zip": 5370,
+    "commune": "Barvaux-Condroz"
+  },
+  {
+    "zip": 5370,
+    "commune": "Flostoy"
+  },
+  {
+    "zip": 5370,
+    "commune": "HAVELANGE"
+  },
+  {
+    "zip": 5370,
+    "commune": "Jeneffe"
+  },
+  {
+    "zip": 5370,
+    "commune": "Porcheresse"
+  },
+  {
+    "zip": 5370,
+    "commune": "Verlée"
+  },
+  {
+    "zip": 5372,
+    "commune": "Méan"
+  },
+  {
+    "zip": 5374,
+    "commune": "Maffe"
+  },
+  {
+    "zip": 5376,
+    "commune": "Miécret"
+  },
+  {
+    "zip": 5377,
+    "commune": "Baillonville"
+  },
+  {
+    "zip": 5377,
+    "commune": "Bonsin"
+  },
+  {
+    "zip": 5377,
+    "commune": "Heure"
+  },
+  {
+    "zip": 5377,
+    "commune": "Hogne"
+  },
+  {
+    "zip": 5377,
+    "commune": "Nettinne"
+  },
+  {
+    "zip": 5377,
+    "commune": "Noiseux"
+  },
+  {
+    "zip": 5377,
+    "commune": "Sinsin"
+  },
+  {
+    "zip": 5377,
+    "commune": "SOMME-LEUZE"
+  },
+  {
+    "zip": 5377,
+    "commune": "Waillet"
+  },
+  {
+    "zip": 5380,
+    "commune": "Bierwart"
+  },
+  {
+    "zip": 5380,
+    "commune": "Cortil-Wodon"
+  },
+  {
+    "zip": 5380,
+    "commune": "FERNELMONT"
+  },
+  {
+    "zip": 5380,
+    "commune": "Forville"
+  },
+  {
+    "zip": 5380,
+    "commune": "Franc-Waret"
+  },
+  {
+    "zip": 5380,
+    "commune": "Hemptinne"
+  },
+  {
+    "zip": 5380,
+    "commune": "Hingeon"
+  },
+  {
+    "zip": 5380,
+    "commune": "Marchovelette"
+  },
+  {
+    "zip": 5380,
+    "commune": "Noville-Les-Bois"
+  },
+  {
+    "zip": 5380,
+    "commune": "Pontillas"
+  },
+  {
+    "zip": 5380,
+    "commune": "Tillier"
+  },
+  {
+    "zip": 5500,
+    "commune": "Anseremme"
+  },
+  {
+    "zip": 5500,
+    "commune": "Bouvignes-Sur-Meuse"
+  },
+  {
+    "zip": 5500,
+    "commune": "DINANT"
+  },
+  {
+    "zip": 5500,
+    "commune": "Dréhance"
+  },
+  {
+    "zip": 5500,
+    "commune": "Falmagne"
+  },
+  {
+    "zip": 5500,
+    "commune": "Falmignoul"
+  },
+  {
+    "zip": 5500,
+    "commune": "Furfooz"
+  },
+  {
+    "zip": 5501,
+    "commune": "Lisogne"
+  },
+  {
+    "zip": 5502,
+    "commune": "Thynes"
+  },
+  {
+    "zip": 5503,
+    "commune": "Sorinnes"
+  },
+  {
+    "zip": 5504,
+    "commune": "Foy-Notre-Dame"
+  },
+  {
+    "zip": 5520,
+    "commune": "Anthée"
+  },
+  {
+    "zip": 5520,
+    "commune": "ONHAYE"
+  },
+  {
+    "zip": 5521,
+    "commune": "Serville"
+  },
+  {
+    "zip": 5522,
+    "commune": "Falaen"
+  },
+  {
+    "zip": 5523,
+    "commune": "Sommière"
+  },
+  {
+    "zip": 5523,
+    "commune": "Weillen"
+  },
+  {
+    "zip": 5524,
+    "commune": "Gerin"
+  },
+  {
+    "zip": 5530,
+    "commune": "Dorinne"
+  },
+  {
+    "zip": 5530,
+    "commune": "Durnal"
+  },
+  {
+    "zip": 5530,
+    "commune": "Evrehailles"
+  },
+  {
+    "zip": 5530,
+    "commune": "Godinne"
+  },
+  {
+    "zip": 5530,
+    "commune": "Houx"
+  },
+  {
+    "zip": 5530,
+    "commune": "Mont"
+  },
+  {
+    "zip": 5530,
+    "commune": "Purnode"
+  },
+  {
+    "zip": 5530,
+    "commune": "Spontin"
+  },
+  {
+    "zip": 5530,
+    "commune": "YVOIR"
+  },
+  {
+    "zip": 5537,
+    "commune": "ANHÉE"
+  },
+  {
+    "zip": 5537,
+    "commune": "Annevoie-Rouillon"
+  },
+  {
+    "zip": 5537,
+    "commune": "Bioul"
+  },
+  {
+    "zip": 5537,
+    "commune": "Denée"
+  },
+  {
+    "zip": 5537,
+    "commune": "Haut-Le-Wastia"
+  },
+  {
+    "zip": 5537,
+    "commune": "Sosoye"
+  },
+  {
+    "zip": 5537,
+    "commune": "Warnant"
+  },
+  {
+    "zip": 5540,
+    "commune": "HASTIÈRE"
+  },
+  {
+    "zip": 5540,
+    "commune": "Hastière-Lavaux"
+  },
+  {
+    "zip": 5540,
+    "commune": "Hermeton-Sur-Meuse"
+  },
+  {
+    "zip": 5540,
+    "commune": "Waulsort"
+  },
+  {
+    "zip": 5541,
+    "commune": "Hastière-Par-Delà"
+  },
+  {
+    "zip": 5542,
+    "commune": "Blaimont"
+  },
+  {
+    "zip": 5543,
+    "commune": "Heer"
+  },
+  {
+    "zip": 5544,
+    "commune": "Agimont"
+  },
+  {
+    "zip": 5550,
+    "commune": "Alle"
+  },
+  {
+    "zip": 5550,
+    "commune": "Bagimont"
+  },
+  {
+    "zip": 5550,
+    "commune": "Bohan"
+  },
+  {
+    "zip": 5550,
+    "commune": "Chairière"
+  },
+  {
+    "zip": 5550,
+    "commune": "Laforet"
+  },
+  {
+    "zip": 5550,
+    "commune": "Membre"
+  },
+  {
+    "zip": 5550,
+    "commune": "Mouzaive"
+  },
+  {
+    "zip": 5550,
+    "commune": "Nafraiture"
+  },
+  {
+    "zip": 5550,
+    "commune": "Orchimont"
+  },
+  {
+    "zip": 5550,
+    "commune": "Pussemange"
+  },
+  {
+    "zip": 5550,
+    "commune": "Sugny"
+  },
+  {
+    "zip": 5550,
+    "commune": "VRESSE-SUR-SEMOIS"
+  },
+  {
+    "zip": 5555,
+    "commune": "Baillamont"
+  },
+  {
+    "zip": 5555,
+    "commune": "Bellefontaine"
+  },
+  {
+    "zip": 5555,
+    "commune": "BIÈVRE"
+  },
+  {
+    "zip": 5555,
+    "commune": "Cornimont"
+  },
+  {
+    "zip": 5555,
+    "commune": "Graide"
+  },
+  {
+    "zip": 5555,
+    "commune": "Gros-Fays"
+  },
+  {
+    "zip": 5555,
+    "commune": "Monceau-En-Ardenne"
+  },
+  {
+    "zip": 5555,
+    "commune": "Naomé"
+  },
+  {
+    "zip": 5555,
+    "commune": "Oizy"
+  },
+  {
+    "zip": 5555,
+    "commune": "Petit-Fays"
+  },
+  {
+    "zip": 5560,
+    "commune": "Ciergnon"
+  },
+  {
+    "zip": 5560,
+    "commune": "Finnevaux"
+  },
+  {
+    "zip": 5560,
+    "commune": "HOUYET"
+  },
+  {
+    "zip": 5560,
+    "commune": "Hulsonniaux"
+  },
+  {
+    "zip": 5560,
+    "commune": "Mesnil-Eglise"
+  },
+  {
+    "zip": 5560,
+    "commune": "Mesnil-Saint-Blaise"
+  },
+  {
+    "zip": 5561,
+    "commune": "Celles"
+  },
+  {
+    "zip": 5562,
+    "commune": "Custinne"
+  },
+  {
+    "zip": 5563,
+    "commune": "Hour"
+  },
+  {
+    "zip": 5564,
+    "commune": "Wanlin"
+  },
+  {
+    "zip": 5570,
+    "commune": "Baronville"
+  },
+  {
+    "zip": 5570,
+    "commune": "BEAURAING"
+  },
+  {
+    "zip": 5570,
+    "commune": "Dion"
+  },
+  {
+    "zip": 5570,
+    "commune": "Felenne"
+  },
+  {
+    "zip": 5570,
+    "commune": "Feschaux"
+  },
+  {
+    "zip": 5570,
+    "commune": "Honnay"
+  },
+  {
+    "zip": 5570,
+    "commune": "Javingue"
+  },
+  {
+    "zip": 5570,
+    "commune": "Vonêche"
+  },
+  {
+    "zip": 5570,
+    "commune": "Wancennes"
+  },
+  {
+    "zip": 5570,
+    "commune": "Winenne"
+  },
+  {
+    "zip": 5571,
+    "commune": "Wiesme"
+  },
+  {
+    "zip": 5572,
+    "commune": "Focant"
+  },
+  {
+    "zip": 5573,
+    "commune": "Martouzin-Neuville"
+  },
+  {
+    "zip": 5574,
+    "commune": "Pondrôme"
+  },
+  {
+    "zip": 5575,
+    "commune": "Bourseigne-Neuve"
+  },
+  {
+    "zip": 5575,
+    "commune": "Bourseigne-Vieille"
+  },
+  {
+    "zip": 5575,
+    "commune": "GEDINNE"
+  },
+  {
+    "zip": 5575,
+    "commune": "Houdremont"
+  },
+  {
+    "zip": 5575,
+    "commune": "Louette-Saint-Denis"
+  },
+  {
+    "zip": 5575,
+    "commune": "Louette-Saint-Pierre"
+  },
+  {
+    "zip": 5575,
+    "commune": "Malvoisin"
+  },
+  {
+    "zip": 5575,
+    "commune": "Patignies"
+  },
+  {
+    "zip": 5575,
+    "commune": "Rienne"
+  },
+  {
+    "zip": 5575,
+    "commune": "Sart-Custinne"
+  },
+  {
+    "zip": 5575,
+    "commune": "Vencimont"
+  },
+  {
+    "zip": 5575,
+    "commune": "Willerzie"
+  },
+  {
+    "zip": 5576,
+    "commune": "Froidfontaine"
+  },
+  {
+    "zip": 5580,
+    "commune": "Ave-Et-Auffe"
+  },
+  {
+    "zip": 5580,
+    "commune": "Buissonville"
+  },
+  {
+    "zip": 5580,
+    "commune": "Eprave"
+  },
+  {
+    "zip": 5580,
+    "commune": "Han-Sur-Lesse"
+  },
+  {
+    "zip": 5580,
+    "commune": "Jemelle"
+  },
+  {
+    "zip": 5580,
+    "commune": "Lavaux-Saint-Anne"
+  },
+  {
+    "zip": 5580,
+    "commune": "Lessive"
+  },
+  {
+    "zip": 5580,
+    "commune": "Mont-Gauthier"
+  },
+  {
+    "zip": 5580,
+    "commune": "ROCHEFORT"
+  },
+  {
+    "zip": 5580,
+    "commune": "Villers-Sur-Lesse"
+  },
+  {
+    "zip": 5580,
+    "commune": "Wavreille"
+  },
+  {
+    "zip": 5590,
+    "commune": "Achêne"
+  },
+  {
+    "zip": 5590,
+    "commune": "Braibant"
+  },
+  {
+    "zip": 5590,
+    "commune": "Chevetogne"
+  },
+  {
+    "zip": 5590,
+    "commune": "CINEY"
+  },
+  {
+    "zip": 5590,
+    "commune": "Conneux"
+  },
+  {
+    "zip": 5590,
+    "commune": "Haversin"
+  },
+  {
+    "zip": 5590,
+    "commune": "Leignon"
+  },
+  {
+    "zip": 5590,
+    "commune": "Pessoux"
+  },
+  {
+    "zip": 5590,
+    "commune": "Serinchamps"
+  },
+  {
+    "zip": 5590,
+    "commune": "Sovet"
+  },
+  {
+    "zip": 5600,
+    "commune": "Fagnolle"
+  },
+  {
+    "zip": 5600,
+    "commune": "Franchimont"
+  },
+  {
+    "zip": 5600,
+    "commune": "Jamagne"
+  },
+  {
+    "zip": 5600,
+    "commune": "Jamiolle"
+  },
+  {
+    "zip": 5600,
+    "commune": "Merlemont"
+  },
+  {
+    "zip": 5600,
+    "commune": "Neuville"
+  },
+  {
+    "zip": 5600,
+    "commune": "Omezée"
+  },
+  {
+    "zip": 5600,
+    "commune": "PHILIPPEVILLE"
+  },
+  {
+    "zip": 5600,
+    "commune": "Roly"
+  },
+  {
+    "zip": 5600,
+    "commune": "Romedenne"
+  },
+  {
+    "zip": 5600,
+    "commune": "Samart"
+  },
+  {
+    "zip": 5600,
+    "commune": "Sart-En-Fagne"
+  },
+  {
+    "zip": 5600,
+    "commune": "Sautour"
+  },
+  {
+    "zip": 5600,
+    "commune": "Surice"
+  },
+  {
+    "zip": 5600,
+    "commune": "Villers-En-Fagne"
+  },
+  {
+    "zip": 5600,
+    "commune": "Villers-Le-Gambon"
+  },
+  {
+    "zip": 5600,
+    "commune": "Vodecée"
+  },
+  {
+    "zip": 5620,
+    "commune": "Corenne"
+  },
+  {
+    "zip": 5620,
+    "commune": "Flavion"
+  },
+  {
+    "zip": 5620,
+    "commune": "FLORENNES"
+  },
+  {
+    "zip": 5620,
+    "commune": "Hemptinne-Lez-Florennes"
+  },
+  {
+    "zip": 5620,
+    "commune": "Morville"
+  },
+  {
+    "zip": 5620,
+    "commune": "Rosée"
+  },
+  {
+    "zip": 5620,
+    "commune": "Saint-Aubin"
+  },
+  {
+    "zip": 5621,
+    "commune": "Hanzinelle"
+  },
+  {
+    "zip": 5621,
+    "commune": "Hanzinne"
+  },
+  {
+    "zip": 5621,
+    "commune": "Morialmé"
+  },
+  {
+    "zip": 5621,
+    "commune": "Thy-Le-Baudouin"
+  },
+  {
+    "zip": 5630,
+    "commune": "CERFONTAINE"
+  },
+  {
+    "zip": 5630,
+    "commune": "Daussois"
+  },
+  {
+    "zip": 5630,
+    "commune": "Senzeille"
+  },
+  {
+    "zip": 5630,
+    "commune": "Silenrieux"
+  },
+  {
+    "zip": 5630,
+    "commune": "Soumoy"
+  },
+  {
+    "zip": 5630,
+    "commune": "Villers-Deux-Eglises"
+  },
+  {
+    "zip": 5640,
+    "commune": "Biesme"
+  },
+  {
+    "zip": 5640,
+    "commune": "Biesmerée"
+  },
+  {
+    "zip": 5640,
+    "commune": "Graux"
+  },
+  {
+    "zip": 5640,
+    "commune": "METTET"
+  },
+  {
+    "zip": 5640,
+    "commune": "Oret"
+  },
+  {
+    "zip": 5640,
+    "commune": "Saint-Gérard"
+  },
+  {
+    "zip": 5641,
+    "commune": "Furnaux"
+  },
+  {
+    "zip": 5644,
+    "commune": "Ermeton-Sur-Biert"
+  },
+  {
+    "zip": 5646,
+    "commune": "Stave"
+  },
+  {
+    "zip": 5650,
+    "commune": "Castillon"
+  },
+  {
+    "zip": 5650,
+    "commune": "Chastrès"
+  },
+  {
+    "zip": 5650,
+    "commune": "Clermont"
+  },
+  {
+    "zip": 5650,
+    "commune": "Fontenelle"
+  },
+  {
+    "zip": 5650,
+    "commune": "Fraire"
+  },
+  {
+    "zip": 5650,
+    "commune": "Pry"
+  },
+  {
+    "zip": 5650,
+    "commune": "Vogenée"
+  },
+  {
+    "zip": 5650,
+    "commune": "WALCOURT"
+  },
+  {
+    "zip": 5650,
+    "commune": "Yves-Gomezée"
+  },
+  {
+    "zip": 5651,
+    "commune": "Berzée"
+  },
+  {
+    "zip": 5651,
+    "commune": "Gourdinne"
+  },
+  {
+    "zip": 5651,
+    "commune": "Laneffe"
+  },
+  {
+    "zip": 5651,
+    "commune": "Rognée"
+  },
+  {
+    "zip": 5651,
+    "commune": "Somzée"
+  },
+  {
+    "zip": 5651,
+    "commune": "Tarcienne"
+  },
+  {
+    "zip": 5651,
+    "commune": "Thy-Le-Château"
+  },
+  {
+    "zip": 5660,
+    "commune": "Aublain"
+  },
+  {
+    "zip": 5660,
+    "commune": "Boussu-En-Fagne"
+  },
+  {
+    "zip": 5660,
+    "commune": "Brûly"
+  },
+  {
+    "zip": 5660,
+    "commune": "Brûly-De-Pesche"
+  },
+  {
+    "zip": 5660,
+    "commune": "COUVIN"
+  },
+  {
+    "zip": 5660,
+    "commune": "Cul-Des-Sarts"
+  },
+  {
+    "zip": 5660,
+    "commune": "Dailly"
+  },
+  {
+    "zip": 5660,
+    "commune": "Frasnes"
+  },
+  {
+    "zip": 5660,
+    "commune": "Gonrieux"
+  },
+  {
+    "zip": 5660,
+    "commune": "Mariembourg"
+  },
+  {
+    "zip": 5660,
+    "commune": "Pesche"
+  },
+  {
+    "zip": 5660,
+    "commune": "Petigny"
+  },
+  {
+    "zip": 5660,
+    "commune": "Petite-Chapelle"
+  },
+  {
+    "zip": 5660,
+    "commune": "Presgaux"
+  },
+  {
+    "zip": 5670,
+    "commune": "Dourbes"
+  },
+  {
+    "zip": 5670,
+    "commune": "Le Mesnil"
+  },
+  {
+    "zip": 5670,
+    "commune": "Mazée"
+  },
+  {
+    "zip": 5670,
+    "commune": "Nismes"
+  },
+  {
+    "zip": 5670,
+    "commune": "Oignies-En-Thiérache"
+  },
+  {
+    "zip": 5670,
+    "commune": "Olloy-Sur-Viroin"
+  },
+  {
+    "zip": 5670,
+    "commune": "Treignes"
+  },
+  {
+    "zip": 5670,
+    "commune": "Vierves-Sur-Viroin"
+  },
+  {
+    "zip": 5670,
+    "commune": "VIROINVAL"
+  },
+  {
+    "zip": 5680,
+    "commune": "DOISCHE"
+  },
+  {
+    "zip": 5680,
+    "commune": "Gimnée"
+  },
+  {
+    "zip": 5680,
+    "commune": "Gochenée"
+  },
+  {
+    "zip": 5680,
+    "commune": "Matagne-La-Grande"
+  },
+  {
+    "zip": 5680,
+    "commune": "Matagne-La-Petite"
+  },
+  {
+    "zip": 5680,
+    "commune": "Niverlée"
+  },
+  {
+    "zip": 5680,
+    "commune": "Romerée"
+  },
+  {
+    "zip": 5680,
+    "commune": "Soulme"
+  },
+  {
+    "zip": 5680,
+    "commune": "Vaucelles"
+  },
+  {
+    "zip": 5680,
+    "commune": "Vodelée"
+  }
+]
