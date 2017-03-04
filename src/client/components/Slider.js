@@ -57,11 +57,11 @@ export default class Slider extends Component {
                    </Carousel.Caption>
                  </Carousel.Item>
                  <Carousel.Item>
-                   <img className="imgCarouselLg" width={900} height={500} alt="900x500" src="/img/fotolia6.png"/>
+                   <img className="imgCarouselLg" width={900} height={500} alt="900x500" src="/img/fotolia6.jpg"/>
                    <Carousel.Caption>
                      <Media smHidden xsHidden>
                       <Media.Left align="top">
-                        <img src="/img/picto3.jpg" width="400" alt="Image"/>
+                        <img src="/img/picto3.png" width="400" alt="Image"/>
                       </Media.Left>
                       <Media.Body className='greenMedia'>
                         <Media.Heading>Nous vous aidons</Media.Heading>
