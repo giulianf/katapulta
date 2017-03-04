@@ -8,7 +8,6 @@ export default class AboutEmprunteur extends Component {
   }
 
   render () {
-
     return (
       <div>
         <div id='aboutEmprunteur'></div>
@@ -21,7 +20,7 @@ export default class AboutEmprunteur extends Component {
         		<Col md={6} sm={6} xs={6} >
               <div>
                 <ResponsiveEmbed a16by9>
-                  <embed type="image/svg+xml" src="https://player.vimeo.com/video/183058098" />
+                  <embed type="image/svg+xml" src="https://player.vimeo.com/video/206726691" />
                 </ResponsiveEmbed>
               </div>
         		</Col>

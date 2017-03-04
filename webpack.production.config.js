@@ -2,7 +2,6 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const aliases = require('./aliases');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer');
 var pkg = require('./package.json');
@@ -16,10 +15,11 @@ module.exports = {
   entry: {
       app: path.join(__dirname, 'src', 'entryPoint', 'app-client.js'),
       vendor: Object.keys(pkg.dependencies).filter(function(item) {
-          if (item === 'font-awesome' || item === 'express' || item === 'ejs'
+          if (item === 'font-awesome' || item === 'express' || item === 'xhr2'
           || item === 'winston' || item === 'net' || item === 'express-jwt'
-          || item === 'cors' || item === 'mongodb' || item === 'async' || item === 'util') {
-          || item === 'soap' || item === 'xml2js') {
+          || item === 'cors' || item === 'mongodb' || item === 'async' || item === 'util'
+          || item === 'body-parser' || item === 'dotenv' || item === 'mailcomposer' || item === 'pdfmake'
+          || item === 'soap' || item === 'aws-sdk' || item === 'blob-stream') {
               return false;
           }
           return item.indexOf('babel') === -1
@@ -52,7 +52,7 @@ module.exports = {
          exclude: /node_modules/,
          query: {
            cacheDirectory: 'babel_cache',
-           presets: ['react', 'es2015', 'stage-2']
+           presets: ['react', 'es2015', 'react-hmre', 'stage-2']
          }
      },
      {
@@ -79,8 +79,7 @@ module.exports = {
  devtool: 'source-map',
  resolve: {
    root: path.resolve(__dirname),
-   extensions: ['', '.js', '.jsx', 'json'],
-   alias: aliases
+   extensions: ['', '.js', '.jsx', '.json']
  },
  plugins: [
    // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)

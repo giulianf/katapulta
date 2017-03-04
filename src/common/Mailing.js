@@ -9,11 +9,10 @@ export class Mailing {
     }
 
 
-    sendMail(subject, content, mailTo, attachments) {
-        info('Entering sendMail() to ' + mailTo );
+    sendMail(subject, content, mailTo, mailFrom, attachments) {
+        info('Entering sendMail() to ' + mailTo + ' and mail from: ' + mailFrom);
 
         try {
-            const mailFrom = 'info@katapulta.be';
 
             const to      = mailTo;
             const from    = mailFrom;

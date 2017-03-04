@@ -1,6 +1,7 @@
 # Dependency directory
 node_modules
 dist
+dist-client
 babel_cache
 src/webapp
 

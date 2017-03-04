@@ -55,13 +55,7 @@ export class MailManager {
             content = _.replace(content, '{creationDate}', basicProfil.creationDate );
             content = _.replace(content, '{reference}', basicInfoEmprunteur.id );
 
-            const contractGenerator = new ContractGenerator();
-
-            const attachmentName = "contract.pdf";
-            const attachmentContent = contractGenerator.createPdfBinary(basicProfil, basicInfoEmprunteur, (binary) => {
-
-            });
-            mail.sendMail(subject, content, basicProfil.email, null, null);
+            mail.sendMail(subject, content, basicProfil.email, 'info@katapulta.be', null);
 
             callback();
         } catch (e) {
@@ -118,7 +112,7 @@ export class MailManager {
                 }
 
                 info("Result: " + result);
-                mail.sendMail(subject, content, basicProfil.email, result );
+                mail.sendMail(subject, content, basicProfil.email, 'contrat@katapulta.be', result );
                 callback();
             });
         } catch (e) {
