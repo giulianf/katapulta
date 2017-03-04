@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Form, Row, Col, PageHeader, FormControl, FormGroup, ControlLabel, Button, Tabs, Tab } from 'react-bootstrap';
-// import CircularProgress from 'material-ui/CircularProgress';
 import _ from 'lodash';
 import ProvideStore from '../stores/ProvideStore';
 import LayoutStore from '../stores/LayoutStore';
