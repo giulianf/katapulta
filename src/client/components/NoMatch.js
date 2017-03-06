@@ -52,7 +52,7 @@ export default class NoMatch extends React.Component {
                     <div className="center">
                       <a href="javascript:history.back()" className="btn btn-grey">
                         <i className="ace-icon fa fa-arrow-left"></i>
-                        Go Back
+                        Retour
                       </a>
 
                       <Link to="/" ><i className="ace-icon fa fa-tachometer"></i> Page d'accueil</Link>

@@ -22,7 +22,7 @@ export default class Footer extends React.Component {
                   </Col>
                 <div className="footer_social">
                   <ul>
-                    <li><a className="f_facebook  wow bounceInDown" href="#"><i className="fa fa-facebook"></i></a></li>
+                    <li><a className="f_facebook  wow bounceInDown" target="_blank" href="https://www.facebook.com/pret.coup.de.pouce.katapulta/"><i className="fa fa-facebook"></i></a></li>
                     <li><a className="f_twitter wow bounceInDown" data-wow-delay=".1s" href="#"><i className="fa fa-twitter"></i></a></li>
                     <li><a className="f_google wow bounceInDown" data-wow-delay=".2s" href="#"><i className="fa fa-google-plus"></i></a></li>
                     <li><a className="f_linkedin wow bounceInDown" data-wow-delay=".3s" href="#"><i className="fa fa-linkedin"></i></a></li>
