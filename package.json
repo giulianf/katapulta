@@ -8,7 +8,7 @@
     "auto-start": "NODE_ENV=development nodemon --exec \"cp -rf src/img/ ./src/webapp/resources/img && npm run start-dev\" --ignore public/js",
     "start-dev": "babel-node --presets 'react,es2015,stage-2' src/server.js",
 
-    "dist-client": "npm run copy:client && BABEL_ENV=production webpack -p --bail --progress --colors --config webpack.production.config.js",
+    "dist-client": "NODE_ENV=production npm run copy-client && BABEL_ENV=production webpack -p --bail --progress --colors --config webpack.production.config.js",
     "copy-client": "npm run copy:img && npm run copy:html",
     "copy:img": "cp -rf src/img/ ./dist-client/webapp/resources/img && cp -rf src/favicon.ico ./dist-client/webapp/resources",
     "copy:html": "cp -rf src/static-prod ./dist-client/webapp",
@@ -22,7 +22,7 @@
     "startProd": "NODE_ENV=production pm2 start ./dist/server.js",
 
     "lint": "eslint src",
-    "start-dev-ui": "npm run start-dev-hmr",
+    "start-dev-ui": "npm run start-dev-hmr"
   },
   "author": "Julien Fumanti",
   "license": "GNU GENERAL PUBLIC LICENSE",
