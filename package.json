@@ -1,24 +1,28 @@
 {
   "name": "Katapulta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pour emprunter ou preter son argent",
   "main": "dist/server.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server",
+      "start": "NODE_ENV=development webpack-dev-server",
     "auto-start": "NODE_ENV=development nodemon --exec \"cp -rf src/img/ ./src/webapp/resources/img && npm run start-dev\" --ignore public/js",
     "start-dev": "babel-node --presets 'react,es2015,stage-2' src/server.js",
-    "dist-client": "NODE_ENV=production npm run clean-client && npm run copy:img && BABEL_ENV=production webpack -p --bail --progress -p --colors --config webpack.production.config.js",
-    "clean-client": "rm -rf ./dist-client/webapp/resources/*",
+
+    "dist-client": "npm run copy:client && BABEL_ENV=production webpack -p --bail --progress --colors --config webpack.production.config.js",
+    "copy-client": "npm run copy:img && npm run copy:html",
     "copy:img": "cp -rf src/img/ ./dist-client/webapp/resources/img && cp -rf src/favicon.ico ./dist-client/webapp/resources",
-    "compile-prod": "npm run clean && npm run copy && babel ./src --experimental --source-maps-inline -d dist --ignore ./src/route.js,static,client,entryPoint --copy-files --presets=react,es2015,stage-2",
+    "copy:html": "cp -rf src/static-prod ./dist-client/webapp",
+
+    "compile-prod": "npm run clean && npm run copy && babel ./src --experimental --source-maps-inline -d dist --ignore ./src/route.js,static,static-prod,client,entryPoint --copy-files --presets=react,es2015,stage-2",
     "clean": "rm -rf ./dist/*",
     "copy": "npm run copy:font && npm run copy:config",
     "copy:font": "cp -rf fonts ./dist/fonts",
     "copy:config": "cp -rf config ./dist/config",
+
     "startProd": "NODE_ENV=production pm2 start ./dist/server.js",
+
     "lint": "eslint src",
     "start-dev-ui": "npm run start-dev-hmr",
-    "copy:html": "cp -rf src/static ./dist-client/static"
   },
   "author": "Julien Fumanti",
   "license": "GNU GENERAL PUBLIC LICENSE",
