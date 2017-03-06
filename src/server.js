@@ -52,8 +52,13 @@ app.use(bodyParser.json({limit: '50mb'}))
          next();
      }
 });
+
+const originCors = process.env.NODE_ENV == 'production' ? f('http://www.katapulta.be') : f('http://%s:%s', process.env.SERVER_CORS_HOST, process.env.SERVER_CORS_PORT);
+
+debug('originCors: ' + originCors);
+
 app.use(cors({
-     origin: f('http://%s:%s', process.env.SERVER_CORS_HOST, process.env.SERVER_CORS_PORT),
+     origin: originCors,
     credentials: true
 }) );
 
@@ -348,6 +353,8 @@ app.post('/api/registerNewsLetter', (req, res) => {
 // start the server
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;
+const portListen = process.env.SERVER_CORS_PORT ;
+const hostListen = process.env.SERVER_CORS_HOST;
 const env = process.env.NODE_ENV;
 const version = getVersion();
 server.listen(port, err => {
@@ -356,6 +363,7 @@ server.listen(port, err => {
   }
    info(`*************************************************`);
    info(`Server running on http://${host}:${port} [${env}]`);
+   info(`Server listening on http://${hostListen}:${portListen} [${env}]`);
    info(`Version of Katapulta: ${version}`);
    info(`*********************************`);
 });

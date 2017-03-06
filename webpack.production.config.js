@@ -52,7 +52,7 @@ module.exports = {
          exclude: /node_modules/,
          query: {
            cacheDirectory: 'babel_cache',
-           presets: ['react', 'es2015', 'react-hmre', 'stage-2']
+           presets: ['react', 'es2015', 'stage-2']
          }
      },
      {
@@ -101,7 +101,9 @@ module.exports = {
              env: {
                  NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                  AUTH_AUDIENCE: JSON.stringify(process.env.AUTH_AUDIENCE),
-                 AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID)
+                 AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID),
+                 SERVER_HOST: JSON.stringify(process.env.SERVER_HOST),
+                 SERVER_PORT: JSON.stringify(process.env.SERVER_PORT)
              }
          }
      }),
