@@ -10,7 +10,7 @@ var autoprefixer = require('autoprefixer');
 require("babel-polyfill");
 // const Dotenv = require('dotenv-webpack');
 require('dotenv').config({
-    path: path.join(__dirname,'config', `.env.development`),
+    path: path.join(__dirname,'src', 'config', `.env.development`),
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
@@ -92,7 +92,8 @@ module.exports = {
                     AUTH_AUDIENCE: JSON.stringify(process.env.AUTH_AUDIENCE),
                     AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID),
                     SERVER_HOST: JSON.stringify(process.env.SERVER_HOST),
-                    SERVER_PORT: JSON.stringify(process.env.SERVER_PORT)
+                    SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),
+                    VERSION: JSON.stringify(process.env.npm_package_version)
                 }
             }
         })

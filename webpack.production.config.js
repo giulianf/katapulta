@@ -7,7 +7,7 @@ var autoprefixer = require('autoprefixer');
 var pkg = require('./package.json');
 var ROOT_PATH = path.resolve(__dirname);
 require('dotenv').config({
-    path: path.join(__dirname,'config', `.env.production`),
+    path: path.join(__dirname,'src', 'config', `.env.production`),
     silent: true
 });
 
@@ -103,7 +103,8 @@ module.exports = {
                  AUTH_AUDIENCE: JSON.stringify(process.env.AUTH_AUDIENCE),
                  AUTH_CLIENT_ID: JSON.stringify(process.env.AUTH_CLIENT_ID),
                  SERVER_HOST: JSON.stringify(process.env.SERVER_HOST),
-                 SERVER_PORT: JSON.stringify(process.env.SERVER_PORT)
+                 SERVER_PORT: JSON.stringify(process.env.SERVER_PORT),
+                 VERSION: JSON.stringify(process.env.npm_package_version)
              }
          }
      }),

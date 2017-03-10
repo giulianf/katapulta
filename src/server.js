@@ -18,7 +18,7 @@ import path from 'path';
 const app = new Express();
 const server = new Server(app);
 require('dotenv').config({
-    path: path.join(__dirname, '..' ,'config', `.env.${process.env.NODE_ENV}`),
+    path: path.join(__dirname ,'config', `.env.${process.env.NODE_ENV}`),
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
@@ -54,8 +54,6 @@ app.use(bodyParser.json({limit: '50mb'}))
 });
 
 const originCors = process.env.NODE_ENV == 'production' ? f('http://www.katapulta.be') : f('http://%s:%s', process.env.SERVER_CORS_HOST, process.env.SERVER_CORS_PORT);
-
-debug('originCors: ' + originCors);
 
 app.use(cors({
      origin: originCors,
@@ -353,17 +351,16 @@ app.post('/api/registerNewsLetter', (req, res) => {
 // start the server
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;
-const portListen = process.env.SERVER_CORS_PORT ;
-const hostListen = process.env.SERVER_CORS_HOST;
 const env = process.env.NODE_ENV;
-const version = getVersion();
+const version = process.env.npm_package_version;
+// getVersion();
 server.listen(port, err => {
   if (err) {
     return error(err);
   }
    info(`*************************************************`);
    info(`Server running on http://${host}:${port} [${env}]`);
-   info(`Server listening on http://${hostListen}:${portListen} [${env}]`);
+   info(`Server listening (cors) on http://${originCors} [${env}]`);
    info(`Version of Katapulta: ${version}`);
    info(`*********************************`);
 });

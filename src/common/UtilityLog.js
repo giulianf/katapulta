@@ -8,7 +8,7 @@ winston.level = 'debug';
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {'timestamp':function() {return getLogDate(); },'colorize':true});
 
-const version = 'ktp-0.0.1';
+const version = `ktp-${process.env.VERSION}`;
 export function info(message) {
     winston.log('info', message);
 }
