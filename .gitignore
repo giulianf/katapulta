@@ -1,7 +1,6 @@
 # Dependency directory
 node_modules
 dist
-dist-client/**/**/*
 babel_cache
 src/webapp
 
@@ -12,6 +11,3 @@ src/webapp
 npm-debug*
 .idea
 
-dist-client/webapp/resources/*.min.js
-
-dist-client/webapp/resources/*.min.js.map
