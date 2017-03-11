@@ -4,23 +4,19 @@
   "description": "Pour emprunter ou preter son argent",
   "main": "dist/server.js",
   "scripts": {
-      "start": "NODE_ENV=development webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "auto-start": "NODE_ENV=development nodemon --exec \"npm run start-dev\" --ignore public/js",
     "start-dev": "babel-node --presets 'react,es2015,stage-2' src/server.js",
-
     "dist-client": "NODE_ENV=production npm run copy-client && BABEL_ENV=production webpack -p --bail --progress --colors --config webpack.production.config.js",
     "copy-client": "npm run copy:img && npm run copy:html",
     "copy:img": "cp -rf src/img/ ./dist-client/webapp/resources/img && cp -rf src/favicon.ico ./dist-client/webapp/resources",
     "copy:html": "cp -rf src/static-prod ./dist-client/webapp",
-
     "compile-prod": "npm run clean && npm run copy && babel ./src --experimental --source-maps-inline -d dist --ignore routes.js,static,static-prod,client,entryPoint,img --copy-files --presets=react,es2015,stage-2",
     "clean": "rm -rf ./dist/*",
     "copy": "npm run copy:font && npm run copy:config",
     "copy:font": "cp -rf fonts ./dist/fonts",
     "copy:config": "cp -rf src/config ./dist/config",
-
     "startProd": "NODE_ENV=production pm2 start ./dist/server.js",
-
     "lint": "eslint src",
     "start-dev-ui": "npm run start-dev-hmr"
   },

@@ -24,7 +24,6 @@ export class SimulatorDao {
         try {
             let simulateResultList = [];
             // Registering 8 year
-            const maxYear = 8;
             let year = getYear(simulateData.datePret);
             let taux = _.round(4, 2) ;
             let calendar = addYear(simulateData.datePret, 1);

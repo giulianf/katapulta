@@ -1,11 +1,9 @@
-// 1tsae"region": "us-west-2"  ,mimport path from 'path';
-import { Server } from 'http';
+import { Server } from 'https';
 import Express from 'express';
 import cors from 'cors';
 let bodyParser = require('body-parser');
-import _ from 'lodash';
 const jwt = require('express-jwt');
-import { error, debug, info, getVersion } from './common/UtilityLog';
+import { error, debug, info } from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
 import { ProfileDao } from './dao/ProfileDao';
 import { ExplorerDao } from './dao/ExplorerDao';
@@ -13,10 +11,16 @@ import { ContractDao } from './dao/ContractDao';
 import { MailDao } from './dao/MailDao';
 import { ReferenceDao } from './dao/ReferenceDao';
 import path from 'path';
+const fs = require('fs');
+
+const privateKey  = fs.readFileSync(path.join(__dirname ,'sslcert', 'server.key'));
+const certificate  = fs.readFileSync(path.join(__dirname ,'sslcert', 'server.crt'));
+
+const credentials = {key: privateKey, cert: certificate};
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
-const server = new Server(app);
+const server = new Server(credentials, app);
 require('dotenv').config({
     path: path.join(__dirname ,'config', `.env.${process.env.NODE_ENV}`),
     // path: './config/.env.${process.env.NODE_ENV}',
@@ -53,7 +57,7 @@ app.use(bodyParser.json({limit: '50mb'}))
      }
 });
 
-const originCors = process.env.NODE_ENV == 'production' ? f('http://www.katapulta.be') : f('http://%s:%s', process.env.SERVER_CORS_HOST, process.env.SERVER_CORS_PORT);
+const originCors = process.env.NODE_ENV == 'production' ? f('https://www.katapulta.be') : f('http://%s:%s', process.env.SERVER_CORS_HOST, process.env.SERVER_CORS_PORT);
 
 app.use(cors({
      origin: originCors,
@@ -359,8 +363,8 @@ server.listen(port, err => {
     return error(err);
   }
    info(`*************************************************`);
-   info(`Server running on http://${host}:${port} [${env}]`);
-   info(`Server listening (cors) on http://${originCors} [${env}]`);
+   info(`Server running on https://${host}:${port} [${env}]`);
+   info(`Server listening (cors) on ${originCors} [${env}]`);
    info(`Version of Katapulta: ${version}`);
    info(`*********************************`);
 });
