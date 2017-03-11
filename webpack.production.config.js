@@ -19,7 +19,7 @@ module.exports = {
           || item === 'winston' || item === 'net' || item === 'express-jwt'
           || item === 'cors' || item === 'mongodb' || item === 'async' || item === 'util'
           || item === 'body-parser' || item === 'dotenv' || item === 'mailcomposer' || item === 'pdfmake'
-          || item === 'soap' || item === 'aws-sdk' || item === 'blob-stream') {
+          || item === 'soap' || item === 'aws-sdk' || item === 'blob-stream'|| item === 'https') {
               return false;
           }
           return item.indexOf('babel') === -1

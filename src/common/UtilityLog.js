@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import moment from 'moment';
 
 let winston = require('winston');

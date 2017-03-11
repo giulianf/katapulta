@@ -1,14 +1,14 @@
 # Dependency directory
 node_modules
 dist
-dist-client/**/**/*
+dist-client/webapp
 babel_cache
 src/webapp
+
+
 
 # Other
 .DS_Store
 npm-debug*
+.idea
 
-dist-client/webapp/resources/*.min.js
-
-dist-client/webapp/resources/*.min.js.map
