@@ -1,6 +1,6 @@
 {
   "name": "Katapulta",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Pour emprunter ou preter son argent",
   "main": "dist/server.js",
   "scripts": {
@@ -13,9 +13,10 @@
     "copy:html": "cp -rf src/static-prod ./dist-client/webapp",
     "compile-prod": "npm run clean && npm run copy && babel ./src --experimental --source-maps-inline -d dist --ignore routes.js,static,static-prod,client,entryPoint,img --copy-files --presets=react,es2015,stage-2",
     "clean": "rm -rf ./dist/*",
-    "copy": "npm run copy:font && npm run copy:config",
+    "copy": "npm run copy:font && npm run copy:config && npm run copy:package",
     "copy:font": "cp -rf fonts ./dist/fonts",
     "copy:config": "cp -rf src/config ./dist/config",
+    "copy:package": "cat package.json | jq '{name: .name, version: .version, description: .description, scripts: {start: \"NODE_ENV=production pm2 start server.js\", stop: \"pm2 stop server.js\" , log: \"pm2 flush && pm2 log server.js\"}, author: .author, license: .license, dependencies: .dependencies}' > ./dist/package.json",
     "startProd": "NODE_ENV=production pm2 start ./dist/server.js",
     "lint": "eslint src",
     "start-dev-ui": "npm run start-dev-hmr"
