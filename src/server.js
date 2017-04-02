@@ -1,4 +1,6 @@
-import { Server } from 'https';
+const http = process.env.NODE_ENV == 'development' ? require('http') : null;
+const https = process.env.NODE_ENV == 'production' ? require('https') : null;
+
 import Express from 'express';
 import cors from 'cors';
 let bodyParser = require('body-parser');
@@ -18,9 +20,10 @@ const certificate  = fs.readFileSync(path.join(__dirname ,'sslcert', 'server.crt
 
 const credentials = {key: privateKey, cert: certificate};
 
-// initialize the server and configure support for ejs templates
+// initialize the server and create support depending on environment
 const app = new Express();
-const server = new Server(credentials, app);
+const server = process.env.NODE_ENV == 'production' ? https.createServer(credentials, app) : http.createServer(app) ;
+
 require('dotenv').config({
     path: path.join(__dirname ,'config', `.env.${process.env.NODE_ENV}`),
     // path: './config/.env.${process.env.NODE_ENV}',
@@ -357,13 +360,18 @@ const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;
 const env = process.env.NODE_ENV;
 const version = process.env.npm_package_version;
+
 // getVersion();
 server.listen(port, err => {
   if (err) {
     return error(err);
   }
    info(`*************************************************`);
-   info(`Server running on https://${host}:${port} [${env}]`);
+  if (env == 'production') {
+      info(`Server running on https://${host}:${port} [${env}]`);
+  } else {
+      info(`Server running on http://${host}:${port} [${env}]`);
+  }
    info(`Server listening (cors) on ${originCors} [${env}]`);
    info(`Version of Katapulta: ${version}`);
    info(`*********************************`);

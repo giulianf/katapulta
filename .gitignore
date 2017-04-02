@@ -5,7 +5,6 @@ dist-client/webapp
 babel_cache
 src/webapp
 
-
 # Other
 .DS_Store
 npm-debug*
