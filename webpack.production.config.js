@@ -12,6 +12,7 @@ require('dotenv').config({
 });
 
 module.exports = {
+  devtool: 'nosources-source-map',
   entry: {
       app: path.join(__dirname, 'src', 'entryPoint', 'app-client.js'),
       vendor: Object.keys(pkg.dependencies).filter(function(item) {
@@ -76,7 +77,6 @@ module.exports = {
       }
    ]
  },
- devtool: 'source-map',
  resolve: {
    root: path.resolve(__dirname),
    extensions: ['', '.js', '.jsx', '.json']
