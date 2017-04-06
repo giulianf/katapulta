@@ -20,7 +20,7 @@ export default class AboutUs extends Component {
         		<Col md={6} sm={9} xs={9} mdOffset={3} lgOffset={3} >
                     <div>
                       <ResponsiveEmbed a16by9>
-                        <embed type="image/svg+xml" src="https://player.vimeo.com/video/206726693" />
+                        <embed type="image/svg+xml" src="https://vimeo.com/user63674021/katapulta" />
                       </ResponsiveEmbed>
                     </div>
         		</Col>
